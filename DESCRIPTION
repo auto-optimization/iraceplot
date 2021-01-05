@@ -1,0 +1,12 @@
+Package: iraceplot
+Type: Package
+Title: Make Various Types of Graphics
+Version: 0.1.0
+Author: person("Pablo","Oñate",role=c("aut","cre"))
+Maintainer: The package maintainer <pablo.onate.m@mail.pucv.cl>
+Description: For the creation of various types of graphs that facilitates to understand the data produced by irace.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: ggplot2, stats
