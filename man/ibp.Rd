@@ -4,16 +4,16 @@
 \alias{ibp}
 \title{Graphic box plot}
 \usage{
-ibp(iraceResults, fileName = NULL, numberIteration = NULL)
+ibp(iraceResults, numberIteration = NULL, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{fileName}{It is of type string.
-You must place the path where you want to save the file and its name, it is not necessary to place the extension of the pdf}
-
-\item{numberIteration}{It's of type numeric.
+\item{numberIteration}{It's of type numeric
 Allows to choose which iteration of the elite configuration of irace to graph}
+
+\item{fileName}{It's of type string
+You must place the path where you want to save the file and its name without the extension pdf}
 }
 \value{
 plot

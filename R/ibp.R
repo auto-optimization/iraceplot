@@ -1,34 +1,34 @@
-#' Graphic box plot
+#'Graphic box plot
 #'
 #'Create a graphic of box plot of irace using the best quality id
 #'By default the graph of the last iteration is shown
 #'
-#' @param iraceResults
+#'@param iraceResults
 #'
-#' The data generated when loading the Rdata file created by irace
+#'The data generated when loading the Rdata file created by irace
 #'
-#' @param fileName
+#'@param numberIteration
 #'
-#'It is of type string.
-#'You must place the path where you want to save the file and its name, it is not necessary to place the extension of the pdf
+#'It's of type numeric
+#'Allows to choose which iteration of the elite configuration of irace to graph
 #'
-#' @param numberIteration
+#'@param fileName
 #'
-#' It's of type numeric.
-#' Allows to choose which iteration of the elite configuration of irace to graph
+#'It's of type string
+#'You must place the path where you want to save the file and its name without the extension pdf
 #'
-#' @return plot
+#'@return plot
 #'
-#' @importFrom stats reshape
-#' @importFrom ggplot2 ggplot geom_boxplot geom_jitter position_jitter aes theme
-#' @importFrom grDevices dev.off pdf
+#'@importFrom stats reshape
+#'@importFrom ggplot2 ggplot geom_boxplot geom_jitter position_jitter aes theme
+#'@importFrom grDevices dev.off pdf
 #'
-#' @export
+#'@export
 #'
-#' @examples
-#' NULL
+#'@examples
+#'NULL
 
-ibp <- function(iraceResults, fileName = NULL,numberIteration = NULL){
+ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
   Performance <- Elite_configuration <- NULL
   long <- length(iraceResults$allElites)
   if(!is.null(numberIteration)){
