@@ -4,10 +4,15 @@
 \alias{ibp}
 \title{Graphic box plot}
 \usage{
-ibp(iraceResults)
+ibp(iraceResults, fileName)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
+
+\item{fileName}{It is of type string
+You must place the path where you want to save the file and its name, it is not necessary to place the extension of the pdf
+If you do not put the route it will be saved in the current location where you are working
+If you do not want to save the file and the graph is displayed on the screen, just put NULL in the argument}
 }
 \value{
 plot
