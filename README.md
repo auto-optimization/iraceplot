@@ -41,7 +41,7 @@ load("~/patch/example/name.Rdata")
 The 'ibp()' function returns a graphic of box plot
 
 ``` r
-ibp(iraceResults,numberInteraction,fileName)
+ibp(iraceResults,numberInteraction = NULL,fileName = NULL)
 ```
 
 Example 1
@@ -79,5 +79,34 @@ Option 2:
 
 ``` r
 ibp(iraceResults,2,"~/patch/example/filename")
+Return the box plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
+```
+
+## Function iscatter()
+
+The 'iscatter()' function returns a graphic of scatter
+
+``` r
+iscatter(iraceResults,idVector,fileName=NULL)
+```
+Example 1
+
+``` r
+iscatter(iraceResults, c(100,300))
+Return the scatter plot of the configurations 100 and 300
+```
+Example 2
+
+Option 1:
+
+``` r
+iscatter(iraceResults, c(100,300),"filename")
+Return the box plot of the second iteration of la elite configuration, but it is saved directly to pdf file in current directory
+```
+
+Option 2:
+
+``` r
+iscatter(iraceResults, c(100,300),"~/patch/example/filename")
 Return the box plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
 ```
