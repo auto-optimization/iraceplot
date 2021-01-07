@@ -29,8 +29,10 @@
 #'NULL
 
 ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
+
   Performance <- Elite_configuration <- NULL
   long <- length(iraceResults$allElites)
+
   if(!is.null(numberIteration)){
     if(numberIteration <= long){
       long <- numberIteration
@@ -38,14 +40,18 @@ ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
       return(print("iteration number out of range"))
     }
   }
+
   id <- iraceResults$allElites[[long]]
   matriz <- as.data.frame(iraceResults$experiments[,id])
+
   if(length(id) == 1){
     colnames(matriz)[colnames(matriz) == "iraceResults$experiments[, id]"] <- id
   }
+
   n_row_col = as.numeric(dim(matriz)[1]*dim(matriz)[2])
   tabla <- reshape(matriz,varying = c(as.character(id)), v.names = "Performance", timevar = "Elite_configuration",times = c(as.character(id)),new.row.names = 1:n_row_col,direction = "long")
   p <- ggplot(tabla, aes(x=Elite_configuration,y=Performance,color=Elite_configuration)) + geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0.2)) + theme(legend.position="none") + labs(x="Elite Configurations")
+
   if(!is.null(fileName)){
     pdf(paste0(fileName,".pdf"),width = 6.79,height = 2.32)
     plot(p)
