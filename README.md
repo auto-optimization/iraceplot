@@ -101,14 +101,14 @@ Option 1:
 
 ``` r
 iscatter(iraceResults, c(100,300),"filename")
-Return the box plot of the second iteration of la elite configuration, but it is saved directly to pdf file in current directory
+Return the scatter plot of the second iteration of la elite configuration, but it is saved directly to pdf file in current directory
 ```
 
 Option 2:
 
 ``` r
 iscatter(iraceResults, c(100,300),"~/patch/example/filename")
-Return the box plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
+Return the scatter plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
 ```
 
 ## Function iheatmap()
@@ -126,9 +126,19 @@ Return the heat map plot interactive
 ```
 Example 2
 
+Option 1:
+
 ``` r
 iheatmap(iraceResults, "filename")
-Return the heat map plot in pdf format
+Return the heat map plot, but it is saved directly to pdf file in current directory
 ```
+
+Option 2:
+
+``` r
+iheatmap(iraceResults,"~/patch/example/filename")
+Return the heat map plot, but it is saved directly to a pdf file
+``` 
+
 
 

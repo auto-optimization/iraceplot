@@ -57,7 +57,7 @@ iheatmap <- function(iraceResults, fileName = NULL){
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
-    #print("Aun no se implementa el pasarlo a pdf, ya que trabaja de otra forma que es orca")
+    #The fileName value is worked to separate it and assign it to new values.
     directory = str_split(fileName,"/")
     nameFile = directory[[1]][length(directory[[1]])]
     directory = directory[[1]][-length(directory[[1]])]
