@@ -110,3 +110,25 @@ Option 2:
 iscatter(iraceResults, c(100,300),"~/patch/example/filename")
 Return the box plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
 ```
+
+## Function iheatmap()
+
+The 'iheatmap()' function returns a graphic of heatmap
+
+``` r
+iheatmap(iraceResults,fileName=NULL)
+```
+Example 1
+
+``` r
+iheatmap(iraceResults)
+Return the heat map plot interactive
+```
+Example 2
+
+``` r
+iheatmap(iraceResults, "filename")
+Return the heat map plot in pdf format
+```
+
+

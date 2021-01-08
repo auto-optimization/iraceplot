@@ -1,4 +1,4 @@
-#' Graphic Scatter
+#' Scatter Plot
 #'
 #'Create a graphic of scatter of irace using a vector with 2 values referring to the id
 #'
@@ -28,16 +28,17 @@ iscatter <- function(iraceResults, idVector, fileName = NULL){
   #Variable assignment
   iteracionFiltrada <- NULL
 
+  #Verify that the entered id are within the possible range
+  if(idVector[1] <= 0 || idVector[1] > dim(iraceResults$experiments)[2]){
+    return(paste("id out of range",idVector[1]))
+  }else if(idVector[2] <= 0 || idVector[2] > dim(iraceResults$experiments)[2]){
+    return(paste("id out of range",idVector[2]))
+  }
   #Verify that a vector of length 2 is entered
   if(length(idVector) == 1 || length(idVector) > 2){
     return("You must enter a vector with 2 values")
   }
-  #Verify that the entered id are within the possible range
-  if(idVector[1] < 0 || idVector[1] > dim(iraceResults$experiments)[2]){
-    return(paste("id out of range",idVector[1]))
-  }else if(idVector[2] < 0 || idVector[2] > dim(iraceResults$experiments)[2]){
-    return(paste("id out of range",idVector[2]))
-  }
+
 
   #An array of true and/or false to display if the field has data
   filtro <- !is.na(iraceResults$experiments[,idVector])

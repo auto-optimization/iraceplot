@@ -2,7 +2,7 @@
 % Please edit documentation in R/ibp.R
 \name{ibp}
 \alias{ibp}
-\title{Graphic box plot}
+\title{Box Plot}
 \usage{
 ibp(iraceResults, numberIteration = NULL, fileName = NULL)
 }

@@ -1,4 +1,4 @@
-#'Graphic box plot
+#'Box Plot
 #'
 #'Create a graphic of box plot of irace using the best quality id
 #'By default the graph of the last iteration is shown
