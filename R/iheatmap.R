@@ -14,7 +14,7 @@
 #' @return plot
 #' @export
 #'
-#' @importFrom plotly ggplotly
+#' @importFrom plotly ggplotly orca
 #' @importFrom tidyr pivot_longer
 #' @importFrom forcats fct_relevel
 #' @importFrom tibble rownames_to_column
@@ -22,6 +22,7 @@
 #' @importFrom graphics text
 #' @importFrom stats C
 #' @importFrom dplyr mutate %>%
+#' @importFrom stringr str_split
 #'
 #'
 #'
