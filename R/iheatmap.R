@@ -30,7 +30,7 @@
 
 iheatmap <- function(iraceResults, fileName = NULL){
 
-  C <- RANK <- text <- i_id  <- NULL
+  C <- RANK <- text <- i_id  <- union <- NULL
 
   #The values of the experiments are assigned to the variable experiments
   experiments <- iraceResults$experiments
@@ -56,8 +56,15 @@ iheatmap <- function(iraceResults, fileName = NULL){
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
-    print("Aun no se implementa el pasarlo a pdf, ya que trabaja de otra forma que es orca")
-    #orca(p,fileName)
+    #print("Aun no se implementa el pasarlo a pdf, ya que trabaja de otra forma que es orca")
+    directory = str_split(fileName,"/")
+    nameFile = directory[[1]][length(directory[[1]])]
+    directory = directory[[1]][-length(directory[[1]])]
+    for(i in 1:length(directory)){
+      union <- paste0(union,directory[[i]],sep="/")
+    }
+
+    withr::with_dir(union, orca(p, paste0(nameFile,".pdf")))
   #If you do not add the value of fileName, the plot is displayed
   }else{
     p
