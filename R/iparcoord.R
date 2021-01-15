@@ -23,9 +23,19 @@
 iparcoord <- function(iraceResults, idIteration = NULL,fileName = NULL){
 
   memo  <- configuration <- NULL
+  idIteration <- unlist(idIteration)
 
-  tabla <-iraceResults$allConfigurations
-  filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
+  if(!is.null(idIteration)){
+    selection <- iraceResults$allConfigurations[, ".ID."] %in% idIteration
+    tabla <- iraceResults$allConfigurations[selection,]
+    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
+    selection2 <- filtro[, "configuration"] %in% idIteration
+    filtro <- filtro[selection2,]
+  }else{
+    tabla <-iraceResults$allConfigurations
+    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
+  }
+
   filtro <- as.data.frame(filtro)
   filtro <- arrange(filtro,configuration)
   iteration <- sample(NA,size=dim(tabla)[1],replace = TRUE)
@@ -35,19 +45,45 @@ iparcoord <- function(iraceResults, idIteration = NULL,fileName = NULL){
   if(tabla$.ID.[1] == filtro$configuration[1] ){
     tabla$iteration[1] = filtro$iteration[1]
   }
-
+  memo = filtro$configuration[1]
   for(i in 2:dim(filtro)[1]){
-    memo = filtro$configuration[i-1]
+
     if(memo == filtro$configuration[i]){
-      add <- tabla[memo,]
+      add <- tabla[tabla$.ID. == memo,]
       add$iteration = filtro$iteration[i]
       tabla <- rbind(tabla,add)
     }else{
-      tabla$iteration[filtro$configuration[i]] = filtro$iteration[i]
+      tabla$iteration[tabla$.ID. == filtro$configuration[i]] = filtro$iteration[i]
     }
+    memo = filtro$configuration[i]
   }
+
   tabla <- tabla[, !(names(tabla) %in% c(".ID.",".PARENT."))]
-  p<-parcoords::parcoords(tabla[1:9],rownames = FALSE,reorder=TRUE,brushMode = "1D")
-  p
+
+  for(k in 1:length(tabla)){
+    tabla[[k]][is.na(tabla[[k]])] <- "NA"
+  }
+  p<-parcoords::parcoords(tabla,
+    rownames = FALSE,
+    reorder=TRUE,
+    brushMode = "1D",
+    color = list(
+    colorBy = "iteration",
+    colorScale = "scaleOrdinal",
+    colorScheme = "schemeCategory10"),
+    withD3 = TRUE
+    )
+
+  #If the value in fileName is added the pdf file is created
+  if(!is.null(fileName)){
+    #The fileName value is worked to separate it and assign it to new values.
+    nameFile = basename(fileName)
+    directory = paste0(dirname(fileName),sep="/")
+    withr::with_dir(directory, orca(p, paste0(nameFile,".pdf")))
+
+    #If you do not add the value of fileName, the plot is displayed
+  }else{
+    p
+  }
 }
 
