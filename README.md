@@ -87,7 +87,7 @@ Return the box plot of the second iteration of la elite configuration, but it is
 The 'iscatter()' function returns a graphic of scatter
 
 ``` r
-iscatter(iraceResults,idVector,fileName=NULL)
+iscatter(iraceResults,idVector,fileName = NULL)
 ```
 Example 1
 
@@ -116,7 +116,7 @@ Return the scatter plot of the second iteration of la elite configuration, but i
 The 'iheatmap()' function returns a graphic of heatmap
 
 ``` r
-iheatmap(iraceResults,fileName=NULL)
+iheatmap(iraceResults, fileName = NULL)
 ```
 Example 1
 
@@ -140,5 +140,39 @@ iheatmap(iraceResults,"~/patch/example/filename")
 Return the heat map plot, but it is saved directly to a pdf file
 ``` 
 
+## Function iparcoord()
 
+The 'iparcoord()' function returns a graphic of parallel coordinates
 
+``` r
+iparcoord(iraceResults,idIteration = NULL, fileName = NULL)
+```
+Example 1
+
+``` r
+iparcoord(iraceResults)
+Return the parallel coordinates plot interactive from all configurations 
+```
+
+Example 2
+
+``` r
+iparcoord(iraceResults, c(2,23,54,100))
+Return the parallel coordinates plot interactive of the configurations  entered 
+```
+
+Example 3
+
+Option 1
+
+``` r
+iparcoord(iraceResults, c(2,23,54,100), "filename")
+Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
+```
+
+Option 2
+
+``` r
+iparcoord(iraceResults, c(2,23,54,100), "~/patch/example/filename")
+Return the parallel coordinates plot but it is saved directly to a pdf file
+```

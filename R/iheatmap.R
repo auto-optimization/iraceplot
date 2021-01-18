@@ -28,7 +28,7 @@
 #' NULL
 
 iheatmap <- function(iraceResults, fileName = NULL){
-
+  #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 
   #The values of the experiments are assigned to the variable experiments
