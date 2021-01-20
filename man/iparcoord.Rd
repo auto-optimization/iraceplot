@@ -4,15 +4,15 @@
 \alias{iparcoord}
 \title{Parallel Coordinates Plot}
 \usage{
-iparcoord(iraceResults, idIteration = NULL, fileName = NULL)
+iparcoord(iraceResults, idIteration = NULL, param_names = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
 \item{idIteration}{It is a vector with id values that you want to graph}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{param_names}{It's of type vector
+is a vector with the parameters to be displayed in the plot}
 }
 \value{
 plot
