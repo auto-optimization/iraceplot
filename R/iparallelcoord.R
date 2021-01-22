@@ -82,9 +82,26 @@ iparallelcoord <- function(iraceResults, idIteration = NULL, param_names = NULL,
     tabla <- tabla[, (names(tabla) %in% param_names )]
   }
 
-  p <- ggparcoord(tabla,columns = 1:11,groupColumn = 12,missing = "exclude", showPoints = TRUE, scale = "center")
+  # for(k in 1:(length(tabla))){
+  #   tabla[[k]][is.na(tabla[[k]])] <- "NA"
+  # }
 
+  tabla[["iteration"]][1] <- as.character(tabla[["iteration"]][1])
 
+  p <- ggparcoord(tabla,
+                  columns = 1:(length(tabla)-1),
+                  groupColumn = "iteration",
+                  missing = "mean",
+                  scale = "center",
+                   alphaLines = 1) +
+      scale_fill_viridis_d() +
+      theme(axis.text.x = element_text(angle = 50, hjust = 1),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.title.y = element_blank(),
+            axis.title.x = element_blank(),
+            legend.position = "right",
+            )
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
