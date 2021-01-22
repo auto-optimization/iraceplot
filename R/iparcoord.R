@@ -1,4 +1,4 @@
-#' Parallel Coordinates Plot
+#' Parallel Coordinates Plot interactive
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace

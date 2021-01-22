@@ -2,7 +2,7 @@
 % Please edit documentation in R/iparcoord.R
 \name{iparcoord}
 \alias{iparcoord}
-\title{Parallel Coordinates Plot}
+\title{Parallel Coordinates Plot interactive}
 \usage{
 iparcoord(iraceResults, idIteration = NULL, param_names = NULL)
 }
@@ -18,7 +18,7 @@ is a vector with the parameters to be displayed in the plot}
 plot
 }
 \description{
-Parallel Coordinates Plot
+Parallel Coordinates Plot interactive
 }
 \examples{
 NULL
