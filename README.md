@@ -140,12 +140,55 @@ iheatmap(iraceResults,"~/patch/example/filename")
 Return the heat map plot, but it is saved directly to a pdf file
 ``` 
 
-## Function iparcoord()
+## Function iparallelcoord()
 
-The 'iparcoord()' function returns a graphic of parallel coordinates
+The 'iparallelcoord()' function returns a graphic of parallel coordinates interactive
 
 ``` r
-iparcoord(iraceResults,idIteration = NULL, fileName = NULL)
+iparallelcoord(iraceResults,idConfiguration = NULL, param_names = NULL, fileName = NULL)
+```
+Example 1
+
+``` r
+iparallelcoord(iraceResults)
+Return the parallel coordinates plot interactive from all configurations 
+```
+
+Example 2
+
+``` r
+iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100))
+Return the parallel coordinates plot interactive of the configurations  entered 
+```
+Example 3
+
+``` r
+iparallelcoord(iraceResults, param_names = c("algorithm","localsearch"))
+Return the parallel coordinates plot interactive of the parameters entered 
+```
+
+Example 4
+
+Option 1:
+
+``` r
+iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), "filename")
+Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
+```
+
+Option2:
+
+``` r
+iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), "~/patch/example/filename")
+Return the parallel coordinates plot but it is saved directly to a pdf file
+```
+
+## Function iparcoord()
+
+The 'iparcoord()' function returns a graphic of parallel coordinates interactive in shinyApp.
+
+``` r
+iparcoord(iraceResults,idConfiguration = NULL, param_names = NULL)
 ```
 Example 1
 
@@ -157,22 +200,13 @@ Return the parallel coordinates plot interactive from all configurations
 Example 2
 
 ``` r
-iparcoord(iraceResults, c(2,23,54,100))
+iparcoord(iraceResults, idConfiguration = c(2,23,54,100))
 Return the parallel coordinates plot interactive of the configurations  entered 
 ```
 
 Example 3
 
-Option 1
-
 ``` r
-iparcoord(iraceResults, c(2,23,54,100), "filename")
+iparcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"))
 Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
-```
-
-Option 2
-
-``` r
-iparcoord(iraceResults, c(2,23,54,100), "~/patch/example/filename")
-Return the parallel coordinates plot but it is saved directly to a pdf file
 ```

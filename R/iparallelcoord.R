@@ -3,7 +3,7 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param idIteration
+#' @param idConfiguration
 #' It is a vector with id values that you want to graph
 #'
 #' @param param_names
@@ -17,16 +17,18 @@
 #' @return plot
 #' @export
 #' @importFrom GGally ggparcoord
-#' @importFrom ggplot2 element_text scale_fill_viridis_d
+#' @importFrom ggplot2 element_text scale_color_viridis_d
+#' @importFrom plotly plot_ly add_trace
+#'
 #'
 #' @examples
 #' NULL
 
-iparallelcoord <- function(iraceResults, idIteration = NULL, param_names = NULL, fileName = NULL){
+iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, fileName = NULL){
 
   #Variable assignment
-  memo  <- configuration <- dim <- choi <- NULL
-  idIteration <- unlist(idIteration)
+  memo  <- configuration <- dim <- NULL
+  idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
 
   #verify that param_names is other than null
@@ -42,23 +44,23 @@ iparallelcoord <- function(iraceResults, idIteration = NULL, param_names = NULL,
 
   }
 
-  if(!is.null(idIteration)){
+  if(!is.null(idConfiguration)){
 
     # Verify that the entered id are within the possible range
-    if(length(idIteration[idIteration < 1]) >= 1 || length(idIteration[idIteration > dim(iraceResults$allConfigurations)[1]]) >= 1){
+    if(length(idConfiguration[idConfiguration < 1]) >= 1 || length(idConfiguration[idConfiguration > dim(iraceResults$allConfigurations)[1]]) >= 1){
       return("IDs entered are outside the range of settings")
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
-    if(length(idIteration) <= 1 || length(idIteration) > dim(iraceResults$allConfigurations)[1] ){
+    if(length(idConfiguration) <= 1 || length(idConfiguration) > dim(iraceResults$allConfigurations)[1] ){
       return("You must enter more than one id")
     }
 
     # the table to be used and the filter with the iterations and configuration is created
-    selection <- iraceResults$allConfigurations[, ".ID."] %in% idIteration
+    selection <- iraceResults$allConfigurations[, ".ID."] %in% idConfiguration
     tabla <- iraceResults$allConfigurations[selection,]
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
-    selection2 <- filtro[, "configuration"] %in% idIteration
+    selection2 <- filtro[, "configuration"] %in% idConfiguration
     filtro <- filtro[selection2,]
   }
   # table is created with all settings
@@ -106,33 +108,92 @@ iparallelcoord <- function(iraceResults, idIteration = NULL, param_names = NULL,
     tabla <- tabla[, (names(tabla) %in% param_names )]
   }
 
-  # for(k in 1:(length(tabla))){
-  #   tabla[[k]][is.na(tabla[[k]])] <- "NA"
-  # }
+  #NA data processing
+  for(k in 1:(length(tabla))){
+    if(class(tabla[[k]]) == "numeric" && NA %in% tabla[[k]]){
+      tabla[[k]][is.na(tabla[[k]])] <- (iraceResults$parameters$domain[[colnames(tabla)[k]]][2] + 1)
+    }else if(class(tabla[[k]]) == "character" && NA %in% tabla[[k]]){
+      tabla[[k]][is.na(tabla[[k]])] <- "NA"
+    }
+  }
 
-  tabla[["iteration"]][1] <- as.character(tabla[["iteration"]][1])
+  #create plot dimensions
+  for(i in 1:length(tabla)){
 
-  # dim <- list()
-  # for(k in 1:(length(tabla)-1) ){
-  #   dim[[k]] <- list(range = c(min(tabla[[k]]),max(tabla[[k]])),
-  #                    values = tabla[[k]]
-  #                    )
-  # }
+    if(colnames(tabla)[i] == "iteration"){
+      dim[[i]] = list(
+        range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+        values = tabla[[i]],
+        label = colnames(tabla)[i],
+        visible = FALSE
+      )
+    }
+    #if the column is of type character
+    else if(class(tabla[[i]]) == "character"){
+      factor_tab <- NULL
+      factor_tab <- factor(tabla[[i]])
+      levels(factor_tab) <- c(1:length(unique(tabla[[i]])))
+      if("NA" %in% tabla[[i]]){
+        tickT = c(iraceResults$parameters$domain[[colnames(tabla)[i]]],"NA")
+      }else{
+        tickT = iraceResults$parameters$domain[[colnames(tabla)[i]]]
+      }
+      dim[[i]] = list(
+            label = colnames(tabla)[i],
+            tickvals = c(1:length(unique(tabla[[i]]))),
+            #ticktext = unique(tabla[[i]]),
+            ticktext = tickT,
+            values = factor_tab
+            )
+    }
+    #if the column is of type numeric
+    else if(class(tabla[[i]]) == "numeric"){
+      if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
+        minimo = min(tabla[[i]], na.rm = TRUE)
+        medio = (max(tabla[[i]], na.rm = TRUE)/4)
+        medio2 = (max(tabla[[i]], na.rm = TRUE)/2)
+        medio3 = (max(tabla[[i]], na.rm = TRUE)*(3/4))
+        maximo = max(tabla[[i]], na.rm = TRUE)
+        dim[[i]] = list(
+          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,"NA"),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
+      }else{
+        dim[[i]] = list(
+          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
+      }
 
-  p <- ggparcoord(tabla,
-                  columns = 1:(length(tabla)-1),
-                  groupColumn = "iteration",
-                  missing = "mean",
-                  showPoints = TRUE,
-                  scale = "center",
-                  alphaLines = 0.3) +
-       scale_color_viridis_d(na.value="NA")  + #theme_ipsum() +
-       theme(axis.text.x = element_text(angle = 50, hjust = 1),
-       axis.text.y = element_blank(),
-       axis.ticks.y = element_blank(),
-       axis.title.y = element_blank(),
-       axis.title.x = element_blank(),
-       legend.position = "right")
+    }
+    #other types
+    else{
+        dim[[i]] = list(
+          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
+      }
+
+  }
+
+  #plot creation
+  p <- tabla %>%
+    plot_ly(width = 1000, height = 600)
+  p <- p %>% add_trace(type = 'parcoords',
+                           line = list(color = ~iteration,
+                                       colorscale = 'Viridis',
+                                       showscale = TRUE,
+                                       reversescale = TRUE,
+                                       cmin = min(tabla$iteration),
+                                       cmax = max(tabla$iteration)),
+                           dimensions = dim
+  )
+
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){

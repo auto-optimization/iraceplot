@@ -6,7 +6,7 @@
 \usage{
 iparallelcoord(
   iraceResults,
-  idIteration = NULL,
+  idConfiguration = NULL,
   param_names = NULL,
   fileName = NULL
 )
@@ -14,7 +14,7 @@ iparallelcoord(
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idIteration}{It is a vector with id values that you want to graph}
+\item{idConfiguration}{It is a vector with id values that you want to graph}
 
 \item{param_names}{It's of type vector
 is a vector with the parameters to be displayed in the plot}

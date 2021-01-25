@@ -3,7 +3,7 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param idIteration
+#' @param idConfiguration
 #'It is a vector with id values that you want to graph
 #'
 #' @param param_names
@@ -22,11 +22,11 @@
 #' @examples
 #' NULL
 
-iparcoord <- function(iraceResults, idIteration = NULL, param_names = NULL){
+iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- choi <- NULL
-  idIteration <- unlist(idIteration)
+  idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
 
   #verify that param_names is other than null
@@ -42,23 +42,23 @@ iparcoord <- function(iraceResults, idIteration = NULL, param_names = NULL){
 
   }
 
-  if(!is.null(idIteration)){
+  if(!is.null(idConfiguration)){
 
     # Verify that the entered id are within the possible range
-    if(length(idIteration[idIteration < 1]) >= 1 || length(idIteration[idIteration > dim(iraceResults$allConfigurations)[1]]) >= 1){
+    if(length(idConfiguration[idConfiguration < 1]) >= 1 || length(idConfiguration[idConfiguration > dim(iraceResults$allConfigurations)[1]]) >= 1){
       return("IDs entered are outside the range of settings")
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
-    if(length(idIteration) <= 1 || length(idIteration) > dim(iraceResults$allConfigurations)[1] ){
+    if(length(idConfiguration) <= 1 || length(idConfiguration) > dim(iraceResults$allConfigurations)[1] ){
       return("You must enter more than one id")
     }
 
     # the table to be used and the filter with the iterations and configuration is created
-    selection <- iraceResults$allConfigurations[, ".ID."] %in% idIteration
+    selection <- iraceResults$allConfigurations[, ".ID."] %in% idConfiguration
     tabla <- iraceResults$allConfigurations[selection,]
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
-    selection2 <- filtro[, "configuration"] %in% idIteration
+    selection2 <- filtro[, "configuration"] %in% idConfiguration
     filtro <- filtro[selection2,]
   }
   # table is created with all settings
