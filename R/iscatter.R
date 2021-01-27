@@ -69,7 +69,9 @@ iscatter <- function(iraceResults, idVector, fileName = NULL){
   colnames(tabla)[colnames(tabla) == idVector[2]] <- "conf2"
 
   #The plot scatter is created and assigned to p
-  p <- ggplot(tabla, aes(x=conf1, y=conf2, color=conf1)) + geom_point() + labs(color=" ",x = paste("Configuration",idVector[1]), y = paste("Configuration",idVector[2]))
+  p <- ggplot(tabla, aes(x=conf1, y=conf2, color=conf1)) +
+    geom_point() +
+    labs(color=" ",x = paste("Configuration",idVector[1]), y = paste("Configuration",idVector[2]))
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){

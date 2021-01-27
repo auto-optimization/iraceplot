@@ -63,7 +63,11 @@ ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
   tabla <- reshape(matriz,varying = c(as.character(id)), v.names = "Performance", timevar = "Elite_configuration",times = c(as.character(id)),new.row.names = 1:n_row_col,direction = "long")
 
   #The plot scatter is created and assigned to p
-  p <- ggplot(tabla, aes(x=Elite_configuration,y=Performance,color=Elite_configuration)) + geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0.2)) + theme(legend.position="none") + labs(x="Elite Configurations")
+  p <- ggplot(tabla, aes(x=Elite_configuration,y=Performance,color=Elite_configuration)) +
+    geom_boxplot() +
+    geom_jitter(shape=16, position=position_jitter(0.2)) +
+    theme(legend.position="none") +
+    labs(x="Elite Configurations")
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
