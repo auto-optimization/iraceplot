@@ -172,14 +172,14 @@ Example 4
 Option 1:
 
 ``` r
-iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), "filename")
+iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), fileName = "filename")
 Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
 ```
 
 Option2:
 
 ``` r
-iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), "~/patch/example/filename")
+iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), fileName = "~/patch/example/filename")
 Return the parallel coordinates plot but it is saved directly to a pdf file
 ```
 
@@ -209,4 +209,26 @@ Example 3
 ``` r
 iparcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"))
 Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
+```
+
+## Function iparameter_freq()
+
+The 'iparameter_freq()' function returns a graph of parameter frequency
+
+``` r
+iparameter_freq(iraceResults, fileNAme = NULL)
+```
+
+Example 1
+
+``` r
+iparameter_freq(iraceResults)
+Return the parameter frequency plot from all parameters 
+```
+
+Example 2
+
+``` r
+iparameter_freq(iraceResults, fileName = "~/patch/example/filename")
+Return the parameter frequency plot from all parameters but it is saved directly to a pdf file
 ```
