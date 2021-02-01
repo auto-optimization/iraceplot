@@ -216,7 +216,7 @@ Return the parallel coordinates plot but it is saved directly to a pdf file in c
 The 'iparameter_freq()' function returns a graph of parameter frequency
 
 ``` r
-iparameter_freq(iraceResults, fileNAme = NULL)
+iparameter_freq(iraceResults, param_names = NULL, fileName = NULL)
 ```
 
 Example 1
@@ -225,10 +225,39 @@ Example 1
 iparameter_freq(iraceResults)
 Return the parameter frequency plot from all parameters 
 ```
-
 Example 2
+
+``` r
+iparameter_freq(iraceResults, param_names = c("algorithm", "alpha"))
+Returns the frequency graph of only the entered parameters 
+```
+
+Example 3
 
 ``` r
 iparameter_freq(iraceResults, fileName = "~/patch/example/filename")
 Return the parameter frequency plot from all parameters but it is saved directly to a pdf file
+```
+
+## Function iparameter_freq_iteration()
+
+The 'iparameter_freq_iteration()' function returns a graph of frequency and density of a single parameter based on its iteration
+
+``` r
+iparameter_freq_iteration(iraceResults, parameter, fileName = NULL)
+```
+
+Example 1
+
+``` r
+iparameter_freq_iteration(iraceResults, parameter = "alpha")
+returns 3 types of density graphs and/or histogram
+
+```
+
+Example 2
+
+``` r
+iparameter_freq_iteration(iraceResults, parameter = "alpha", fileName =  "~/patch/example/filename")
+A pdf is created with the graphics
 ```

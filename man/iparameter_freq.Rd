@@ -4,10 +4,13 @@
 \alias{iparameter_freq}
 \title{Parameter Frequency Plot}
 \usage{
-iparameter_freq(iraceResults, fileName = NULL)
+iparameter_freq(iraceResults, param_names = NULL, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
+
+\item{param_names}{It's of type vector
+Is a vector with the parameters to be displayed in the plot}
 
 \item{fileName}{It's of type string
 You must place the path where you want to save the file and its name without the extension pdf}

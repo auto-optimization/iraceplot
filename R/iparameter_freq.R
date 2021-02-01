@@ -3,6 +3,11 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
+#' @param param_names
+#' It's of type vector
+#' Is a vector with the parameters to be displayed in the plot
+#'
+#'
 #' @param fileName
 #' It's of type string
 #' You must place the path where you want to save the file and its name without the extension pdf
@@ -17,11 +22,22 @@
 #' @examples
 #' NULL
 
-iparameter_freq <- function(iraceResults, fileName = NULL){
+iparameter_freq <- function(iraceResults, param_names = NULL, fileName = NULL){
 
   #Variable assignment
-  config <- iraceResults$allConfigurations[iraceResults$parameters$names]
   vectorG <- tabla <- Var1 <- Freq <- ..density.. <-NULL
+  param_names <- unlist(param_names)
+
+  if(!is.null(param_names)){
+    if("FALSE" %in% (param_names %in% iraceResults$parameters$names)){
+      return("Some wrong parameter entered")
+    }
+    config <- iraceResults$allConfigurations[param_names]
+
+  }else{
+    config <- iraceResults$allConfigurations[iraceResults$parameters$names]
+  }
+
 
   for(i in 1:length(config)){
 
