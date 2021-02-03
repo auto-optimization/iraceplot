@@ -60,7 +60,12 @@ ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
   n_row_col = as.numeric(dim(matriz)[1]*dim(matriz)[2])
 
   #A restructured table is created
-  tabla <- reshape(matriz,varying = c(as.character(id)), v.names = "Performance", timevar = "Elite_configuration",times = c(as.character(id)),new.row.names = 1:n_row_col,direction = "long")
+  tabla <- reshape(matriz,varying = c(as.character(id)),
+                   v.names = "Performance",
+                   timevar = "Elite_configuration",
+                   times = c(as.character(id)),
+                   new.row.names = 1:n_row_col,
+                   direction = "long")
 
   #The plot scatter is created and assigned to p
   p <- ggplot(tabla, aes(x=Elite_configuration,y=Performance,color=Elite_configuration)) +

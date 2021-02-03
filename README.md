@@ -261,3 +261,72 @@ Example 2
 iparameter_freq_iteration(iraceResults, parameter = "alpha", fileName =  "~/patch/example/filename")
 A pdf is created with the graphics
 ```
+
+## Function iscatter_test()
+
+The 'iscatter_test()' function returns a scatter plot based on test settings 
+
+``` r
+iscatter_test(iraceResults, idVector,distance_min = FALSE, fileName = NULL)
+```
+Example 1
+
+``` r
+iscatter_test(iraceResults, idVector = c("92","119"))
+returns the graph of the two configurations
+```
+Example 2
+
+``` r
+iscatter_test(iraceResults, idVector = c("92","119"), distance_min = TRUE)
+the data in the table is modified according to the minimum distance of each percentage row
+```
+
+Example 3
+
+``` r
+iscatter_test(iraceResults, idVector = c("92","119"), distance_min = TRUE, fileName = "~/patch/example/filename")
+it is saved in a PDF in the place indicated with its name
+```
+## Function iboxplot_test()
+
+The 'iboxplot_test()' function returns a box plot based on test settings
+
+``` r
+iboxplot_test(iraceResults, type = NULL ,distance_min = FALSE, fileName = NULL)
+```
+
+Example 1
+
+``` r
+iboxplot_test(iraceResults)
+returns the graph with all the testing experiments settings
+```
+
+Example 2
+
+``` r
+iboxplot_test(iraceResults, type = 1)
+returns the graph with the elite configurations of the last iteration in testintg
+```
+
+Example 3
+
+``` r
+iboxplot_test(iraceResults, type = 2)
+returns the graph with the the best settings of each iteration in testintg
+```
+
+Example 4
+
+``` r
+iboxplot_test(iraceResults,distance_min = TRUE)
+the data in the table is modified according to the minimum distance of each percentage row
+```
+
+Example 5
+
+``` r
+iboxplot_test(iraceResults, type = 1 ,distance_min = TRUE, fileName = "~/patch/example/filename")
+it is saved in a PDF in the place indicated with its name
+```
