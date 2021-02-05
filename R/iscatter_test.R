@@ -44,16 +44,20 @@ iscatter_test <- function(iraceResults,idVector,distance_min = FALSE ,fileName =
   colnames(datos)[1] <- "x"
   colnames(datos)[2] <- "y"
 
+  datos <- datos %>%
+    mutate(text = paste0("x: ", x, "\n", "y: ", y, "\n"))
+
   # the scatter graphics is created
-  p <- ggplot(datos, aes(x=x,y=y, color=y)) +
+  q <- ggplot(datos, aes(x=x,y=y, color=y, text = text)) +
       geom_point() +
       scale_color_viridis_c() +
       labs(color = "",x = paste("Configuration",idVector[1]), y = paste("Configuration",idVector[2]))
+  p <- plotly::ggplotly(q, tooltip="text")
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
     pdf(paste0(fileName,".pdf"))
-    plot(p)
+    plot(q)
     dev.off()
     #If you do not add the value of fileName, the plot is displayed
   }else{

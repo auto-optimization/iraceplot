@@ -41,7 +41,7 @@ load("~/patch/example/name.Rdata")
 The 'ibp()' function returns a graphic of box plot
 
 ``` r
-ibp(iraceResults,numberInteraction = NULL,fileName = NULL)
+ibp(iraceResults,numberInteraction = NULL,distance_min = FALSE,fileName = NULL)
 ```
 
 Example 1
@@ -63,10 +63,15 @@ If I get a range of iterations that goes from 1 to 10 then I can choose which it
 ``` r
 ibp(iraceResults,3)
 Return the box plot of the third iteration of la elite configuration
+```
+Example 3
 
+``` r
+ibp(iraceResults,3,distance_min = TRUE)
+the data in the table is modified according to the minimum distance of each percentage row
 ```
 
-Example 3
+Example 4
 
 Option 1:
 
@@ -87,7 +92,7 @@ Return the box plot of the second iteration of la elite configuration, but it is
 The 'iscatter()' function returns a graphic of scatter
 
 ``` r
-iscatter(iraceResults,idVector,fileName = NULL)
+iscatter(iraceResults,idVector,distance_min = FALSE,fileName = NULL)
 ```
 Example 1
 
@@ -96,6 +101,13 @@ iscatter(iraceResults, c(100,300))
 Return the scatter plot of the configurations 100 and 300
 ```
 Example 2
+
+``` r
+iscatter(iraceResults, c(100,300), distance_min = TRUE)
+the data in the table is modified according to the minimum distance of each percentage row
+```
+
+Example 3
 
 Option 1:
 
@@ -293,7 +305,7 @@ it is saved in a PDF in the place indicated with its name
 The 'iboxplot_test()' function returns a box plot based on test settings
 
 ``` r
-iboxplot_test(iraceResults, type = NULL ,distance_min = FALSE, fileName = NULL)
+iboxplot_test(iraceResults, type = "all" ,distance_min = FALSE, fileName = NULL)
 ```
 
 Example 1
@@ -306,14 +318,14 @@ returns the graph with all the testing experiments settings
 Example 2
 
 ``` r
-iboxplot_test(iraceResults, type = 1)
+iboxplot_test(iraceResults, type = "last")
 returns the graph with the elite configurations of the last iteration in testintg
 ```
 
 Example 3
 
 ``` r
-iboxplot_test(iraceResults, type = 2)
+iboxplot_test(iraceResults, type = "best")
 returns the graph with the the best settings of each iteration in testintg
 ```
 
@@ -327,6 +339,6 @@ the data in the table is modified according to the minimum distance of each perc
 Example 5
 
 ``` r
-iboxplot_test(iraceResults, type = 1 ,distance_min = TRUE, fileName = "~/patch/example/filename")
+iboxplot_test(iraceResults, type = "last" ,distance_min = TRUE, fileName = "~/patch/example/filename")
 it is saved in a PDF in the place indicated with its name
 ```

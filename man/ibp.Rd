@@ -4,13 +4,20 @@
 \alias{ibp}
 \title{Box Plot}
 \usage{
-ibp(iraceResults, numberIteration = NULL, fileName = NULL)
+ibp(
+  iraceResults,
+  numberIteration = NULL,
+  distance_min = FALSE,
+  fileName = NULL
+)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
 \item{numberIteration}{It's of type numeric
 Allows to choose which iteration of the elite configuration of irace to graph}
+
+\item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
 
 \item{fileName}{It's of type string
 You must place the path where you want to save the file and its name without the extension pdf}

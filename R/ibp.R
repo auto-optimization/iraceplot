@@ -12,6 +12,10 @@
 #'It's of type numeric
 #'Allows to choose which iteration of the elite configuration of irace to graph
 #'
+#'@param distance_min
+#'
+#'The data is treated referring to the minimum distance of each percentage row
+#'
 #'@param fileName
 #'
 #'It's of type string
@@ -28,7 +32,7 @@
 #'@examples
 #'NULL
 
-ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
+ibp <- function(iraceResults, numberIteration = NULL, distance_min = FALSE ,fileName = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL
@@ -49,7 +53,13 @@ ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
   id <- iraceResults$allElites[[long]]
 
   #A table is created with the values of all elite configurations of the id of the requested iteration
-  matriz <- as.data.frame(iraceResults$experiments[,id])
+  distance <- iraceResults$experiments
+
+  if(distance_min == TRUE){
+    distance <- 100*(distance - apply(distance,1,min, na.rm = TRUE))/apply(distance,1,min, na.rm=TRUE)
+  }
+
+  matriz <- as.data.frame(distance[,id])
 
   #If the length of id is one, a different value must be added to the column
   if(length(id) == 1){
@@ -76,7 +86,7 @@ ibp <- function(iraceResults, numberIteration = NULL,fileName = NULL){
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"),width = 6.79,height = 2.32)
+    pdf(paste0(fileName,".pdf"))
     plot(p)
     dev.off()
   #If you do not add the value of fileName, the plot is displayed

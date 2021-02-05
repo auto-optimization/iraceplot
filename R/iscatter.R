@@ -10,6 +10,11 @@
 #'
 #'It is a vector with 2 id values that you want to graph
 #'
+#'@param distance_min
+#'
+#'The data is treated referring to the minimum distance of each percentage row
+#'
+#'
 #'@param fileName
 #'
 #'It's of type string
@@ -23,7 +28,7 @@
 #' @examples
 #' NULL
 
-iscatter <- function(iraceResults, idVector, fileName = NULL){
+iscatter <- function(iraceResults, idVector, distance_min = FALSE, fileName = NULL){
 
   #Variable assignment
   iteracionFiltrada <- NULL
@@ -39,9 +44,15 @@ iscatter <- function(iraceResults, idVector, fileName = NULL){
     return("You must enter a vector with 2 values")
   }
 
+  distance <- iraceResults$experiments
+
+  if(distance_min == TRUE){
+
+    distance <- 100*(distance - apply(distance,1,min, na.rm = TRUE))/apply(distance,1,min, na.rm=TRUE)
+  }
 
   #An array of true and/or false to display if the field has data
-  filtro <- !is.na(iraceResults$experiments[,idVector])
+  filtro <- !is.na(distance[,idVector])
 
   #A vector is created only with paired iterations (both true)
   for(i in 1:dim(filtro)[1]){
@@ -51,7 +62,7 @@ iscatter <- function(iraceResults, idVector, fileName = NULL){
   }
 
   #A table is created with only the paired values
-  tabla <- as.data.frame((iraceResults$experiments[,idVector])[iteracionFiltrada,])
+  tabla <- as.data.frame((distance[,idVector])[iteracionFiltrada,])
 
   #If you can't find paired data
   if(length(iteracionFiltrada) == 0){

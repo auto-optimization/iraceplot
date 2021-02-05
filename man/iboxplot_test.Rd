@@ -4,14 +4,19 @@
 \alias{iboxplot_test}
 \title{Box Plot Testing}
 \usage{
-iboxplot_test(iraceResults, type = NULL, distance_min = FALSE, fileName = NULL)
+iboxplot_test(
+  iraceResults,
+  type = "all",
+  distance_min = FALSE,
+  fileName = NULL
+)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{type}{type = NULL, all testing experiments settings
-type = 1, the last iteration of the elite settings
-type = 2, the best settings of each iteration}
+\item{type}{type = "all", all testing experiments settings
+type = "last", the last iteration of the elite settings
+type = "best", the best settings of each iteration}
 
 \item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
 
