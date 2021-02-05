@@ -11,3 +11,7 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: ggplot2, stats, tibble, tidyr, forcats, dplyr, plotly, stringr, withr, parcoords, 
          shiny, shinydashboard, htmlwidgets, GGally, viridis, ggridges
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

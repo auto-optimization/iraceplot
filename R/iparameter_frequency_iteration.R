@@ -16,13 +16,11 @@
 #'
 #' @importFrom ggplot2 scale_fill_manual vars guide_legend facet_grid
 #' @importFrom viridis viridis
-#' @importFrom ggridges geom_density_ridges
 #'
 #' @examples
 #' NULL
 
-iparameter_freq_iteration <- function(iraceResults,parameter,fileName = NULL){
-
+iparameter_frequency_iteration <- function(iraceResults,parameter,fileName = NULL){
   #Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
 
@@ -111,7 +109,7 @@ iparameter_freq_iteration <- function(iraceResults,parameter,fileName = NULL){
     nbreaks <- pretty(range(tabla$x), n = nclass.Sturges(tabla$x),
                       min.n = 1)
     # density and histogram plot
-    s <- ggplot(as.data.frame(tabla), aes(x = x, fill=iteration)) +
+    p <- ggplot(as.data.frame(tabla), aes(x = x, fill=iteration)) +
       geom_histogram(aes(y = ..density..), breaks = nbreaks,
                      color = "black", fill = "gray") +
       geom_density(alpha = 0.7) +
@@ -127,47 +125,18 @@ iparameter_freq_iteration <- function(iraceResults,parameter,fileName = NULL){
       theme(strip.text.y = element_text(angle = 0))
 
     # The plot is saved in a list
-    vectorPlot[1] <- list(s)
-
-    # density plot
-    p <- ggplot(tabla, aes(x, y = iteration)) +
-      geom_density_ridges(aes(fill = iteration), na.rm = TRUE) +
-      scale_fill_manual(values = viridis(length(unique(tabla$iteration))))+
-      labs(x = parameter)
-
-    # The plot is saved in a list
-    vectorPlot[2] <- list(p)
-
-    # density plot
-    q <- ggplot(tabla, aes(x=x, fill=iteration)) +
-      geom_density(alpha = 1, na.rm = TRUE) +
-      facet_grid(vars(iteration_f),scales = "free", space = "free_y") +
-      scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
-      labs(x = parameter) +
-      scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0))
-
-    # The plot is saved in a list
-    vectorPlot[3] <- list(q)
+    vectorPlot[1] <- list(p)
   }
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
     pdf(paste0(fileName,".pdf"))
-    if(length(vectorPlot) == 1){
-      do.call("grid.arrange",c(vectorPlot,ncol=1))
-    }else{
-      do.call("grid.arrange",c(vectorPlot,ncol=2))
-    }
+    do.call("grid.arrange",c(vectorPlot,ncol=1))
     dev.off()
     #If you do not add the value of fileName, the plot is displayed
   }else{
-    if(length(vectorPlot) == 1){
-      do.call("grid.arrange",c(vectorPlot,ncol=1))
-    }else{
-      do.call("grid.arrange",c(vectorPlot,ncol=3))
-    }
+    do.call("grid.arrange",c(vectorPlot,ncol=1))
+    return(p)
   }
-
 
 }
