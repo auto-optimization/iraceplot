@@ -15,6 +15,7 @@
 #' @export
 #'
 #' @importFrom ggridges geom_density_ridges
+#' @importFrom gridExtra grid.arrange
 #'
 #' @examples
 #' NULL

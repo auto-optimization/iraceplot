@@ -115,7 +115,7 @@ iparameter_frequency_iteration <- function(iraceResults,parameter,fileName = NUL
       geom_density(alpha = 0.7) +
       scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
       facet_grid(vars(iteration_f),scales = "free",space = "free_y") +
-      labs(x=parameter, y="density")+
+      labs(x=parameter, y="frequency")+
       theme(axis.title.y = element_text(),
             axis.title.x = element_text(size = 10),
             plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),

@@ -112,23 +112,25 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
 
   # the box plot is created
   if(type == "last"){
-    p <- ggplot(datos, aes(x=ids_f,y=performance, color= best_conf))
+    p <- ggplot(datos, aes(x=ids_f,y=performance, color = best_conf))
+
   }else if(type == "best"){
-    p <- ggplot(datos, aes(x=ids_f,y=performance, color= iteration_f)) +
+    p <- ggplot(datos, aes(x=ids_f,y=performance, color = iteration_f)) +
       labs(subtitle = "iterations") +
       theme(plot.subtitle = element_text(hjust = 0.5))
+
   }else{
-    p <- ggplot(datos, aes(x=ids_f,y=performance, color = best_conf)) +
+    p <- ggplot(datos, aes(x=ids_f,y=performance, colour = best_conf)) +
       labs(subtitle = "iterations")+
       theme(plot.subtitle = element_text(hjust = 0.5),
-            axis.text.x = element_text(size = 6.4)  )
+            axis.text.x = element_text(size = 6.4))
+
   }
 
    p <- p +
     geom_boxplot() +
     theme(legend.position="none") +
     labs(x="IDs")
-
 
   #each box plot is divided by iteration
   if(type == "all"){
@@ -139,7 +141,7 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"))
+    pdf(paste0(fileName,".pdf"), width = 12)
     plot(p)
     dev.off()
     #If you do not add the value of fileName, the plot is displayed
