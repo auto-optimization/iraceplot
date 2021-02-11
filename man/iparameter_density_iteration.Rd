@@ -9,17 +9,17 @@ iparameter_density_iteration(iraceResults, parameter, fileName = NULL)
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{parameter}{It's of type string
-The parameter you want to plot}
+\item{parameter}{String, value of the parameter to be analyzed (example: parameter = "alpha")}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/filename")}
 }
 \value{
-plot
+density plot
 }
 \description{
-Density plot based on its iteration
+The function will return a density plot for parameters numeric data
+in case of placing a categorical parameter, it will show a bar plot
 }
 \examples{
 NULL

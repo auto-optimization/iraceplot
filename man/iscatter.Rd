@@ -2,25 +2,28 @@
 % Please edit documentation in R/iscatter.R
 \name{iscatter}
 \alias{iscatter}
-\title{Scatter Plot}
+\title{Scatter Plot Training}
 \usage{
 iscatter(iraceResults, idVector, distance_min = FALSE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idVector}{It is a vector with 2 id values that you want to graph}
+\item{idVector}{Numeric vector, you need to put the elite settings you
+want to compare, only 2 values are allowed (example: idVector = c(806,809))}
 
-\item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
+\item{distance_min}{Logical (default FALSE) to fit through an equation of minimum percentage
+distance between the values of each row of all configurations}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/filename")}
 }
 \value{
 plot
 }
 \description{
-Create a graphic of scatter of irace using a vector with 2 values referring to the id
+The function will return a scatter plot
+comparing two elite configurations in training
 }
 \examples{
 NULL

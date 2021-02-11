@@ -1,6 +1,24 @@
-isunburst <- function(iraceResults,fileName = NULL){
+#' Sunburst Plot
+#'
+#' @description
+#' The isunburst function will return a sunburst plot of the categorical parameters
+#'
+#' @param iraceResults
+#' The data generated when loading the Rdata file created by irace
+#' @param dependency
+#' Logical (default FALSE) that allows to verify if the parameters
+#' are dependent on others, modifying the visualization of the plot
+#' @param fileName
+#' String, A pdf will be created in the location and with the assigned
+#' name (example: "~/patch/example/filename")
+#' @return sunburst plot
+#' @export
+#'
+#' @examples
+#' NULL
+isunburst <- function(iraceResults, dependency = FALSE, fileName = NULL){
 
-  param_c <- parents <- labels <- values <- ids <- NULL
+  param_c <- parents <- labels <- values <- ids <- depend <-NULL
 
   for(i in 1:length(iraceResults$parameters$types)){
     if(iraceResults$parameters$types[[i]] == "c"){
@@ -10,16 +28,32 @@ isunburst <- function(iraceResults,fileName = NULL){
 
   data <- as.data.frame(iraceResults$allConfigurations[param_c])
 
+  if(dependency == TRUE){
+    for (i in 1:length(data)) {
+      if(!identical(iraceResults$parameters$depends[[colnames(data)[i]]], character(0))){
+        depend[colnames(data)[i]] <- list(iraceResults$parameters$depends[[colnames(data)[i]]])
+      }
+    }
+  }
+
   for (j in 1:length(data)) {
 
     tabla <- table(data[j],useNA = "ifany")
 
     for (k in 1:length(tabla)) {
       if(k == 1){
+
         ids <- c(ids,colnames(data)[j])
-        parents <- c(parents,"")
+
+        if(!is.null(depend[[colnames(data)[j]]]) && dependency == TRUE){
+          parents <- c(parents, depend[[colnames(data)[j]]])
+        }else{
+          parents <- c(parents,"")
+
+        }
         labels <- c(labels,colnames(data)[j])
         values <- c(values,sum(tabla))
+
       }
       ids <- c(ids,paste(colnames(data)[j],names(tabla)[k],sep = " - "))
       parents <- c(parents,colnames(data)[j])
@@ -30,6 +64,12 @@ isunburst <- function(iraceResults,fileName = NULL){
 
   data_f <- data.frame(ids,parents,labels,values, stringsAsFactors = FALSE)
   data_f[is.na(data_f)] <- "NA"
+
+  if(!is.null(depend) && dependency == TRUE){
+    for (i in 1:length(depend)) {
+      data_f$values[data_f$ids == depend[[i]]] <- data_f$values[data_f$ids == depend[[i]]] + data_f$values[data_f$ids == names(depend[i])]
+    }
+  }
 
   p <- plot_ly(
     type='sunburst',

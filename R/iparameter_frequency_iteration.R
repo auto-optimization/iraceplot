@@ -1,17 +1,21 @@
 #' Frequency and Density plot based on its iteration
 #'
+#' @description
+#' The function will return a frequency plot used
+#' for categorical data (its values are string, show a bar plot) or
+#' numeric data (show a histogram and density plot) by each iteration
+#'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
 #' @param parameter
-#' It's of type string
-#' The parameter you want to plot
+#' String, value of the parameter to be analyzed (example: parameter = "algorithm")
 #'
 #' @param fileName
-#' It's of type string
-#' You must place the path where you want to save the file and its name without the extension pdf
+#' String, A pdf will be created in the location and with the assigned
+#' name (example: "~/patch/example/filename")
 #'
-#' @return plot
+#' @return bar plot
 #' @export
 #'
 #' @importFrom ggplot2 scale_fill_manual vars guide_legend facet_grid

@@ -14,16 +14,17 @@ ibp(
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{numberIteration}{It's of type numeric
-Allows to choose which iteration of the elite configuration of irace to graph}
+\item{numberIteration}{Numeric, It is the number referring to the iteration that you want to graph,
+the range of these varies according to the Rdata used (example: numberIteration = 5)}
 
-\item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
+\item{distance_min}{Logical (default FALSE) to fit through an equation of minimum percentage distance
+between the values of each row of all configurations}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/filename")}
 }
 \value{
-plot
+box plot
 }
 \description{
 Create a graphic of box plot of irace using the best quality id

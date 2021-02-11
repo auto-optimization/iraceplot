@@ -9,16 +9,19 @@ iparcoord(iraceResults, idConfiguration = NULL, param_names = NULL)
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfiguration}{It is a vector with id values that you want to graph}
+\item{idConfiguration}{Numeric vector, you need to put the configurations you want to analyze
+(example: idConfiguration = c(20,50,100,300,500,600,700))}
 
-\item{param_names}{It's of type vector
-is a vector with the parameters to be displayed in the plot}
+\item{param_names}{String vector, you need to put the parameters you want to analyze
+(example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 }
 \value{
-plot
+parallel cordinates plot
 }
 \description{
-Parallel Coordinates Plot interactive
+The function will returns a parallel coordinates plot
+interactive in shinyApp allowing the analysis of the set of parameters
+allowing the visualization of the data and filter by iteration
 }
 \examples{
 NULL

@@ -9,18 +9,21 @@ iscatter_test(iraceResults, idVector, distance_min = FALSE, fileName = NULL)
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idVector}{It is a vector with 2 id values that you want to graph}
+\item{idVector}{String vector, you need to put the elite settings you
+want to compare, only 2 values are allowed (example: idVector = c("92","119"))}
 
-\item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
+\item{distance_min}{logical(default FALSE) to fit through an equation of minimum percentage distance
+between the values of each row of all configurations}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/filename")}
 }
 \value{
 scatter plot
 }
 \description{
-Scatter Plot Testing
+The function will return a scatter plot
+comparing two elite configurations in testing
 }
 \examples{
 NULL

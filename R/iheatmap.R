@@ -1,17 +1,17 @@
 #' Heat Map Plot
 #'
-#' Create a heat map plot interactive
+#' @description
+#' The function will return a heat map plot of all experimental data configurations
 #'
 #' @param iraceResults
 #'
-#'The data generated when loading the Rdata file created by irace
+#' The data generated when loading the Rdata file created by irace
 #'
 #' @param fileName
+#' string, A pdf will be created in the location and with the
+#' assigned name (example: "~/patch/example/filename")
 #'
-#'It's of type string
-#'You must place the path where you want to save the file and its name without the extension pdf
-#'
-#' @return plot
+#' @return heatmap plot
 #' @export
 #'
 #' @importFrom plotly ggplotly orca

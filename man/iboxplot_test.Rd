@@ -14,20 +14,22 @@ iboxplot_test(
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{type}{type = "all", all testing experiments settings
-type = "last", the last iteration of the elite settings
-type = "best", the best settings of each iteration}
+\item{type}{String, either "all", "best" or "last". By default it is "all" which shows all the configurations,
+"best" shows the best configurations of each iteration and
+"last" shows the configurations of the last iteration}
 
-\item{distance_min}{The data is treated referring to the minimum distance of each percentage row}
+\item{distance_min}{Logical (default FALSE) to fit through an equation of minimum percentage distance between
+the values of each row of all configurations}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/filename")}
 }
 \value{
-plot
+box plot
 }
 \description{
-Box Plot Testing
+The function will return a box plot, using the data generated in the test
+settings coloring the best configuration in each iteration
 }
 \examples{
 NULL

@@ -2,7 +2,7 @@
 % Please edit documentation in R/iparameter_freq.R
 \name{iparameter_freq}
 \alias{iparameter_freq}
-\title{Parameter Frequency Plot}
+\title{Parameter Frequency and density Plot}
 \usage{
 iparameter_freq(iraceResults, param_names = NULL, fileName = NULL)
 }
@@ -16,10 +16,12 @@ Is a vector with the parameters to be displayed in the plot}
 You must place the path where you want to save the file and its name without the extension pdf}
 }
 \value{
-plot
+Frequency and/or density plot
 }
 \description{
-Parameter Frequency Plot
+The function will return a frequency and density plot,
+for categorical parameters (string) one of frequency is created,
+in case of numerical parameters it will show a histogram and its density
 }
 \examples{
 NULL

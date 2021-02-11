@@ -1,15 +1,20 @@
 #' Scatter Plot Testing
 #'
+#' @description
+#' The function will return a scatter plot
+#' comparing two elite configurations in testing
+#'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #' @param idVector
-#' It is a vector with 2 id values that you want to graph
+#' String vector, you need to put the elite settings you
+#' want to compare, only 2 values are allowed (example: idVector = c("92","119"))
 #' @param distance_min
-#' The data is treated referring to the minimum distance of each percentage row
+#' logical(default FALSE) to fit through an equation of minimum percentage distance
+#' between the values of each row of all configurations
 #' @param fileName
-#' It's of type string
-#' You must place the path where you want to save the file and its name without the extension pdf
-#'
+#' String, A pdf will be created in the location and with the assigned
+#' name (example: "~/patch/example/filename")
 #' @return scatter plot
 #'
 #' @importFrom ggplot2 scale_color_viridis_c

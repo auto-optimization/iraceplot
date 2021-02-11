@@ -9,14 +9,14 @@ iheatmap(iraceResults, fileName = NULL)
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{string, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/filename")}
 }
 \value{
-plot
+heatmap plot
 }
 \description{
-Create a heat map plot interactive
+The function will return a heat map plot of all experimental data configurations
 }
 \examples{
 NULL

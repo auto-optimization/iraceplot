@@ -1,4 +1,9 @@
-#' Parameter Frequency Plot
+#' Parameter Frequency and density Plot
+#'
+#' @description
+#' The function will return a frequency and density plot,
+#' for categorical parameters (string) one of frequency is created,
+#' in case of numerical parameters it will show a histogram and its density
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
@@ -12,7 +17,7 @@
 #' It's of type string
 #' You must place the path where you want to save the file and its name without the extension pdf
 #'
-#' @return plot
+#' @return Frequency and/or density plot
 #' @export
 #'
 #' @importFrom ggplot2 geom_bar geom_density geom_histogram ggtitle scale_y_continuous rel

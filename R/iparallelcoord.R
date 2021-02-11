@@ -1,20 +1,25 @@
 #' Parallel Coordinates Plot static
 #'
+#' @description
+#' The iparallelcoord function will return a parallel cordinates plot
+#' allowing the analysis of the set of parameters
+#'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
 #' @param idConfiguration
-#' It is a vector with id values that you want to graph
+#' Numeric vector, you need to put the configurations you want to analyze
+#' (example: idConfiguration = c(20,50,100,300,500,600,700))
 #'
 #' @param param_names
-#' It's of type vector
-#' is a vector with the parameters to be displayed in the plot
+#' String vector, you need to put the parameters you want to analyze
+#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @param fileName
-#'It's of type string
-#'You must place the path where you want to save the file and its name without the extension pdf
+#' A pdf will be created in the location and with
+#' the assigned name (example: "~/patch/example/filename")
 #'
-#' @return plot
+#' @return parallel cordinates plot
 #' @export
 #' @importFrom GGally ggparcoord
 #' @importFrom ggplot2 element_text scale_color_viridis_d
@@ -183,7 +188,7 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
 
   #plot creation
   p <- tabla %>%
-    plot_ly(width = 1000, height = 600)
+    plot_ly(width = 700, height = 600)
   p <- p %>% add_trace(type = 'parcoords',
                            line = list(color = ~iteration,
                                        colorscale = 'Viridis',
