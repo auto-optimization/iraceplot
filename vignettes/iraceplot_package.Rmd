@@ -169,23 +169,26 @@ iparallelcoord(iraceResults)
 
 If we want to graph all the parameters and only some configurations, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width=5}
 iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
 ```
-
+</div>
 If we want to filter the parameters that we want to visualize and with all the configurations, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width=5}
 iparallelcoord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
-
+</div>
 Finally, if we want to filter the parameters and the settings that we want to analyze, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width=5}
 iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
-
+</div>
 <h4>Function iparcoord</h4>
 
 The iparcoord function will returns a parallel coordinates plot interactive in shinyApp allowing the analysis of the set of parameters allowing the visualization of the data and filter by iteration
@@ -217,23 +220,26 @@ iparcoord(iraceResults)
 
 If we want to graph all the parameters and only some configurations, the following code is used:
 
+<div style="text-align: center">
 ```
 iparcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
 ```
-
+</div>
 If we want to filter the parameters that we want to visualize and with all the configurations, the following code is used:
 
+<div style="text-align: center">
 ```
 iparcoord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
-
+</div>
 Finally, if we want to filter the parameters and the settings that we want to analyze, the following code is used:
 
+<div style="text-align: center">
 ```
 iparcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
-
+</div>
 <h4>Function iparameter_freq</h4>
 
 The iparameter_freq function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
@@ -255,16 +261,18 @@ fileName:       String, A pdf will be created in the location and with the assig
 ```
 If we want to visualize all the parameters, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
 iparameter_freq(iraceResults)
 ```
-
+</div>
 If we only want to visualize some parameters, we must place specifically those, as shown in the code below:
 
+<div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
 iparameter_freq(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
-
+</div>
 <h4>Function iparamater_frequency_iteration</h4>
 
 The iparameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
@@ -286,15 +294,19 @@ fileName:       String, A pdf will be created in the location and with the assig
 ```
 If we place a categorical parameter it will be shown in the following way, using the following code:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 iparameter_frequency_iteration(iraceResults,parameter = "algorithm")
 ```
+</div>
 
 If we place a numeric parameter it will be shown in the following way, using the following code:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 iparameter_frequency_iteration(iraceResults,parameter = "alpha")
 ```
+</div>
 
 <h4>Function iparamater_density_iteration</h4>
 
@@ -318,9 +330,11 @@ fileName:       String, A pdf will be created in the location and with the assig
 
 The following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 iparameter_density_iteration(iraceResults,parameter = "alpha")
 ```
+</div>
 
 <h4>Function iparamater_compare_iteration</h4>
 
@@ -343,9 +357,11 @@ fileName:       string, A pdf will be created in the location and with the assig
 ```
 The following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 iparameter_compare_iteration(iraceResults, parameter = "alpha")
 ```
+</div>
 
 <h4>Function isunburst</h4>
 
@@ -367,15 +383,23 @@ fileName:       string, A pdf will be created in the location and with the assig
 ```
 If we want to visualize the categorical parameters and their distribution in reference to their values, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 isunburst(iraceResults)
 ```
+</div>
 
 If we want to see how the categorical parameters are distributed and if there is a dependency between them, the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 isunburst(iraceResults, dependency = TRUE)
 ```
+</div>
+
+<h3>Training</h3>
+
+Descripcion de que es el training ------------------
 
 <h4>Function iheatmap</h4>
 
@@ -395,13 +419,11 @@ fileName:       string, A pdf will be created in the location and with the assig
 
 to execute the function the following code is used:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 iheatmap(iraceResults)
 ```
-
-<h3>Training</h3>
-
-Descripcion de que es el training ------------------
+</div>
 
 <h4>Function ibp</h4>
 
@@ -427,17 +449,21 @@ fileName:           String, A pdf will be created in the location and with the a
 
 If you want to view the graph of the last iteration, use the following code:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 ibp(iraceResults)
 ibp(iraceResults,distance_min = TRUE)
 ```
+</div>
 
 If you want to visualize the graph of the fifth iteration, use the following code:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
 ibp(iraceResults,numberIteration = 5)
 ibp(iraceResults,numberIteration = 5, distance_min = TRUE)
 ```
+</div>
 
 <h4>Function iscatter</h4>
 
@@ -454,7 +480,7 @@ iscatter(iraceResults,
 ```
 iraceResults:   The data generated when loading the Rdata file created by irace
 
-idVector:       Numeric vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c(,))
+idVector:       Numeric vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c(806,809))
 
 distance_min:   Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
@@ -462,7 +488,9 @@ fileName:       string, A pdf will be created in the location and with the assig
 ```
 To compare two elite setups in training, use the following code:
 
+<div style="text-align: center">
 ```{r, fig.width= 7}
-iscatter(iraceResults, idVector = c(800,809))
-iscatter(iraceResults, idVector = c(800,809), distance_min = TRUE)
+iscatter(iraceResults, idVector = c(806,809))
+iscatter(iraceResults, idVector = c(806,809), distance_min = TRUE)
 ```
+</div>

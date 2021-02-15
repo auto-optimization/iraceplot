@@ -139,7 +139,7 @@ iparameter_frequency_iteration <- function(iraceResults,parameter,fileName = NUL
     dev.off()
     #If you do not add the value of fileName, the plot is displayed
   }else{
-    do.call("grid.arrange",c(vectorPlot,ncol=1))
+    p
     return(p)
   }
 

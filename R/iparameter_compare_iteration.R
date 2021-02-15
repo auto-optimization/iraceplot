@@ -49,8 +49,10 @@ iparameter_compare_iteration <- function(iraceResults,parameter,fileName = NULL)
   }else{
     if(length(vectorPlot) == 1){
       do.call("grid.arrange",c(vectorPlot,ncol=1))
+      #grid.arrange(vectorPlot,ncol=1)
     }else{
       do.call("grid.arrange",c(vectorPlot,ncol=2))
+      #grid.arrange(vectorPlot,ncol=2)
     }
   }
 

@@ -101,9 +101,6 @@ iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL)
       scale_y_continuous(n.breaks = 3) +
       theme(strip.text.y = element_text(angle = 0))
 
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
-
   }else if(class(tabla[[1]]) == "numeric"){
 
     tabla <- na.omit(tabla)
@@ -115,9 +112,6 @@ iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL)
       scale_fill_manual(values = viridis(length(unique(tabla$iteration))))+
       labs(x = parameter)
 
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
-
     # # density plot
     # q <- ggplot(tabla, aes(x=x, fill=iteration)) +
     #   geom_density(alpha = 1, na.rm = TRUE) +
@@ -128,7 +122,7 @@ iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL)
     #   theme(strip.text.y = element_text(angle = 0))
     #
     # # The plot is saved in a list
-    # vectorPlot[3] <- list(q)
+    # vectorPlot[2] <- list(q)
   }
 
   #If the value in fileName is added the pdf file is created
@@ -138,6 +132,6 @@ iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL)
     dev.off()
     #If you do not add the value of fileName, the plot is displayed
   }else{
-    do.call("grid.arrange",c(vectorPlot,ncol=1))
+    p
   }
 }
