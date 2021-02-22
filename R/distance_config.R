@@ -1,12 +1,17 @@
 #' Distance between configurations
 #'
+#' @description
+#' Calculate the difference between two settings. Calculate the difference between two configurations. The greater
+#' the number, the greater the difference
+#'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #' @param idConfigurations
 #' Numeric vector, you need to put the settings you
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))
 #' @param t
-#' Numeric, value to determine the range of difference between settings
+#' Numeric, It is a percentage factor that will determine the range of difference
+#' between settings (example: t = 0.05 is equivalent to 5 percent)
 #'
 #' @importFrom dplyr select
 #' @return numeric

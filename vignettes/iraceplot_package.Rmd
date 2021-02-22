@@ -397,6 +397,37 @@ isunburst(iraceResults, dependency = TRUE)
 ```
 </div>
 
+<h4>Function idistance_iteration</h4>
+
+The idistance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
+
+```
+idistance_iteration(
+                    iraceResults,
+                    type = "line",
+                    t = 0.05,
+                    fileName = NULL)
+```
+<h5>Arguments</h5>
+
+```
+iraceResults:   The data generated when loading the Rdata file created by irace
+type:           String, either "line" or "boxplot". by default it is "line" which will show a plot of points and lines, "boxplot" will show a box plot
+t:              Numeric, It is a percentage factor that will determine the range of difference between settings (example: t = 0.05 is equivalent to 5%)
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+If you want to show the graph of lines and points, with a difference margin of 5% between parameters, use the following code:
+
+```
+idistance_iteration(iraceResults)
+```
+
+If you want to show the box plot, with a difference margin of 20% between parameters, use the following code:
+
+```
+idistance_iteration(iraceResults, type = "boxplot", t=0.2)
+```
+
 <h3>Training</h3>
 
 Descripcion de que es el training ------------------

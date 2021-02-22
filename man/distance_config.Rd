@@ -12,13 +12,15 @@ distance_config(iraceResults, idConfigurations, t = 0.05)
 \item{idConfigurations}{Numeric vector, you need to put the settings you
 want to compare, only 2 values are allowed (example: idVector = c(806,809))}
 
-\item{t}{Numeric, value to determine the range of difference between settings}
+\item{t}{Numeric, It is a percentage factor that will determine the range of difference
+between settings (example: t = 0.05 is equivalent to 5 percent)}
 }
 \value{
 numeric
 }
 \description{
-Distance between configurations
+Calculate the difference between two settings. Calculate the difference between two configurations. The greater
+the number, the greater the difference
 }
 \examples{
 NULL
