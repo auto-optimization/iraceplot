@@ -14,6 +14,8 @@
 #' @param param_names
 #' String vector, you need to put the parameters you want to analyze
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' @param iterations
+#'
 #'
 #' @param fileName
 #' A pdf will be created in the location and with
@@ -29,7 +31,7 @@
 #' @examples
 #' NULL
 
-iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, fileName = NULL){
+iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,fileName = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- NULL
@@ -122,6 +124,10 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
     }
   }
 
+  if(!is.null(iterations)){
+     tabla <- tabla[tabla$iteration %in% iterations,]
+  }
+
   #create plot dimensions
   for(i in 1:length(tabla)){
 
@@ -132,9 +138,8 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
         label = colnames(tabla)[i],
         visible = FALSE
       )
-    }
-    #if the column is of type character
-    else if(class(tabla[[i]]) == "character"){
+      #if the column is of type character
+    }else if(class(tabla[[i]]) == "character"){
       factor_tab <- NULL
       factor_tab <- factor(tabla[[i]])
       levels(factor_tab) <- c(1:length(unique(tabla[[i]])))
@@ -150,28 +155,33 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
             ticktext = tickT,
             values = factor_tab
             )
-    }
-    #if the column is of type numeric
-    else if(class(tabla[[i]]) == "numeric"){
+      #if the column is of type numeric
+    }else if(class(tabla[[i]]) == "numeric"){
       if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
-        minimo = min(tabla[[i]], na.rm = TRUE)
-        medio = (max(tabla[[i]], na.rm = TRUE)/4)
-        medio2 = (max(tabla[[i]], na.rm = TRUE)/2)
-        medio3 = (max(tabla[[i]], na.rm = TRUE)*(3/4))
-        maximo = max(tabla[[i]], na.rm = TRUE)
+        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
+        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
+        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
+        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2] +1
         dim[[i]] = list(
-          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]+1),
           tickvals = c(minimo,medio,medio2,medio3,maximo),
           ticktext = c(minimo,medio,medio2,medio3,"NA"),
           values = tabla[[i]],
           label = colnames(tabla)[i]
         )
       }else{
+        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
+        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
+        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
+        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2]
         dim[[i]] = list(
-          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,maximo),
           values = tabla[[i]],
-          label = colnames(tabla)[i]
-        )
+          label = colnames(tabla)[i])
       }
 
     }
@@ -186,16 +196,20 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
 
   }
 
+  iteration_f <- factor(as.character(tabla$iteration), ordered = TRUE)
+  levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
+  tabla <- cbind(tabla,iteration_f)
+
   #plot creation
   p <- tabla %>%
     plot_ly(width = 700, height = 600)
   p <- p %>% add_trace(type = 'parcoords',
-                           line = list(color = ~iteration,
+                           line = list(color = ~iteration_f,
                                        colorscale = 'Viridis',
                                        showscale = TRUE,
                                        reversescale = TRUE,
-                                       cmin = min(tabla$iteration),
-                                       cmax = max(tabla$iteration)),
+                                       cmin = min(tabla$iteration_f),
+                                       cmax = max(tabla$iteration_f)),
                            dimensions = dim
   )
 

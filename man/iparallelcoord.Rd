@@ -8,6 +8,7 @@ iparallelcoord(
   iraceResults,
   idConfiguration = NULL,
   param_names = NULL,
+  iterations = NULL,
   fileName = NULL
 )
 }
@@ -19,6 +20,8 @@ iparallelcoord(
 
 \item{param_names}{String vector, you need to put the parameters you want to analyze
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
+
+\item{iterations}{}
 
 \item{fileName}{A pdf will be created in the location and with
 the assigned name (example: "~/patch/example/filename")}

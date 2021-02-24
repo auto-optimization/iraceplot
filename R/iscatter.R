@@ -11,7 +11,7 @@
 #' Numeric vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))
 #'
-#' @param distance_min
+#' @param rpd
 #' Logical (default FALSE) to fit through an equation of minimum percentage
 #' distance between the values of each row of all configurations
 #'
@@ -27,7 +27,7 @@
 #' @examples
 #' NULL
 
-iscatter <- function(iraceResults, idVector, distance_min = FALSE, fileName = NULL){
+iscatter <- function(iraceResults, idVector, rpd = FALSE, fileName = NULL){
 
   #Variable assignment
   iteracionFiltrada <- NULL
@@ -45,7 +45,7 @@ iscatter <- function(iraceResults, idVector, distance_min = FALSE, fileName = NU
 
   distance <- iraceResults$experiments
 
-  if(distance_min == TRUE){
+  if(rpd == TRUE){
 
     distance <- 100*(distance - apply(distance,1,min, na.rm = TRUE))/apply(distance,1,min, na.rm=TRUE)
   }

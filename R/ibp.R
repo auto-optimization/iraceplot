@@ -10,7 +10,7 @@
 #'Numeric, It is the number referring to the iteration that you want to graph,
 #'the range of these varies according to the Rdata used (example: numberIteration = 5)
 #'
-#'@param distance_min
+#'@param rpd
 #'Logical (default FALSE) to fit through an equation of minimum percentage distance
 #'between the values of each row of all configurations
 #'
@@ -29,7 +29,7 @@
 #'@examples
 #'NULL
 
-ibp <- function(iraceResults, numberIteration = NULL, distance_min = FALSE ,fileName = NULL){
+ibp <- function(iraceResults, numberIteration = NULL, rpd = FALSE ,fileName = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL
@@ -52,7 +52,7 @@ ibp <- function(iraceResults, numberIteration = NULL, distance_min = FALSE ,file
   #A table is created with the values of all elite configurations of the id of the requested iteration
   distance <- iraceResults$experiments
 
-  if(distance_min == TRUE){
+  if(rpd == TRUE){
     distance <- 100*(distance - apply(distance,1,min, na.rm = TRUE))/apply(distance,1,min, na.rm=TRUE)
   }
 

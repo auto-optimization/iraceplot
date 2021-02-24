@@ -7,10 +7,10 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #' @param type
-#' String, either "all", "best" or "last". By default it is "all" which shows all the configurations,
+#' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 #' "best" shows the best configurations of each iteration and
 #' "last" shows the configurations of the last iteration
-#' @param distance_min
+#' @param rpd
 #' Logical (default FALSE) to fit through an equation of minimum percentage distance between
 #' the values of each row of all configurations
 #' @param fileName
@@ -22,7 +22,7 @@
 #' @examples
 #' NULL
 
-iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,fileName = NULL){
+iboxplot_test <- function(iraceResults, type = "all", rpd = FALSE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
@@ -34,7 +34,7 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
   tabla <- as.data.frame(iraceResults$testing$experiments)
 
   # the table values are modified
-  if(distance_min == TRUE){
+  if(rpd == TRUE){
     tabla <- 100*(tabla - apply(tabla,1,min))/apply(tabla,1,min)
   }
 
@@ -46,13 +46,13 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
     datos <- tabla[as.character(v_allElites)]
 
   # the last iteration of the elite settings
-  }else if(type == "last"){
+  }else if(type == "best"){
     num_it <- length(iraceResults$allElites)
     v_allElites <- as.character(iraceResults$allElites[[num_it]])
     datos <- tabla[v_allElites]
 
   # the best settings of each iteration
-  }else if(type == "best"){
+  }else if(type == "ibest"){
     v_allElites <- as.character(iraceResults$iterationElites)
     datos <- tabla[v_allElites]
   }else{
@@ -70,7 +70,7 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
                   direction = "long")
 
   # column iteration is added
-  if(type == "all" || type == "best"){
+  if(type == "all" || type == "ibest"){
 
       iteration <- sample(NA,size=dim(datos)[1],replace = TRUE)
       datos <- cbind(datos,iteration)
@@ -85,7 +85,7 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
           }
         }
 
-      }else if(type == "best"){
+      }else if(type == "ibest"){
         for(i in 1:length(unique(datos$ids))){
           datos$iteration[datos$ids == unique(datos$ids)[i]] <- i
         }
@@ -100,25 +100,26 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
     }
   }
 
-  if(type == "all" || type == "last"){
+  if(type == "all" || type == "best"){
     best_conf <- sample(NA,size=dim(datos)[1],replace = TRUE)
     datos <- cbind(datos,best_conf)
     if(type == "all"){
       for (i in 1:length(iraceResults$allElites)) {
-        datos$best_conf[datos$iteration == i & datos$ids == as.character(iraceResults$iterationElites[i])] <- as.character(i)
+        datos$best_conf[datos$iteration == i & datos$ids == as.character(iraceResults$iterationElites[i])] <- "best"#as.character(i)
       }
     }else{
-      datos$best_conf[datos$ids == v_allElites[1]] <- as.character(1)
+      datos$best_conf[datos$ids == v_allElites[1]] <- "best" #as.character(1)
     }
   }
 
   datos$ids_f = factor(datos$ids, levels = unique(datos$ids))
 
   # the box plot is created
-  if(type == "last"){
-    p <- ggplot(datos, aes(x=ids_f,y=performance, color = best_conf))
+  if(type == "best"){
+    p <- ggplot(datos, aes(x=ids_f,y=performance, color = best_conf)) +
+         scale_color_hue(h = c(220,270))
 
-  }else if(type == "best"){
+  }else if(type == "ibest"){
     p <- ggplot(datos, aes(x=ids_f,y=performance, color = iteration_f)) +
       labs(subtitle = "iterations") +
       theme(plot.subtitle = element_text(hjust = 0.5))
@@ -127,19 +128,19 @@ iboxplot_test <- function(iraceResults, type = "all", distance_min = FALSE ,file
     p <- ggplot(datos, aes(x=ids_f,y=performance, colour = best_conf)) +
       labs(subtitle = "iterations")+
       theme(plot.subtitle = element_text(hjust = 0.5),
-            axis.text.x = element_text(size = 6.4))
-
+            axis.text.x = element_text(size = 6.4, angle = 90))+
+      scale_color_hue(h = c(220,270))
   }
 
    p <- p +
     geom_boxplot() +
     theme(legend.position="none") +
-    labs(x="IDs")
+    labs(x="ID")
 
   #each box plot is divided by iteration
   if(type == "all"){
       p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
-  }else if(type == "best"){
+  }else if(type == "ibest"){
     p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
   }
 

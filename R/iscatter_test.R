@@ -9,7 +9,7 @@
 #' @param idVector
 #' String vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c("92","119"))
-#' @param distance_min
+#' @param rpd
 #' logical(default FALSE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations
 #' @param fileName
@@ -24,13 +24,16 @@
 #' @examples
 #' NULL
 
-iscatter_test <- function(iraceResults,idVector,distance_min = FALSE ,fileName = NULL){
+iscatter_test <- function(iraceResults,idVector,rpd = FALSE ,fileName = NULL){
 
   # verify that the data is correct
-  if("FALSE" %in% (idVector %in% colnames(iraceResults$testing$experiments))){
-    return("Some of the settings are not in testing")
-  }else if(length(idVector) != 2){
+
+  if(length(idVector) != 2){
     return("You must enter a vector with 2 values")
+  }else if(!(idVector[1] %in% colnames(iraceResults$testing$experiments))){
+    return(paste("Configuration",idVector[1],"not found"))
+  }else if(!(idVector[2] %in% colnames(iraceResults$testing$experiments))){
+    return(paste("Configuration",idVector[2],"not found"))
   }
 
   x <- y <- NULL
@@ -38,7 +41,7 @@ iscatter_test <- function(iraceResults,idVector,distance_min = FALSE ,fileName =
   tabla <- as.data.frame(iraceResults$testing$experiments)
 
   # the table values are modified
-  if(distance_min == TRUE){
+  if(rpd == TRUE){
     tabla <- 100*(tabla - apply(tabla,1,min))/apply(tabla,1,min)
   }
 
@@ -56,7 +59,11 @@ iscatter_test <- function(iraceResults,idVector,distance_min = FALSE ,fileName =
   q <- ggplot(datos, aes(x=x,y=y, color=y, text = text)) +
       geom_point() +
       scale_color_viridis_c() +
-      labs(color = "",x = paste("Configuration",idVector[1]), y = paste("Configuration",idVector[2]))
+  if(rpd == TRUE){
+    labs(color = "",x = paste("Configuration",idVector[1],"RPD"), y = paste("Configuration",idVector[2],"RPD"))
+  }else{
+    labs(color = "",x = paste("Configuration",idVector[1],"Performance"), y = paste("Configuration",idVector[2],"Performance"))
+  }
   p <- plotly::ggplotly(q, tooltip="text")
 
   #If the value in fileName is added the pdf file is created

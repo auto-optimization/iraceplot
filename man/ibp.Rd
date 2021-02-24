@@ -4,12 +4,7 @@
 \alias{ibp}
 \title{Box Plot}
 \usage{
-ibp(
-  iraceResults,
-  numberIteration = NULL,
-  distance_min = FALSE,
-  fileName = NULL
-)
+ibp(iraceResults, numberIteration = NULL, rpd = FALSE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
@@ -17,7 +12,7 @@ ibp(
 \item{numberIteration}{Numeric, It is the number referring to the iteration that you want to graph,
 the range of these varies according to the Rdata used (example: numberIteration = 5)}
 
-\item{distance_min}{Logical (default FALSE) to fit through an equation of minimum percentage distance
+\item{rpd}{Logical (default FALSE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}
 
 \item{fileName}{String, A pdf will be created in the location and with the
