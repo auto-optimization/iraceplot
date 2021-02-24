@@ -22,6 +22,7 @@
 
 distance_config <- function(iraceResults, idConfigurations, t = 0.05){
 
+  #restrictions
   if(length(idConfigurations) != 2){
     return("You must enter two settings")
   }else if(FALSE %in% (idConfigurations[1] %in% iraceResults$allConfigurations[[".ID."]])){
@@ -30,11 +31,14 @@ distance_config <- function(iraceResults, idConfigurations, t = 0.05){
     return(paste("Configuration",idConfigurations[2],"does not exist",sep = " "))
   }
 
+  #variable assignment
   distance <- .ID. <- .PARENT. <-NULL
   datos <- select(iraceResults$allConfigurations[idConfigurations,],-.ID.,-.PARENT.)
   tipos <- iraceResults$parameters$types
 
+  #the sum of the distance between parameters according to their type
   for (i in 1:length(datos)) {
+    # c = category
     if(tipos[[colnames(datos)[i]]] == "c"){
       if(is.na(datos[[i]][1]) && is.na(datos[[i]][2])){
         distance <- c(distance,0)
@@ -45,6 +49,7 @@ distance_config <- function(iraceResults, idConfigurations, t = 0.05){
       }else{
         distance <- c(distance,1)
       }
+    # r and i = numeric
     }else if(tipos[[colnames(datos)[i]]] == "r" || tipos[[colnames(datos)[i]]] == "i"){
 
       if(is.na(datos[[i]][1]) && is.na(datos[[i]][2])){
@@ -65,5 +70,6 @@ distance_config <- function(iraceResults, idConfigurations, t = 0.05){
       }
     }
   }
+  #the total difference between two configurations
   return(sum(distance))
 }

@@ -14,8 +14,10 @@
 #' @param param_names
 #' String vector, you need to put the parameters you want to analyze
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
-#' @param iterations
 #'
+#' @param iterations
+#' NUmeric vector, you need to put the iterations you want to analyze
+#' (example: iterations = c(1,4,5))
 #'
 #' @param fileName
 #' A pdf will be created in the location and with
@@ -37,6 +39,13 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
   memo  <- configuration <- dim <- NULL
   idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
+
+  if(!is.null(iterations)){
+    it <- c(1:length(iraceResults$allElites))
+    if(FALSE %in% (iterations %in% it)){
+      return("The interactions entered are outside the possible range")
+    }
+  }
 
   #verify that param_names is other than null
   if(!is.null(param_names)){

@@ -19,6 +19,8 @@
 #' @return box plot
 #' @export
 #'
+#' @importFrom ggplot2 scale_color_hue
+#'
 #' @examples
 #' NULL
 
@@ -27,6 +29,9 @@ iboxplot_test <- function(iraceResults, type = "all", rpd = FALSE ,fileName = NU
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
     return("iraceResults does not contain the testing element")
+  }
+  if(type != "all" || type != "best" || type != "ibest"){
+    return("The type parameter entered is incorrect")
   }
 
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL

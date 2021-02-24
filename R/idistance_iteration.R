@@ -26,11 +26,16 @@
 
 idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName = NULL){
 
-  media <- allconf <- valor <- iterations <- tabla_box <- iteration <-NULL
+  if(type != "line" || type != "boxplot"){
+    return("The type parameter entered is incorrect")
+  }
 
+  #variable assignment
+  media <- allconf <- valor <- iterations <- tabla_box <- iteration <-NULL
   allconf <- iraceResults$allConfigurations
   n_param <- length(allconf) - 2
 
+  #The value of the distance between each configuration is created
   for (i in 1:length(iraceResults$allElites)) {
     distance <- NULL
     ids <- unique(subset(as.data.frame(iraceResults$experimentLog),
@@ -51,6 +56,7 @@ idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName 
     media <- c(media, mean(distance))
   }
 
+  #A graph of points and lines is created
   if(type == "line"){
 
     tabla <- data.frame(iterations,media)
@@ -65,6 +71,7 @@ idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName 
          scale_color_viridis_c() +
          labs(y = "diference")
 
+  #A box plot is created
   }else if(type == "boxplot"){
 
     p <- ggplot(tabla_box, aes(x=it,y=distance, group = it, color = it)) +

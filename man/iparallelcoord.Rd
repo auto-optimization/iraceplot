@@ -21,7 +21,8 @@ iparallelcoord(
 \item{param_names}{String vector, you need to put the parameters you want to analyze
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
-\item{iterations}{}
+\item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
+(example: iterations = c(1,4,5))}
 
 \item{fileName}{A pdf will be created in the location and with
 the assigned name (example: "~/patch/example/filename")}

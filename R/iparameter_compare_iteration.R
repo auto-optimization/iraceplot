@@ -25,6 +25,19 @@ iparameter_compare_iteration <- function(iraceResults,parameter,fileName = NULL)
 
   vectorPlot <- NULL
 
+  #verify that param_names is other than null
+  if(!is.null(parameter)){
+    #verify that param_names contain the data entered
+    if( "FALSE" %in% names(table(parameter %in% iraceResults$parameters$names))){
+      return("Some wrong parameter entered")
+    }
+    #verify that param_names contain more than one parameter
+    else if(length(parameter) != 1){
+      return("You can only enter one parameter")
+    }
+
+  }
+
   if(iraceResults$parameters$types[[parameter]] == "c"){
     p <- iparameter_frequency_iteration(iraceResults,parameter)
     vectorPlot[1] <- list(p)

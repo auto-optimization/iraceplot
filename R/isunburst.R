@@ -18,16 +18,20 @@
 #' NULL
 isunburst <- function(iraceResults, dependency = FALSE, fileName = NULL){
 
+  #variable assignment
   param_c <- parents <- labels <- values <- ids <- depend <-NULL
 
+  #assigns categorical type parameters to param_c
   for(i in 1:length(iraceResults$parameters$types)){
     if(iraceResults$parameters$types[[i]] == "c"){
       param_c = c(param_c,names(iraceResults$parameters$types)[i])
     }
   }
 
+  #the table is generated only with categorical parameters
   data <- as.data.frame(iraceResults$allConfigurations[param_c])
 
+  #checks if there is dependency between the parameters
   if(dependency == TRUE){
     for (i in 1:length(data)) {
       if(!identical(iraceResults$parameters$depends[[colnames(data)[i]]], character(0))){
@@ -36,6 +40,7 @@ isunburst <- function(iraceResults, dependency = FALSE, fileName = NULL){
     }
   }
 
+  #the table data is generated
   for (j in 1:length(data)) {
 
     tabla <- table(data[j],useNA = "ifany")
@@ -62,15 +67,18 @@ isunburst <- function(iraceResults, dependency = FALSE, fileName = NULL){
     }
   }
 
+  #The data table that will be used for the graph is created
   data_f <- data.frame(ids,parents,labels,values, stringsAsFactors = FALSE)
   data_f[is.na(data_f)] <- "NA"
 
+  #if there is a dependency, the values ​​of the dependent data are added to its parent
   if(!is.null(depend) && dependency == TRUE){
     for (i in 1:length(depend)) {
       data_f$values[data_f$ids == depend[[i]]] <- data_f$values[data_f$ids == depend[[i]]] + data_f$values[data_f$ids == names(depend[i])]
     }
   }
 
+  #the graph is created
   p <- plot_ly(
     type='sunburst',
     ids = data_f$ids,

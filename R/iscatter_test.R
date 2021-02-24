@@ -26,6 +26,10 @@
 
 iscatter_test <- function(iraceResults,idVector,rpd = FALSE ,fileName = NULL){
 
+  # verify that test this in iraceResults
+  if(!("testing" %in% names(iraceResults))){
+    return("iraceResults does not contain the testing element")
+  }
   # verify that the data is correct
 
   if(length(idVector) != 2){
