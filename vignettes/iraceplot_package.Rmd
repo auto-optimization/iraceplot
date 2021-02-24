@@ -27,8 +27,10 @@ iparameter_density_iteration
 iparameter_compare_iteration
 isunburst
 iheatmap
+idistance_iteration
 ibp
 iscatter
+iconf_instances
 ```
 <h3>Install Iraceplot</h3>
 
@@ -521,5 +523,32 @@ To compare two elite setups in training, use the following code:
 ```{r, fig.width= 7}
 iscatter(iraceResults, idVector = c(806,809))
 iscatter(iraceResults, idVector = c(806,809), rpd = TRUE)
+```
+</div>
+
+<h4>Function iconf_instances</h4>
+
+A graph is created with all the settings and instance of the training data
+
+```
+iscatter(iraceResults, 
+         rpd = FALSE, 
+         fileName = NULL)
+```
+<h5>Arguments</h5>
+
+```
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+rpd:   Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+If we want to observe all the values ​​that the configurations take in their respective instances and iterations, place the following code:
+
+<div style="text-align: center">
+```{r, fig.width= 7}
+iconf_instances(iraceResults,rpd = TRUE)
 ```
 </div>
