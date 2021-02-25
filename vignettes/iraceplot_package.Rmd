@@ -65,7 +65,7 @@ Breve descripcion de que es testing------------
 ```
 iboxplot_test(iraceResults,
               type = "all",
-              rpd = FALSE,
+              rpd = TRUE,
               fileName = NULL)
 ```
 <h5>Arguments</h5>
@@ -75,7 +75,7 @@ iraceResults:   The data generated when loading the Rdata file created by irace
 
 type:           String, either "all", "ibest" or "best". By default it is  "all" which shows all the configurations in testing, "ibest" shows the best configurations of each iteration and "best" shows the configurations of the last iteration
 
-rpd:   Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -84,7 +84,7 @@ If you want to analyze the elite configurations from the last test iteration, us
 <div style="text-align: center">
 ```{r, fig.width= 7}
 iboxplot_test(iraceResults, type = "best")
-iboxplot_test(iraceResults, type = "best", rpd = TRUE)
+iboxplot_test(iraceResults, type = "best", rpd = FALSE)
 ```
 </div>
 
@@ -92,7 +92,7 @@ When analyzing all elite configurations in testing, use the following code:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iboxplot_test(iraceResults, rpd = TRUE)
+iboxplot_test(iraceResults)
 ```
 </div>
 
@@ -100,7 +100,7 @@ Finally, to analyze the best elite configuration of each iteration, use the foll
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iboxplot_test(iraceResults, type = "ibest", rpd = TRUE)
+iboxplot_test(iraceResults, type = "ibest")
 ```
 </div>
 
@@ -111,7 +111,7 @@ The iscatter_test function will return a scatter plot comparing two elite config
 ```
 iscatter_test(iraceResults,
               idVector,
-              rpd = FALSE,
+              rpd = TRUE,
               fileName = TRUE)
 ```
 <h5>Arguments</h5>
@@ -121,7 +121,7 @@ iraceResults:   The data generated when loading the Rdata file created by irace
 
 idVector:       String vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c("92","119"))
 
-rpd:   logical(default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+rpd:   logical(default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -130,7 +130,7 @@ To compare two elite setups in testing, use the following code:
 <div style="text-align: center">
 ```{r, fig.width= 7}
 iscatter_test(iraceResults, idVector = c("92","119"))
-iscatter_test(iraceResults, idVector = c("92","119"), rpd = TRUE)
+iscatter_test(iraceResults, idVector = c("92","119"), rpd = FALSE)
 ```
 </div>
 
@@ -182,11 +182,20 @@ If we want to filter the parameters that we want to visualize and with all the c
 iparallelcoord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
-Finally, if we want to filter the parameters and the settings that we want to analyze, the following code is used:
+
+If we want to filter the iterations that we want to visualize, the following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width=5}
-iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
+iparallelcoord(iraceResults, iterations = c(1,4,6))
+```
+</div>
+
+Finally, if we want to filter the parameters, iterations and the settings that we want to analyze, the following code is used:
+
+<div style="text-align: center">
+```{r, fig.width=5}
+iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
 ```
 </div>
 <h4>Function iparcoord</h4>
@@ -295,7 +304,7 @@ fileName:       String, A pdf will be created in the location and with the assig
 If we place a categorical parameter it will be shown in the following way, using the following code:
 
 <div style="text-align: center">
-```{r, fig.width= 7}
+```{r, fig.width= 7,fig.height= 7}
 iparameter_frequency_iteration(iraceResults,parameter = "algorithm")
 ```
 </div>
@@ -303,7 +312,7 @@ iparameter_frequency_iteration(iraceResults,parameter = "algorithm")
 If we place a numeric parameter it will be shown in the following way, using the following code:
 
 <div style="text-align: center">
-```{r, fig.width= 7}
+```{r, fig.width= 7,fig.height= 7}
 iparameter_frequency_iteration(iraceResults,parameter = "alpha")
 ```
 </div>
@@ -331,7 +340,7 @@ fileName:       String, A pdf will be created in the location and with the assig
 The following code is used:
 
 <div style="text-align: center">
-```{r, fig.width= 7}
+```{r, fig.width= 7,fig.height= 7}
 iparameter_density_iteration(iraceResults,parameter = "alpha")
 ```
 </div>
@@ -358,7 +367,7 @@ fileName:       string, A pdf will be created in the location and with the assig
 The following code is used:
 
 <div style="text-align: center">
-```{r, fig.width= 7}
+```{r, fig.width= 7,fig.height= 7}
 iparameter_compare_iteration(iraceResults, parameter = "alpha")
 ```
 </div>
@@ -389,21 +398,20 @@ isunburst(iraceResults)
 ```
 </div>
 
-If we want to see how the categorical parameters are distributed and if there is a dependency between them, the following code is used:
+<!-- If we want to see how the categorical parameters are distributed and if there is a dependency between them, the following code is used: -->
 
-<div style="text-align: center">
-```{r, fig.width= 7}
-isunburst(iraceResults, dependency = TRUE)
-```
-</div>
+<!-- <div style="text-align: center"> -->
+<!-- ```{r, fig.width= 7} -->
+<!-- isunburst(iraceResults, dependency = TRUE) -->
+<!-- ``` -->
+<!-- </div> -->
 
 <h4>Function idistance_iteration</h4>
 
 The idistance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
 
 ```
-idistance_iteration(
-                    iraceResults,
+idistance_iteration(iraceResults,
                     type = "line",
                     t = 0.05,
                     fileName = NULL)
@@ -418,15 +426,19 @@ fileName:       String, A pdf will be created in the location and with the assig
 ```
 If you want to show the graph of lines and points, with a difference margin of 5% between parameters, use the following code:
 
-```
-idistance_iteration(iraceResults)
-```
+<!-- <div style="text-align: center"> -->
+<!-- ```{r,fig.width= 7} -->
+<!-- idistance_iteration(iraceResults) -->
+<!-- ``` -->
+<!-- </div> -->
 
 If you want to show the box plot, with a difference margin of 20% between parameters, use the following code:
 
-```
-idistance_iteration(iraceResults, type = "boxplot", t=0.2)
-```
+<!-- <div style="text-align: center"> -->
+<!-- ```{r,fig.width= 7} -->
+<!-- idistance_iteration(iraceResults, type = "boxplot", t=0.2) -->
+<!-- ``` -->
+<!-- </div> -->
 
 <h3>Training</h3>
 
@@ -463,7 +475,7 @@ The ibp function will return a box plot of the elite confirations according to t
 ```
 ibp(iraceResults, 
     numberIteration = NULL, 
-    rpd = FALSE ,
+    rpd = TRUE ,
     fileName = NULL)
 ```
 <h5>Arguments</h5>
@@ -473,7 +485,7 @@ iraceResults:       The data generated when loading the Rdata file created by ir
 
 numberIteration:    Numeric, It is the number referring to the iteration that you want to graph, the range of these varies according to the Rdata used (example: numberIteration = 5)
 
-rpd:       Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+rpd:       Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:           String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -483,7 +495,7 @@ If you want to view the graph of the last iteration, use the following code:
 <div style="text-align: center">
 ```{r, fig.width= 7}
 ibp(iraceResults)
-ibp(iraceResults,rpd = TRUE)
+ibp(iraceResults,rpd = FALSE)
 ```
 </div>
 
@@ -492,7 +504,7 @@ If you want to visualize the graph of the fifth iteration, use the following cod
 <div style="text-align: center">
 ```{r, fig.width= 7}
 ibp(iraceResults,numberIteration = 5)
-ibp(iraceResults,numberIteration = 5, rpd = TRUE)
+ibp(iraceResults,numberIteration = 5, rpd = FALSE)
 ```
 </div>
 
@@ -503,7 +515,7 @@ The iscatter function will return a scatter plot comparing two elite configurati
 ```
 iscatter(iraceResults, 
          idVector, 
-         rpd = FALSE, 
+         rpd = TRUE, 
          fileName = NULL)
 ```
 <h5>Arguments</h5>
@@ -513,7 +525,7 @@ iraceResults:   The data generated when loading the Rdata file created by irace
 
 idVector:       Numeric vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c(806,809))
 
-rpd:   Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -522,7 +534,7 @@ To compare two elite setups in training, use the following code:
 <div style="text-align: center">
 ```{r, fig.width= 7}
 iscatter(iraceResults, idVector = c(806,809))
-iscatter(iraceResults, idVector = c(806,809), rpd = TRUE)
+iscatter(iraceResults, idVector = c(806,809), rpd = FALSE)
 ```
 </div>
 
@@ -531,24 +543,24 @@ iscatter(iraceResults, idVector = c(806,809), rpd = TRUE)
 A graph is created with all the settings and instance of the training data
 
 ```
-iscatter(iraceResults, 
-         rpd = FALSE, 
-         fileName = NULL)
+iconf_instances(iraceResults, 
+                rpd = TRUE, 
+                fileName = NULL)
 ```
 <h5>Arguments</h5>
 
 ```
 iraceResults:   The data generated when loading the Rdata file created by irace
 
-rpd:   Logical (default FALSE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
 If we want to observe all the values ​​that the configurations take in their respective instances and iterations, place the following code:
 
-<div style="text-align: center">
-```{r, fig.width= 7}
-iconf_instances(iraceResults,rpd = TRUE)
-```
-</div>
+<!-- <div style="text-align: center"> -->
+<!-- ```{r, fig.width= 7} -->
+<!-- iconf_instances(iraceResults) -->
+<!-- ``` -->
+<!-- </div> -->

@@ -110,7 +110,7 @@ iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL)
     p <- ggplot(tabla, aes(x, y = iteration)) +
       geom_density_ridges(aes(fill = iteration), na.rm = TRUE) +
       scale_fill_manual(values = viridis(length(unique(tabla$iteration))))+
-      labs(x = parameter)
+      labs(x = parameter, y = "Iteration")
 
     # # density plot
     # q <- ggplot(tabla, aes(x=x, fill=iteration)) +

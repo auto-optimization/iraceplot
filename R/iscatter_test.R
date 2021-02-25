@@ -10,7 +10,7 @@
 #' String vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c("92","119"))
 #' @param rpd
-#' logical(default FALSE) to fit through an equation of minimum percentage distance
+#' logical(default TRUE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations
 #' @param fileName
 #' String, A pdf will be created in the location and with the assigned
@@ -24,7 +24,7 @@
 #' @examples
 #' NULL
 
-iscatter_test <- function(iraceResults,idVector,rpd = FALSE ,fileName = NULL){
+iscatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){

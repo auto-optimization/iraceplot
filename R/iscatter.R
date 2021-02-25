@@ -12,7 +12,7 @@
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))
 #'
 #' @param rpd
-#' Logical (default FALSE) to fit through an equation of minimum percentage
+#' Logical (default TRUE) to fit through an equation of minimum percentage
 #' distance between the values of each row of all configurations
 #'
 #' @param fileName
@@ -27,7 +27,7 @@
 #' @examples
 #' NULL
 
-iscatter <- function(iraceResults, idVector, rpd = FALSE, fileName = NULL){
+iscatter <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL){
 
   #Variable assignment
   iteracionFiltrada <- NULL
@@ -81,7 +81,12 @@ iscatter <- function(iraceResults, idVector, rpd = FALSE, fileName = NULL){
   #The plot scatter is created and assigned to p
   p <- ggplot(tabla, aes(x=conf1, y=conf2, color=conf1)) +
     geom_point() +
-    labs(color=" ",x = paste("Configuration",idVector[1]), y = paste("Configuration",idVector[2]))
+
+  if(rpd == TRUE){
+    labs(color=" ",x = paste("Configuration",idVector[1],"RPD"), y = paste("Configuration",idVector[2],"RPD"))
+  }else{
+    labs(color=" ",x = paste("Configuration",idVector[1],"Performance"), y = paste("Configuration",idVector[2],"Performance"))
+  }
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){

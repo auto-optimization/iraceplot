@@ -51,7 +51,7 @@ iheatmap <- function(iraceResults, fileName = NULL){
   q <- ggplot(tabla,aes(x=C, y=i_id, fill=RANK,text=text)) +
     geom_tile() +
     scale_fill_viridis_c(na.value = "#ECE1EB") +
-    labs(x = "Configurations", y = "ID") +
+    labs(x = "Configurations", y = "Instances") +
     theme(axis.text.x = element_blank(),axis.ticks = element_blank())
 
   #The plot becomes interactive

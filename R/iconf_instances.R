@@ -5,13 +5,14 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #' @param rpd
-#' Logical (default FALSE) to fit through an equation of minimum percentage distance
+#' Logical (default TRUE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations
 #' @param fileName
 #' String, A pdf will be created in the location and with the
 #' assigned name (example: "~/patch/example/filename")
 #'
-#' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete
+#' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete scale_color_manual
+#' @importFrom grDevices rainbow
 #'
 #' @return plot
 #' @export
@@ -19,16 +20,16 @@
 #' @examples
 #' NULL
 
-iconf_instances <- function(iraceResults, rpd = FALSE, fileName = NULL){
+iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
 
   #variable assignment
-  time <- bound <- instance <- configuration <- iteration <- nconfig <- NULL
+  time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
   nconfig = 0
   experiments <- as.data.frame(iraceResults$experiments)
 
   # the table values are modified
   if(rpd == TRUE){
-    experiments <- 100*(experiments - apply(experiments,1,min,na.rm = TRUE))/apply(experiments,1,min,na.rm = TRUE)
+    experiments <- (experiments - apply(experiments,1,min,na.rm = TRUE))/apply(experiments,1,min,na.rm = TRUE)
   }
 
   #variable assignment
@@ -37,23 +38,25 @@ iconf_instances <- function(iraceResults, rpd = FALSE, fileName = NULL){
   execution <- sample(NA,size=dim(exp_log)[1],replace = TRUE)
   tabla <- cbind(exp_log,value, execution)
 
-  #the values ​​of each configuration are added to the table
+  #the values of each configuration are added to the table
+  cont_exe = 0
   for (i in 1:dim(exp_log)[1]) {
     for (j in 1:dim(iraceResults$experiments)[1]) {
       if(!is.na(experiments[[tabla$configuration[i]]][j])){
 
         if(is.na(tabla$value[i])){
+          cont_exe = cont_exe+1
           tabla$value[i] = experiments[[tabla$configuration[i]]][j]
-          tabla$execution[i] = i
+          tabla$execution[i] = cont_exe
         }else{
+          cont_exe = cont_exe+1
           add <- tabla[i,]
           add$value = experiments[[tabla$configuration[i]]][j]
-          add$execution = i + j*0.01
+          add$execution = cont_exe
           tabla <- rbind(tabla,add)
         }
       }
     }
-
   }
 
   #new columns are created and added to the table
@@ -103,11 +106,10 @@ iconf_instances <- function(iraceResults, rpd = FALSE, fileName = NULL){
 
   #point plot creation
   q <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
-    geom_point(aes(shape = type)) +
+    geom_point(aes(shape = type), size = 0.5) +
     facet_grid(cols = vars(tabla$instance_it),scales = "free_x", space = "free_x") +
     scale_shape_manual(values = c(0,1,5,4)) +
-    theme_bw() +
-    scale_color_viridis_d() +
+    scale_color_manual(values = rainbow(length(unique(tabla$instance)))) +
     scale_x_discrete(breaks = c(1,unique(tabla$conf_it))) +
     labs(x = "Candidate evaluations",
          y =  "Relative deviaton",
@@ -116,8 +118,8 @@ iconf_instances <- function(iraceResults, rpd = FALSE, fileName = NULL){
           axis.text.x = element_text(angle = 90),
           axis.ticks.x = element_blank(),
           plot.subtitle = element_text(hjust = 0.5)) +
-    geom_point(mapping = aes(y = media_regular),colour = "red", size = 0.5) +
-    geom_point(mapping = aes(y = media_elite),colour = "orange", size = 0.5)
+    geom_point(mapping = aes(y = media_regular),colour = "red", size = 0.1) +
+    geom_point(mapping = aes(y = media_elite),colour = "orange", size = 0.1)
 
   #The graph is transformed to plotly
   p <- plotly::ggplotly(q, tooltip = "text")

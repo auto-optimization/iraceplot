@@ -4,7 +4,7 @@
 \alias{iboxplot_test}
 \title{Box Plot Testing}
 \usage{
-iboxplot_test(iraceResults, type = "all", rpd = FALSE, fileName = NULL)
+iboxplot_test(iraceResults, type = "all", rpd = TRUE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
@@ -13,7 +13,7 @@ iboxplot_test(iraceResults, type = "all", rpd = FALSE, fileName = NULL)
 "best" shows the best configurations of each iteration and
 "last" shows the configurations of the last iteration}
 
-\item{rpd}{Logical (default FALSE) to fit through an equation of minimum percentage distance between
+\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance between
 the values of each row of all configurations}
 
 \item{fileName}{String, A pdf will be created in the location and with the assigned

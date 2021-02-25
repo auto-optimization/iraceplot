@@ -4,12 +4,12 @@
 \alias{iconf_instances}
 \title{The configurations by iteration and instance}
 \usage{
-iconf_instances(iraceResults, rpd = FALSE, fileName = NULL)
+iconf_instances(iraceResults, rpd = TRUE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{rpd}{Logical (default FALSE) to fit through an equation of minimum percentage distance
+\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}
 
 \item{fileName}{String, A pdf will be created in the location and with the

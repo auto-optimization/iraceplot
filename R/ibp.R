@@ -11,7 +11,7 @@
 #'the range of these varies according to the Rdata used (example: numberIteration = 5)
 #'
 #'@param rpd
-#'Logical (default FALSE) to fit through an equation of minimum percentage distance
+#'Logical (default TRUE) to fit through an equation of minimum percentage distance
 #'between the values of each row of all configurations
 #'
 #'@param fileName
@@ -29,7 +29,7 @@
 #'@examples
 #'NULL
 
-ibp <- function(iraceResults, numberIteration = NULL, rpd = FALSE ,fileName = NULL){
+ibp <- function(iraceResults, numberIteration = NULL, rpd = TRUE ,fileName = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL

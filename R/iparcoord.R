@@ -29,6 +29,8 @@
 
 iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
 
+  return("Arreglando algunas cosas")
+
   #Variable assignment
   memo  <- configuration <- dim <- choi <- NULL
   idConfiguration <- unlist(idConfiguration)
@@ -117,20 +119,88 @@ iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
   }
 
   #The dimension is modified for certain parameters in the plot
-  if("rasrank" %in% colnames(tabla) && "elitistants" %in% colnames(tabla)){
-    dim = list(
-      rasrank = list(
-        tickValues = c(min(tabla$rasrank),
-                     iraceResults$parameters$domain[["rasrank"]][2]/4,
-                     iraceResults$parameters$domain[["rasrank"]][2]/2,
-                     max(tabla$rasrank))
-      ),
-      elitistants = list(
-        tickValues = c(min(tabla$elitistants),
-                     450,
-                     max(tabla$elitistants))
-        )
+  # if("rasrank" %in% colnames(tabla) && "elitistants" %in% colnames(tabla)){
+  #   dim = list(
+  #     rasrank = list(
+  #       tickValues = c(min(tabla$rasrank),
+  #                    iraceResults$parameters$domain[["rasrank"]][2]/4,
+  #                    iraceResults$parameters$domain[["rasrank"]][2]/2,
+  #                    max(tabla$rasrank))
+  #     ),
+  #     elitistants = list(
+  #       tickValues = c(min(tabla$elitistants),
+  #                    450,
+  #                    max(tabla$elitistants))
+  #       )
+  #     )
+  # }
+
+  #create plot dimensions
+  for(i in 1:length(tabla)){
+
+    if(colnames(tabla)[i] == "iteration"){
+      dim[[i]] = list(
+        range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+        values = tabla[[i]],
+        label = colnames(tabla)[i],
+        visible = FALSE
       )
+      #if the column is of type character
+    }else if(class(tabla[[i]]) == "character"){
+      factor_tab <- NULL
+      factor_tab <- factor(tabla[[i]])
+      levels(factor_tab) <- c(1:length(unique(tabla[[i]])))
+      if("NA" %in% tabla[[i]]){
+        tickT = c(iraceResults$parameters$domain[[colnames(tabla)[i]]],"NA")
+      }else{
+        tickT = iraceResults$parameters$domain[[colnames(tabla)[i]]]
+      }
+      dim[[i]] = list(
+        label = colnames(tabla)[i],
+        tickvals = c(1:length(unique(tabla[[i]]))),
+        #ticktext = unique(tabla[[i]]),
+        ticktext = tickT,
+        values = factor_tab
+      )
+      #if the column is of type numeric
+    }else if(class(tabla[[i]]) == "numeric"){
+      if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
+        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
+        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
+        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
+        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2] +1
+        dim[[i]] = list(
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]+1),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,"NA"),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
+      }else{
+        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
+        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
+        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
+        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2]
+        dim[[i]] = list(
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,maximo),
+          values = tabla[[i]],
+          label = colnames(tabla)[i])
+      }
+
+    }
+    #other types
+    else{
+      dim[[i]] = list(
+        range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+        values = tabla[[i]],
+        label = colnames(tabla)[i]
+      )
+    }
+
   }
 
   #A list is created based on the iterations of the table

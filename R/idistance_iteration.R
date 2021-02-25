@@ -26,8 +26,8 @@
 
 idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName = NULL){
 
-  if(type != "line" || type != "boxplot"){
-    return("The type parameter entered is incorrect")
+  if(!(type == "line" | type == "boxplot")){
+    print("The type parameter entered is incorrect")
   }
 
   #variable assignment
@@ -69,7 +69,7 @@ idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName 
          scale_x_continuous(limits = c(0,length(iraceResults$allElites)+1),
                              breaks = seq(1,length(iraceResults$allElites),1)) +
          scale_color_viridis_c() +
-         labs(y = "diference")
+         labs(y = "RPD", x = "iteration")
 
   #A box plot is created
   }else if(type == "boxplot"){
@@ -81,7 +81,7 @@ idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName 
                          breaks = seq(0,n_param,2)) +
       scale_x_continuous(limits = c(0,length(iraceResults$allElites)+1),
                          breaks = seq(1,length(iraceResults$allElites),1)) +
-      labs(x = "iteration", y = "diference")
+      labs(x = "iteration", y = "RPD")
 
     }
 

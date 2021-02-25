@@ -4,7 +4,7 @@
 \alias{iscatter}
 \title{Scatter Plot Training}
 \usage{
-iscatter(iraceResults, idVector, rpd = FALSE, fileName = NULL)
+iscatter(iraceResults, idVector, rpd = TRUE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
@@ -12,7 +12,7 @@ iscatter(iraceResults, idVector, rpd = FALSE, fileName = NULL)
 \item{idVector}{Numeric vector, you need to put the elite settings you
 want to compare, only 2 values are allowed (example: idVector = c(806,809))}
 
-\item{rpd}{Logical (default FALSE) to fit through an equation of minimum percentage
+\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage
 distance between the values of each row of all configurations}
 
 \item{fileName}{String, A pdf will be created in the location and with the

@@ -11,7 +11,7 @@
 #' "best" shows the best configurations of each iteration and
 #' "last" shows the configurations of the last iteration
 #' @param rpd
-#' Logical (default FALSE) to fit through an equation of minimum percentage distance between
+#' Logical (default TRUE) to fit through an equation of minimum percentage distance between
 #' the values of each row of all configurations
 #' @param fileName
 #' String, A pdf will be created in the location and with the assigned
@@ -24,14 +24,15 @@
 #' @examples
 #' NULL
 
-iboxplot_test <- function(iraceResults, type = "all", rpd = FALSE ,fileName = NULL){
+iboxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
     return("iraceResults does not contain the testing element")
   }
-  if(type != "all" || type != "best" || type != "ibest"){
-    return("The type parameter entered is incorrect")
+
+  if(!(type == "all" | type == "best" | type == "ibest")){
+    print("The type parameter entered is incorrect")
   }
 
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
@@ -140,7 +141,7 @@ iboxplot_test <- function(iraceResults, type = "all", rpd = FALSE ,fileName = NU
    p <- p +
     geom_boxplot() +
     theme(legend.position="none") +
-    labs(x="ID")
+    labs(x="ID", y = "Performance")
 
   #each box plot is divided by iteration
   if(type == "all"){
