@@ -65,8 +65,9 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
   instance_it <- sample(NA,size=dim(tabla)[1],replace = TRUE)
   media_regular <- sample(NA,size=dim(tabla)[1],replace = TRUE)
   media_elite <- sample(NA,size=dim(tabla)[1],replace = TRUE)
-
-  tabla <- cbind(tabla, type, conf_it, instance_it, media_regular, media_elite)
+  regular_color <- sample("median iteration",size=dim(tabla)[1],replace = TRUE)
+  elite_color <- sample("median elites",size=dim(tabla)[1],replace = TRUE)
+  tabla <- cbind(tabla, type, conf_it, instance_it, media_regular, media_elite, regular_color,elite_color)
   tabla <- tabla[order(tabla$execution),]
 
   #the data is added to the conf_it, instance_it and type columns
@@ -106,20 +107,21 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
 
   #point plot creation
   q <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
-    geom_point(aes(shape = type), size = 0.5) +
+    geom_point(aes(shape = type), size = 0.8) +
     facet_grid(cols = vars(tabla$instance_it),scales = "free_x", space = "free_x") +
     scale_shape_manual(values = c(0,1,5,4)) +
-    scale_color_manual(values = rainbow(length(unique(tabla$instance)))) +
+    scale_color_manual(values = rainbow(length(unique(tabla$instance))+1)) +
     scale_x_discrete(breaks = c(1,unique(tabla$conf_it))) +
     labs(x = "Candidate evaluations",
          y =  "Relative deviaton",
          subtitle = "Instances evaluated") +
-    theme(legend.position = "none",
-          axis.text.x = element_text(angle = 90),
+    theme(axis.text.x = element_text(angle = 90),
           axis.ticks.x = element_blank(),
-          plot.subtitle = element_text(hjust = 0.5)) +
-    geom_point(mapping = aes(y = media_regular),colour = "red", size = 0.1) +
-    geom_point(mapping = aes(y = media_elite),colour = "orange", size = 0.1)
+          plot.subtitle = element_text(hjust = 0.5),
+          strip.text.x = element_text(size = 8)) +
+    guides(color = FALSE) +
+    geom_point(mapping = aes(y = media_regular), color = "red",size = 0.1) +
+    geom_point(mapping = aes(y = media_elite), color = "orange",size = 0.1)
 
   #The graph is transformed to plotly
   p <- plotly::ggplotly(q, tooltip = "text")

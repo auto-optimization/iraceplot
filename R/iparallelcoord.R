@@ -52,9 +52,8 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
     #verify that param_names contain the data entered
     if( "FALSE" %in% names(table(param_names %in% iraceResults$parameters$names))){
       return("Some wrong parameter entered")
-    }
-    #verify that param_names contain more than one parameter
-    else if(length(param_names) < 2){
+      #verify that param_names contain more than one parameter
+    }else if(length(param_names) < 2){
       return("You must enter at least two parameters")
     }
 
@@ -78,9 +77,8 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
     selection2 <- filtro[, "configuration"] %in% idConfiguration
     filtro <- filtro[selection2,]
-  }
-  # table is created with all settings
-  else{
+    # table is created with all settings
+  }else{
     tabla <-iraceResults$allConfigurations
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
   }
@@ -109,9 +107,8 @@ iparallelcoord <- function(iraceResults, idConfiguration = NULL, param_names = N
       add <- tabla[tabla$.ID. == memo,]
       add$iteration = filtro$iteration[i]
       tabla <- rbind(tabla,add)
-    }
-    #The iteration is assigned to the configuration
-    else{
+      #The iteration is assigned to the configuration
+    }else{
       tabla$iteration[tabla$.ID. == filtro$configuration[i]] = filtro$iteration[i]
     }
     memo = filtro$configuration[i]
