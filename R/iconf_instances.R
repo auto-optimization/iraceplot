@@ -77,19 +77,19 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
     tabla$instance_it[tabla$iteration == j] = max(unique(tabla$instance[tabla$iteration == j]))
 
     if(j == length(iraceResults$allElites)){
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular"
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]])] = "final"
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]][1])] = "best"
+      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular config."
+      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]])] = "final elite config."
+      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]][1])] = "best found config."
     }else{
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular"
-      tabla$type[tabla$iteration == j & tabla$configuration %in% iraceResults$allElites[[j]]] = "elite"
+      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular config."
+      tabla$type[tabla$iteration == j & tabla$configuration %in% iraceResults$allElites[[j]]] = "elite config."
     }
   }
 
   #The mean values ​​are calculated in the configurations by iteration
   for (k in 1:length(iraceResults$allElites)) {
     tabla$media_regular[tabla$iteration == k] = mean(tabla$value[tabla$iteration == k])
-    tabla$media_elite[tabla$iteration == k] = mean(tabla$value[tabla$iteration == k & (tabla$type == "elite" | tabla$type == "final" | tabla$type == "best")])
+    tabla$media_elite[tabla$iteration == k] = mean(tabla$value[tabla$iteration == k & (tabla$type == "elite config." | tabla$type == "final elite config." | tabla$type == "best found config.")])
   }
 
   #Instance and configuration columns are converted to character
@@ -107,21 +107,24 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
 
   #point plot creation
   q <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
-    geom_point(aes(shape = type), size = 0.8) +
+    geom_point(aes(shape = type, size = type)) +
     facet_grid(cols = vars(tabla$instance_it),scales = "free_x", space = "free_x") +
-    scale_shape_manual(values = c(0,1,5,4)) +
-    scale_color_manual(values = rainbow(length(unique(tabla$instance))+1)) +
+    scale_shape_manual(values = c(22,21,24,4)) +
+    scale_color_manual(values = c(rainbow(length(unique(tabla$instance))),"red","orange"), breaks = c("median elites", "median iteration")) +
+    scale_size_manual(values = c(2,2,2,0.5)) +
     scale_x_discrete(breaks = c(1,unique(tabla$conf_it))) +
     labs(x = "Candidate evaluations",
-         y =  "Relative deviaton",
+         y =  "RPD",
          subtitle = "Instances evaluated") +
     theme(axis.text.x = element_text(angle = 90),
           axis.ticks.x = element_blank(),
           plot.subtitle = element_text(hjust = 0.5),
-          strip.text.x = element_text(size = 8)) +
-    guides(color = FALSE) +
-    geom_point(mapping = aes(y = media_regular), color = "red",size = 0.1) +
-    geom_point(mapping = aes(y = media_elite), color = "orange",size = 0.1)
+          strip.text.x = element_text(size = 8),
+          legend.position = "bottom",
+          legend.title = element_blank()) +
+    geom_point(mapping = aes(y = media_elite, color = elite_color),size = 0.1,) +
+    geom_point(mapping = aes(y = media_regular, color = regular_color),size = 0.1)
+
 
   #The graph is transformed to plotly
   p <- plotly::ggplotly(q, tooltip = "text")
