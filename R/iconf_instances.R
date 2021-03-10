@@ -107,11 +107,12 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
 
   #point plot creation
   q <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
-    geom_point(aes(shape = type, size = type)) +
+    geom_point(aes(shape = type, size = type, alpha = type)) +
     facet_grid(cols = vars(tabla$instance_it),scales = "free_x", space = "free_x") +
     scale_shape_manual(values = c(22,21,24,4)) +
     scale_color_manual(values = c(rainbow(length(unique(tabla$instance))),"red","orange"), breaks = c("median elites", "median iteration")) +
     scale_size_manual(values = c(2,2,2,0.5)) +
+    scale_alpha_manual(values = c(0.8,0.6,1,0.2)) +
     scale_x_discrete(breaks = c(1,unique(tabla$conf_it))) +
     labs(x = "Candidate evaluations",
          y =  "RPD",
@@ -120,7 +121,7 @@ iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
           axis.ticks.x = element_blank(),
           plot.subtitle = element_text(hjust = 0.5),
           strip.text.x = element_text(size = 8),
-          legend.position = "bottom",
+          legend.position = "right",
           legend.title = element_blank()) +
     geom_point(mapping = aes(y = media_elite, color = elite_color),size = 0.1,) +
     geom_point(mapping = aes(y = media_regular, color = regular_color),size = 0.1)
