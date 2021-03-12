@@ -11,7 +11,7 @@
 #' String, A pdf will be created in the location and with the
 #' assigned name (example: "~/patch/example/filename")
 #'
-#' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete scale_color_manual
+#' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete scale_color_manual scale_size_manual scale_alpha_manual
 #' @importFrom grDevices rainbow
 #'
 #' @return plot
@@ -20,7 +20,7 @@
 #' @examples
 #' NULL
 
-iconf_instances <- function(iraceResults, rpd = TRUE, fileName = NULL){
+configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
 
   #variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL

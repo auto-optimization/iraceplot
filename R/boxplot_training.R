@@ -29,7 +29,7 @@
 #'@examples
 #'NULL
 
-ibp <- function(iraceResults, numberIteration = NULL, rpd = TRUE ,fileName = NULL){
+boxplot_training <- function(iraceResults, numberIteration = NULL, rpd = TRUE ,fileName = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL

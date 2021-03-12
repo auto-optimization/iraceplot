@@ -21,7 +21,7 @@
 #' @examples
 #' NULL
 
-iparameter_compare_iteration <- function(iraceResults,parameter,fileName = NULL){
+parameter_compare_sampling <- function(iraceResults,parameter,fileName = NULL){
 
   vectorPlot <- NULL
 
@@ -39,13 +39,13 @@ iparameter_compare_iteration <- function(iraceResults,parameter,fileName = NULL)
   }
 
   if(iraceResults$parameters$types[[parameter]] == "c"){
-    p <- iparameter_frequency_iteration(iraceResults,parameter)
+    p <- parameter_frequency_iteration(iraceResults,parameter)
     vectorPlot[1] <- list(p)
   }else{
-    p <- iparameter_frequency_iteration(iraceResults,parameter)
+    p <- parameter_frequency_iteration(iraceResults,parameter)
     p <- p + theme(legend.position = "none")
     vectorPlot[1] <- list(p)
-    q <- iparameter_density_iteration(iraceResults,parameter)
+    q <- parameter_density_iteration(iraceResults,parameter)
     vectorPlot[2] <- list(q)
   }
 

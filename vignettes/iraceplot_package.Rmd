@@ -17,20 +17,20 @@ vignette: >
   The different functions used in iraceplot will allow the creation of different graphics. The functions are as follows:
 
 ```
-iboxplot_test
-iscatter_test
-iparallelcoord
-iparcoord
-iparameter_freq
-iparameter_frequency_iteration
-iparameter_density_iteration
-iparameter_compare_iteration
-isunburst
-iheatmap
-idistance_iteration
-ibp
-iscatter
-iconf_instances
+boxplot_test
+scatter_test
+parallel_coord
+iparallel_coord
+parameter_frequency
+parameter_frequency_iteration
+parameter_density_iteration
+parameter_compare_sampling
+sampling_pie
+heatmap
+distance_iteration
+boxplot_training
+scatter_training
+configurations_display
 ```
 <h3>Install Iraceplot</h3>
 
@@ -58,12 +58,12 @@ load("../data/iraceResults.rda")
 
 Breve descripcion de que es testing------------
 
-<h4>Function iboxplot_test</h4>
+<h4>Function boxplot_test</h4>
 
   The boxplot_test function will return a box plot, using the data generated in the test settings coloring the best configuration in each iteration
 
 ```
-iboxplot_test(iraceResults,
+boxplot_test(iraceResults,
               type = "all",
               rpd = TRUE,
               fileName = NULL)
@@ -83,8 +83,7 @@ If you want to analyze the elite configurations from the last test iteration, us
   
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iboxplot_test(iraceResults, type = "best")
-iboxplot_test(iraceResults, type = "best", rpd = FALSE)
+boxplot_test(iraceResults, type = "best")
 ```
 </div>
 
@@ -92,7 +91,7 @@ When analyzing all elite configurations in testing, use the following code:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iboxplot_test(iraceResults)
+boxplot_test(iraceResults)
 ```
 </div>
 
@@ -100,16 +99,16 @@ Finally, to analyze the best elite configuration of each iteration, use the foll
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iboxplot_test(iraceResults, type = "ibest")
+boxplot_test(iraceResults, type = "ibest")
 ```
 </div>
 
-<h4>Function iscatter_test</h4>
+<h4>Function scatter_test</h4>
 
-The iscatter_test function will return a scatter plot comparing two elite configurations in testing
+The scatter_test function will return a scatter plot comparing two elite configurations in testing
 
 ```
-iscatter_test(iraceResults,
+scatter_test(iraceResults,
               idVector,
               rpd = TRUE,
               fileName = TRUE)
@@ -129,8 +128,7 @@ To compare two elite setups in testing, use the following code:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iscatter_test(iraceResults, idVector = c("92","119"))
-iscatter_test(iraceResults, idVector = c("92","119"), rpd = FALSE)
+scatter_test(iraceResults, idVector = c("92","119"))
 ```
 </div>
 
@@ -138,12 +136,12 @@ iscatter_test(iraceResults, idVector = c("92","119"), rpd = FALSE)
 
 Escribir una descripcion ------------------------------
 
-<h4>Function iparallelcoord</h4>
+<h4>Function parallel_coord</h4>
 
-The iparallelcoord function will return a parallel cordinates plot allowing the analysis of the set of parameters
+The parallel_coord function will return a parallel cordinates plot allowing the analysis of the set of parameters
 
 ```
-iparallelcoord(iraceResults,
+parallel_coord(iraceResults,
                idConfiguration = NULL,
                param_names = NULL,
                fileName = NULL)
@@ -163,7 +161,7 @@ If we want to graph all the parameters and configurations, the following code is
 
 <div style = "text-align:center">
 ```{r, fig.width=7}
-iparallelcoord(iraceResults)
+parallel_coord(iraceResults)
 ```
 </div>
 
@@ -171,7 +169,7 @@ If we want to graph all the parameters and only some configurations, the followi
 
 <div style="text-align: center">
 ```{r, fig.width=5}
-iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+parallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
 ```
 </div>
@@ -179,7 +177,7 @@ If we want to filter the parameters that we want to visualize and with all the c
 
 <div style="text-align: center">
 ```{r, fig.width=5}
-iparallelcoord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+parallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
 
@@ -187,7 +185,7 @@ If we want to filter the iterations that we want to visualize, the following cod
 
 <div style="text-align: center">
 ```{r, fig.width=5}
-iparallelcoord(iraceResults, iterations = c(1,4,6))
+parallel_coord(iraceResults, iterations = c(1,4,6))
 ```
 </div>
 
@@ -195,16 +193,16 @@ Finally, if we want to filter the parameters, iterations and the settings that w
 
 <div style="text-align: center">
 ```{r, fig.width=5}
-iparallelcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
+parallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
 ```
 </div>
-<h4>Function iparcoord</h4>
+<h4>Function iparallel_coord</h4>
 
-The iparcoord function will returns a parallel coordinates plot interactive in shinyApp allowing the analysis of the set of parameters allowing the visualization of the data and filter by iteration
+The iparallelcoord function will returns a parallel coordinates plot interactive in shinyApp allowing the analysis of the set of parameters allowing the visualization of the data and filter by iteration
 
 
 ```
-iparcoord(iraceResults, 
+iparallel_coord(iraceResults, 
           idConfiguration = NULL, 
           param_names = NULL)
 ```
@@ -223,7 +221,7 @@ If we want to graph all the parameters and configurations, the following code is
 
 <div style = "text-align:center">
 ```
-iparcoord(iraceResults)
+iparallel_coord(iraceResults)
 ```
 </div>
 
@@ -231,7 +229,7 @@ If we want to graph all the parameters and only some configurations, the followi
 
 <div style="text-align: center">
 ```
-iparcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
 ```
 </div>
@@ -239,22 +237,22 @@ If we want to filter the parameters that we want to visualize and with all the c
 
 <div style="text-align: center">
 ```
-iparcoord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+iparallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
 Finally, if we want to filter the parameters and the settings that we want to analyze, the following code is used:
 
 <div style="text-align: center">
 ```
-iparcoord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
+iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
-<h4>Function iparameter_freq</h4>
+<h4>Function parameter_frequency</h4>
 
-The iparameter_freq function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
+The parameter_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
 
 ```
-iparameter_freq(iraceResults, 
+parameter_frequency(iraceResults, 
                 param_names = NULL, 
                 fileName = NULL)
 ```
@@ -272,22 +270,22 @@ If we want to visualize all the parameters, the following code is used:
 
 <div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
-iparameter_freq(iraceResults)
+parameter_frequency(iraceResults)
 ```
 </div>
 If we only want to visualize some parameters, we must place specifically those, as shown in the code below:
 
 <div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
-iparameter_freq(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+parameter_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
-<h4>Function iparamater_frequency_iteration</h4>
+<h4>Function paramater_frequency_iteration</h4>
 
-The iparameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
+The parameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
 
 ```
-iparamater_frequency_iteration(iraceResults,
+paramater_frequency_iteration(iraceResults,
                                parameter,
                                fileName = NULL)
 ```
@@ -305,7 +303,7 @@ If we place a categorical parameter it will be shown in the following way, using
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-iparameter_frequency_iteration(iraceResults,parameter = "algorithm")
+parameter_frequency_iteration(iraceResults,parameter = "algorithm")
 ```
 </div>
 
@@ -313,16 +311,16 @@ If we place a numeric parameter it will be shown in the following way, using the
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-iparameter_frequency_iteration(iraceResults,parameter = "alpha")
+parameter_frequency_iteration(iraceResults,parameter = "alpha")
 ```
 </div>
 
-<h4>Function iparamater_density_iteration</h4>
+<h4>Function paramater_density_iteration</h4>
 
-The iparameter_density_iteration function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
+The parameter_density_iteration function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
 
 ```
-iparamater_density_iteration(iraceResults,
+paramater_density_iteration(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -341,16 +339,16 @@ The following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-iparameter_density_iteration(iraceResults,parameter = "alpha")
+parameter_density_iteration(iraceResults,parameter = "alpha")
 ```
 </div>
 
-<h4>Function iparamater_compare_iteration</h4>
+<h4>Function paramater_compare_sampling</h4>
 
-The iparameter_compare_iteration function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
+The parameter_compare_sampling function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
 
 ```
-iparamater_compare_iteration(iraceResults,
+paramater_compare_sampling(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -368,16 +366,16 @@ The following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-iparameter_compare_iteration(iraceResults, parameter = "alpha")
+parameter_compare_sampling(iraceResults, parameter = "alpha")
 ```
 </div>
 
-<h4>Function isunburst</h4>
+<h4>Function sampling_pie</h4>
 
-The isunburst function will return a sunburst plot of the categorical parameters
+The sampling_pie function will return a sunburst plot of the categorical parameters
 
 ```
-isunburst(iraceResults, 
+sampling_pie(iraceResults, 
           dependency = FALSE,
           fileName = NULL)
 ```
@@ -394,7 +392,7 @@ If we want to visualize the categorical parameters and their distribution in ref
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-isunburst(iraceResults)
+sampling_pie(iraceResults)
 ```
 </div>
 
@@ -402,16 +400,16 @@ isunburst(iraceResults)
 
 <!-- <div style="text-align: center"> -->
 <!-- ```{r, fig.width= 7} -->
-<!-- isunburst(iraceResults, dependency = TRUE) -->
+<!-- sampling_pie(iraceResults, dependency = TRUE) -->
 <!-- ``` -->
 <!-- </div> -->
 
-<h4>Function idistance_iteration</h4>
+<h4>Function distance_iteration</h4>
 
-The idistance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
+The distance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
 
 ```
-idistance_iteration(iraceResults,
+distance_iteration(iraceResults,
                     type = "line",
                     t = 0.05,
                     fileName = NULL)
@@ -426,30 +424,30 @@ fileName:       String, A pdf will be created in the location and with the assig
 ```
 If you want to show the graph of lines and points, with a difference margin of 5% between parameters, use the following code:
 
-<!-- <div style="text-align: center"> -->
-<!-- ```{r,fig.width= 7} -->
-<!-- idistance_iteration(iraceResults) -->
-<!-- ``` -->
-<!-- </div> -->
+<div style="text-align: center">
+```
+distance_iteration(iraceResults)
+```
+</div>
 
 If you want to show the box plot, with a difference margin of 20% between parameters, use the following code:
 
-<!-- <div style="text-align: center"> -->
-<!-- ```{r,fig.width= 7} -->
-<!-- idistance_iteration(iraceResults, type = "boxplot", t=0.2) -->
-<!-- ``` -->
-<!-- </div> -->
+<div style="text-align: center">
+```
+distance_iteration(iraceResults, type = "boxplot", t=0.2)
+```
+</div>
 
 <h3>Training</h3>
 
 Descripcion de que es el training ------------------
 
-<h4>Function iheatmap</h4>
+<h4>Function heatmap</h4>
 
-The iheatmap function will return a heat map plot of all experimental data configurations
+The heatmap function will return a heat map plot of all experimental data configurations
 
 ```
-iheatmap(iraceResults, 
+heatmap(iraceResults, 
          fileName = NULL)
 ```
 
@@ -464,16 +462,16 @@ to execute the function the following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iheatmap(iraceResults)
+heatmap(iraceResults)
 ```
 </div>
 
-<h4>Function ibp</h4>
+<h4>Function boxplot_training</h4>
 
-The ibp function will return a box plot of the elite confirations according to the iteration you want
+The boxplot_training function will return a box plot of the elite confirations according to the iteration you want
 
 ```
-ibp(iraceResults, 
+boxplot_training(iraceResults, 
     numberIteration = NULL, 
     rpd = TRUE ,
     fileName = NULL)
@@ -494,8 +492,7 @@ If you want to view the graph of the last iteration, use the following code:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-ibp(iraceResults)
-ibp(iraceResults,rpd = FALSE)
+boxplot_training(iraceResults)
 ```
 </div>
 
@@ -503,20 +500,19 @@ If you want to visualize the graph of the fifth iteration, use the following cod
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-ibp(iraceResults,numberIteration = 5)
-ibp(iraceResults,numberIteration = 5, rpd = FALSE)
+boxplot_training(iraceResults,numberIteration = 5)
 ```
 </div>
 
-<h4>Function iscatter</h4>
+<h4>Function scatter_training</h4>
 
-The iscatter function will return a scatter plot comparing two elite configurations in training
+The scatter_training function will return a scatter plot comparing two elite configurations in training
 
 ```
-iscatter(iraceResults, 
-         idVector, 
-         rpd = TRUE, 
-         fileName = NULL)
+scatter_training(iraceResults, 
+                 idVector, 
+                 rpd = TRUE, 
+                 fileName = NULL)
 ```
 <h5>Arguments</h5>
 
@@ -533,19 +529,18 @@ To compare two elite setups in training, use the following code:
 
 <div style="text-align: center">
 ```{r, fig.width= 7}
-iscatter(iraceResults, idVector = c(806,809))
-iscatter(iraceResults, idVector = c(806,809), rpd = FALSE)
+scatter_training(iraceResults, idVector = c(806,809))
 ```
 </div>
 
-<h4>Function iconf_instances</h4>
+<h4>Function configurations_display</h4>
 
 A graph is created with all the settings and instance of the training data
 
 ```
-iconf_instances(iraceResults, 
-                rpd = TRUE, 
-                fileName = NULL)
+configurations_display(iraceResults, 
+                       rpd = TRUE, 
+                       fileName = NULL)
 ```
 <h5>Arguments</h5>
 
@@ -559,8 +554,8 @@ fileName:       string, A pdf will be created in the location and with the assig
 
 If we want to observe all the values ​​that the configurations take in their respective instances and iterations, place the following code:
 
-<!-- <div style="text-align: center"> -->
-<!-- ```{r, fig.width= 7} -->
-<!-- iconf_instances(iraceResults) -->
-<!-- ``` -->
-<!-- </div> -->
+<div style="text-align: center">
+```
+configurations_display(iraceResults)
+```
+</div>

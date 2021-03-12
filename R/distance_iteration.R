@@ -24,7 +24,7 @@
 #' @examples
 #' NULL
 
-idistance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName = NULL){
+distance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName = NULL){
 
   if(!(type == "line" | type == "boxplot")){
     print("The type parameter entered is incorrect")

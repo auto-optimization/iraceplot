@@ -16,7 +16,8 @@
 #'
 #' @examples
 #' NULL
-isunburst <- function(iraceResults, dependency = FALSE, fileName = NULL){
+
+sampling_pie <- function(iraceResults, dependency = FALSE, fileName = NULL){
 
   #variable assignment
   param_c <- parents <- labels <- values <- ids <- depend <-NULL

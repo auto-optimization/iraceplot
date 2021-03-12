@@ -27,7 +27,7 @@
 #' @examples
 #' NULL
 
-iparameter_freq <- function(iraceResults, param_names = NULL, fileName = NULL){
+parameter_frequency <- function(iraceResults, param_names = NULL, fileName = NULL){
 
   #Variable assignment
   vectorG <- tabla <- Var1 <- Freq <- ..density.. <-NULL

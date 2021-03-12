@@ -1,9 +1,8 @@
-#' Parallel Coordinates Plot interactive
+#' Parallel Coordinates Plot static
 #'
 #' @description
-#' The function will returns a parallel coordinates plot
-#' interactive in shinyApp allowing the analysis of the set of parameters
-#' allowing the visualization of the data and filter by iteration
+#' The iparallelcoord function will return a parallel cordinates plot
+#' allowing the analysis of the set of parameters
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
@@ -16,34 +15,45 @@
 #' String vector, you need to put the parameters you want to analyze
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
+#' @param iterations
+#' NUmeric vector, you need to put the iterations you want to analyze
+#' (example: iterations = c(1,4,5))
+#'
+#' @param fileName
+#' A pdf will be created in the location and with
+#' the assigned name (example: "~/patch/example/filename")
+#'
 #' @return parallel cordinates plot
 #' @export
+#' @importFrom GGally ggparcoord
+#' @importFrom ggplot2 element_text scale_color_viridis_d
+#' @importFrom plotly plot_ly add_trace
 #'
-#'@importFrom dplyr arrange
-#'@importFrom parcoords parcoords
-#'@importFrom shinydashboard  dashboardBody dashboardPage dashboardHeader dashboardSidebar box
-#'@importFrom shiny dataTableOutput renderDataTable shinyApp fluidRow checkboxGroupInput h3
 #'
 #' @examples
 #' NULL
 
-iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
+parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,fileName = NULL){
 
   #Variable assignment
-  memo  <- configuration <- dim <- choi <- cont <-NULL
+  memo  <- configuration <- dim <- NULL
   idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
-  dim <- list()
-  cont = 0
+
+  if(!is.null(iterations)){
+    it <- c(1:length(iraceResults$allElites))
+    if(FALSE %in% (iterations %in% it)){
+      return("The interactions entered are outside the possible range")
+    }
+  }
 
   #verify that param_names is other than null
   if(!is.null(param_names)){
     #verify that param_names contain the data entered
     if( "FALSE" %in% names(table(param_names %in% iraceResults$parameters$names))){
       return("Some wrong parameter entered")
-    }
-    #verify that param_names contain more than one parameter
-    else if(length(param_names) < 2){
+      #verify that param_names contain more than one parameter
+    }else if(length(param_names) < 2){
       return("You must enter at least two parameters")
     }
 
@@ -67,9 +77,8 @@ iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
     selection2 <- filtro[, "configuration"] %in% idConfiguration
     filtro <- filtro[selection2,]
-  }
-  # table is created with all settings
-  else{
+    # table is created with all settings
+  }else{
     tabla <-iraceResults$allConfigurations
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
   }
@@ -98,9 +107,8 @@ iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
       add <- tabla[tabla$.ID. == memo,]
       add$iteration = filtro$iteration[i]
       tabla <- rbind(tabla,add)
-    }
-    #The iteration is assigned to the configuration
-    else{
+      #The iteration is assigned to the configuration
+    }else{
       tabla$iteration[tabla$.ID. == filtro$configuration[i]] = filtro$iteration[i]
     }
     memo = filtro$configuration[i]
@@ -113,11 +121,6 @@ iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
     tabla <- tabla[, (names(tabla) %in% param_names )]
   }
 
-  # NA are converted to character in the table
-  # for(k in 1:(length(tabla))){
-  #   tabla[[k]][is.na(tabla[[k]])] <- "NA"
-  # }
-
   #NA data processing
   for(k in 1:(length(tabla))){
     if(class(tabla[[k]]) == "numeric" && NA %in% tabla[[k]]){
@@ -127,136 +130,106 @@ iparcoord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
     }
   }
 
-  for (i in 1:(length(colnames(tabla))-1)) {
-    if(class(tabla[[i]]) == "character"){
+  if(!is.null(iterations)){
+     tabla <- tabla[tabla$iteration %in% iterations,]
+  }
 
+  #create plot dimensions
+  for(i in 1:length(tabla)){
+
+    if(colnames(tabla)[i] == "iteration"){
+      dim[[i]] = list(
+        range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+        values = tabla[[i]],
+        label = colnames(tabla)[i],
+        visible = FALSE
+      )
+      #if the column is of type character
+    }else if(class(tabla[[i]]) == "character"){
+      factor_tab <- NULL
+      factor_tab <- factor(tabla[[i]])
+      levels(factor_tab) <- c(1:length(unique(tabla[[i]])))
+      if("NA" %in% tabla[[i]]){
+        tickT = c(iraceResults$parameters$domain[[colnames(tabla)[i]]],"NA")
+      }else{
+        tickT = iraceResults$parameters$domain[[colnames(tabla)[i]]]
+      }
+      dim[[i]] = list(
+            label = colnames(tabla)[i],
+            tickvals = c(1:length(unique(tabla[[i]]))),
+            #ticktext = unique(tabla[[i]]),
+            ticktext = tickT,
+            values = factor_tab
+            )
+      #if the column is of type numeric
     }else if(class(tabla[[i]]) == "numeric"){
-      cont = cont +1
-      dim[colnames(tabla)[i]] <- dim[cont]
       if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
         minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
         medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
         medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
         medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
         maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2] +1
-
-        dim[[cont]] = list(
-          tickValues = c(minimo,medio,medio2,medio3,maximo)
-          )
+        dim[[i]] = list(
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]+1),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,"NA"),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
       }else{
         minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
         medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
         medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
         medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
-        tickFormat = list()
         maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2]
-        dim[[cont]] = list(
-          tickValues = c(minimo,medio,medio2,medio3,maximo)
-          )
-        }
-    }
-  }
-
-  #A list is created based on the iterations of the table
-  for(m in min(tabla$iteration):max(tabla$iteration)){
-    texto = paste("Iteration",m)
-    choi[[texto]] <- m
-  }
-
-
-  #shiny app body
-  body <- dashboardBody(
-    fluidRow(
-      # parallel coordinate plot box
-      box(
-        title = "Irace Parcoords Plot", width = 10, status = "primary",
-        parcoords::parcoordsOutput("tablaPlot")
-      ),
-      # iterations box
-      box(
-        width = 2,
-        checkboxGroupInput("checkGroup",h3("Iterations"),
-                           choices =  choi,
-                           selected = c(min(tabla$iteration):max(tabla$iteration)))
-      )
-    ),
-    # Data box
-    fluidRow(
-      box(
-        title = "Extracted Data", status = "primary",
-        dataTableOutput("SelectedData")
-      )
-    )
-  )
-
-  ui <- dashboardPage(
-    dashboardHeader(title="Parcoords Plot"),
-    dashboardSidebar(disable=TRUE),
-    body
-  )
-
-  server = function(input, output, session) {
-
-
-    #Standard parcoords plot in shiny
-
-    output$tablaPlot <- parcoords::renderParcoords({
-      tablaOut <- tabla[(tabla$iteration %in% input$checkGroup),]
-      parcoords::parcoords(tablaOut,
-                           rownames = FALSE,
-                           reorder=TRUE,
-                           brushMode = "1D",
-                           color = list(
-                             colorBy = "iteration",
-                             colorScale = "scaleOrdinal",
-                             colorScheme = "schemePaired"),
-                           withD3 = TRUE,
-                           autoresize = TRUE,
-                           dimensions = dim,
-                           tasks = list(htmlwidgets::JS(
-                             "
-    function(){
-      // supply an array of columns to hide
-      this.parcoords.hideAxis(['names','iteration'])
-
-      this.parcoords.removeAxes();
-      this.parcoords.render();
-
-      // duplicated from the widget js code
-      //  to make sure reorderable and brushes work
-      if( this.x.options.reorderable ) {
-        this.parcoords.reorderable();
-      } else {
-        this.parcoords.createAxes();
+        dim[[i]] = list(
+          range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]),
+          tickvals = c(minimo,medio,medio2,medio3,maximo),
+          ticktext = c(minimo,medio,medio2,medio3,maximo),
+          values = tabla[[i]],
+          label = colnames(tabla)[i])
       }
 
-      if( this.x.options.brushMode ) {
-      // reset the brush with None
-        this.parcoords.brushMode('None')
-        this.parcoords.brushMode(this.x.options.brushMode);
-        this.parcoords.brushPredicate(this.x.options.brushPredicate);
-      }
-
-      // delete title from the rownames axis
-      //d3.select('#' + this.el.id + ' .dimension .axis > text').remove();
     }
-    "
-                           ))
-      )
-
-    })
-
-
-    # Here we can access the variable input$id_rows to determine which are selected
-    # we display these results in a table
-    output$SelectedData <- renderDataTable({
-      ids <- rownames(tabla) %in% input$tablaPlot_brushed_row_names
-      tabla[ids,]
-    })
+    #other types
+    else{
+        dim[[i]] = list(
+          range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+          values = tabla[[i]],
+          label = colnames(tabla)[i]
+        )
+      }
 
   }
 
-  shinyApp(ui, server)
+  iteration_f <- factor(as.character(tabla$iteration), ordered = TRUE)
+  levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
+  tabla <- cbind(tabla,iteration_f)
+
+  #plot creation
+  p <- tabla %>%
+    plot_ly(width = 700, height = 600)
+  p <- p %>% add_trace(type = 'parcoords',
+                           line = list(color = ~iteration_f,
+                                       colorscale = 'Viridis',
+                                       showscale = TRUE,
+                                       reversescale = TRUE,
+                                       cmin = min(tabla$iteration_f),
+                                       cmax = max(tabla$iteration_f)),
+                           dimensions = dim
+  )
+
+
+  #If the value in fileName is added the pdf file is created
+  if(!is.null(fileName)){
+    #The fileName value is worked to separate it and assign it to new values.
+    nameFile = basename(fileName)
+    directory = paste0(dirname(fileName),sep="/")
+    withr::with_dir(directory, orca(p, paste0(nameFile,".pdf")))
+
+  #If you do not add the value of fileName, the plot is displayed
+  }else{
+    p
+  }
 
 }
-

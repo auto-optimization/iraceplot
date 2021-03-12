@@ -24,7 +24,7 @@
 #' @examples
 #' NULL
 
-iscatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
+scatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){

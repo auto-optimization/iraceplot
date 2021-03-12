@@ -24,7 +24,7 @@
 #' @examples
 #' NULL
 
-iboxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL){
+boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){

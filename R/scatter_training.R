@@ -27,7 +27,7 @@
 #' @examples
 #' NULL
 
-iscatter <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL){
+scatter_training <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL){
 
   #Variable assignment
   iteracionFiltrada <- NULL

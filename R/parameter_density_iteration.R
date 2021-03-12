@@ -23,7 +23,7 @@
 #' @examples
 #' NULL
 
-iparameter_density_iteration <- function(iraceResults,parameter,fileName = NULL){
+parameter_density_iteration <- function(iraceResults,parameter,fileName = NULL){
   #Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
 

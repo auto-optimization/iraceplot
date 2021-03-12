@@ -27,7 +27,7 @@
 #' @examples
 #' NULL
 
-iheatmap <- function(iraceResults, fileName = NULL){
+heatmap <- function(iraceResults, fileName = NULL){
   #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 
