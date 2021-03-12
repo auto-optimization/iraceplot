@@ -8,6 +8,9 @@
 #' @param dependency
 #' Logical (default FALSE) that allows to verify if the parameters
 #' are dependent on others, modifying the visualization of the plot
+#' @param parameters
+#' String vector, a set of categorical type parameters
+#' (example: parameters = c("algorithm","dlb"))
 #' @param fileName
 #' String, A pdf will be created in the location and with the assigned
 #' name (example: "~/patch/example/filename")
@@ -17,7 +20,7 @@
 #' @examples
 #' NULL
 
-sampling_pie <- function(iraceResults, dependency = FALSE, fileName = NULL){
+sampling_pie <- function(iraceResults, dependency = FALSE, parameters = NULL,fileName = NULL){
 
   #variable assignment
   param_c <- parents <- labels <- values <- ids <- depend <-NULL
@@ -26,6 +29,15 @@ sampling_pie <- function(iraceResults, dependency = FALSE, fileName = NULL){
   for(i in 1:length(iraceResults$parameters$types)){
     if(iraceResults$parameters$types[[i]] == "c"){
       param_c = c(param_c,names(iraceResults$parameters$types)[i])
+    }
+  }
+
+  if(!is.null(parameters)){
+    if(FALSE %in% (parameters %in% param_c)){
+      print("Only categorical data can be used")
+      return(paste("The following parameters are not found:",parameters[!(parameters %in% param_c)]))
+    }else{
+      param_c = unique(parameters)
     }
   }
 

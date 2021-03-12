@@ -10,6 +10,10 @@
 #'Numeric, It is the number referring to the iteration that you want to graph,
 #'the range of these varies according to the Rdata used (example: numberIteration = 5)
 #'
+#'@param idConfigurations
+#'Numeric vector, you need to put the configurations you want to analyze
+#' (example: idConfigurations = c(20,50,100,300,500,600,700))
+#'
 #'@param rpd
 #'Logical (default TRUE) to fit through an equation of minimum percentage distance
 #'between the values of each row of all configurations
@@ -29,11 +33,15 @@
 #'@examples
 #'NULL
 
-boxplot_training <- function(iraceResults, numberIteration = NULL, rpd = TRUE ,fileName = NULL){
+boxplot_training <- function(iraceResults, numberIteration = NULL, idConfigurations = NULL, rpd = TRUE ,fileName = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL
   long <- length(iraceResults$allElites)
+
+  if(!is.null(numberIteration) & !is.null(idConfigurations)){
+    return("You cannot use idConfigurations and numberIteration at the same time")
+  }
 
   #It is checked if the fileName argument was added
   if(!is.null(numberIteration)){
@@ -48,6 +56,15 @@ boxplot_training <- function(iraceResults, numberIteration = NULL, rpd = TRUE ,f
 
   #A vector is created with the id of all elite configurations from the iteration entered
   id <- iraceResults$allElites[[long]]
+
+  if(!is.null(idConfigurations)){
+    n_conf = c(1:dim(iraceResults$experiments)[2])
+    if(FALSE %in% (idConfigurations %in% n_conf)){
+      return(paste("The following settings are out of range:",idConfigurations[!(idConfigurations %in% n_conf)]))
+    }else{
+      id <- idConfigurations
+    }
+  }
 
   #A table is created with the values of all elite configurations of the id of the requested iteration
   distance <- iraceResults$experiments

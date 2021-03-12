@@ -322,6 +322,7 @@ The sampling_pie function will return a sunburst plot of the categorical paramet
 ``` r
 sampling_pie(iraceResults, 
           dependency = FALSE,
+          parameters = NULL,
           fileName = NULL)
 ```
 
@@ -331,6 +332,8 @@ sampling_pie(iraceResults,
 iraceResults:   The data generated when loading the Rdata file created by irace
 
 dependency:     Logical (default FALSE) that allows to verify if the parameters are dependent on others, modifying the visualization of the plot
+
+parameters:     String vector, a set of categorical type parameters (example: parameters = c("algorithm","dlb"))
 
 fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -402,6 +405,7 @@ The boxplot_training function will return a box plot of the elite confirations a
 ``` r
 boxplot_training(iraceResults, 
     numberIteration = NULL, 
+    idConfigurations = NULL,
     rpd = TRUE ,
     fileName = NULL)
 ```
@@ -412,6 +416,8 @@ boxplot_training(iraceResults,
 iraceResults:       The data generated when loading the Rdata file created by irace
 
 numberIteration:    Numeric, It is the number referring to the iteration that you want to graph, the range of these varies according to the Rdata used (example: numberIteration = 5)
+
+idConfigurations:   Numeric vector, you need to put the configurations you want to analyze (example: idConfigurations = c(20,50,100,300,500,600,700))
 
 rpd:       Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
@@ -424,6 +430,8 @@ fileName:           String, A pdf will be created in the location and with the a
 boxplot_training(iraceResults)
 
 boxplot_training(iraceResults,numberIteration = 5)
+
+boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
 ```
 
 ## Function scatter_training

@@ -7,6 +7,7 @@
 boxplot_training(
   iraceResults,
   numberIteration = NULL,
+  idConfigurations = NULL,
   rpd = TRUE,
   fileName = NULL
 )
@@ -16,6 +17,9 @@ boxplot_training(
 
 \item{numberIteration}{Numeric, It is the number referring to the iteration that you want to graph,
 the range of these varies according to the Rdata used (example: numberIteration = 5)}
+
+\item{idConfigurations}{Numeric vector, you need to put the configurations you want to analyze
+(example: idConfigurations = c(20,50,100,300,500,600,700))}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}

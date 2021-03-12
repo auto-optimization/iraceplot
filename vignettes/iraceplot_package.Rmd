@@ -400,6 +400,7 @@ The sampling_pie function will return a sunburst plot of the categorical paramet
 ```
 sampling_pie(iraceResults, 
           dependency = FALSE,
+          parameters = NULL,
           fileName = NULL)
 ```
 <h5>Arguments</h5>
@@ -409,6 +410,8 @@ iraceResults:   The data generated when loading the Rdata file created by irace
 
 dependency:     Logical (default FALSE) that allows to verify if the parameters are dependent on others, modifying the visualization of the plot
 
+parameters:     String vector, a set of categorical type parameters (example: parameters = c("algorithm","dlb"))
+
 fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 If we want to visualize the categorical parameters and their distribution in reference to their values, the following code is used:
@@ -416,6 +419,14 @@ If we want to visualize the categorical parameters and their distribution in ref
 <div style="text-align: center">
 ```{r, fig.width= 7}
 sampling_pie(iraceResults)
+```
+</div>
+
+If you want to filter the parameters you want to display, use the following code
+
+<div style="text-align: center">
+```{r, fig.width= 7}
+sampling_pie(iraceResults, parameters = c("algorithm","dlb"))
 ```
 </div>
 
@@ -499,7 +510,8 @@ The boxplot_training function will return a box plot of the elite confirations a
 
 ```
 boxplot_training(iraceResults, 
-    numberIteration = NULL, 
+    numberIteration = NULL,
+    idConfigurations = NULL,
     rpd = TRUE ,
     fileName = NULL)
 ```
@@ -510,7 +522,9 @@ iraceResults:       The data generated when loading the Rdata file created by ir
 
 numberIteration:    Numeric, It is the number referring to the iteration that you want to graph, the range of these varies according to the Rdata used (example: numberIteration = 5)
 
-rpd:       Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+idConfigurations:   Numeric vector, you need to put the configurations you want to analyze (example: idConfigurations = c(20,50,100,300,500,600,700))
+
+rpd:                Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
 fileName:           String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -528,6 +542,14 @@ If you want to visualize the graph of the fifth iteration, use the following cod
 <div style="text-align: center">
 ```{r, fig.width= 7}
 boxplot_training(iraceResults,numberIteration = 5)
+```
+</div>
+
+If you want some specific settings, do the following:
+
+<div style="text-align: center">
+```{r, fig.width= 7}
+boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
 ```
 </div>
 
