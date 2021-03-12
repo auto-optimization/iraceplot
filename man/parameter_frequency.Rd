@@ -9,11 +9,11 @@ parameter_frequency(iraceResults, param_names = NULL, fileName = NULL)
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{param_names}{It's of type vector
-Is a vector with the parameters to be displayed in the plot}
+\item{param_names}{String vector, A set of parameters to be plotted
+(example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
-\item{fileName}{It's of type string
-You must place the path where you want to save the file and its name without the extension pdf}
+\item{fileName}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/filename")}
 }
 \value{
 Frequency and/or density plot

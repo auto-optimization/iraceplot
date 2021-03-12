@@ -9,13 +9,12 @@
 #' The data generated when loading the Rdata file created by irace
 #'
 #' @param param_names
-#' It's of type vector
-#' Is a vector with the parameters to be displayed in the plot
-#'
+#' String vector, A set of parameters to be plotted
+#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @param fileName
-#' It's of type string
-#' You must place the path where you want to save the file and its name without the extension pdf
+#' String, A pdf will be created in the location and with the assigned
+#' name (example: "~/patch/example/filename")
 #'
 #' @return Frequency and/or density plot
 #' @export
