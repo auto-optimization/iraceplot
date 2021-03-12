@@ -36,309 +36,447 @@ load("~/patch/example/name.Rdata")
 
 # Functions
 
-## Function ibp()
-
-The 'ibp()' function returns a graphic of box plot
+  The different functions used in iraceplot will allow the creation of different graphics. The functions are as follows:
 
 ``` r
-ibp(iraceResults,numberInteraction = NULL,distance_min = FALSE,fileName = NULL)
+get_parameters_names
+boxplot_test
+scatter_test
+parallel_coord
+iparallel_coord
+parameter_frequency
+parameter_frequency_iteration
+parameter_density_iteration
+parameter_compare_sampling
+sampling_pie
+heatmap
+distance_iteration
+boxplot_training
+scatter_training
+configurations_display
 ```
 
-Example 1
+## Function get_parameters_names
+
+The function get_parameters_names returns a string vector with the names of the document parameters iraceResults
+
+### Arguments
 
 ``` r
-ibp(iraceResults)
-Return the box plot of the last iteration of la elite configuration
+iraceResults:   The data generated when loading the Rdata file created by irace
+```
+### Example
+
+``` r
+get_parameters_names(iraceResults)
 ```
 
-Example 2
+## Function boxplot_test
 
-The following line allows us to visualize the number of iterations and the best configurations of each one
+The boxplot_test function will return a box plot, using the data generated in the test settings coloring the best configuration in each iteration
+
 ``` r
-iraceResults$allElites
+boxplot_test(iraceResults,
+              type = "all",
+              rpd = TRUE,
+              fileName = NULL)
 ```
 
-If I get a range of iterations that goes from 1 to 10 then I can choose which iteration to plot
+### Arguments
 
 ``` r
-ibp(iraceResults,3)
-Return the box plot of the third iteration of la elite configuration
-```
-Example 3
+iraceResults:   The data generated when loading the Rdata file created by irace
 
-``` r
-ibp(iraceResults,3,distance_min = TRUE)
-the data in the table is modified according to the minimum distance of each percentage row
-```
+type:           String, either "all", "ibest" or "best". By default it is  "all" which shows all the configurations in testing, "ibest" shows the best configurations of each iteration and "best" shows the configurations of the last iteration
 
-Example 4
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
 
-Option 1:
-
-``` r
-ibp(iraceResults,2,"filename")
-Return the box plot of the second iteration of la elite configuration, but it is saved directly to pdf file in current directory
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Option 2:
+### Examples
 
 ``` r
-ibp(iraceResults,2,"~/patch/example/filename")
-Return the box plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
+boxplot_test(iraceResults)
+
+boxplot_test(iraceResults, type = "best")
+
+boxplot_test(iraceResults, type = "ibest")
 ```
 
-## Function iscatter()
+## Function scatter_test
 
-The 'iscatter()' function returns a graphic of scatter
-
-``` r
-iscatter(iraceResults,idVector,distance_min = FALSE,fileName = NULL)
-```
-Example 1
+The scatter_test function will return a scatter plot comparing two elite configurations in testing
 
 ``` r
-iscatter(iraceResults, c(100,300))
-Return the scatter plot of the configurations 100 and 300
-```
-Example 2
-
-``` r
-iscatter(iraceResults, c(100,300), distance_min = TRUE)
-the data in the table is modified according to the minimum distance of each percentage row
+scatter_test(iraceResults,
+              idVector,
+              rpd = TRUE,
+              fileName = TRUE)
 ```
 
-Example 3
-
-Option 1:
+### Arguments
 
 ``` r
-iscatter(iraceResults, c(100,300),"filename")
-Return the scatter plot of the second iteration of la elite configuration, but it is saved directly to pdf file in current directory
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+idVector:       String vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c("92","119"))
+
+rpd:   logical(default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Option 2:
+### Example
 
 ``` r
-iscatter(iraceResults, c(100,300),"~/patch/example/filename")
-Return the scatter plot of the second iteration of la elite configuration, but it is saved directly to a pdf file
+scatter_test(iraceResults, idVector = c("92","119"))
 ```
 
-## Function iheatmap()
+## Function parallel_coord
 
-The 'iheatmap()' function returns a graphic of heatmap
-
-``` r
-iheatmap(iraceResults, fileName = NULL)
-```
-Example 1
+The parallel_coord function will return a parallel cordinates plot allowing the analysis of the set of parameters
 
 ``` r
-iheatmap(iraceResults)
-Return the heat map plot interactive
-```
-Example 2
-
-Option 1:
-
-``` r
-iheatmap(iraceResults, "filename")
-Return the heat map plot, but it is saved directly to pdf file in current directory
+parallel_coord(iraceResults,
+               idConfiguration = NULL,
+               param_names = NULL,
+               fileName = NULL)
 ```
 
-Option 2:
+### Arguments
 
 ``` r
-iheatmap(iraceResults,"~/patch/example/filename")
-Return the heat map plot, but it is saved directly to a pdf file
-``` 
+iraceResults:       The data generated when loading the Rdata file created by irace
 
-## Function iparallelcoord()
+idConfiguration:    Numeric vector, you need to put the configurations you want to analyze (example: idConfiguration = c(20,50,100,300,500,600,700))
 
-The 'iparallelcoord()' function returns a graphic of parallel coordinates interactive
+param_names:        String vector, you need to put the parameters you want to analyze (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 
-``` r
-iparallelcoord(iraceResults,idConfiguration = NULL, param_names = NULL, fileName = NULL)
-```
-Example 1
-
-``` r
-iparallelcoord(iraceResults)
-Return the parallel coordinates plot interactive from all configurations 
+fileName:           string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Example 2
+### Examples
 
 ``` r
-iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100))
-Return the parallel coordinates plot interactive of the configurations  entered 
-```
-Example 3
+parallel_coord(iraceResults)
 
-``` r
-iparallelcoord(iraceResults, param_names = c("algorithm","localsearch"))
-Return the parallel coordinates plot interactive of the parameters entered 
-```
+parallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
-Example 4
+parallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 
-Option 1:
+parallel_coord(iraceResults, iterations = c(1,4,6))
 
-``` r
-iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), fileName = "filename")
-Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
+parallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
 ```
 
-Option2:
+## Function iparallel_coord
+
+The iparallelcoord function will returns a parallel coordinates plot interactive in shinyApp allowing the analysis of the set of parameters allowing the visualization of the data and filter by iteration
 
 ``` r
-iparallelcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"), fileName = "~/patch/example/filename")
-Return the parallel coordinates plot but it is saved directly to a pdf file
+iparallel_coord(iraceResults, 
+          idConfiguration = NULL, 
+          param_names = NULL)
 ```
 
-## Function iparcoord()
-
-The 'iparcoord()' function returns a graphic of parallel coordinates interactive in shinyApp.
+### Arguments
 
 ``` r
-iparcoord(iraceResults,idConfiguration = NULL, param_names = NULL)
-```
-Example 1
+iraceResults:       The data generated when loading the Rdata file created by irace
 
-``` r
-iparcoord(iraceResults)
-Return the parallel coordinates plot interactive from all configurations 
+idConfiguration:    Numeric vector, you need to put the configurations you want to analyze (example: idConfiguration = c(20,50,100,300,500,600,700))
+
+param_names:        String vector, you need to put the parameters you want to analyze (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
-Example 2
+### Examples
 
 ``` r
-iparcoord(iraceResults, idConfiguration = c(2,23,54,100))
-Return the parallel coordinates plot interactive of the configurations  entered 
+iparallel_coord(iraceResults)
+
+iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+
+iparallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
+iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
-Example 3
+## Function parameter_frequency
+
+The parameter_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
 
 ``` r
-iparcoord(iraceResults, idConfiguration = c(2,23,54,100), param_names = c("algorithm","localsearch"))
-Return the parallel coordinates plot but it is saved directly to a pdf file in current directory
+parameter_frequency(iraceResults, 
+                param_names = NULL, 
+                fileName = NULL)
 ```
 
-## Function iparameter_freq()
-
-The 'iparameter_freq()' function returns a graph of parameter frequency
+### Arguments
 
 ``` r
-iparameter_freq(iraceResults, param_names = NULL, fileName = NULL)
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+param_names:    String vector, A set of parameters to be plotted (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Example 1
+### Example
 
 ``` r
-iparameter_freq(iraceResults)
-Return the parameter frequency plot from all parameters 
-```
-Example 2
+parameter_frequency(iraceResults)
 
-``` r
-iparameter_freq(iraceResults, param_names = c("algorithm", "alpha"))
-Returns the frequency graph of only the entered parameters 
+parameter_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
-Example 3
+## Function parameter_frequency_iteration
+
+The parameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
 
 ``` r
-iparameter_freq(iraceResults, fileName = "~/patch/example/filename")
-Return the parameter frequency plot from all parameters but it is saved directly to a pdf file
+paramater_frequency_iteration(iraceResults,
+                               parameter,
+                               fileName = NULL)
 ```
 
-## Function iparameter_freq_iteration()
-
-The 'iparameter_freq_iteration()' function returns a graph of frequency and density of a single parameter based on its iteration
+### Arguments
 
 ``` r
-iparameter_freq_iteration(iraceResults, parameter, fileName = NULL)
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+parameter:      String, value of the parameter to be analyzed (example: parameter = "alpha") 
+
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Example 1
+### Examples
+
+The graph that is generated is different if the parameter is of a categorical or numerical type
 
 ``` r
-iparameter_freq_iteration(iraceResults, parameter = "alpha")
-returns 3 types of density graphs and/or histogram
+parameter_frequency_iteration(iraceResults,parameter = "algorithm")
 
 ```
 
-Example 2
+## Function parameter_density_iteration
+
+The parameter_density_iteration function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
 
 ``` r
-iparameter_freq_iteration(iraceResults, parameter = "alpha", fileName =  "~/patch/example/filename")
-A pdf is created with the graphics
+paramater_density_iteration(iraceResults,
+                             parameter,
+                             fileName = NULL)
 ```
 
-## Function iscatter_test()
-
-The 'iscatter_test()' function returns a scatter plot based on test settings 
+### Arguments
 
 ``` r
-iscatter_test(iraceResults, idVector,distance_min = FALSE, fileName = NULL)
-```
-Example 1
+iraceResults:   The data generated when loading the Rdata file created by irace
 
-``` r
-iscatter_test(iraceResults, idVector = c("92","119"))
-returns the graph of the two configurations
-```
-Example 2
+parameter:      String, value of the parameter to be analyzed (example: parameter = "alpha")
 
-``` r
-iscatter_test(iraceResults, idVector = c("92","119"), distance_min = TRUE)
-the data in the table is modified according to the minimum distance of each percentage row
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Example 3
+### Example
+
+The graph that is generated is different if the parameter is of a categorical or numerical type
 
 ``` r
-iscatter_test(iraceResults, idVector = c("92","119"), distance_min = TRUE, fileName = "~/patch/example/filename")
-it is saved in a PDF in the place indicated with its name
-```
-## Function iboxplot_test()
-
-The 'iboxplot_test()' function returns a box plot based on test settings
-
-``` r
-iboxplot_test(iraceResults, type = "all" ,distance_min = FALSE, fileName = NULL)
+parameter_density_iteration(iraceResults,parameter = "alpha")
 ```
 
-Example 1
+## Function parameter_compare_sampling
+
+The parameter_compare_sampling function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
 
 ``` r
-iboxplot_test(iraceResults)
-returns the graph with all the testing experiments settings
+paramater_compare_sampling(iraceResults,
+                             parameter,
+                             fileName = NULL)
 ```
 
-Example 2
+### Arguments
 
 ``` r
-iboxplot_test(iraceResults, type = "last")
-returns the graph with the elite configurations of the last iteration in testintg
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+parameter:      String, value of the parameter to be analyzed (example: parameter = "alpha")
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
-Example 3
+### Example
+
+it is recommended to use for numerical parameters
 
 ``` r
-iboxplot_test(iraceResults, type = "best")
-returns the graph with the the best settings of each iteration in testintg
+parameter_compare_sampling(iraceResults, parameter = "alpha")
 ```
 
-Example 4
+## Function sampling_pie
+
+The sampling_pie function will return a sunburst plot of the categorical parameters
 
 ``` r
-iboxplot_test(iraceResults,distance_min = TRUE)
-the data in the table is modified according to the minimum distance of each percentage row
+sampling_pie(iraceResults, 
+          dependency = FALSE,
+          fileName = NULL)
 ```
 
-Example 5
+### Arguments
 
 ``` r
-iboxplot_test(iraceResults, type = "last" ,distance_min = TRUE, fileName = "~/patch/example/filename")
-it is saved in a PDF in the place indicated with its name
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+dependency:     Logical (default FALSE) that allows to verify if the parameters are dependent on others, modifying the visualization of the plot
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+sampling_pie(iraceResults)
+```
+
+## Function distance_iteration
+
+The distance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
+
+``` r
+distance_iteration(iraceResults,
+                    type = "line",
+                    t = 0.05,
+                    fileName = NULL)
+```
+
+### Arguments
+
+``` r
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+type:           String, either "line" or "boxplot". by default it is "line" which will show a plot of points and lines, "boxplot" will show a box plot
+
+t:              Numeric, It is a percentage factor that will determine the range of difference between settings (example: t = 0.05 is equivalent to 5%)
+
+fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+distance_iteration(iraceResults)
+
+distance_iteration(iraceResults, type = "boxplot", t=0.2)
+```
+
+## Function heatmap
+
+The heatmap function will return a heat map plot of all experimental data configurations
+
+``` r
+heatmap(iraceResults, 
+         fileName = NULL)
+```
+
+### Arguments
+
+``` r
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+heatmap(iraceResults)
+```
+
+## Function boxplot_training
+
+The boxplot_training function will return a box plot of the elite confirations according to the iteration you want
+
+``` r
+boxplot_training(iraceResults, 
+    numberIteration = NULL, 
+    rpd = TRUE ,
+    fileName = NULL)
+```
+
+### Arguments
+
+``` r
+iraceResults:       The data generated when loading the Rdata file created by irace
+
+numberIteration:    Numeric, It is the number referring to the iteration that you want to graph, the range of these varies according to the Rdata used (example: numberIteration = 5)
+
+rpd:       Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+
+fileName:           String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+boxplot_training(iraceResults)
+
+boxplot_training(iraceResults,numberIteration = 5)
+```
+
+## Function scatter_training
+
+The scatter_training function will return a scatter plot comparing two elite configurations in training
+
+``` r
+scatter_training(iraceResults, 
+                 idVector, 
+                 rpd = TRUE, 
+                 fileName = NULL)
+```
+
+### Arguments
+
+``` r
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+idVector:       Numeric vector, you need to put the elite settings you want to compare, only 2 values are allowed (example: idVector = c(806,809))
+
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+scatter_training(iraceResults, idVector = c(806,809))
+```
+
+## Function configurations_display
+
+The configuration_display will return a graph that is created with all the settings and instance of the training data
+
+``` r
+configurations_display(iraceResults, 
+                       rpd = TRUE, 
+                       fileName = NULL)
+```
+
+### Arguments
+
+``` r
+iraceResults:   The data generated when loading the Rdata file created by irace
+
+rpd:   Logical (default TRUE) to fit through an equation of minimum percentage distance between the values of each row of all configurations
+
+fileName:       string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
+```
+
+### Example
+
+``` r
+configurations_display(iraceResults)
 ```
