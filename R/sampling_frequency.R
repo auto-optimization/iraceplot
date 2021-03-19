@@ -32,7 +32,7 @@
 #' @examples
 #' NULL
 
-parameter_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileName = NULL){
+sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileName = NULL){
 
   #Variable assignment
   vectorG <- tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <-NULL

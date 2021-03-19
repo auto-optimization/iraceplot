@@ -44,13 +44,13 @@ boxplot_test
 scatter_test
 parallel_coord
 iparallel_coord
-parameter_frequency
-parameter_frequency_iteration
-parameter_density_iteration
-parameter_compare_sampling
+sampling_frequency
+sampling_frequency_iteration
+sampling_density
+sampling_model_compare
 sampling_pie
 heatmap
-distance_iteration
+sampling_distance
 boxplot_training
 scatter_training
 configurations_display
@@ -208,12 +208,12 @@ iparallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","ra
 iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
-## Function parameter_frequency
+## Function sampling_frequency
 
-The parameter_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
+The sampling_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
 
 ``` r
-parameter_frequency(iraceResults, 
+sampling_frequency(iraceResults, 
                 param_names = NULL,
                 n = NULL,
                 fileName = NULL)
@@ -234,17 +234,17 @@ fileName:       String, A pdf will be created in the location and with the assig
 ### Example
 
 ``` r
-parameter_frequency(iraceResults)
+sampling_frequency(iraceResults)
 
-parameter_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
-## Function parameter_frequency_iteration
+## Function sampling_frequency_iteration
 
-The parameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
+The sampling_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
 
 ``` r
-paramater_frequency_iteration(iraceResults,
+sampling_frequency_iteration(iraceResults,
                                parameter,
                                fileName = NULL)
 ```
@@ -264,16 +264,15 @@ fileName:       String, A pdf will be created in the location and with the assig
 The graph that is generated is different if the parameter is of a categorical or numerical type
 
 ``` r
-parameter_frequency_iteration(iraceResults,parameter = "algorithm")
-
+sampling_frequency_iteration(iraceResults,parameter = "algorithm")
 ```
 
-## Function parameter_density_iteration
+## Function sampling_density
 
-The parameter_density_iteration function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
+The sampling_density function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
 
 ``` r
-paramater_density_iteration(iraceResults,
+sampling_density(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -293,15 +292,15 @@ fileName:       String, A pdf will be created in the location and with the assig
 The graph that is generated is different if the parameter is of a categorical or numerical type
 
 ``` r
-parameter_density_iteration(iraceResults,parameter = "alpha")
+sampling_density(iraceResults,parameter = "alpha")
 ```
 
-## Function parameter_compare_sampling
+## Function sampling_model_compare
 
-The parameter_compare_sampling function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
+The sampling_model_compare function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
 
 ``` r
-paramater_compare_sampling(iraceResults,
+sampling_model_compare(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -321,7 +320,7 @@ fileName:       string, A pdf will be created in the location and with the assig
 it is recommended to use for numerical parameters
 
 ``` r
-parameter_compare_sampling(iraceResults, parameter = "alpha")
+sampling_model_compare(iraceResults, parameter = "alpha")
 ```
 
 ## Function sampling_pie
@@ -353,12 +352,12 @@ fileName:       string, A pdf will be created in the location and with the assig
 sampling_pie(iraceResults)
 ```
 
-## Function distance_iteration
+## Function sampling_distance
 
-The distance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
+The sampling_distance function Shows the mean of the difference between the configurations that were run for each iteration
 
 ``` r
-distance_iteration(iraceResults,
+sampling_distance(iraceResults,
                     type = "both",
                     t = 0.05,
                     fileName = NULL)
@@ -379,9 +378,9 @@ fileName:       String, A pdf will be created in the location and with the assig
 ### Example
 
 ``` r
-distance_iteration(iraceResults)
+sampling_distance(iraceResults)
 
-distance_iteration(iraceResults, type = "boxplot", t=0.2)
+sampling_distance(iraceResults, type = "boxplot", t=0.2)
 ```
 
 ## Function heatmap

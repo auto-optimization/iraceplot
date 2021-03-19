@@ -21,7 +21,7 @@
 #' @examples
 #' NULL
 
-parameter_compare_sampling <- function(iraceResults,parameter,fileName = NULL){
+sampling_model_compare <- function(iraceResults,parameter,fileName = NULL){
 
   vectorPlot <- NULL
 

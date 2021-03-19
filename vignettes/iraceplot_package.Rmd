@@ -22,13 +22,13 @@ boxplot_test
 scatter_test
 parallel_coord
 iparallel_coord
-parameter_frequency
-parameter_frequency_iteration
-parameter_density_iteration
-parameter_compare_sampling
+sampling_frequency
+sampling_frequency_iteration
+sampling_density
+sampling_model_compare
 sampling_pie
 heatmap
-distance_iteration
+sampling_distance
 boxplot_training
 scatter_training
 configurations_display
@@ -276,12 +276,12 @@ Finally, if we want to filter the parameters and the settings that we want to an
 iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
-<h4>Function parameter_frequency</h4>
+<h4>Function sampling_frequency</h4>
 
-The parameter_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
+The sampling_frequency function will return a frequency and density plot, for categorical parameters (string) one of frequency is created, in case of numerical parameters it will show a histogram and its density
 
 ```
-parameter_frequency(iraceResults, 
+sampling_frequency(iraceResults, 
                 param_names = NULL,
                 n = NULL,
                 fileName = NULL)
@@ -302,7 +302,7 @@ If we want to visualize all the parameters, the following code is used:
 
 <div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
-parameter_frequency(iraceResults)
+sampling_frequency(iraceResults)
 ```
 </div>
 
@@ -310,7 +310,7 @@ If you want to display the parameters from 10 to 18 (if it reaches parameter 18)
 
 <div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
-parameter_frequency(iraceResults, n = 2)
+sampling_frequency(iraceResults, n = 2)
 ```
 </div>
 
@@ -318,15 +318,15 @@ If we only want to visualize some parameters, we must place specifically those, 
 
 <div style="text-align: center">
 ```{r, fig.height= 7, fig.width=7}
-parameter_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 </div>
-<h4>Function paramater_frequency_iteration</h4>
+<h4>Function sampling_frequency_iteration</h4>
 
-The parameter_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
+The sampling_frequency_iteration function will return a frequency plot used for categorical data (its values are string, show a bar plot) or numeric data (show a histogram and density plot) by each iteration
 
 ```
-paramater_frequency_iteration(iraceResults,
+sampling_frequency_iteration(iraceResults,
                                parameter,
                                fileName = NULL)
 ```
@@ -344,7 +344,7 @@ If we place a categorical parameter it will be shown in the following way, using
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-parameter_frequency_iteration(iraceResults,parameter = "algorithm")
+sampling_frequency_iteration(iraceResults,parameter = "algorithm")
 ```
 </div>
 
@@ -352,16 +352,16 @@ If we place a numeric parameter it will be shown in the following way, using the
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-parameter_frequency_iteration(iraceResults,parameter = "alpha")
+sampling_frequency_iteration(iraceResults,parameter = "alpha")
 ```
 </div>
 
-<h4>Function paramater_density_iteration</h4>
+<h4>Function sampling_density</h4>
 
-The parameter_density_iteration function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
+The sampling_density function will return a density plot for parameters numeric data in case of placing a categorical parameter, it will show a bar plot
 
 ```
-paramater_density_iteration(iraceResults,
+sampling_density(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -380,16 +380,16 @@ The following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-parameter_density_iteration(iraceResults,parameter = "alpha")
+sampling_density(iraceResults,parameter = "alpha")
 ```
 </div>
 
-<h4>Function paramater_compare_sampling</h4>
+<h4>Function sampling_model_compare</h4>
 
-The parameter_compare_sampling function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
+The sampling_model_compare function will return two plots, one of frequency and one of density of the numerical parameter, in case of being a categorical parameter it will only show one of frequency
 
 ```
-paramater_compare_sampling(iraceResults,
+sampling_model_compare(iraceResults,
                              parameter,
                              fileName = NULL)
 ```
@@ -407,7 +407,7 @@ The following code is used:
 
 <div style="text-align: center">
 ```{r, fig.width= 7,fig.height= 7}
-parameter_compare_sampling(iraceResults, parameter = "alpha")
+sampling_model_compare(iraceResults, parameter = "alpha")
 ```
 </div>
 
@@ -456,12 +456,12 @@ sampling_pie(iraceResults, parameters = c("algorithm","dlb"))
 <!-- ``` -->
 <!-- </div> -->
 
-<h4>Function distance_iteration</h4>
+<h4>Function sampling_distance</h4>
 
-The distance_iteration function Shows the mean of the difference between the configurations that were run for each iteration
+The sampling_distance function Shows the mean of the difference between the configurations that were run for each iteration
 
 ```
-distance_iteration(iraceResults,
+sampling_distance(iraceResults,
                     type = "both",
                     t = 0.05,
                     fileName = NULL)
@@ -481,7 +481,7 @@ If you want to show the graph of lines and points, with a difference margin of 5
 
 <div style="text-align: center">
 ```
-distance_iteration(iraceResults)
+sampling_distance(iraceResults)
 ```
 </div>
 
@@ -489,7 +489,7 @@ If you want to show the box plot, with a difference margin of 20% between parame
 
 <div style="text-align: center">
 ```
-distance_iteration(iraceResults, type = "boxplot", t=0.2)
+sampling_distance(iraceResults, type = "boxplot", t=0.2)
 ```
 </div>
 

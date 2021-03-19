@@ -1,30 +1,29 @@
-#' Frequency and Density plot based on its iteration
+#' Density plot based on its iteration
 #'
 #' @description
-#' The function will return a frequency plot used
-#' for categorical data (its values are string, show a bar plot) or
-#' numeric data (show a histogram and density plot) by each iteration
+#' The function will return a density plot for parameters numeric data
+#' in case of placing a categorical parameter, it will show a bar plot
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
 #' @param parameter
-#' String, value of the parameter to be analyzed (example: parameter = "algorithm")
+#' String, value of the parameter to be analyzed (example: parameter = "alpha")
 #'
 #' @param fileName
-#' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/filename")
+#' String, A pdf will be created in the location and with the
+#' assigned name (example: "~/patch/example/filename")
 #'
-#' @return bar plot
+#' @return density plot
 #' @export
 #'
-#' @importFrom ggplot2 scale_fill_manual vars guide_legend facet_grid
-#' @importFrom viridis viridis
+#' @importFrom ggridges geom_density_ridges
+#' @importFrom gridExtra grid.arrange
 #'
 #' @examples
 #' NULL
 
-parameter_frequency_iteration <- function(iraceResults,parameter,fileName = NULL){
+sampling_density <- function(iraceResults,parameter,fileName = NULL){
   #Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
 
@@ -102,34 +101,28 @@ parameter_frequency_iteration <- function(iraceResults,parameter,fileName = NULL
       scale_y_continuous(n.breaks = 3) +
       theme(strip.text.y = element_text(angle = 0))
 
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
-
   }else if(class(tabla[[1]]) == "numeric"){
 
     tabla <- na.omit(tabla)
     tabla$iteration_f = factor(tabla$iteration,levels = rev(unique(tabla$iteration)))
 
-    nbreaks <- pretty(range(tabla$x), n = nclass.Sturges(tabla$x),
-                      min.n = 1)
-    # density and histogram plot
-    p <- ggplot(as.data.frame(tabla), aes(x = x, fill=iteration)) +
-      geom_histogram(aes(y = ..density..), breaks = nbreaks,
-                     color = "black", fill = "gray") +
-      geom_density(alpha = 0.7) +
-      scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
-      facet_grid(vars(iteration_f),scales = "free") +
-      labs(x=parameter, y="Frequency")+
-      theme(axis.title.y = element_text(),
-            axis.title.x = element_text(size = 10),
-            plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
-            axis.ticks.x = element_blank()
-      ) +
-      scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0))
+    # density plot
+    p <- ggplot(tabla, aes(x, y = iteration)) +
+      geom_density_ridges(aes(fill = iteration), na.rm = TRUE) +
+      scale_fill_manual(values = viridis(length(unique(tabla$iteration))))+
+      labs(x = parameter, y = "Iteration")
 
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
+    # # density plot
+    # q <- ggplot(tabla, aes(x=x, fill=iteration)) +
+    #   geom_density(alpha = 1, na.rm = TRUE) +
+    #   facet_grid(vars(iteration_f),scales = "free", space = "free_y") +
+    #   scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
+    #   labs(x = parameter) +
+    #   scale_y_continuous(n.breaks = 3) +
+    #   theme(strip.text.y = element_text(angle = 0))
+    #
+    # # The plot is saved in a list
+    # vectorPlot[2] <- list(q)
   }
 
   #If the value in fileName is added the pdf file is created
@@ -140,7 +133,5 @@ parameter_frequency_iteration <- function(iraceResults,parameter,fileName = NULL
     #If you do not add the value of fileName, the plot is displayed
   }else{
     p
-    return(p)
   }
-
 }
