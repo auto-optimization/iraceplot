@@ -6,7 +6,7 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #' @param type
-#' String, either "line" or "boxplot". by default it is "line" which will show a plot of
+#' String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
 #' points and lines, "boxplot" will show a box plot
 #' @param t
 #' Numeric, It is a percentage factor that will determine the range of difference
@@ -24,14 +24,14 @@
 #' @examples
 #' NULL
 
-distance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName = NULL){
+distance_iteration <- function(iraceResults, type = "both", t = 0.05, fileName = NULL){
 
-  if(!(type == "line" | type == "boxplot")){
+  if(!(type == "line" | type == "boxplot" | type == "both")){
     print("The type parameter entered is incorrect")
   }
 
   #variable assignment
-  media <- allconf <- valor <- iterations <- tabla_box <- iteration <-NULL
+  media <- allconf <- valor <- iterations <- tabla_box <- iteration <- vectorP <-NULL
   allconf <- iraceResults$allConfigurations
   n_param <- length(allconf) - 2
 
@@ -57,7 +57,7 @@ distance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName =
   }
 
   #A graph of points and lines is created
-  if(type == "line"){
+  if(type == "line" | type == "both"){
 
     tabla <- data.frame(iterations,media)
 
@@ -66,32 +66,47 @@ distance_iteration <- function(iraceResults, type = "line", t = 0.05, fileName =
          geom_line() +
          scale_y_continuous(limits = c(0,n_param),
                             breaks = seq(0,n_param,2)) +
-         scale_x_continuous(limits = c(0,length(iraceResults$allElites)+1),
+         scale_x_continuous(limits = c(0.8,length(iraceResults$allElites)+0.2),
                              breaks = seq(1,length(iraceResults$allElites),1)) +
          scale_color_viridis_c() +
-         labs(y = "RPD", x = "iteration")
+         labs(y = "RPD", x = "iteration", color = "IT.")
+    vectorP[1] <- list(p)
 
   #A box plot is created
-  }else if(type == "boxplot"){
+  }
+  if(type == "boxplot" | type == "both"){
 
     p <- ggplot(tabla_box, aes(x=it,y=distance, group = it, color = it)) +
       geom_boxplot(na.rm = TRUE) +
       scale_color_viridis_c()+
       scale_y_continuous(limits = c(0,n_param),
                          breaks = seq(0,n_param,2)) +
-      scale_x_continuous(limits = c(0,length(iraceResults$allElites)+1),
+      scale_x_continuous(limits = c(0.6,length(iraceResults$allElites)+0.4),
                          breaks = seq(1,length(iraceResults$allElites),1)) +
-      labs(x = "iteration", y = "RPD")
+      labs(x = "iteration", y = "RPD", color = "IT.")
+    vectorP[2] <- list(p)
 
     }
 
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"), width = 12)
-    plot(p)
-    dev.off()
+    if(type == "both"){
+      pdf(paste0(fileName,".pdf"), width = 12)
+      do.call("grid.arrange",c(vectorP[1],ncol=1))
+      do.call("grid.arrange",c(vectorP[2],ncol=1))
+      dev.off()
+    }else{
+      pdf(paste0(fileName,".pdf"), width = 12)
+      plot(p)
+      dev.off()
+    }
+
     #If you do not add the value of fileName, the plot is displayed
   }else{
-    p
+    if(type == "both"){
+      do.call("grid.arrange",c(vectorP,nrow = 2))
+    }else{
+      p
+    }
   }
 }

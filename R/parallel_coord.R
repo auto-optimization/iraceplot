@@ -19,6 +19,11 @@
 #' NUmeric vector, you need to put the iterations you want to analyze
 #' (example: iterations = c(1,4,5))
 #'
+#' @param pdfAllParameters
+#' logical (default FALSE), If I want to create a pdf with all the parameters,
+#' I must put TRUE, otherwise it will be created only with the default
+#' parameters (15 or less) or those entered.
+#'
 #' @param fileName
 #' A pdf will be created in the location and with
 #' the assigned name (example: "~/patch/example/filename")
@@ -33,12 +38,34 @@
 #' @examples
 #' NULL
 
-parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,fileName = NULL){
+parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, pdfAllParameters = FALSE, fileName = NULL){
 
   #Variable assignment
-  memo  <- configuration <- dim <- NULL
+  memo  <- configuration <- dim <- tickV <- vectorP <- NULL
   idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
+
+  if(is.null(param_names) & is.null(fileName)){
+    if(length(get_parameters_names(iraceResults)) == 16){
+      print("There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters")
+      print("The first 16 parameters will be displayed")
+      param_names = get_parameters_names(iraceResults)[1:16]
+    }else if(length(get_parameters_names(iraceResults)) > 15){
+      print("There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters")
+      print("The first 15 parameters will be displayed")
+      param_names = get_parameters_names(iraceResults)[1:15]
+    }
+
+  }
+
+  if(is.null(iterations)){
+    iterations = c(length(iraceResults$allElites))
+
+     if(length(iraceResults$allElites[[length(iraceResults$allElites)]]) == 1){
+      print("The final iteration only has an elite configuration")
+    }
+
+  }
 
   if(!is.null(iterations)){
     it <- c(1:length(iraceResults$allElites))
@@ -151,12 +178,15 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
       levels(factor_tab) <- c(1:length(unique(tabla[[i]])))
       if("NA" %in% tabla[[i]]){
         tickT = c(iraceResults$parameters$domain[[colnames(tabla)[i]]],"NA")
+        tickV = c(1:length(iraceResults$parameters$domain[[colnames(tabla)[i]]])+1)
       }else{
         tickT = iraceResults$parameters$domain[[colnames(tabla)[i]]]
+        tickV = c(1:length(iraceResults$parameters$domain[[colnames(tabla)[i]]]))
       }
       dim[[i]] = list(
+            range = c(1,max(tickV)),
             label = colnames(tabla)[i],
-            tickvals = c(1:length(unique(tabla[[i]]))),
+            tickvals = tickV,
             #ticktext = unique(tabla[[i]]),
             ticktext = tickT,
             values = factor_tab
@@ -165,10 +195,11 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
     }else if(class(tabla[[i]]) == "numeric"){
       if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
         minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
-        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
-        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
-        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
         maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2] +1
+        medio = round(((maximo-1)/4),1)
+        medio2 = round(((maximo-1)/2),1)
+        medio3 = round(((maximo-1)*(3/4)),1)
+
         dim[[i]] = list(
           range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]+1),
           tickvals = c(minimo,medio,medio2,medio3,maximo),
@@ -178,10 +209,11 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
         )
       }else{
         minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
-        medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
-        medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
-        medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
         maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2]
+        medio = round((maximo/4),1)
+        medio2 = round((maximo/2),1)
+        medio3 = round(maximo*(3/4),1)
+        #max(tabla[[i]] cambio maximo
         dim[[i]] = list(
           range = c(iraceResults$parameters$domain[[colnames(tabla)[i]]][1],iraceResults$parameters$domain[[colnames(tabla)[i]]][2]),
           tickvals = c(minimo,medio,medio2,medio3,maximo),
@@ -206,30 +238,51 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
   levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
   tabla <- cbind(tabla,iteration_f)
 
+  if(length(get_parameters_names(iraceResults)) > 15 & !is.null(fileName) & pdfAllParameters == TRUE){
+    inicio = 1
+    final = 15
+    for (i in 1:ceiling(length(get_parameters_names(iraceResults))/15)) {
+      n_parameters = length(get_parameters_names(iraceResults))
+      params = get_parameters_names(iraceResults)[inicio:final]
+      params = params[!is.na(params)]
+      q <- parallel_coord(iraceResults, idConfiguration, param_names = params , iterations)
+      vectorP[i] <- list(q)
+      inicio = final + 1
+      final = (i+1)*15
+    }
+  }
+
   #plot creation
-  p <- tabla %>%
-    plot_ly(width = 700, height = 600)
-  p <- p %>% add_trace(type = 'parcoords',
-                           line = list(color = ~iteration_f,
-                                       colorscale = 'Viridis',
-                                       showscale = TRUE,
-                                       reversescale = TRUE,
-                                       cmin = min(tabla$iteration_f),
-                                       cmax = max(tabla$iteration_f)),
-                           dimensions = dim
-  )
+    p <- tabla %>%
+      plot_ly(width = 1000, height = 600)
+    p <- p %>% add_trace(type = 'parcoords',
+                         line = list(color = ~iteration_f,
+                                     colorscale = 'Viridis',
+                                     showscale = TRUE,
+                                     reversescale = TRUE,
+                                     cmin = 1,
+                                     cmax = length(iraceResults$allElites)),
+                         dimensions = dim,
+                         labelangle = -25
+    )
+
 
 
   #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
+  if(!is.null(fileName) & pdfAllParameters == FALSE){
     #The fileName value is worked to separate it and assign it to new values.
     nameFile = basename(fileName)
     directory = paste0(dirname(fileName),sep="/")
     withr::with_dir(directory, orca(p, paste0(nameFile,".pdf")))
 
   #If you do not add the value of fileName, the plot is displayed
+  }else if(!is.null(fileName) & pdfAllParameters == TRUE){
+    nameFile = basename(fileName)
+    directory = paste0(dirname(fileName),sep="/")
+    withr::with_dir(directory, orca(vectorP[[4]], paste0(nameFile,".pdf")))
   }else{
     p
   }
+  return(p)
 
 }

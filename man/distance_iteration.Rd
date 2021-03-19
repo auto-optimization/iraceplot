@@ -4,12 +4,12 @@
 \alias{distance_iteration}
 \title{Distance Iteration Plot}
 \usage{
-distance_iteration(iraceResults, type = "line", t = 0.05, fileName = NULL)
+distance_iteration(iraceResults, type = "both", t = 0.05, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{type}{String, either "line" or "boxplot". by default it is "line" which will show a plot of
+\item{type}{String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
 points and lines, "boxplot" will show a box plot}
 
 \item{t}{Numeric, It is a percentage factor that will determine the range of difference

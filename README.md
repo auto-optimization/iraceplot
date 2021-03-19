@@ -141,6 +141,8 @@ The parallel_coord function will return a parallel cordinates plot allowing the 
 parallel_coord(iraceResults,
                idConfiguration = NULL,
                param_names = NULL,
+               iterations = NULL,
+               pdfAllParameters = FALSE,
                fileName = NULL)
 ```
 
@@ -152,6 +154,10 @@ iraceResults:       The data generated when loading the Rdata file created by ir
 idConfiguration:    Numeric vector, you need to put the configurations you want to analyze (example: idConfiguration = c(20,50,100,300,500,600,700))
 
 param_names:        String vector, you need to put the parameters you want to analyze (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
+iterations:         NUmeric vector, you need to put the iterations you want to analyze (example: iterations = c(1,4,5))
+
+pdfAllParameters:   logical (default FALSE), If I want to create a pdf with all the parameters, I must put TRUE, otherwise it will be created only with the default parameters (15 or less) or those entered.
 
 fileName:           string, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -208,7 +214,8 @@ The parameter_frequency function will return a frequency and density plot, for c
 
 ``` r
 parameter_frequency(iraceResults, 
-                param_names = NULL, 
+                param_names = NULL,
+                n = NULL,
                 fileName = NULL)
 ```
 
@@ -218,6 +225,8 @@ parameter_frequency(iraceResults,
 iraceResults:   The data generated when loading the Rdata file created by irace
 
 param_names:    String vector, A set of parameters to be plotted (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
+n:              Numeric, It will allow going through the various parameters of 9 in 9 graphs (example: if we place an n = 1, it will show us the parameters from 1 to 9, in case an n = 2 it will show the parameters from 10 to 18 and so on)
 
 fileName:       String, A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
@@ -350,7 +359,7 @@ The distance_iteration function Shows the mean of the difference between the con
 
 ``` r
 distance_iteration(iraceResults,
-                    type = "line",
+                    type = "both",
                     t = 0.05,
                     fileName = NULL)
 ```
@@ -360,7 +369,7 @@ distance_iteration(iraceResults,
 ``` r
 iraceResults:   The data generated when loading the Rdata file created by irace
 
-type:           String, either "line" or "boxplot". by default it is "line" which will show a plot of points and lines, "boxplot" will show a box plot
+type:           String, either "line", "boxplot" or "both". by default it is "both" will show both graphics,"line" which will show a plot of points and lines, "boxplot" will show a box plot
 
 t:              Numeric, It is a percentage factor that will determine the range of difference between settings (example: t = 0.05 is equivalent to 5%)
 

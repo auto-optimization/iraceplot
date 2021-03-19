@@ -4,7 +4,12 @@
 \alias{parameter_frequency}
 \title{Parameter Frequency and density Plot}
 \usage{
-parameter_frequency(iraceResults, param_names = NULL, fileName = NULL)
+parameter_frequency(
+  iraceResults,
+  param_names = NULL,
+  n = NULL,
+  fileName = NULL
+)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
@@ -12,8 +17,13 @@ parameter_frequency(iraceResults, param_names = NULL, fileName = NULL)
 \item{param_names}{String vector, A set of parameters to be plotted
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
+\item{n}{Numeric, It will allow going through the various parameters of 9 in 9 graphs
+(example: if we place an n = 1, it will show us the parameters from 1 to 9,
+in case an n = 2 it will show the parameters from 10 to 18 and so on)}
+
 \item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+name. By default, all the parameters will be displayed appropriately, with nine
+graphics for each sheet. (example: "~/patch/example/filename")}
 }
 \value{
 Frequency and/or density plot

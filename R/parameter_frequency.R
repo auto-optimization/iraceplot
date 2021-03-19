@@ -12,9 +12,15 @@
 #' String vector, A set of parameters to be plotted
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
+#' @param n
+#' Numeric, It will allow going through the various parameters of 9 in 9 graphs
+#' (example: if we place an n = 1, it will show us the parameters from 1 to 9,
+#' in case an n = 2 it will show the parameters from 10 to 18 and so on)
+#'
 #' @param fileName
 #' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/filename")
+#' name. By default, all the parameters will be displayed appropriately, with nine
+#' graphics for each sheet. (example: "~/patch/example/filename")
 #'
 #' @return Frequency and/or density plot
 #' @export
@@ -26,20 +32,53 @@
 #' @examples
 #' NULL
 
-parameter_frequency <- function(iraceResults, param_names = NULL, fileName = NULL){
+parameter_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileName = NULL){
 
   #Variable assignment
-  vectorG <- tabla <- Var1 <- Freq <- ..density.. <-NULL
+  vectorG <- tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <-NULL
   param_names <- unlist(param_names)
+  max_p = 9
+
+  if(length(get_parameters_names(iraceResults)) > max_p & is.null(n) & is.null(param_names) & is.null(fileName)){
+    print("There are too many parameters to display. It will select relevant parameters")
+    print(paste("The first",max_p,"parameters will be displayed"))
+    param_names = get_parameters_names(iraceResults)[1:max_p]
+  }
+
 
   if(!is.null(param_names)){
     if("FALSE" %in% (param_names %in% iraceResults$parameters$names)){
       return("Some wrong parameter entered")
     }
-    config <- iraceResults$allConfigurations[param_names]
+    n = 1
+    if(!is.null(n)){
+      if(n < 1 | n > ceiling(length(param_names)/max_p) ){
+        return(paste("n cannot be less than 1 and greater than",ceiling(length(param_names)/max_p)))
+      }
+      inicio = (max_p*n - 8)
+      fin = max_p*n
+      param_names = param_names[inicio:fin]
+      param_names = param_names[!is.na(param_names)]
+      config <- iraceResults$allConfigurations[param_names]
+    }else{
+      config <- iraceResults$allConfigurations[param_names]
+    }
 
   }else{
-    config <- iraceResults$allConfigurations[iraceResults$parameters$names]
+
+    if(!is.null(n)){
+      if(n < 1 | n > ceiling(length(get_parameters_names(iraceResults))/max_p)){
+        return(paste("n cannot be less than 1 and greater than",ceiling(length(get_parameters_names(iraceResults))/max_p)))
+      }
+      inicio = (max_p*n - 8)
+      fin = max_p*n
+      params = iraceResults$parameters$names[inicio:fin]
+      params = params[!is.na(params)]
+      config <- iraceResults$allConfigurations[params]
+    }else{
+      config <- iraceResults$allConfigurations[iraceResults$parameters$names]
+    }
+
   }
 
 
