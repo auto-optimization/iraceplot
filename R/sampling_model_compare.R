@@ -39,13 +39,13 @@ sampling_model_compare <- function(iraceResults,parameter,fileName = NULL){
   }
 
   if(iraceResults$parameters$types[[parameter]] == "c"){
-    p <- parameter_frequency_iteration(iraceResults,parameter)
+    p <- sampling_frequency_iteration(iraceResults,parameter)
     vectorPlot[1] <- list(p)
   }else{
-    p <- parameter_frequency_iteration(iraceResults,parameter)
+    p <- sampling_frequency_iteration(iraceResults,parameter)
     p <- p + theme(legend.position = "none")
     vectorPlot[1] <- list(p)
-    q <- parameter_density_iteration(iraceResults,parameter)
+    q <- sampling_density(iraceResults,parameter)
     vectorPlot[2] <- list(q)
   }
 
