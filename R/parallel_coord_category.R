@@ -23,10 +23,10 @@
 #' @export
 #'
 #' @examples
-parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,fileName = NULL){
+parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
 
   #Variable assignment
-  memo  <- configuration <- dim <- tickV <- vectorP <- x_factor <- NULL
+  memo  <- configuration <- dim <- tickV <- vectorP <- NULL
   idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
 
@@ -107,7 +107,7 @@ parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_
 
   # Column .ID. and .PARENT. are removed
   tabla <- tabla[, !(names(tabla) %in% c(".ID.",".PARENT."))]
-  if(is.null(param_names) & length(get_parameters_names(iraceResults)) > 15){
+  if(is.null(param_names) & length(get_parameters_names(iraceResults)) > 15 & pdfAllParameters == FALSE){
     param_names = get_parameters_names(iraceResults)[1:15]
   }
   if(!is.null(param_names)){
@@ -141,12 +141,40 @@ parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_
 
   tabla <- tabla[tabla$x != "iteration",]
 
-  ggplot(tabla, aes(x, id = id, split = y, value = freq)) +
+  if(!is.null(fileName) & pdfAllParameters == TRUE & length(get_parameters_names(iraceResults))>15){
+    inicio = 1
+    final = 15
+    for (i in 1:ceiling(length(get_parameters_names(iraceResults))/15)) {
+      n_parameters = length(get_parameters_names(iraceResults))
+      params = get_parameters_names(iraceResults)[inicio:final]
+      params = params[!is.na(params)]
+      q <- parallel_coord_category(iraceResults, idConfiguration, param_names = params , iterations)
+      vectorP[i] <- list(q)
+      inicio = final + 1
+      final = (i+1)*15
+    }
+
+  }
+  p <- ggplot(tabla, aes(x, id = id, split = y, value = freq)) +
     geom_parallel_sets(aes(fill = iteration), alpha = 0.7, axis.width = 0.2) +
     geom_parallel_sets_axes(axis.width = 0.5, alpha = 0.4) +
     geom_parallel_sets_labels(colour = "black",angle = 90,size = 3) +
     theme_bw() +
-    theme(axis.text.x = element_text(angle = 90),
+    theme(axis.text.x = element_text(angle = 90, size = 6),
           axis.title.x = element_blank())
+
+  #If the value in fileName is added the pdf file is created
+  if(!is.null(fileName)){
+
+    pdf(paste0(fileName,".pdf"))
+    for (i in 1:length(vectorP)) {
+      plot(vectorP[[i]])
+    }
+    dev.off()
+    #If you do not add the value of fileName, the plot is displayed
+  }else{
+    p
+  }
+  return(p)
 }
 

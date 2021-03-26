@@ -41,7 +41,7 @@
 #' @examples
 #' NULL
 
-parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, onlyElite = FALSE, pdfAllParameters = FALSE, fileName = NULL){
+parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, onlyElite = TRUE, pdfAllParameters = FALSE, fileName = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- tickV <- vectorP <- NULL
