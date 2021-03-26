@@ -19,6 +19,9 @@
 #' NUmeric vector, you need to put the iterations you want to analyze
 #' (example: iterations = c(1,4,5))
 #'
+#' @param onlyElite
+#' logical (default FALSE),
+#'
 #' @param pdfAllParameters
 #' logical (default FALSE), If I want to create a pdf with all the parameters,
 #' I must put TRUE, otherwise it will be created only with the default
@@ -38,7 +41,7 @@
 #' @examples
 #' NULL
 
-parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, pdfAllParameters = FALSE, fileName = NULL){
+parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, onlyElite = FALSE, pdfAllParameters = FALSE, fileName = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- tickV <- vectorP <- NULL
@@ -139,6 +142,17 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
       tabla$iteration[tabla$.ID. == filtro$configuration[i]] = filtro$iteration[i]
     }
     memo = filtro$configuration[i]
+  }
+
+  if(onlyElite == TRUE){
+    for (i in 1:length(iraceResults$allElites)) {
+      if(i == 1){
+        tabla_new <- tabla[tabla$.ID. %in% iraceResults$allElites[[i]] & tabla$iteration %in% i,]
+      }else{
+        tabla_new <- rbind(tabla_new,tabla[tabla$.ID. %in% iraceResults$allElites[[i]] & tabla$iteration %in% i,])
+      }
+    }
+    tabla <- tabla_new
   }
 
   # Column .ID. and .PARENT. are removed
@@ -271,15 +285,21 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
   #If the value in fileName is added the pdf file is created
   if(!is.null(fileName) & pdfAllParameters == FALSE){
     #The fileName value is worked to separate it and assign it to new values.
+
     nameFile = basename(fileName)
     directory = paste0(dirname(fileName),sep="/")
     withr::with_dir(directory, orca(p, paste0(nameFile,".pdf")))
 
   #If you do not add the value of fileName, the plot is displayed
   }else if(!is.null(fileName) & pdfAllParameters == TRUE){
-    nameFile = basename(fileName)
-    directory = paste0(dirname(fileName),sep="/")
-    withr::with_dir(directory, orca(vectorP[[4]], paste0(nameFile,".pdf")))
+
+    server <- plotly::orca_serve()
+    for (i in 1:length(vectorP)) {
+      part = paste0("_plot-",i)
+      server$export(vectorP[[i]], paste0(fileName,part,".pdf"))
+    }
+    server$close()
+
   }else{
     p
   }
