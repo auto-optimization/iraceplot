@@ -15,18 +15,28 @@
 #' NUmeric vector, you need to put the iterations you want to analyze
 #' (example: iterations = c(1,4,5))
 #'
+#' @param pdfAllParameters
+#' logical (default FALSE), If I want to create a pdf with all the parameters,
+#' I must put TRUE, otherwise it will be created only with the default
+#' parameters (15 or less) or those entered.
+#'
 #' @param fileName
 #' A pdf will be created in the location and with
 #' the assigned name (example: "~/patch/example/filename")
 #'
-#' @return
+#' @return parallel coordinate category plot
 #' @export
 #'
+#' @importFrom dplyr group_by summarise n
+#' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
+#'
 #' @examples
+#' NULL
+
 parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
 
   #Variable assignment
-  memo  <- configuration <- dim <- tickV <- vectorP <- NULL
+  memo  <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
   idConfiguration <- unlist(idConfiguration)
   param_names <- unlist(param_names)
 

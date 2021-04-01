@@ -9,6 +9,7 @@ parallel_coord_category(
   idConfiguration = NULL,
   param_names = NULL,
   iterations = NULL,
+  pdfAllParameters = FALSE,
   fileName = NULL
 )
 }
@@ -24,12 +25,19 @@ parallel_coord_category(
 \item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
 (example: iterations = c(1,4,5))}
 
+\item{pdfAllParameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
+I must put TRUE, otherwise it will be created only with the default
+parameters (15 or less) or those entered.}
+
 \item{fileName}{A pdf will be created in the location and with
 the assigned name (example: "~/patch/example/filename")}
 }
 \value{
-
+parallel coordinate category plot
 }
 \description{
 Parallel Cordinate Category
+}
+\examples{
+NULL
 }

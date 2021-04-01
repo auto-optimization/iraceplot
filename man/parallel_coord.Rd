@@ -9,6 +9,7 @@ parallel_coord(
   idConfiguration = NULL,
   param_names = NULL,
   iterations = NULL,
+  onlyElite = TRUE,
   pdfAllParameters = FALSE,
   fileName = NULL
 )
@@ -24,6 +25,8 @@ parallel_coord(
 
 \item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
 (example: iterations = c(1,4,5))}
+
+\item{onlyElite}{logical (default FALSE),}
 
 \item{pdfAllParameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
 I must put TRUE, otherwise it will be created only with the default
