@@ -1,5 +1,10 @@
 #' Parallel Cordinate Category
 #'
+#' @description
+#' The parallel_coord_category function will return a graph of categorical
+#' parallel coordinates allowing the analysis of the set of parameters
+#' allowing the visualization of the data and the filtering by iteration
+#'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'

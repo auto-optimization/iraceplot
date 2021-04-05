@@ -36,7 +36,9 @@ the assigned name (example: "~/patch/example/filename")}
 parallel coordinate category plot
 }
 \description{
-Parallel Cordinate Category
+The parallel_coord_category function will return a graph of categorical
+parallel coordinates allowing the analysis of the set of parameters
+allowing the visualization of the data and the filtering by iteration
 }
 \examples{
 NULL
