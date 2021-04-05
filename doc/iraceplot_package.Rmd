@@ -1,0 +1,28 @@
+---
+title: "Report Iraceplot Package"
+output: rmarkdown::word_document
+vignette: >
+  %\VignetteIndexEntry{iraceplot_package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include= FALSE}
+library(iraceplot)
+```
+
+```{r, include= FALSE}
+ubicacion <- file.choose()
+load(ubicacion)
+```
+
+```{r}
+boxplot_training(iraceResults)
+```
