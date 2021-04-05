@@ -43,7 +43,7 @@ get_parameters_names
 boxplot_test
 scatter_test
 parallel_coord
-iparallel_coord
+parallel_coord_category
 sampling_frequency
 sampling_frequency_iteration
 sampling_density
@@ -176,14 +176,17 @@ parallel_coord(iraceResults, iterations = c(1,4,6))
 parallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
 ```
 
-## Function iparallel_coord
+## Function parallel_coord_category
 
-The iparallelcoord function will returns a parallel coordinates plot interactive in shinyApp allowing the analysis of the set of parameters allowing the visualization of the data and filter by iteration
+The parallel_coord_category function will return a graph of categorical parallel coordinates allowing the analysis of the set of parameters allowing the visualization of the data and the filtering by iteration
 
 ``` r
-iparallel_coord(iraceResults, 
-          idConfiguration = NULL, 
-          param_names = NULL)
+parallel_coord__category(iraceResults, 
+                        idConfiguration = NULL, 
+                        param_names = NULL,
+                        iterations = NULL,
+                        pdfAllParameters = FALSE,
+                        fileName = NULL)
 ```
 
 ### Arguments
@@ -194,18 +197,26 @@ iraceResults:       The data generated when loading the Rdata file created by ir
 idConfiguration:    Numeric vector, you need to put the configurations you want to analyze (example: idConfiguration = c(20,50,100,300,500,600,700))
 
 param_names:        String vector, you need to put the parameters you want to analyze (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
+iterations:         NUmeric vector, you need to put the iterations you want to analyze (example: iterations = c(1,4,5))
+
+pdfAllParameters:   logical (default FALSE), If I want to create a pdf with all the parameters, I must put TRUE, otherwise it will be created only with the default parameters (15 or less) or those entered.
+
+fileName:           A pdf will be created in the location and with the assigned name (example: "~/patch/example/filename")
 ```
 
 ### Examples
 
 ``` r
-iparallel_coord(iraceResults)
+parallel_coord_category(iraceResults)
 
-iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+parallel_coord_category(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
-iparallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+parallel_coord_category(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 
-iparallel_coord(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
+parallel_coord_category(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"))
+
+parallel_coord_category(iraceResults,idConfiguration = c(20,50,100,300,500,600,700), param_names =  c("algorithm","alpha","rho","q0","rasrank"), iterations = c(1,4,6))
 ```
 
 ## Function sampling_frequency
