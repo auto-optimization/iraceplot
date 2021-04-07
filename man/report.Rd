@@ -4,7 +4,14 @@
 \alias{report}
 \title{Report Iraceplot}
 \usage{
-report()
+report(iraceResults, fileName = NULL)
+}
+\arguments{
+\item{iraceResults}{irace log variable obtained from the Rdata file generate by irace}
+
+\item{fileName}{String, file name indicating where to save a pdf file with the plot.
+A pdf extension will be added to the file name provided
+(example: "~/path-to/filename")}
 }
 \value{
 document

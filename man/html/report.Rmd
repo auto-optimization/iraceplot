@@ -1,6 +1,6 @@
 ---
 title: "Report Iraceplot Package"
-output: word_document
+output: pdf_document
 ---
 
 

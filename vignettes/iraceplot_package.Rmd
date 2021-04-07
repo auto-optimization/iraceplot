@@ -614,7 +614,7 @@ type:           String, either "line","boxplot" or "both" (default type="both").
 
 t:              Numeric [0,1], percentage that will determine the range to determine if two values are different (example: t = 0.05 is equivalent to 5%)
 
-fileName:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/filename")
+fileName:       String, file name indicating where to save a pdf file with the plot. A pdf extension will be added to the file name provided (example: "~/path-to/filename")
 ```
 
 To visualize the distance between sampled configurations, use the following code:
