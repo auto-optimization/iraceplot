@@ -38,7 +38,7 @@
 #' @examples
 #' NULL
 
-parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
+parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
@@ -163,7 +163,7 @@ parallel_coord_category <- function(iraceResults, idConfiguration = NULL, param_
       n_parameters = length(get_parameters_names(iraceResults))
       params = get_parameters_names(iraceResults)[inicio:final]
       params = params[!is.na(params)]
-      q <- parallel_coord_category(iraceResults, idConfiguration, param_names = params , iterations)
+      q <- parallel_cat(iraceResults, idConfiguration, param_names = params , iterations)
       vectorP[i] <- list(q)
       inicio = final + 1
       final = (i+1)*15

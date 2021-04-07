@@ -23,7 +23,7 @@ get_parameters_names
 boxplot_test
 scatter_test
 parallel_coord
-parallel_coord_category
+parallel_cat
 sampling_frequency
 sampling_frequency_iteration
 sampling_density
@@ -270,9 +270,9 @@ fileName:       String, file name indicating where to save a pdf file with the p
 To visualize the configuration process detail
 
 
-```{r fig.align="center", fig.width= 7}
-configurations_display(iraceResults)
-```
+<!-- ```{r fig.align="center", fig.width= 7} -->
+<!-- configurations_display(iraceResults) -->
+<!-- ``` -->
 
 
 
@@ -353,7 +353,7 @@ parallel_coord(iraceResults, iterations = c(1,4,6))
 <!-- PARALLEL CATEGORIES  --> 
 ## Parallel categories
 
-The ``parallel_coord__category`` function creates a parallel categories plot a set of the parameter values of a set of configurations.
+The ``parallel_cat`` function creates a parallel categories plot a set of the parameter values of a set of configurations.
 
 If the ``idConfiguration`` argument is not provided this function displays parameter values all sampled configurations. When a set of ids is provided, 
 these selected configurations are displayed.
@@ -366,7 +366,7 @@ When there are more than 15 parameters in the scenario, only the first 15 parame
 
 
 ```
-parallel_coord__category(iraceResults, 
+parallel_cat(iraceResults, 
                         idConfiguration = NULL, 
                         param_names = NULL,
                         iterations = NULL,
@@ -394,7 +394,7 @@ To visualize all parameters values of all configurations, use the following code
 
 
 ```{r  fig.align="center", fig.width=7}
-parallel_coord_category(iraceResults)
+parallel_cat(iraceResults)
 ```
 
 
@@ -402,7 +402,7 @@ To visualize all parameters values of a set of selected configurations, use the 
 
 
 ```{r  fig.align="center", fig.width=7}
-parallel_coord_category(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+parallel_cat(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
 
 ```
 
@@ -410,13 +410,13 @@ To visualize a set of selected parameters values of the final elite configuratio
 
 
 ```{r  fig.align="center", fig.width=7}
-parallel_coord_category(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
 To visualize all parameters values of the elite configurations of selected iterations, use the following code:
 
 ```{r  fig.align="center", fig.width=7}
-parallel_coord_category(iraceResults, iterations =  c(1,4,6))
+parallel_cat(iraceResults, iterations =  c(1,4,6))
 ```
 
 
@@ -620,17 +620,17 @@ fileName:       String, file name indicating where to save a pdf file with the p
 To visualize the distance between sampled configurations, use the following code:
 
 
-```{r fig.align="center", fig.width= 7}
-sampling_distance(iraceResults)
-```
+# ```{r fig.align="center", fig.width= 7}
+# sampling_distance(iraceResults)
+# ```
 
 
 To visualize the distance between sampled configurations with a 20% difference threshold for numerical parameters, use the following code:
 
 
-```{r fig.align="center", fig.width= 7}
-sampling_distance(iraceResults, type = "boxplot", t=0.2)
-```
+# ```{r fig.align="center", fig.width= 7}
+# sampling_distance(iraceResults, type = "boxplot", t=0.2)
+# ```
 
 
 

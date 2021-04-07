@@ -24,7 +24,7 @@
 #' @examples
 #' NULL
 
-sampling_iteration <- function(iraceResults, type = "both", t = 0.05, fileName = NULL){
+sampling_distance <- function(iraceResults, type = "both", t = 0.05, fileName = NULL){
 
   if(!(type == "line" | type == "boxplot" | type == "both")){
     print("The type parameter entered is incorrect")

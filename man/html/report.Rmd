@@ -1,0 +1,21 @@
+---
+title: "Report Iraceplot Package"
+output: word_document
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include= FALSE}
+library(iraceplot)
+```
+
+
+```{r}
+boxplot_training(iraceResults)
+```
