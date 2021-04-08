@@ -7,7 +7,7 @@
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param idVector
+#' @param idConfigurations
 #' Numeric vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))
 #'
@@ -27,19 +27,19 @@
 #' @examples
 #' NULL
 
-scatter_training <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL){
+scatter_training <- function(iraceResults, idConfigurations, rpd = TRUE, fileName = NULL){
 
   #Variable assignment
   iteracionFiltrada <- NULL
 
   #Verify that the entered id are within the possible range
-  if(idVector[1] <= 0 || idVector[1] > dim(iraceResults$experiments)[2]){
-    return(paste("id out of range",idVector[1]))
-  }else if(idVector[2] <= 0 || idVector[2] > dim(iraceResults$experiments)[2]){
-    return(paste("id out of range",idVector[2]))
+  if(idConfigurations[1] <= 0 || idConfigurations[1] > dim(iraceResults$experiments)[2]){
+    return(paste("id out of range",idConfigurations[1]))
+  }else if(idConfigurations[2] <= 0 || idConfigurations[2] > dim(iraceResults$experiments)[2]){
+    return(paste("id out of range",idConfigurations[2]))
   }
   #Verify that a vector of length 2 is entered
-  if(length(idVector) == 1 || length(idVector) > 2){
+  if(length(idConfigurations) == 1 || length(idConfigurations) > 2){
     return("You must enter a vector with 2 values")
   }
 
@@ -51,7 +51,7 @@ scatter_training <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL
   }
 
   #An array of true and/or false to display if the field has data
-  filtro <- !is.na(distance[,idVector])
+  filtro <- !is.na(distance[,idConfigurations])
 
   #A vector is created only with paired iterations (both true)
   for(i in 1:dim(filtro)[1]){
@@ -61,7 +61,7 @@ scatter_training <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL
   }
 
   #A table is created with only the paired values
-  tabla <- as.data.frame((distance[,idVector])[iteracionFiltrada,])
+  tabla <- as.data.frame((distance[,idConfigurations])[iteracionFiltrada,])
 
   #If you can't find paired data
   if(length(iteracionFiltrada) == 0){
@@ -75,17 +75,17 @@ scatter_training <- function(iraceResults, idVector, rpd = TRUE, fileName = NULL
   }
 
   #The names of the columns are changed otherwise they would be shown in the graph as they are numbers
-  colnames(tabla)[colnames(tabla) == idVector[1]] <- "conf1"
-  colnames(tabla)[colnames(tabla) == idVector[2]] <- "conf2"
+  colnames(tabla)[colnames(tabla) == idConfigurations[1]] <- "conf1"
+  colnames(tabla)[colnames(tabla) == idConfigurations[2]] <- "conf2"
 
   #The plot scatter is created and assigned to p
   p <- ggplot(tabla, aes(x=conf1, y=conf2, color=conf1)) +
     geom_point() +
 
   if(rpd == TRUE){
-    labs(color=" ",x = paste("Configuration",idVector[1],"RPD"), y = paste("Configuration",idVector[2],"RPD"))
+    labs(color=" ",x = paste("Configuration",idConfigurations[1],"RPD"), y = paste("Configuration",idConfigurations[2],"RPD"))
   }else{
-    labs(color=" ",x = paste("Configuration",idVector[1],"Performance"), y = paste("Configuration",idVector[2],"Performance"))
+    labs(color=" ",x = paste("Configuration",idConfigurations[1],"Performance"), y = paste("Configuration",idConfigurations[2],"Performance"))
   }
 
   #If the value in fileName is added the pdf file is created

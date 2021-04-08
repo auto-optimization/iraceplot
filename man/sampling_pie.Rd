@@ -4,18 +4,10 @@
 \alias{sampling_pie}
 \title{Sunburst Plot}
 \usage{
-sampling_pie(
-  iraceResults,
-  dependency = FALSE,
-  parameters = NULL,
-  fileName = NULL
-)
+sampling_pie(iraceResults, parameters = NULL, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
-
-\item{dependency}{Logical (default FALSE) that allows to verify if the parameters
-are dependent on others, modifying the visualization of the plot}
 
 \item{parameters}{String vector, a set of categorical type parameters
 (example: parameters = c("algorithm","dlb"))}

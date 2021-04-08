@@ -5,9 +5,6 @@
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
-#' @param dependency
-#' Logical (default FALSE) that allows to verify if the parameters
-#' are dependent on others, modifying the visualization of the plot
 #' @param parameters
 #' String vector, a set of categorical type parameters
 #' (example: parameters = c("algorithm","dlb"))
@@ -20,10 +17,14 @@
 #' @examples
 #' NULL
 
-sampling_pie <- function(iraceResults, dependency = FALSE, parameters = NULL,fileName = NULL){
+sampling_pie <- function(iraceResults, parameters = NULL,fileName = NULL){
 
   #variable assignment
   param_c <- parents <- labels <- values <- ids <- depend <-NULL
+
+  dependency = FALSE
+  # Logical (default FALSE) that allows to verify if the parameters
+  # are dependent on others, modifying the visualization of the plot
 
   #assigns categorical type parameters to param_c
   for(i in 1:length(iraceResults$parameters$types)){

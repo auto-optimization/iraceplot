@@ -117,27 +117,27 @@ The ``scatter_test`` function creates a scatter plot comparing the testing perfo
 
 ```
 scatter_test(iraceResults,
-              idVector,
+              idConfigurations,
               rpd = TRUE,
               fileName = TRUE)
 ```
 ### Arguments
 
 ```
-iraceResults: irace log, loaded from the irace log Rdata file
+iraceResults:       irace log, loaded from the irace log Rdata file
 
-idVector:     Numeric vector??, a pair of configuration ids to be compared (example: idVector = c("92","119"))
+idConfigurations:   Numeric vector??, a pair of configuration ids to be compared (example: idVector = c("92","119"))
 
-rpd:          Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
+rpd:                Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
-fileName:     String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/filename")
+fileName:           String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/filename")
 ```
 
 For example, to compare the performance of two configurations executed in the testing, use the following code:
 
 
 ```{r fig.align="center", fig.width= 7}
-scatter_test(iraceResults, idVector = c("92","119"))
+scatter_test(iraceResults, idConfigurations = c("92","119"))
 ```
 
 <!-- ################################################### -->
@@ -200,7 +200,7 @@ boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
 The ``scatter_test`` function creates a scatter plot comparing the training performance of two configurations
 ```
 scatter_training(iraceResults, 
-                 idVector, 
+                 idConfigurations, 
                  rpd = TRUE, 
                  fileName = NULL)
 ```
@@ -209,7 +209,7 @@ scatter_training(iraceResults,
 ```
 iraceResults:   irace log, loaded from the irace log Rdata file
 
-idVector:       Numeric vector??, a pair of configuration ids to be compared (example: idVector = c("92","119"))
+idConfigurations: Numeric vector??, a pair of configuration ids to be compared (example: idVector = c("92","119"))
 
 rpd:            Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
@@ -218,7 +218,7 @@ fileName:       String, file name indicating where to save a pdf file with the p
 For example, to compare the performance of two configurations evaluated in the configuration process, use the following code:
 
 ```{r fig.align="center", fig.width= 7}
-scatter_training(iraceResults, idVector = c(806,809))
+scatter_training(iraceResults, idConfigurations = c(806,809))
 ```
 
 

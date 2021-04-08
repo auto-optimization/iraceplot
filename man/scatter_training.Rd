@@ -4,12 +4,12 @@
 \alias{scatter_training}
 \title{Scatter Plot Training}
 \usage{
-scatter_training(iraceResults, idVector, rpd = TRUE, fileName = NULL)
+scatter_training(iraceResults, idConfigurations, rpd = TRUE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idVector}{Numeric vector, you need to put the elite settings you
+\item{idConfigurations}{Numeric vector, you need to put the elite settings you
 want to compare, only 2 values are allowed (example: idVector = c(806,809))}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage

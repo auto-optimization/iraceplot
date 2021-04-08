@@ -3,6 +3,10 @@
 #' @param iraceResults
 #' irace log variable obtained from the Rdata file generate by irace
 #'
+#' @param locationRdata
+#' String, indicate the location where the Rdata file is located
+#' (example: "~/path-to/file.Rdata")
+#'
 #' @param fileName
 #' String, file name indicating where to save a pdf file with the plot.
 #' A pdf extension will be added to the file name provided
@@ -16,9 +20,17 @@
 #' @examples
 #' NULL
 
-report <- function(iraceResults, fileName = NULL){
+report <- function(iraceResults = NULL, locationRdata = NULL,fileName){
 
   filename <- NULL
+
+  if(is.null(iraceResults) & is.null(locationRdata)){
+    return("You must enter iraceResults or locationRData")
+  }else if(!is.null(locationRdata) & is.null(iraceResults)){
+    load(locationRdata)
+  }else if(!is.null(iraceResults) & !is.null(locationRdata)){
+    return("You can only enter iraceResults or locationRData, but not both")
+  }
 
   reportes <- tibble(
     filename = stringr::str_c(paste0(fileName,".pdf"))
@@ -28,5 +40,4 @@ report <- function(iraceResults, fileName = NULL){
     select(output_file = filename) %>%
     purrr::pwalk(rmarkdown::render, input = "man/html/report.Rmd")
 
-  #rmarkdown::render("doc/iraceplot_package.Rmd", output_format = "word_document")
 }

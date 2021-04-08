@@ -4,12 +4,12 @@
 \alias{scatter_test}
 \title{Scatter Plot Testing}
 \usage{
-scatter_test(iraceResults, idVector, rpd = TRUE, fileName = NULL)
+scatter_test(iraceResults, idConfigurations, rpd = TRUE, fileName = NULL)
 }
 \arguments{
 \item{iraceResults}{The data generated when loading the Rdata file created by irace}
 
-\item{idVector}{String vector, you need to put the elite settings you
+\item{idConfigurations}{String vector, you need to put the elite settings you
 want to compare, only 2 values are allowed (example: idVector = c("92","119"))}
 
 \item{rpd}{logical(default TRUE) to fit through an equation of minimum percentage distance

@@ -61,7 +61,7 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
 
   }
 
-  if(is.null(iterations)){
+  if(is.null(iterations) & is.null(idConfiguration)){
     iterations = c(length(iraceResults$allElites))
 
      if(length(iraceResults$allElites[[length(iraceResults$allElites)]]) == 1){
@@ -107,6 +107,7 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
     filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
     selection2 <- filtro[, "configuration"] %in% idConfiguration
     filtro <- filtro[selection2,]
+    onlyElite = FALSE
     # table is created with all settings
   }else{
     tabla <-iraceResults$allConfigurations

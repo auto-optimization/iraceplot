@@ -6,7 +6,7 @@
 #'
 #' @param iraceResults
 #' The data generated when loading the Rdata file created by irace
-#' @param idVector
+#' @param idConfigurations
 #' String vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c("92","119"))
 #' @param rpd
@@ -24,20 +24,20 @@
 #' @examples
 #' NULL
 
-scatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
+scatter_test <- function(iraceResults,idConfigurations,rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
     return("iraceResults does not contain the testing element")
   }
   # verify that the data is correct
-
-  if(length(idVector) != 2){
+  idConfigurations <- as.character(idConfigurations)
+  if(length(idConfigurations) != 2){
     return("You must enter a vector with 2 values")
-  }else if(!(idVector[1] %in% colnames(iraceResults$testing$experiments))){
-    return(paste("Configuration",idVector[1],"not found"))
-  }else if(!(idVector[2] %in% colnames(iraceResults$testing$experiments))){
-    return(paste("Configuration",idVector[2],"not found"))
+  }else if(!(idConfigurations[1] %in% colnames(iraceResults$testing$experiments))){
+    return(paste("Configuration",idConfigurations[1],"not found"))
+  }else if(!(idConfigurations[2] %in% colnames(iraceResults$testing$experiments))){
+    return(paste("Configuration",idConfigurations[2],"not found"))
   }
 
   x <- y <- NULL
@@ -50,7 +50,7 @@ scatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
   }
 
   # the table is created based on the entered values
-  datos <- tabla[idVector]
+  datos <- tabla[idConfigurations]
 
   # column names are changed
   colnames(datos)[1] <- "x"
@@ -64,9 +64,9 @@ scatter_test <- function(iraceResults,idVector,rpd = TRUE ,fileName = NULL){
       geom_point() +
       scale_color_viridis_c() +
   if(rpd == TRUE){
-    labs(color = "",x = paste("Configuration",idVector[1],"RPD"), y = paste("Configuration",idVector[2],"RPD"))
+    labs(color = "",x = paste("Configuration",idConfigurations[1],"RPD"), y = paste("Configuration",idConfigurations[2],"RPD"))
   }else{
-    labs(color = "",x = paste("Configuration",idVector[1],"Performance"), y = paste("Configuration",idVector[2],"Performance"))
+    labs(color = "",x = paste("Configuration",idConfigurations[1],"Performance"), y = paste("Configuration",idConfigurations[2],"Performance"))
   }
   p <- plotly::ggplotly(q, tooltip="text")
 

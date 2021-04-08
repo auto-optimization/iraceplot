@@ -11,7 +11,7 @@ boxplot_test(iraceResults, type = "all", rpd = TRUE, fileName = NULL)
 
 \item{type}{String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 "best" shows the best configurations of each iteration and
-"last" shows the configurations of the last iteration}
+"ibest" shows the configurations of the last iteration}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance between
 the values of each row of all configurations}
