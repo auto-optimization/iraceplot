@@ -23,5 +23,6 @@ for categorical data (its values are string, show a bar plot) or
 numeric data (show a histogram and density plot) by each iteration
 }
 \examples{
-NULL
+sampling_frequency_iteration(iraceResults,parameter = "alpha")
+
 }

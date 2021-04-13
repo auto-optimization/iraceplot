@@ -22,13 +22,13 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' scatter_test(iraceResults, idConfigurations = c("92","119"))
 
 scatter_test <- function(iraceResults,idConfigurations,rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
-    return("iraceResults does not contain the testing element")
+    return("iraceResults does not contain the testing data")
   }
   # verify that the data is correct
   idConfigurations <- as.character(idConfigurations)

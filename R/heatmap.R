@@ -25,7 +25,7 @@
 #' @importFrom stringr str_split
 #'
 #' @examples
-#' NULL
+#' heatmap(iraceResults)
 
 heatmap <- function(iraceResults, fileName = NULL){
   #Variable assignment

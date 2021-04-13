@@ -1,0 +1,64 @@
+---
+title: "Report Iraceplot Package"
+output: html_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include= FALSE}
+library(iraceplot)
+```
+
+## Testing performance box plot
+
+  The ``boxplot_test`` function creates a box plot using the performance of the configurations tested. Note that the performance that can be displayed is restricted to the testing performed by irace.
+  
+```{r,fig.align="center", fig.width= 7}
+boxplot_test(iraceResults, type = "best")
+```
+
+```{r,fig.align="center", fig.width= 7}
+boxplot_test(iraceResults, type = "ibest")
+```
+
+## Training performance box plot
+
+The ``boxplot_training`` function creates a box plot using the performance of the configurations obtained in the configuration process. Note that this function can only plot the performance of elite configurations.
+
+```{r,fig.align="center", fig.width= 7}
+boxplot_training(iraceResults)
+```
+
+## Parallel coordinates 
+
+The ``parallel_coord`` function creates a parallel coordinate plot of a set of selected configurations. 
+
+```{r,fig.align="center", fig.width= 7}
+parallel_coord(iraceResults)
+```
+
+## Sampling proportions
+
+The ``sampling_pie`` function creates a pie chart to visualize the proportion of the sampling values for categorical parameters in the configuration process.
+
+
+```{r,fig.align="center", fig.width= 7}
+sampling_pie(iraceResults)
+```
+
+## Sampling frequency
+
+The ``sampling_frequency`` function plots the sampling frequency plots of the parameter values sampled during the configuration process.
+
+For categorical parameters frequency bar plot is displayed, while for of numerical parameters (integer and real) an histogram and density plot are shown.
+
+
+```{r,fig.align="center", fig.width= 7}
+sampling_frequency(iraceResults)
+```
+

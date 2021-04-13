@@ -39,7 +39,11 @@
 #'
 #'
 #' @examples
-#' NULL
+#' parallel_coord(iraceResults)
+#' parallel_coord(iraceResults, idConfiguration = c(20,50,100,300,500,600,700))
+#' parallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' parallel_coord(iraceResults, iterations = c(1,4,6))
+#'
 
 parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL, onlyElite = TRUE, pdfAllParameters = FALSE, fileName = NULL){
 

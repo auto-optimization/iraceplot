@@ -31,7 +31,10 @@
 #'@export
 #'
 #'@examples
-#'NULL
+#'boxplot_training(iraceResults)
+#'boxplot_training(iraceResults,numberIteration = 5)
+#'boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
+#'
 
 boxplot_training <- function(iraceResults, numberIteration = NULL, idConfigurations = NULL, rpd = TRUE ,fileName = NULL){
 

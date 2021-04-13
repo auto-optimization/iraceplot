@@ -27,5 +27,7 @@ The function will return a box plot, using the data generated in the test
 settings coloring the best configuration in each iteration
 }
 \examples{
-NULL
+boxplot_test(iraceResults)
+boxplot_test(iraceResults, type = "ibest")
+boxplot_test(iraceResults, type = "best")
 }

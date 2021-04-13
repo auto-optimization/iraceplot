@@ -26,5 +26,5 @@ The function will return a scatter plot
 comparing two elite configurations in training
 }
 \examples{
-NULL
+scatter_training(iraceResults, idConfigurations = c(806,809))
 }

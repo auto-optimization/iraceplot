@@ -36,7 +36,10 @@
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
 #'
 #' @examples
-#' NULL
+#' parallel_cat(iraceResults)
+#' parallel_cat(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+#' parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' parallel_cat(iraceResults, iterations =  c(1,4,6))
 
 parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
 

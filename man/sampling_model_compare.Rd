@@ -23,5 +23,5 @@ one of density of the numerical parameter, in case of being a categorical parame
 it will only show one of frequency
 }
 \examples{
-NULL
+sampling_model_compare(iraceResults, parameter = "alpha")
 }

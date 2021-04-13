@@ -30,7 +30,10 @@
 #' @importFrom grDevices nclass.Sturges
 #'
 #' @examples
-#' NULL
+#' sampling_frequency(iraceResults)
+#' sampling_frequency(iraceResults, n = 2)
+#' sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#'
 
 sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileName = NULL){
 

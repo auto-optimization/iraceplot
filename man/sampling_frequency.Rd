@@ -29,5 +29,8 @@ for categorical parameters (string) one of frequency is created,
 in case of numerical parameters it will show a histogram and its density
 }
 \examples{
-NULL
+sampling_frequency(iraceResults)
+sampling_frequency(iraceResults, n = 2)
+sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+
 }

@@ -21,7 +21,7 @@
 #' @importFrom gridExtra grid.arrange
 #'
 #' @examples
-#' NULL
+#' sampling_density(iraceResults,parameter = "alpha")
 
 sampling_density <- function(iraceResults,parameter,fileName = NULL){
   #Variable assignment

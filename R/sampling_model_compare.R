@@ -19,7 +19,7 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' sampling_model_compare(iraceResults, parameter = "alpha")
 
 sampling_model_compare <- function(iraceResults,parameter,fileName = NULL){
 

@@ -197,7 +197,7 @@ boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
 <!-- SCATTER TRAINING  --> 
 ## Function scatter_training
 
-The ``scatter_test`` function creates a scatter plot comparing the training performance of two configurations
+The ``scatter_training`` function creates a scatter plot comparing the training performance of two configurations
 ```
 scatter_training(iraceResults, 
                  idConfigurations, 

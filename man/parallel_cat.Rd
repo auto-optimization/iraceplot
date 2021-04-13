@@ -41,5 +41,8 @@ parallel coordinates allowing the analysis of the set of parameters
 allowing the visualization of the data and the filtering by iteration
 }
 \examples{
-NULL
+parallel_cat(iraceResults)
+parallel_cat(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
+parallel_cat(iraceResults, iterations =  c(1,4,6))
 }

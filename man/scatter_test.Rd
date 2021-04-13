@@ -26,5 +26,5 @@ The function will return a scatter plot
 comparing two elite configurations in testing
 }
 \examples{
-NULL
+scatter_test(iraceResults, idConfigurations = c("92","119"))
 }

@@ -22,7 +22,8 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' #sampling_distance(iraceResults)
+#' #sampling_distance(iraceResults, type = "boxplot", t=0.2)
 
 sampling_distance <- function(iraceResults, type = "both", t = 0.05, fileName = NULL){
 

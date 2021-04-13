@@ -25,7 +25,7 @@
 #'@importFrom ggplot2 geom_point
 #'
 #' @examples
-#' NULL
+#' scatter_training(iraceResults, idConfigurations = c(806,809))
 
 scatter_training <- function(iraceResults, idConfigurations, rpd = TRUE, fileName = NULL){
 

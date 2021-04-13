@@ -35,5 +35,8 @@ Create a graphic of box plot of irace using the best quality id
 By default the graph of the last iteration is shown
 }
 \examples{
-NULL
+boxplot_training(iraceResults)
+boxplot_training(iraceResults,numberIteration = 5)
+boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
+
 }

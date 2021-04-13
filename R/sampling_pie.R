@@ -15,7 +15,8 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' sampling_pie(iraceResults)
+#' sampling_pie(iraceResults, parameters = c("algorithm","dlb"))
 
 sampling_pie <- function(iraceResults, parameters = NULL,fileName = NULL){
 

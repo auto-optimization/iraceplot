@@ -3,7 +3,6 @@ title: "Report Iraceplot Package"
 output: pdf_document
 ---
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -39,18 +38,18 @@ boxplot_training(iraceResults)
 
 The ``parallel_coord`` function creates a parallel coordinate plot of a set of selected configurations. 
 
-# ```{r,fig.align="center", fig.width= 7}
-# parallel_coord(iraceResults)
-# ```
+```{r,fig.align="center", fig.width= 7}
+parallel_coord(iraceResults)
+```
 
 ## Sampling proportions
 
 The ``sampling_pie`` function creates a pie chart to visualize the proportion of the sampling values for categorical parameters in the configuration process.
 
 
-# ```{r,fig.align="center", fig.width= 7}
-# sampling_pie(iraceResults)
-# ```
+```{r,fig.align="center", fig.width= 7}
+sampling_pie(iraceResults)
+```
 
 ## Sampling frequency
 

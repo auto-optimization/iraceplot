@@ -22,7 +22,8 @@
 #' @importFrom viridis viridis
 #'
 #' @examples
-#' NULL
+#' sampling_frequency_iteration(iraceResults,parameter = "alpha")
+#'
 
 sampling_frequency_iteration <- function(iraceResults,parameter,fileName = NULL){
   #Variable assignment

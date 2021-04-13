@@ -22,5 +22,5 @@ plot
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-NULL
+#configurations_display(iraceResults)
 }

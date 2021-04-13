@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' #configurations_display(iraceResults)
 
 configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
 

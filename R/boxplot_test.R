@@ -22,13 +22,15 @@
 #' @importFrom ggplot2 scale_color_hue
 #'
 #' @examples
-#' NULL
+#' boxplot_test(iraceResults)
+#' boxplot_test(iraceResults, type = "ibest")
+#' boxplot_test(iraceResults, type = "best")
 
 boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL){
 
   # verify that test this in iraceResults
   if(!("testing" %in% names(iraceResults))){
-    return("iraceResults does not contain the testing element")
+    return("iraceResults does not contain the testing data")
   }
 
   if(!(type == "all" | type == "best" | type == "ibest")){

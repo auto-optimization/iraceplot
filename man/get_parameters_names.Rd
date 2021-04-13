@@ -17,5 +17,5 @@ The function returns a string vector with the names of
 the document parameters iraceResults
 }
 \examples{
-NULL
+get_parameters_names(iraceResults)
 }

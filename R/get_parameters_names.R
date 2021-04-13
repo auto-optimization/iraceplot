@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' NULL
+#' get_parameters_names(iraceResults)
 
 get_parameters_names <- function(iraceResults){
   return(iraceResults$parameters$names)
