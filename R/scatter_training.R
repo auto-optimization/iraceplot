@@ -93,8 +93,10 @@ scatter_training <- function(iraceResults, idConfigurations, rpd = TRUE, fileNam
     pdf(paste0(fileName,".pdf"),width = 6.79,height = 2.32)
     plot(p)
     dev.off()
+    return(p)
   #If you do not add the value of fileName, the plot is displayed
   }else{
     p
+    return(p)
   }
 }
