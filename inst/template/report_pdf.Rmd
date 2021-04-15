@@ -1,6 +1,7 @@
 ---
 title: "Report Iraceplot Package"
 output: pdf_document
+always_allow_html: true
 ---
 
 ```{r, include = FALSE}

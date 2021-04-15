@@ -38,6 +38,7 @@ report <- function(format = "html",iraceResults = NULL, iraceFile = NULL,fileNam
   }
 
   if(format == "pdf"){
+    final_file <- irace:::path.rel2abs(paste0(fileName,".pdf"))
     #Output file name is generated
     reportes <- tibble(
       filename = stringr::str_c(paste0(fileName,".pdf"))
@@ -45,8 +46,10 @@ report <- function(format = "html",iraceResults = NULL, iraceFile = NULL,fileNam
     #The output location of the file is placed as well as the location report_pdf.Rmd
     reportes %>%
       select(output_file = filename) %>%
-      purrr::pwalk(rmarkdown::render, input = "inst/template/report_pdf.Rmd")
+      purrr::pwalk(rmarkdown::render, input = system.file("template","report_pdf.Rmd", package = 'iraceplot'))
   }else if(format == "html"){
+    final_file <- irace:::path.rel2abs(paste0(fileName,".html"))
+    print(final_file)
     #Output file name is generated
     reportes <- tibble(
       filename = stringr::str_c(paste0(fileName,".html"))
@@ -54,7 +57,8 @@ report <- function(format = "html",iraceResults = NULL, iraceFile = NULL,fileNam
     #The output location of the file is placed as well as the location report_html.Rmd
     reportes %>%
       select(output_file = filename) %>%
-      purrr::pwalk(rmarkdown::render, input = "inst/template/report_html.Rmd")
+      purrr::pwalk(rmarkdown::render, input = system.file("template","report_html.Rmd", package = 'iraceplot'))
+    browseURL(final_file)
   }
 
 
