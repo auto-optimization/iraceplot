@@ -151,6 +151,11 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
       tabla[i][is.na(tabla[i])] <- "NA"
     }
   }
+
+  iteration_f <- factor(as.character(tabla$iteration), ordered = TRUE)
+  levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
+  tabla$iteration <- iteration_f
+
   tabla$iteration[1] <- as.character(tabla$iteration[1])
 
   tabla <- tabla %>% group_by(tabla[1:dim(tabla)[2]]) %>% summarise(freq = n()) #%>% filter(freq > 1)
@@ -174,7 +179,7 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
 
   }
   p <- ggplot(tabla, aes(x, id = id, split = y, value = freq)) +
-    geom_parallel_sets(aes(fill = iteration), alpha = 0.7, axis.width = 0.2) +
+    geom_parallel_sets(aes(fill = iteration), alpha = 0.8, axis.width = 0.2) +
     geom_parallel_sets_axes(axis.width = 0.5, alpha = 0.4) +
     geom_parallel_sets_labels(colour = "black",angle = 90,size = 3) +
     theme_bw() +
