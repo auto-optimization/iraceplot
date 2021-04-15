@@ -185,7 +185,7 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
 
     if(colnames(tabla)[i] == "iteration"){
       dim[[i]] = list(
-        range = c(min(tabla[[i]], na.rm = TRUE),max(tabla[[i]], na.rm = TRUE)),
+        range = c(1, length(iraceResults$allElites)),
         values = tabla[[i]],
         label = colnames(tabla)[i],
         visible = FALSE
@@ -275,12 +275,13 @@ parallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = N
     p <- tabla %>%
       plot_ly(width = 1000, height = 600)
     p <- p %>% add_trace(type = 'parcoords',
-                         line = list(color = ~iteration_f,
+                         line = list(color = ~iteration,
                                      colorscale = 'Viridis',
                                      showscale = TRUE,
                                      reversescale = TRUE,
                                      cmin = 1,
-                                     cmax = length(iraceResults$allElites)),
+                                     cmax = length(iraceResults$allElites)
+                                     ),
                          dimensions = dim,
                          labelangle = -25
     )
