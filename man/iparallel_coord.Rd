@@ -4,13 +4,13 @@
 \alias{iparallel_coord}
 \title{Parallel Coordinates Plot interactive}
 \usage{
-iparallel_coord(iraceResults, idConfiguration = NULL, param_names = NULL)
+iparallel_coord(irace_results, id_configuration = NULL, param_names = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfiguration}{Numeric vector, you need to put the configurations you want to analyze
-(example: idConfiguration = c(20,50,100,300,500,600,700))}
+\item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
+(example: id_configuration = c(20,50,100,300,500,600,700))}
 
 \item{param_names}{String vector, you need to put the parameters you want to analyze
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}

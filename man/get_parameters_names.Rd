@@ -4,17 +4,17 @@
 \alias{get_parameters_names}
 \title{Parameters Names}
 \usage{
-get_parameters_names(iraceResults)
+get_parameters_names(irace_results)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 }
 \value{
 String vector
 }
 \description{
 The function returns a string vector with the names of
-the document parameters iraceResults
+the document parameters irace_results
 }
 \examples{
 get_parameters_names(iraceResults)

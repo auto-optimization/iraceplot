@@ -4,16 +4,16 @@
 \alias{configurations_display}
 \title{The configurations by iteration and instance}
 \usage{
-configurations_display(iraceResults, rpd = TRUE, fileName = NULL)
+configurations_display(irace_results, rpd = TRUE, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}
 
-\item{fileName}{String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/file_name")}
 }
 \value{
 plot

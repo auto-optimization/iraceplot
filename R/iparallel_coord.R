@@ -5,12 +5,12 @@
 #' interactive in shinyApp allowing the analysis of the set of parameters
 #' allowing the visualization of the data and filter by iteration
 #'
-#' @param iraceResults
+#' @param irace_results
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param idConfiguration
+#' @param id_configuration
 #' Numeric vector, you need to put the configurations you want to analyze
-#' (example: idConfiguration = c(20,50,100,300,500,600,700))
+#' (example: id_configuration = c(20,50,100,300,500,600,700))
 #'
 #' @param param_names
 #' String vector, you need to put the parameters you want to analyze
@@ -27,11 +27,11 @@
 #' @examples
 #' NULL
 
-iparallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = NULL){
+iparallel_coord <- function(irace_results, id_configuration = NULL, param_names = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- choi <- cont <-NULL
-  idConfiguration <- unlist(idConfiguration)
+  id_configuration <- unlist(id_configuration)
   param_names <- unlist(param_names)
   dim <- list()
   cont = 0
@@ -39,7 +39,7 @@ iparallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = 
   #verify that param_names is other than null
   if(!is.null(param_names)){
     #verify that param_names contain the data entered
-    if( "FALSE" %in% names(table(param_names %in% iraceResults$parameters$names))){
+    if( "FALSE" %in% names(table(param_names %in% irace_results$parameters$names))){
       return("Some wrong parameter entered")
     }
     #verify that param_names contain more than one parameter
@@ -49,29 +49,29 @@ iparallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = 
 
   }
 
-  if(!is.null(idConfiguration)){
+  if(!is.null(id_configuration)){
 
     # Verify that the entered id are within the possible range
-    if(length(idConfiguration[idConfiguration < 1]) >= 1 || length(idConfiguration[idConfiguration > dim(iraceResults$allConfigurations)[1]]) >= 1){
+    if(length(id_configuration[id_configuration < 1]) >= 1 || length(id_configuration[id_configuration > dim(irace_results$allConfigurations)[1]]) >= 1){
       return("IDs entered are outside the range of settings")
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
-    if(length(idConfiguration) <= 1 || length(idConfiguration) > dim(iraceResults$allConfigurations)[1] ){
+    if(length(id_configuration) <= 1 || length(id_configuration) > dim(irace_results$allConfigurations)[1] ){
       return("You must enter more than one id")
     }
 
     # the table to be used and the filter with the iterations and configuration is created
-    selection <- iraceResults$allConfigurations[, ".ID."] %in% idConfiguration
-    tabla <- iraceResults$allConfigurations[selection,]
-    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
-    selection2 <- filtro[, "configuration"] %in% idConfiguration
+    selection <- irace_results$allConfigurations[, ".ID."] %in% id_configuration
+    tabla <- irace_results$allConfigurations[selection,]
+    filtro <- unique(irace_results$experimentLog[,c("iteration","configuration")])
+    selection2 <- filtro[, "configuration"] %in% id_configuration
     filtro <- filtro[selection2,]
   }
   # table is created with all settings
   else{
-    tabla <-iraceResults$allConfigurations
-    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
+    tabla <-irace_results$allConfigurations
+    filtro <- unique(irace_results$experimentLog[,c("iteration","configuration")])
   }
 
   # The filter table is created and ordered according to the configurations
@@ -121,7 +121,7 @@ iparallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = 
   #NA data processing
   for(k in 1:(length(tabla))){
     if(class(tabla[[k]]) == "numeric" && NA %in% tabla[[k]]){
-      tabla[[k]][is.na(tabla[[k]])] <- (iraceResults$parameters$domain[[colnames(tabla)[k]]][2] + 1)
+      tabla[[k]][is.na(tabla[[k]])] <- (irace_results$parameters$domain[[colnames(tabla)[k]]][2] + 1)
     }else if(class(tabla[[k]]) == "character" && NA %in% tabla[[k]]){
       tabla[[k]][is.na(tabla[[k]])] <- "NA"
     }
@@ -133,23 +133,23 @@ iparallel_coord <- function(iraceResults, idConfiguration = NULL, param_names = 
     }else if(class(tabla[[i]]) == "numeric"){
       cont = cont +1
       dim[colnames(tabla)[i]] <- dim[cont]
-      if((as.numeric(iraceResults$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
-        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+      if((as.numeric(irace_results$parameters$domain[[colnames(tabla)[i]]][2])+1) %in% tabla[[i]]){
+        minimo = irace_results$parameters$domain[[colnames(tabla)[i]]][1]
         medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
         medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
         medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
-        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2] +1
+        maximo = irace_results$parameters$domain[[colnames(tabla)[i]]][2] +1
 
         dim[[cont]] = list(
           tickValues = c(minimo,medio,medio2,medio3,maximo)
           )
       }else{
-        minimo = iraceResults$parameters$domain[[colnames(tabla)[i]]][1]
+        minimo = irace_results$parameters$domain[[colnames(tabla)[i]]][1]
         medio = round((max(tabla[[i]], na.rm = TRUE)/4),1)
         medio2 = round((max(tabla[[i]], na.rm = TRUE)/2),1)
         medio3 = round((max(tabla[[i]], na.rm = TRUE)*(3/4)),1)
         tickFormat = list()
-        maximo = iraceResults$parameters$domain[[colnames(tabla)[i]]][2]
+        maximo = irace_results$parameters$domain[[colnames(tabla)[i]]][2]
         dim[[cont]] = list(
           tickValues = c(minimo,medio,medio2,medio3,maximo)
           )

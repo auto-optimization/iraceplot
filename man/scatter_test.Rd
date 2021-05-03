@@ -4,19 +4,19 @@
 \alias{scatter_test}
 \title{Scatter Plot Testing}
 \usage{
-scatter_test(iraceResults, idConfigurations, rpd = TRUE, fileName = NULL)
+scatter_test(irace_results, id_configurations, rpd = TRUE, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfigurations}{String vector, you need to put the elite settings you
+\item{id_configurations}{String vector, you need to put the elite settings you
 want to compare, only 2 values are allowed (example: idVector = c("92","119"))}
 
 \item{rpd}{logical(default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}
 
-\item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/file_name")}
 }
 \value{
 scatter plot
@@ -26,5 +26,5 @@ The function will return a scatter plot
 comparing two elite configurations in testing
 }
 \examples{
-scatter_test(iraceResults, idConfigurations = c("92","119"))
+scatter_test(iraceResults, id_configurations = c("92","119"))
 }

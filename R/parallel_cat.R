@@ -5,12 +5,12 @@
 #' parallel coordinates allowing the analysis of the set of parameters
 #' allowing the visualization of the data and the filtering by iteration
 #'
-#' @param iraceResults
+#' @param irace_results
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param idConfiguration
+#' @param id_configuration
 #' Numeric vector, you need to put the configurations you want to analyze
-#' (example: idConfiguration = c(20,50,100,300,500,600,700))
+#' (example: id_configuration = c(20,50,100,300,500,600,700))
 #'
 #' @param param_names
 #' String vector, you need to put the parameters you want to analyze
@@ -20,14 +20,14 @@
 #' NUmeric vector, you need to put the iterations you want to analyze
 #' (example: iterations = c(1,4,5))
 #'
-#' @param pdfAllParameters
+#' @param pdf_all_parameters
 #' logical (default FALSE), If I want to create a pdf with all the parameters,
 #' I must put TRUE, otherwise it will be created only with the default
 #' parameters (15 or less) or those entered.
 #'
-#' @param fileName
+#' @param file_name
 #' A pdf will be created in the location and with
-#' the assigned name (example: "~/patch/example/filename")
+#' the assigned name (example: "~/patch/example/file_name")
 #'
 #' @return parallel coordinate category plot
 #' @export
@@ -37,20 +37,20 @@
 #'
 #' @examples
 #' parallel_cat(iraceResults)
-#' parallel_cat(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+#' parallel_cat(iraceResults,id_configuration = c(20,50,100,300,500,600,700))
 #' parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #' parallel_cat(iraceResults, iterations =  c(1,4,6))
 
-parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NULL, iterations = NULL,pdfAllParameters = FALSE,fileName = NULL){
+parallel_cat <- function(irace_results, id_configuration = NULL, param_names = NULL, iterations = NULL,pdf_all_parameters = FALSE,file_name = NULL){
 
   #Variable assignment
   memo  <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
-  idConfiguration <- unlist(idConfiguration)
+  id_configuration <- unlist(id_configuration)
   param_names <- unlist(param_names)
 
 
   if(!is.null(iterations)){
-    it <- c(1:length(iraceResults$allElites))
+    it <- c(1:length(irace_results$allElites))
     if(FALSE %in% (iterations %in% it)){
       return("The interactions entered are outside the possible range")
     }
@@ -59,7 +59,7 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
   #verify that param_names is other than null
   if(!is.null(param_names)){
     #verify that param_names contain the data entered
-    if( "FALSE" %in% names(table(param_names %in% iraceResults$parameters$names))){
+    if( "FALSE" %in% names(table(param_names %in% irace_results$parameters$names))){
       return("Some wrong parameter entered")
       #verify that param_names contain more than one parameter
     }else if(length(param_names) < 2){
@@ -68,28 +68,28 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
 
   }
 
-  if(!is.null(idConfiguration)){
+  if(!is.null(id_configuration)){
 
     # Verify that the entered id are within the possible range
-    if(length(idConfiguration[idConfiguration < 1]) >= 1 || length(idConfiguration[idConfiguration > dim(iraceResults$allConfigurations)[1]]) >= 1){
+    if(length(id_configuration[id_configuration < 1]) >= 1 || length(id_configuration[id_configuration > dim(irace_results$allConfigurations)[1]]) >= 1){
       return("IDs entered are outside the range of settings")
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
-    if(length(idConfiguration) <= 1 || length(idConfiguration) > dim(iraceResults$allConfigurations)[1] ){
+    if(length(id_configuration) <= 1 || length(id_configuration) > dim(irace_results$allConfigurations)[1] ){
       return("You must enter more than one id")
     }
 
     # the table to be used and the filter with the iterations and configuration is created
-    selection <- iraceResults$allConfigurations[, ".ID."] %in% idConfiguration
-    tabla <- iraceResults$allConfigurations[selection,]
-    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
-    selection2 <- filtro[, "configuration"] %in% idConfiguration
+    selection <- irace_results$allConfigurations[, ".ID."] %in% id_configuration
+    tabla <- irace_results$allConfigurations[selection,]
+    filtro <- unique(irace_results$experimentLog[,c("iteration","configuration")])
+    selection2 <- filtro[, "configuration"] %in% id_configuration
     filtro <- filtro[selection2,]
     # table is created with all settings
   }else{
-    tabla <-iraceResults$allConfigurations
-    filtro <- unique(iraceResults$experimentLog[,c("iteration","configuration")])
+    tabla <-irace_results$allConfigurations
+    filtro <- unique(irace_results$experimentLog[,c("iteration","configuration")])
   }
 
   # The filter table is created and ordered according to the configurations
@@ -125,8 +125,8 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
 
   # Column .ID. and .PARENT. are removed
   tabla <- tabla[, !(names(tabla) %in% c(".ID.",".PARENT."))]
-  if(is.null(param_names) & length(get_parameters_names(iraceResults)) > 15 & pdfAllParameters == FALSE){
-    param_names = get_parameters_names(iraceResults)[1:15]
+  if(is.null(param_names) & length(get_parameters_names(irace_results)) > 15 & pdf_all_parameters == FALSE){
+    param_names = get_parameters_names(irace_results)[1:15]
   }
   if(!is.null(param_names)){
     param_names <- c(param_names,"iteration")
@@ -142,8 +142,8 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
   }
 
   for (i in 1:(dim(tabla)[2]-1)) {
-    if(class(iraceResults$parameters$domain[colnames(tabla[i])][[1]]) == "numeric"){
-      valor = paste(iraceResults$parameters$domain[colnames(tabla[i])][[1]][1],"-",iraceResults$parameters$domain[colnames(tabla[i])][[1]][2])
+    if(class(irace_results$parameters$domain[colnames(tabla[i])][[1]]) == "numeric"){
+      valor = paste(irace_results$parameters$domain[colnames(tabla[i])][[1]][1],"-",irace_results$parameters$domain[colnames(tabla[i])][[1]][2])
       tabla[i][!is.na(tabla[i])] <- valor
       tabla[i][is.na(tabla[i])] <- "NA"
     }
@@ -164,14 +164,14 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
 
   tabla <- tabla[tabla$x != "iteration",]
 
-  if(!is.null(fileName) & pdfAllParameters == TRUE & length(get_parameters_names(iraceResults))>15){
+  if(!is.null(file_name) & pdf_all_parameters == TRUE & length(get_parameters_names(irace_results))>15){
     inicio = 1
     final = 15
-    for (i in 1:ceiling(length(get_parameters_names(iraceResults))/15)) {
-      n_parameters = length(get_parameters_names(iraceResults))
-      params = get_parameters_names(iraceResults)[inicio:final]
+    for (i in 1:ceiling(length(get_parameters_names(irace_results))/15)) {
+      n_parameters = length(get_parameters_names(irace_results))
+      params = get_parameters_names(irace_results)[inicio:final]
       params = params[!is.na(params)]
-      q <- parallel_cat(iraceResults, idConfiguration, param_names = params , iterations)
+      q <- parallel_cat(irace_results, id_configuration, param_names = params , iterations)
       vectorP[i] <- list(q)
       inicio = final + 1
       final = (i+1)*15
@@ -186,15 +186,15 @@ parallel_cat <- function(iraceResults, idConfiguration = NULL, param_names = NUL
     theme(axis.text.x = element_text(angle = 90, size = 6),
           axis.title.x = element_blank())
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
 
-    pdf(paste0(fileName,".pdf"))
+    pdf(paste0(file_name,".pdf"))
     for (i in 1:length(vectorP)) {
       plot(vectorP[[i]])
     }
     dev.off()
-    #If you do not add the value of fileName, the plot is displayed
+    #If you do not add the value of file_name, the plot is displayed
   }else{
     p
   }

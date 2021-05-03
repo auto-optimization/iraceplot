@@ -2,14 +2,14 @@
 #'
 #' @description
 #' A graph is created with all the settings and instance of the training data
-#' @param iraceResults
+#' @param irace_results
 #' The data generated when loading the Rdata file created by irace
 #' @param rpd
 #' Logical (default TRUE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations
-#' @param fileName
+#' @param file_name
 #' String, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/filename")
+#' assigned name (example: "~/patch/example/file_name")
 #'
 #' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete scale_color_manual scale_size_manual scale_alpha_manual
 #' @importFrom grDevices rainbow
@@ -20,12 +20,12 @@
 #' @examples
 #' #configurations_display(iraceResults)
 
-configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
+configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL){
 
   #variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
   nconfig = 0
-  experiments <- as.data.frame(iraceResults$experiments)
+  experiments <- as.data.frame(irace_results$experiments)
 
   # the table values are modified
   if(rpd == TRUE){
@@ -33,7 +33,7 @@ configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
   }
 
   #variable assignment
-  exp_log <- select(as.data.frame(iraceResults$experimentLog),-time,-bound)
+  exp_log <- select(as.data.frame(irace_results$experimentLog),-time,-bound)
   value <- sample(NA,size=dim(exp_log)[1],replace = TRUE)
   execution <- sample(NA,size=dim(exp_log)[1],replace = TRUE)
   tabla <- cbind(exp_log,value, execution)
@@ -41,7 +41,7 @@ configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
   #the values of each configuration are added to the table
   cont_exe = 0
   for (i in 1:dim(exp_log)[1]) {
-    for (j in 1:dim(iraceResults$experiments)[1]) {
+    for (j in 1:dim(irace_results$experiments)[1]) {
       if(!is.na(experiments[[tabla$configuration[i]]][j])){
 
         if(is.na(tabla$value[i])){
@@ -71,23 +71,23 @@ configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
   tabla <- tabla[order(tabla$execution),]
 
   #the data is added to the conf_it, instance_it and type columns
-  for (j in 1:length(iraceResults$allElites)) {
+  for (j in 1:length(irace_results$allElites)) {
     nconfig = max(tabla$execution[tabla$iteration == j])
     tabla$conf_it[tabla$iteration == j] = nconfig
     tabla$instance_it[tabla$iteration == j] = max(unique(tabla$instance[tabla$iteration == j]))
 
-    if(j == length(iraceResults$allElites)){
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular config."
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]])] = "final elite config."
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% iraceResults$allElites[[j]][1])] = "best found config."
+    if(j == length(irace_results$allElites)){
+      tabla$type[tabla$iteration == j & !(tabla$configuration %in% irace_results$allElites[[j]])] = "regular config."
+      tabla$type[tabla$iteration == j & (tabla$configuration %in% irace_results$allElites[[j]])] = "final elite config."
+      tabla$type[tabla$iteration == j & (tabla$configuration %in% irace_results$allElites[[j]][1])] = "best found config."
     }else{
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% iraceResults$allElites[[j]])] = "regular config."
-      tabla$type[tabla$iteration == j & tabla$configuration %in% iraceResults$allElites[[j]]] = "elite config."
+      tabla$type[tabla$iteration == j & !(tabla$configuration %in% irace_results$allElites[[j]])] = "regular config."
+      tabla$type[tabla$iteration == j & tabla$configuration %in% irace_results$allElites[[j]]] = "elite config."
     }
   }
 
   #The mean values ​​are calculated in the configurations by iteration
-  for (k in 1:length(iraceResults$allElites)) {
+  for (k in 1:length(irace_results$allElites)) {
     tabla$media_regular[tabla$iteration == k] = mean(tabla$value[tabla$iteration == k])
     tabla$media_elite[tabla$iteration == k] = mean(tabla$value[tabla$iteration == k & (tabla$type == "elite config." | tabla$type == "final elite config." | tabla$type == "best found config.")])
   }
@@ -130,13 +130,14 @@ configurations_display <- function(iraceResults, rpd = TRUE, fileName = NULL){
   #The graph is transformed to plotly
   p <- plotly::ggplotly(q, tooltip = "text")
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"), width = 12)
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
+    pdf(paste0(file_name,".pdf"), width = 12)
     plot(q)
     dev.off()
-    #If you do not add the value of fileName, the plot is displayed
+    #If you do not add the value of file_name, the plot is displayed
   }else{
     q
+    return(q)
   }
 }

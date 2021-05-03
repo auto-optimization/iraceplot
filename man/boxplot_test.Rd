@@ -4,10 +4,10 @@
 \alias{boxplot_test}
 \title{Box Plot Testing}
 \usage{
-boxplot_test(iraceResults, type = "all", rpd = TRUE, fileName = NULL)
+boxplot_test(irace_results, type = "all", rpd = TRUE, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
 \item{type}{String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 "best" shows the best configurations of each iteration and
@@ -16,8 +16,8 @@ boxplot_test(iraceResults, type = "all", rpd = TRUE, fileName = NULL)
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance between
 the values of each row of all configurations}
 
-\item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/file_name")}
 }
 \value{
 box plot

@@ -3,24 +3,24 @@
 #'Create a graphic of box plot of irace using the best quality id
 #'By default the graph of the last iteration is shown
 #'
-#'@param iraceResults
+#'@param irace_results
 #'The data generated when loading the Rdata file created by irace
 #'
-#'@param numberIteration
+#'@param number_iteration
 #'Numeric, It is the number referring to the iteration that you want to graph,
-#'the range of these varies according to the Rdata used (example: numberIteration = 5)
+#'the range of these varies according to the Rdata used (example: number_iteration = 5)
 #'
-#'@param idConfigurations
+#'@param id_configurations
 #'Numeric vector, you need to put the configurations you want to analyze
-#' (example: idConfigurations = c(20,50,100,300,500,600,700))
+#' (example: id_configurations = c(20,50,100,300,500,600,700))
 #'
 #'@param rpd
 #'Logical (default TRUE) to fit through an equation of minimum percentage distance
 #'between the values of each row of all configurations
 #'
-#'@param fileName
+#'@param file_name
 #' String, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/filename")
+#' assigned name (example: "~/patch/example/file_name")
 #'
 #'@return box plot
 #'
@@ -32,45 +32,45 @@
 #'
 #'@examples
 #'boxplot_training(iraceResults)
-#'boxplot_training(iraceResults,numberIteration = 5)
-#'boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
+#'boxplot_training(iraceResults,number_iteration = 5)
+#'boxplot_training(iraceResults,id_configurations = c(20,50,100,300,500,600,700))
 #'
 
-boxplot_training <- function(iraceResults, numberIteration = NULL, idConfigurations = NULL, rpd = TRUE ,fileName = NULL){
+boxplot_training <- function(irace_results, number_iteration = NULL, id_configurations = NULL, rpd = TRUE ,file_name = NULL){
 
   #Variable assignment
   Performance <- Elite_configuration <- NULL
-  long <- length(iraceResults$allElites)
+  long <- length(irace_results$allElites)
 
-  if(!is.null(numberIteration) & !is.null(idConfigurations)){
-    return("You cannot use idConfigurations and numberIteration at the same time")
+  if(!is.null(number_iteration) & !is.null(id_configurations)){
+    return("You cannot use id_configurations and number_iteration at the same time")
   }
 
-  #It is checked if the fileName argument was added
-  if(!is.null(numberIteration)){
-    #We verify that numberIteration is within the range of values it can take
-    if(numberIteration > 0 && numberIteration <= long){
-      long <- numberIteration
-    #If numberIteration is out of range it delivers a message per screen
+  #It is checked if the file_name argument was added
+  if(!is.null(number_iteration)){
+    #We verify that number_iteration is within the range of values it can take
+    if(number_iteration > 0 && number_iteration <= long){
+      long <- number_iteration
+    #If number_iteration is out of range it delivers a message per screen
     }else{
       return(print("iteration number out of range"))
     }
   }
 
   #A vector is created with the id of all elite configurations from the iteration entered
-  id <- iraceResults$allElites[[long]]
+  id <- irace_results$allElites[[long]]
 
-  if(!is.null(idConfigurations)){
-    n_conf = c(1:dim(iraceResults$experiments)[2])
-    if(FALSE %in% (idConfigurations %in% n_conf)){
-      return(paste("The following settings are out of range:",idConfigurations[!(idConfigurations %in% n_conf)]))
+  if(!is.null(id_configurations)){
+    n_conf = c(1:dim(irace_results$experiments)[2])
+    if(FALSE %in% (id_configurations %in% n_conf)){
+      return(paste("The following settings are out of range:",id_configurations[!(id_configurations %in% n_conf)]))
     }else{
-      id <- idConfigurations
+      id <- id_configurations
     }
   }
 
   #A table is created with the values of all elite configurations of the id of the requested iteration
-  distance <- iraceResults$experiments
+  distance <- irace_results$experiments
 
   if(rpd == TRUE){
     distance <- 100*(distance - apply(distance,1,min, na.rm = TRUE))/apply(distance,1,min, na.rm=TRUE)
@@ -80,7 +80,7 @@ boxplot_training <- function(iraceResults, numberIteration = NULL, idConfigurati
 
   #If the length of id is one, a different value must be added to the column
   if(length(id) == 1){
-    colnames(matriz)[colnames(matriz) == "iraceResults$experiments[, id]"] <- id
+    colnames(matriz)[colnames(matriz) == "irace_results$experiments[, id]"] <- id
   }
 
   #value of elements that the matrix contains
@@ -101,13 +101,14 @@ boxplot_training <- function(iraceResults, numberIteration = NULL, idConfigurati
     theme(legend.position="none") +
     labs(x="Elite Configurations")
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"))
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
+    pdf(paste0(file_name,".pdf"))
     plot(p)
     dev.off()
-  #If you do not add the value of fileName, the plot is displayed
+  #If you do not add the value of file_name, the plot is displayed
   }else{
     p
+    return(p)
   }
 }

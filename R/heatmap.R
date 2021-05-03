@@ -3,13 +3,13 @@
 #' @description
 #' The function will return a heat map plot of all experimental data configurations
 #'
-#' @param iraceResults
+#' @param irace_results
 #'
 #' The data generated when loading the Rdata file created by irace
 #'
-#' @param fileName
+#' @param file_name
 #' string, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/filename")
+#' assigned name (example: "~/patch/example/file_name")
 #'
 #' @return heatmap plot
 #' @export
@@ -27,12 +27,12 @@
 #' @examples
 #' heatmap(iraceResults)
 
-heatmap <- function(iraceResults, fileName = NULL){
+heatmap <- function(irace_results, file_name = NULL){
   #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 
   #The values of the experiments are assigned to the variable experiments
-  experiments <- iraceResults$experiments
+  experiments <- irace_results$experiments
   experiments[] <- rank(experiments, na.last="keep")
 
   #he table is created and organized for ease of use
@@ -57,15 +57,16 @@ heatmap <- function(iraceResults, fileName = NULL){
   #The plot becomes interactive
   p <- plotly::ggplotly(q, tooltip="text")
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
-    #The fileName value is worked to separate it and assign it to new values.
-    nameFile = basename(fileName)
-    directory = paste0(dirname(fileName),sep="/")
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
+    #The file_name value is worked to separate it and assign it to new values.
+    nameFile = basename(file_name)
+    directory = paste0(dirname(file_name),sep="/")
     withr::with_dir(directory, orca(p, paste0(nameFile,".pdf")))
 
-  #If you do not add the value of fileName, the plot is displayed
+  #If you do not add the value of file_name, the plot is displayed
   }else{
     p
+    return(p)
   }
 }

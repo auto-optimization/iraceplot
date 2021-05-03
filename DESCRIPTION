@@ -2,16 +2,38 @@ Package: iraceplot
 Type: Package
 Title: Make Various Types of Graphics
 Version: 0.1.0
-Author: person("Pablo","Oñate",role=c("aut","cre"))
-Maintainer: The package maintainer <pablo.onate.m@mail.pucv.cl>
+Authors@R:
+    person(given = "Pablo",
+           family = "Oñate",
+           role = c("aut", "cre"),
+           email = "pablo.onate.m@gmail.com")
 Description: For the creation of various types of graphs that facilitates to understand the data produced by irace.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Imports: ggplot2, stats, tibble, tidyr, forcats, dplyr, plotly, stringr, withr, parcoords, 
-         shiny, shinydashboard, htmlwidgets, GGally, viridis, ggridges, gridExtra, ggforce, 
-         purrr, webshot
+Imports: ggplot2, 
+         stats, 
+         tibble, 
+         tidyr, 
+         forcats, 
+         dplyr, 
+         plotly, 
+         stringr, 
+         withr, 
+         parcoords, 
+         shiny, 
+         shinydashboard, 
+         htmlwidgets, 
+         GGally, 
+         viridis, 
+         ggridges, 
+         gridExtra, 
+         ggforce, 
+         purrr, 
+         webshot,
+         utils,
+         irace
 Suggests: 
     knitr,
     rmarkdown,

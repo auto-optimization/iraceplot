@@ -5,7 +5,7 @@
 #' for categorical parameters (string) one of frequency is created,
 #' in case of numerical parameters it will show a histogram and its density
 #'
-#' @param iraceResults
+#' @param irace_results
 #' The data generated when loading the Rdata file created by irace
 #'
 #' @param param_names
@@ -17,10 +17,10 @@
 #' (example: if we place an n = 1, it will show us the parameters from 1 to 9,
 #' in case an n = 2 it will show the parameters from 10 to 18 and so on)
 #'
-#' @param fileName
+#' @param file_name
 #' String, A pdf will be created in the location and with the assigned
 #' name. By default, all the parameters will be displayed appropriately, with nine
-#' graphics for each sheet. (example: "~/patch/example/filename")
+#' graphics for each sheet. (example: "~/patch/example/file_name")
 #'
 #' @return Frequency and/or density plot
 #' @export
@@ -35,22 +35,22 @@
 #' sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 
-sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileName = NULL){
+sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file_name = NULL){
 
   #Variable assignment
   vectorG <- tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <-NULL
   param_names <- unlist(param_names)
   max_p = 9
 
-  if(length(get_parameters_names(iraceResults)) > max_p & is.null(n) & is.null(param_names) & is.null(fileName)){
+  if(length(get_parameters_names(irace_results)) > max_p & is.null(n) & is.null(param_names) & is.null(file_name)){
     print("There are too many parameters to display. It will select relevant parameters")
     print(paste("The first",max_p,"parameters will be displayed"))
-    param_names = get_parameters_names(iraceResults)[1:max_p]
+    param_names = get_parameters_names(irace_results)[1:max_p]
   }
 
 
   if(!is.null(param_names)){
-    if("FALSE" %in% (param_names %in% iraceResults$parameters$names)){
+    if("FALSE" %in% (param_names %in% irace_results$parameters$names)){
       return("Some wrong parameter entered")
     }
     n = 1
@@ -62,24 +62,24 @@ sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileN
       fin = max_p*n
       param_names = param_names[inicio:fin]
       param_names = param_names[!is.na(param_names)]
-      config <- iraceResults$allConfigurations[param_names]
+      config <- irace_results$allConfigurations[param_names]
     }else{
-      config <- iraceResults$allConfigurations[param_names]
+      config <- irace_results$allConfigurations[param_names]
     }
 
   }else{
 
     if(!is.null(n)){
-      if(n < 1 | n > ceiling(length(get_parameters_names(iraceResults))/max_p)){
-        return(paste("n cannot be less than 1 and greater than",ceiling(length(get_parameters_names(iraceResults))/max_p)))
+      if(n < 1 | n > ceiling(length(get_parameters_names(irace_results))/max_p)){
+        return(paste("n cannot be less than 1 and greater than",ceiling(length(get_parameters_names(irace_results))/max_p)))
       }
       inicio = (max_p*n - 8)
       fin = max_p*n
-      params = iraceResults$parameters$names[inicio:fin]
+      params = irace_results$parameters$names[inicio:fin]
       params = params[!is.na(params)]
-      config <- iraceResults$allConfigurations[params]
+      config <- irace_results$allConfigurations[params]
     }else{
-      config <- iraceResults$allConfigurations[iraceResults$parameters$names]
+      config <- irace_results$allConfigurations[irace_results$parameters$names]
     }
 
   }
@@ -126,9 +126,9 @@ sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileN
     }
   }
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"))
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
+    pdf(paste0(file_name,".pdf"))
     if(length(config) == 1 ){
       do.call("grid.arrange",c(vectorG,ncol=1))
     }else if(length(config) == 2){
@@ -150,9 +150,10 @@ sampling_frequency <- function(iraceResults, param_names = NULL, n = NULL, fileN
     }
 
     dev.off()
-  #If you do not add the value of fileName, the plot is displayed
+  #If you do not add the value of file_name, the plot is displayed
   }else{
     do.call("grid.arrange",c(vectorG,ncol=3))
+    return(vectorG)
   }
 
 }

@@ -4,20 +4,20 @@
 \alias{report}
 \title{Report Iraceplot}
 \usage{
-report(format = "html", iraceResults = NULL, iraceFile = NULL, fileName)
+report(format = "html", irace_results = NULL, irace_file = NULL, file_name)
 }
 \arguments{
 \item{format}{String, either "pdf" or "html". The parameter according to its
 value is how the output file format will be.,By default it is "html"}
 
-\item{iraceResults}{irace log variable obtained from the Rdata file generate by irace}
+\item{irace_results}{irace log variable obtained from the Rdata file generate by irace}
 
-\item{iraceFile}{String, indicate the location where the Rdata file is located
+\item{irace_file}{String, indicate the location where the Rdata file is located
 (example: "~/path-to/file.Rdata")}
 
-\item{fileName}{String, file name indicating where to save a pdf file with the plot.
+\item{file_name}{String, file name indicating where to save a pdf file with the plot.
 A pdf extension will be added to the file name provided
-(example: "~/path-to/filename")}
+(example: "~/path-to/file_name")}
 }
 \value{
 document

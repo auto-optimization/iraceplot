@@ -4,10 +4,10 @@
 \alias{sampling_distance}
 \title{Distance Iteration Plot}
 \usage{
-sampling_distance(iraceResults, type = "both", t = 0.05, fileName = NULL)
+sampling_distance(irace_results, type = "both", t = 0.05, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
 \item{type}{String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
 points and lines, "boxplot" will show a box plot}
@@ -15,8 +15,8 @@ points and lines, "boxplot" will show a box plot}
 \item{t}{Numeric, It is a percentage factor that will determine the range of difference
 between settings (example: t = 0.05 is equivalent to 5 percent)}
 
-\item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/file_name")}
 }
 \value{
 line or box plot

@@ -4,12 +4,12 @@
 \alias{distance_config}
 \title{Distance between configurations}
 \usage{
-distance_config(iraceResults, idConfigurations, t = 0.05)
+distance_config(irace_results, id_configurations, t = 0.05)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfigurations}{Numeric vector, you need to put the settings you
+\item{id_configurations}{Numeric vector, you need to put the settings you
 want to compare, only 2 values are allowed (example: idVector = c(806,809))}
 
 \item{t}{Numeric, It is a percentage factor that will determine the range of difference

@@ -4,13 +4,13 @@
 \alias{heatmap}
 \title{Heat Map Plot}
 \usage{
-heatmap(iraceResults, fileName = NULL)
+heatmap(irace_results, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{fileName}{string, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/filename")}
+\item{file_name}{string, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/file_name")}
 }
 \value{
 heatmap plot

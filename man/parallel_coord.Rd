@@ -5,20 +5,20 @@
 \title{Parallel Coordinates Plot static}
 \usage{
 parallel_coord(
-  iraceResults,
-  idConfiguration = NULL,
+  irace_results,
+  id_configuration = NULL,
   param_names = NULL,
   iterations = NULL,
-  onlyElite = TRUE,
-  pdfAllParameters = FALSE,
-  fileName = NULL
+  only_elite = TRUE,
+  pdf_all_parameters = FALSE,
+  file_name = NULL
 )
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfiguration}{Numeric vector, you need to put the configurations you want to analyze
-(example: idConfiguration = c(20,50,100,300,500,600,700))}
+\item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
+(example: id_configuration = c(20,50,100,300,500,600,700))}
 
 \item{param_names}{String vector, you need to put the parameters you want to analyze
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
@@ -26,14 +26,14 @@ parallel_coord(
 \item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
 (example: iterations = c(1,4,5))}
 
-\item{onlyElite}{logical (default FALSE),}
+\item{only_elite}{logical (default FALSE),}
 
-\item{pdfAllParameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
+\item{pdf_all_parameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
 I must put TRUE, otherwise it will be created only with the default
 parameters (15 or less) or those entered.}
 
-\item{fileName}{A pdf will be created in the location and with
-the assigned name (example: "~/patch/example/filename")}
+\item{file_name}{A pdf will be created in the location and with
+the assigned name (example: "~/patch/example/file_name")}
 }
 \value{
 parallel cordinates plot
@@ -44,7 +44,7 @@ allowing the analysis of the set of parameters
 }
 \examples{
 parallel_coord(iraceResults)
-parallel_coord(iraceResults, idConfiguration = c(20,50,100,300,500,600,700))
+parallel_coord(iraceResults, id_configuration = c(20,50,100,300,500,600,700))
 parallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 parallel_coord(iraceResults, iterations = c(1,4,6))
 

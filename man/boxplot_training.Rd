@@ -5,27 +5,27 @@
 \title{Box Plot}
 \usage{
 boxplot_training(
-  iraceResults,
-  numberIteration = NULL,
-  idConfigurations = NULL,
+  irace_results,
+  number_iteration = NULL,
+  id_configurations = NULL,
   rpd = TRUE,
-  fileName = NULL
+  file_name = NULL
 )
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{numberIteration}{Numeric, It is the number referring to the iteration that you want to graph,
-the range of these varies according to the Rdata used (example: numberIteration = 5)}
+\item{number_iteration}{Numeric, It is the number referring to the iteration that you want to graph,
+the range of these varies according to the Rdata used (example: number_iteration = 5)}
 
-\item{idConfigurations}{Numeric vector, you need to put the configurations you want to analyze
-(example: idConfigurations = c(20,50,100,300,500,600,700))}
+\item{id_configurations}{Numeric vector, you need to put the configurations you want to analyze
+(example: id_configurations = c(20,50,100,300,500,600,700))}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}
 
-\item{fileName}{String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the
+assigned name (example: "~/patch/example/file_name")}
 }
 \value{
 box plot
@@ -36,7 +36,7 @@ By default the graph of the last iteration is shown
 }
 \examples{
 boxplot_training(iraceResults)
-boxplot_training(iraceResults,numberIteration = 5)
-boxplot_training(iraceResults,idConfigurations = c(20,50,100,300,500,600,700))
+boxplot_training(iraceResults,number_iteration = 5)
+boxplot_training(iraceResults,id_configurations = c(20,50,100,300,500,600,700))
 
 }

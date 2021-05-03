@@ -4,15 +4,15 @@
 \alias{sampling_frequency_iteration}
 \title{Frequency and Density plot based on its iteration}
 \usage{
-sampling_frequency_iteration(iraceResults, parameter, fileName = NULL)
+sampling_frequency_iteration(irace_results, parameter, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
 \item{parameter}{String, value of the parameter to be analyzed (example: parameter = "algorithm")}
 
-\item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/file_name")}
 }
 \value{
 bar plot

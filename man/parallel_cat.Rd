@@ -5,19 +5,19 @@
 \title{Parallel Cordinate Category}
 \usage{
 parallel_cat(
-  iraceResults,
-  idConfiguration = NULL,
+  irace_results,
+  id_configuration = NULL,
   param_names = NULL,
   iterations = NULL,
-  pdfAllParameters = FALSE,
-  fileName = NULL
+  pdf_all_parameters = FALSE,
+  file_name = NULL
 )
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
-\item{idConfiguration}{Numeric vector, you need to put the configurations you want to analyze
-(example: idConfiguration = c(20,50,100,300,500,600,700))}
+\item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
+(example: id_configuration = c(20,50,100,300,500,600,700))}
 
 \item{param_names}{String vector, you need to put the parameters you want to analyze
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
@@ -25,12 +25,12 @@ parallel_cat(
 \item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
 (example: iterations = c(1,4,5))}
 
-\item{pdfAllParameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
+\item{pdf_all_parameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
 I must put TRUE, otherwise it will be created only with the default
 parameters (15 or less) or those entered.}
 
-\item{fileName}{A pdf will be created in the location and with
-the assigned name (example: "~/patch/example/filename")}
+\item{file_name}{A pdf will be created in the location and with
+the assigned name (example: "~/patch/example/file_name")}
 }
 \value{
 parallel coordinate category plot
@@ -42,7 +42,7 @@ allowing the visualization of the data and the filtering by iteration
 }
 \examples{
 parallel_cat(iraceResults)
-parallel_cat(iraceResults,idConfiguration = c(20,50,100,300,500,600,700))
+parallel_cat(iraceResults,id_configuration = c(20,50,100,300,500,600,700))
 parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 parallel_cat(iraceResults, iterations =  c(1,4,6))
 }

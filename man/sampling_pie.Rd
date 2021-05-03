@@ -4,16 +4,16 @@
 \alias{sampling_pie}
 \title{Sunburst Plot}
 \usage{
-sampling_pie(iraceResults, parameters = NULL, fileName = NULL)
+sampling_pie(irace_results, parameters = NULL, file_name = NULL)
 }
 \arguments{
-\item{iraceResults}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the Rdata file created by irace}
 
 \item{parameters}{String vector, a set of categorical type parameters
 (example: parameters = c("algorithm","dlb"))}
 
-\item{fileName}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/filename")}
+\item{file_name}{String, A pdf will be created in the location and with the assigned
+name (example: "~/patch/example/file_name")}
 }
 \value{
 sunburst plot

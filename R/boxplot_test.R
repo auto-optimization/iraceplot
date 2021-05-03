@@ -4,7 +4,7 @@
 #' The function will return a box plot, using the data generated in the test
 #' settings coloring the best configuration in each iteration
 #'
-#' @param iraceResults
+#' @param irace_results
 #' The data generated when loading the Rdata file created by irace
 #' @param type
 #' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
@@ -13,9 +13,9 @@
 #' @param rpd
 #' Logical (default TRUE) to fit through an equation of minimum percentage distance between
 #' the values of each row of all configurations
-#' @param fileName
+#' @param file_name
 #' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/filename")
+#' name (example: "~/patch/example/file_name")
 #' @return box plot
 #' @export
 #'
@@ -26,11 +26,11 @@
 #' boxplot_test(iraceResults, type = "ibest")
 #' boxplot_test(iraceResults, type = "best")
 
-boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL){
+boxplot_test <- function(irace_results, type = "all", rpd = TRUE ,file_name = NULL){
 
-  # verify that test this in iraceResults
-  if(!("testing" %in% names(iraceResults))){
-    return("iraceResults does not contain the testing data")
+  # verify that test this in irace_results
+  if(!("testing" %in% names(irace_results))){
+    return("irace_results does not contain the testing data")
   }
 
   if(!(type == "all" | type == "best" | type == "ibest")){
@@ -39,7 +39,7 @@ boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL
 
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
   # the table is created with all the data from testing experiments
-  tabla <- as.data.frame(iraceResults$testing$experiments)
+  tabla <- as.data.frame(irace_results$testing$experiments)
 
   # the table values are modified
   if(rpd == TRUE){
@@ -48,20 +48,20 @@ boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL
 
   # all testing experiments settings
   if(type == "all"){
-    for (j in 1:length(iraceResults$allElites)) {
-      v_allElites <- c(v_allElites,iraceResults$allElites[[j]])
+    for (j in 1:length(irace_results$allElites)) {
+      v_allElites <- c(v_allElites,irace_results$allElites[[j]])
     }
     datos <- tabla[as.character(v_allElites)]
 
   # the last iteration of the elite settings
   }else if(type == "best"){
-    num_it <- length(iraceResults$allElites)
-    v_allElites <- as.character(iraceResults$allElites[[num_it]])
+    num_it <- length(irace_results$allElites)
+    v_allElites <- as.character(irace_results$allElites[[num_it]])
     datos <- tabla[v_allElites]
 
   # the best settings of each iteration
   }else if(type == "ibest"){
-    v_allElites <- as.character(iraceResults$iterationElites)
+    v_allElites <- as.character(irace_results$iterationElites)
     datos <- tabla[v_allElites]
   }else{
     return("non existent type")
@@ -86,8 +86,8 @@ boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL
       if(type == "all"){
 
         a = 1
-        for (i in 1:length(iraceResults$allElites)) {
-          for (k in 1:length(iraceResults$allElites[[i]])) {
+        for (i in 1:length(irace_results$allElites)) {
+          for (k in 1:length(irace_results$allElites[[i]])) {
             datos$iteration[datos$ids == names_col[a]] <- i
             a = a+1
           }
@@ -112,8 +112,8 @@ boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL
     best_conf <- sample(NA,size=dim(datos)[1],replace = TRUE)
     datos <- cbind(datos,best_conf)
     if(type == "all"){
-      for (i in 1:length(iraceResults$allElites)) {
-        datos$best_conf[datos$iteration == i & datos$ids == as.character(iraceResults$iterationElites[i])] <- "best"#as.character(i)
+      for (i in 1:length(irace_results$allElites)) {
+        datos$best_conf[datos$iteration == i & datos$ids == as.character(irace_results$iterationElites[i])] <- "best"#as.character(i)
       }
     }else{
       datos$best_conf[datos$ids == v_allElites[1]] <- "best" #as.character(1)
@@ -152,14 +152,15 @@ boxplot_test <- function(iraceResults, type = "all", rpd = TRUE ,fileName = NULL
     p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
   }
 
-  #If the value in fileName is added the pdf file is created
-  if(!is.null(fileName)){
-    pdf(paste0(fileName,".pdf"), width = 12)
+  #If the value in file_name is added the pdf file is created
+  if(!is.null(file_name)){
+    pdf(paste0(file_name,".pdf"), width = 12)
     plot(p)
     dev.off()
-    #If you do not add the value of fileName, the plot is displayed
+    #If you do not add the value of file_name, the plot is displayed
   }else{
     p
+    return(p)
   }
 
 }
