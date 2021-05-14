@@ -90,9 +90,7 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"),width = 6.79,height = 2.32)
-    plot(p)
-    dev.off()
+    ggsave(file_name,plot = p)
     return(p)
   #If you do not add the value of file_name, the plot is displayed
   }else{

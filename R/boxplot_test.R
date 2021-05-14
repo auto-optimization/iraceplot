@@ -146,17 +146,13 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE ,file_name = NU
     labs(x="ID", y = "Performance")
 
   #each box plot is divided by iteration
-  if(type == "all"){
+  if(type == "all" || type == "ibest"){
       p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
-  }else if(type == "ibest"){
-    p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
   }
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"), width = 12)
-    plot(p)
-    dev.off()
+    ggsave(file_name,plot = p)
     #If you do not add the value of file_name, the plot is displayed
   }else{
     p

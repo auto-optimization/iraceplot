@@ -127,9 +127,7 @@ sampling_density <- function(irace_results,parameter,file_name = NULL){
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"))
-    do.call("grid.arrange",c(vectorPlot,ncol=1))
-    dev.off()
+    ggsave(file_name,plot = do.call("grid.arrange",c(vectorPlot,ncol=1)))
     #If you do not add the value of file_name, the plot is displayed
   }else{
     p

@@ -128,14 +128,14 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"))
     if(length(config) == 1 ){
-      do.call("grid.arrange",c(vectorG,ncol=1))
+      ggsave(file_name,plot = do.call("grid.arrange",c(vectorG,ncol=1)))
     }else if(length(config) == 2){
-      do.call("grid.arrange",c(vectorG,ncol=2))
+      ggsave(file_name,plot = do.call("grid.arrange",c(vectorG,ncol=2)))
     }else if(length(config) > 2 && length(config) <= 9){
-      do.call("grid.arrange",c(vectorG,ncol=3))
+      ggsave(file_name,plot = do.call("grid.arrange",c(vectorG,ncol=3)))
     }else{
+      pdf(paste0(file_name,".pdf"), width = 12)
       a = 1
       b = 9
       for(k in 1:(ceiling(length(config)/9))){
@@ -147,9 +147,10 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
           b = length(config)
         }
       }
+      dev.off()
     }
 
-    dev.off()
+
   #If you do not add the value of file_name, the plot is displayed
   }else{
     do.call("grid.arrange",c(vectorG,ncol=3))

@@ -72,9 +72,7 @@ scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name =
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"))
-    plot(q)
-    dev.off()
+    ggsave(file_name,plot = q)
     return(q)
     #If you do not add the value of file_name, the plot is displayed
   }else{

@@ -132,9 +132,7 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL){
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"), width = 12)
-    plot(q)
-    dev.off()
+    ggsave(file_name,plot = q)
     #If you do not add the value of file_name, the plot is displayed
   }else{
     q

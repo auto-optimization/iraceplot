@@ -51,13 +51,11 @@ sampling_model_compare <- function(irace_results,parameter,file_name = NULL){
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"))
     if(length(vectorPlot) == 1){
-      do.call("grid.arrange",c(vectorPlot,ncol=1))
+      ggsave(file_name,plot = do.call("grid.arrange",c(vectorPlot,ncol=1)))
     }else{
-      do.call("grid.arrange",c(vectorPlot,ncol=2))
+      ggsave(file_name,plot = do.call("grid.arrange",c(vectorPlot,ncol=2)))
     }
-    dev.off()
     #If you do not add the value of file_name, the plot is displayed
   }else{
     if(length(vectorPlot) == 1){

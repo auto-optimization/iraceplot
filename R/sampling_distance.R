@@ -97,9 +97,7 @@ sampling_distance <- function(irace_results, type = "both", t = 0.05, file_name 
       do.call("grid.arrange",c(vectorP[2],ncol=1))
       dev.off()
     }else{
-      pdf(paste0(file_name,".pdf"), width = 12)
-      plot(p)
-      dev.off()
+      ggsave(file_name,plot = p)
     }
 
     #If you do not add the value of file_name, the plot is displayed

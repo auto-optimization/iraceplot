@@ -103,9 +103,7 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    pdf(paste0(file_name,".pdf"))
-    plot(p)
-    dev.off()
+    ggsave(file_name,plot = p)
   #If you do not add the value of file_name, the plot is displayed
   }else{
     p
