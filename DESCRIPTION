@@ -2,11 +2,10 @@ Package: iraceplot
 Type: Package
 Title: Make Various Types of Graphics
 Version: 0.1.0
-Authors@R:
-    person(given = "Pablo",
-           family = "Oñate",
-           role = c("aut", "cre"),
-           email = "pablo.onate.m@gmail.com")
+Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut", "cre"),
+                    email = "pablo.onate.m@gmail.com"),
+            person("Leslie", "Pérez Cáceres", role = "aut")
+           )
 Description: For the creation of various types of graphs that facilitates to understand the data produced by irace.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -37,6 +36,7 @@ Imports: ggplot2,
 Suggests: 
     knitr,
     rmarkdown,
+    markdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
