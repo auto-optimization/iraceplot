@@ -31,14 +31,12 @@ Imports: ggplot2,
          ggforce, 
          purrr, 
          webshot,
-         utils,
-         irace
+         utils
 Suggests: 
     knitr,
     rmarkdown,
     markdown,
-    testthat (>= 3.0.0),
-    pandoc (>= 1.12.3)
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)

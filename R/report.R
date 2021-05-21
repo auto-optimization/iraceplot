@@ -26,8 +26,7 @@
 #' NULL
 
 report <- function(format = "html",irace_results = NULL, irace_file = NULL,file_name){
-  #start of parameters
-  file_name <- NULL
+
 
   #It is verified that only the location of the data file or its loaded form can be entered
   if(is.null(irace_results) & is.null(irace_file)){
@@ -39,7 +38,7 @@ report <- function(format = "html",irace_results = NULL, irace_file = NULL,file_
   }
 
   if(format == "pdf"){
-    final_file <- irace:::path.rel2abs(paste0(file_name,".pdf"))
+    final_file <- path_rel2abs(paste0(file_name,".pdf"))
     #Output file name is generated
     reportes <- tibble(
       file_name = stringr::str_c(paste0(file_name,".pdf"))
@@ -49,8 +48,7 @@ report <- function(format = "html",irace_results = NULL, irace_file = NULL,file_
       select(output_file = file_name) %>%
       purrr::pwalk(rmarkdown::render, input = system.file("template","report_pdf.Rmd", package = 'iraceplot'))
   }else if(format == "html"){
-    final_file <- irace:::path.rel2abs(paste0(file_name,".html"))
-    print(final_file)
+    final_file <- path_rel2abs(paste0(file_name,".html"))
     #Output file name is generated
     reportes <- tibble(
       file_name = stringr::str_c(paste0(file_name,".html"))

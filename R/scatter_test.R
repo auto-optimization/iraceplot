@@ -17,7 +17,7 @@
 #' name (example: "~/patch/example/file_name")
 #' @return scatter plot
 #'
-#' @importFrom ggplot2 scale_color_viridis_c
+#' @importFrom ggplot2 scale_color_viridis_c ggsave
 #'
 #' @export
 #'
