@@ -27,7 +27,7 @@
 #' @examples
 #' heatmap(iraceResults)
 
-heatmap <- function(irace_results, file_name = NULL){
+plot_experiments_matrix <- function(irace_results, file_name = NULL){
   #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 
