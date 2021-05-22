@@ -31,7 +31,8 @@ Imports: ggplot2,
          ggforce, 
          purrr, 
          webshot,
-         utils
+         utils,
+         irace
 Suggests: 
     knitr,
     rmarkdown,
