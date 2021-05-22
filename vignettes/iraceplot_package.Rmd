@@ -619,19 +619,19 @@ file_name:       String, file name indicating where to save a pdf file with the 
 
 To visualize the distance between sampled configurations, use the following code:
 
-
-# ```{r fig.align="center", fig.width= 7}
-# sampling_distance(irace_results = iraceResults)
-# ```
+<!--
+```{r fig.align="center", fig.width= 7}
+ sampling_distance(irace_results = iraceResults)
+```
 
 
 To visualize the distance between sampled configurations with a 20% difference threshold for numerical parameters, use the following code:
 
 
-# ```{r fig.align="center", fig.width= 7}
-# sampling_distance(irace_results = iraceResults, type = "boxplot", t=0.2)
-# ```
-
+```{r fig.align="center", fig.width= 7}
+sampling_distance(irace_results = iraceResults, type = "boxplot", t=0.2)
+```
+-->
 
 
 <!-- ################################################### -->
