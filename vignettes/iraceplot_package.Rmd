@@ -29,7 +29,7 @@ sampling_frequency_iteration
 sampling_density
 sampling_model_compare
 sampling_pie
-heatmap
+plot_experiments_matrix
 sampling_distance
 boxplot_training
 scatter_training
@@ -222,13 +222,13 @@ scatter_training(irace_results = iraceResults, id_configurations = c(806,809))
 ```
 
 
-<!-- HEATMAP  --> 
-## Configuration process heatmap
+<!-- plot_experiments_matrix  --> 
+## Configuration process plot_experiments_matrix
 
-The ``heatmap`` function will return a heat map plot of all experimental data configurations
+The ``plot_experiments_matrix`` function will return a heat map plot of all experimental data configurations
 
 ```
-heatmap(irace_results, 
+plot_experiments_matrix(irace_results, 
          file_name = NULL)
 ```
 
@@ -240,11 +240,11 @@ irace_results:   irace log, loaded from the irace log Rdata file
 file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
 ```
 
-To visualize the heatmap, use the following code:
+To visualize the plot_experiments_matrix, use the following code:
 
 
 ```{r fig.align="center", fig.width= 7}
-heatmap(irace_results = iraceResults)
+plot_experiments_matrix(irace_results = iraceResults)
 ```
 
 <!-- CONFIGURATION PROCESS  --> 
