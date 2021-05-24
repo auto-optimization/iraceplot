@@ -3,8 +3,7 @@
 #'Create a graphic of box plot of irace using the best quality id
 #'By default the graph of the last iteration is shown
 #'
-#'@param irace_results
-#'The data generated when loading the Rdata file created by irace
+#'@template arg_irace_results
 #'
 #'@param number_iteration
 #'Numeric, It is the number referring to the iteration that you want to graph,

@@ -5,8 +5,7 @@
 #' parallel coordinates allowing the analysis of the set of parameters
 #' allowing the visualization of the data and the filtering by iteration
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param id_configuration
 #' Numeric vector, you need to put the configurations you want to analyze

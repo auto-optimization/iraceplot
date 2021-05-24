@@ -12,7 +12,7 @@ sampling_frequency(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{param_names}{String vector, A set of parameters to be plotted
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}

@@ -4,8 +4,7 @@
 #' The function will return a scatter plot
 #' comparing two elite configurations in testing
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #' @param id_configurations
 #' String vector, you need to put the elite settings you
 #' want to compare, only 2 values are allowed (example: idVector = c("92","119"))

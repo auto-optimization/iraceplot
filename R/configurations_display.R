@@ -2,8 +2,9 @@
 #'
 #' @description
 #' A graph is created with all the settings and instance of the training data
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#'
+#' @template arg_irace_results
+#' 
 #' @param rpd
 #' Logical (default TRUE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations

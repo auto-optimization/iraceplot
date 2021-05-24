@@ -4,8 +4,8 @@
 #' Calculate the difference between two settings. Calculate the difference between two configurations. The greater
 #' the number, the greater the difference
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
+#' 
 #' @param id_configurations
 #' Numeric vector, you need to put the settings you
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))

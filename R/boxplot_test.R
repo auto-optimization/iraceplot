@@ -4,8 +4,8 @@
 #' The function will return a box plot, using the data generated in the test
 #' settings coloring the best configuration in each iteration
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
+#'
 #' @param type
 #' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 #' "best" shows the best configurations of each iteration and

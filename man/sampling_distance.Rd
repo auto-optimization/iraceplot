@@ -7,7 +7,7 @@
 sampling_distance(irace_results, type = "both", t = 0.05, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{type}{String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
 points and lines, "boxplot" will show a box plot}

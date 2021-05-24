@@ -2,10 +2,9 @@
 #'
 #' @param format
 #' String, either "pdf" or "html". The parameter according to its
-#' value is how the output file format will be.,By default it is "html"
+#' value is how the output file format will be. By default it is "html"
 #'
-#' @param irace_results
-#' irace log variable obtained from the Rdata file generate by irace
+#' @template arg_irace_results
 #'
 #' @param irace_file
 #' String, indicate the location where the Rdata file is located

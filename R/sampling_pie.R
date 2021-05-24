@@ -3,8 +3,7 @@
 #' @description
 #' The isunburst function will return a sunburst plot of the categorical parameters
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #' @param parameters
 #' String vector, a set of categorical type parameters
 #' (example: parameters = c("algorithm","dlb"))

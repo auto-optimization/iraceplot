@@ -7,7 +7,7 @@
 configurations_display(irace_results, rpd = TRUE, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
 between the values of each row of all configurations}

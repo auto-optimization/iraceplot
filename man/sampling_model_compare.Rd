@@ -7,7 +7,7 @@
 sampling_model_compare(irace_results, parameter, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{parameter}{String, value of the parameter to be analyzed (example: parameter = "alpha")}
 

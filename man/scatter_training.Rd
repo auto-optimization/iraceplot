@@ -12,7 +12,7 @@ scatter_training(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{id_configurations}{Numeric vector, you need to put the elite settings you
 want to compare, only 2 values are allowed (example: idVector = c(806,809))}

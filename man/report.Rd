@@ -8,9 +8,9 @@ report(format = "html", irace_results = NULL, irace_file = NULL, file_name)
 }
 \arguments{
 \item{format}{String, either "pdf" or "html". The parameter according to its
-value is how the output file format will be.,By default it is "html"}
+value is how the output file format will be. By default it is "html"}
 
-\item{irace_results}{irace log variable obtained from the Rdata file generate by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{irace_file}{String, indicate the location where the Rdata file is located
 (example: "~/path-to/file.Rdata")}

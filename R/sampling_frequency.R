@@ -5,8 +5,7 @@
 #' for categorical parameters (string) one of frequency is created,
 #' in case of numerical parameters it will show a histogram and its density
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param param_names
 #' String vector, A set of parameters to be plotted

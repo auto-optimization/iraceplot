@@ -3,9 +3,7 @@
 #' @description
 #' The function will return a heat map plot of all experimental data configurations
 #'
-#' @param irace_results
-#'
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param file_name
 #' string, A pdf will be created in the location and with the

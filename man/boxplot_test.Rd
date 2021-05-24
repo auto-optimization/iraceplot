@@ -7,7 +7,7 @@
 boxplot_test(irace_results, type = "all", rpd = TRUE, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{type}{String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 "best" shows the best configurations of each iteration and
