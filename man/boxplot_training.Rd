@@ -13,7 +13,7 @@ boxplot_training(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{number_iteration}{Numeric, It is the number referring to the iteration that you want to graph,
 the range of these varies according to the Rdata used (example: number_iteration = 5)}

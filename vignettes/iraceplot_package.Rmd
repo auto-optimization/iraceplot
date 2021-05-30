@@ -228,8 +228,7 @@ scatter_training(irace_results = iraceResults, id_configurations = c(806,809))
 The ``plot_experiments_matrix`` function will return a heat map plot of all experimental data configurations
 
 ```
-plot_experiments_matrix(irace_results, 
-         file_name = NULL)
+plot_experiments_matrix(irace_results, file_name = NULL)
 ```
 
 ## Arguments
@@ -240,8 +239,7 @@ irace_results:   irace log, loaded from the irace log Rdata file
 file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
 ```
 
-To visualize the plot_experiments_matrix, use the following code:
-
+To visualize the experiments matrix, use the following code:
 
 ```{r fig.align="center", fig.width= 7}
 plot_experiments_matrix(irace_results = iraceResults)

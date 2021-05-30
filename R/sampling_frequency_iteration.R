@@ -5,8 +5,7 @@
 #' for categorical data (its values are string, show a bar plot) or
 #' numeric data (show a histogram and density plot) by each iteration
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param parameter
 #' String, value of the parameter to be analyzed (example: parameter = "algorithm")

@@ -7,7 +7,7 @@
 sampling_pie(irace_results, parameters = NULL, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{parameters}{String vector, a set of categorical type parameters
 (example: parameters = c("algorithm","dlb"))}

@@ -4,8 +4,7 @@
 #' The function returns a string vector with the names of
 #' the document parameters irace_results
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @return String vector
 #' @export

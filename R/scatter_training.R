@@ -4,8 +4,7 @@
 #' The function will return a scatter plot
 #' comparing two elite configurations in training
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param id_configurations
 #' Numeric vector, you need to put the elite settings you

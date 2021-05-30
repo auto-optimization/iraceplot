@@ -7,7 +7,7 @@
 plot_experiments_matrix(irace_results, file_name = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{file_name}{string, A pdf will be created in the location and with the
 assigned name (example: "~/patch/example/file_name")}

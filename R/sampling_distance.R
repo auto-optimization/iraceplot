@@ -3,8 +3,7 @@
 #' @description
 #' Shows the mean of the difference between the configurations that were run for each iteration
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #' @param type
 #' String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
 #' points and lines, "boxplot" will show a box plot

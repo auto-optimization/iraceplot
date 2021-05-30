@@ -14,7 +14,7 @@ parallel_cat(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
 (example: id_configuration = c(20,50,100,300,500,600,700))}

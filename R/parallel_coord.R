@@ -4,8 +4,7 @@
 #' The iparallelcoord function will return a parallel cordinates plot
 #' allowing the analysis of the set of parameters
 #'
-#' @param irace_results
-#' The data generated when loading the Rdata file created by irace
+#' @template arg_irace_results
 #'
 #' @param id_configuration
 #' Numeric vector, you need to put the configurations you want to analyze

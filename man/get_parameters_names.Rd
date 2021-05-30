@@ -7,7 +7,7 @@
 get_parameters_names(irace_results)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the Rdata file created by irace}
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 }
 \value{
 String vector
