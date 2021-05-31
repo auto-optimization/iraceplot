@@ -9,6 +9,9 @@
 #' string, A pdf will be created in the location and with the
 #' assigned name (example: "~/patch/example/file_name")
 #'
+#' @param interactive
+#' Logical (Default TRUE),
+#'
 #' @return heatmap plot
 #' @export
 #'
@@ -25,7 +28,7 @@
 #' @examples
 #' plot_experiments_matrix(iraceResults)
 
-plot_experiments_matrix <- function(irace_results, file_name = NULL){
+plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = TRUE ){
   #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 
@@ -46,14 +49,17 @@ plot_experiments_matrix <- function(irace_results, file_name = NULL){
   mutate(text = paste0("x: ", C, "\n", "y: ", i_id, "\n", "Value: ",round(RANK,2), "\n"))
 
   #Heat map plot is created
-  q <- ggplot(tabla,aes(x=C, y=i_id, fill=RANK,text=text)) +
+  p <- ggplot(tabla,aes(x=C, y=i_id, fill=RANK,text=text)) +
     geom_tile() +
     scale_fill_viridis_c(na.value = "#ECE1EB") +
     labs(x = "Configurations", y = "Instances") +
     theme(axis.text.x = element_blank(),axis.ticks = element_blank())
 
   #The plot becomes interactive
-  p <- plotly::ggplotly(q, tooltip="text")
+  if(interactive == TRUE){
+    p <- plotly::ggplotly(p, tooltip="text")
+  }
+
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
