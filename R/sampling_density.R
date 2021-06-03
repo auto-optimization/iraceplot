@@ -16,9 +16,6 @@
 #' @return density plot
 #' @export
 #'
-#' @importFrom ggridges geom_density_ridges
-#' @importFrom gridExtra grid.arrange
-#'
 #' @examples
 #' sampling_density(iraceResults,parameter = "alpha")
 

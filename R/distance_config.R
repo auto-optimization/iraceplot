@@ -5,7 +5,7 @@
 #' the number, the greater the difference
 #'
 #' @template arg_irace_results
-#' 
+#'
 #' @param id_configurations
 #' Numeric vector, you need to put the settings you
 #' want to compare, only 2 values are allowed (example: idVector = c(806,809))
@@ -13,9 +13,7 @@
 #' Numeric, It is a percentage factor that will determine the range of difference
 #' between settings (example: t = 0.05 is equivalent to 5 percent)
 #'
-#' @importFrom dplyr select
 #' @return numeric
-#' @export
 #'
 #' @examples
 #' NULL

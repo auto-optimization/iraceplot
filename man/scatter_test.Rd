@@ -4,7 +4,13 @@
 \alias{scatter_test}
 \title{Scatter Plot Testing}
 \usage{
-scatter_test(irace_results, id_configurations, rpd = TRUE, file_name = NULL)
+scatter_test(
+  irace_results,
+  id_configurations,
+  rpd = TRUE,
+  file_name = NULL,
+  interactive = interactive()
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
@@ -17,6 +23,11 @@ between the values of each row of all configurations}
 
 \item{file_name}{String, A pdf will be created in the location and with the assigned
 name (example: "~/patch/example/file_name")}
+
+\item{interactive}{Logical (Default interactive() ), Allows you to decide when generating the graph, i
+t is generated interactively (It is created with the plotly package) which
+is the default option or it is generated statically (It is created with the ggplot2
+package). You must set interactive = FALSE.}
 }
 \value{
 scatter plot
@@ -26,5 +37,5 @@ The function will return a scatter plot
 comparing two elite configurations in testing
 }
 \examples{
-scatter_test(iraceResults, id_configurations = c("92","119"))
+scatter_test(iraceResults, id_configurations = c("92","119"), interactive = interactive())
 }

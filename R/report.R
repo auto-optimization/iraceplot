@@ -18,9 +18,6 @@
 #' @return document
 #' @export
 #'
-#' @importFrom dplyr tibble
-#' @importFrom utils browseURL
-#'
 #' @examples
 #' NULL
 

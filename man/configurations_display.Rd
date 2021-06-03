@@ -4,7 +4,12 @@
 \alias{configurations_display}
 \title{The configurations by iteration and instance}
 \usage{
-configurations_display(irace_results, rpd = TRUE, file_name = NULL)
+configurations_display(
+  irace_results,
+  rpd = TRUE,
+  file_name = NULL,
+  interactive = interactive()
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
@@ -14,6 +19,11 @@ between the values of each row of all configurations}
 
 \item{file_name}{String, A pdf will be created in the location and with the
 assigned name (example: "~/patch/example/file_name")}
+
+\item{interactive}{Logical (Default interactive() ), Allows you to decide when generating the graph, i
+t is generated interactively (It is created with the plotly package) which
+is the default option or it is generated statically (It is created with the ggplot2
+package). You must set interactive = FALSE.}
 }
 \value{
 plot
@@ -22,5 +32,5 @@ plot
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-#configurations_display(iraceResults)
+#configurations_display(iraceResults, interactive = interactive())
 }

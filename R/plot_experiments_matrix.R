@@ -10,25 +10,18 @@
 #' assigned name (example: "~/patch/example/file_name")
 #'
 #' @param interactive
-#' Logical (Default TRUE),
+#' Logical (Default interactive() ), Allows you to decide when generating the graph, i
+#' t is generated interactively (It is created with the plotly package) which
+#' is the default option or it is generated statically (It is created with the ggplot2
+#' package). You must set interactive = FALSE.
 #'
 #' @return heatmap plot
 #' @export
 #'
-#' @importFrom plotly ggplotly orca
-#' @importFrom tidyr pivot_longer
-#' @importFrom forcats fct_relevel
-#' @importFrom tibble rownames_to_column
-#' @importFrom ggplot2 geom_tile scale_fill_viridis_c element_blank
-#' @importFrom graphics text
-#' @importFrom stats C
-#' @importFrom dplyr mutate %>%
-#' @importFrom stringr str_split
-#'
 #' @examples
-#' plot_experiments_matrix(iraceResults)
+#' plot_experiments_matrix(iraceResults, interactive = interactive() )
 
-plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = TRUE ){
+plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = interactive() ){
   #Variable assignment
   C <- RANK <- text <- i_id  <- union <- NULL
 

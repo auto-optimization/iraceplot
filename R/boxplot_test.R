@@ -19,8 +19,6 @@
 #' @return box plot
 #' @export
 #'
-#' @importFrom ggplot2 scale_color_hue
-#'
 #' @examples
 #' boxplot_test(iraceResults)
 #' boxplot_test(iraceResults, type = "ibest")

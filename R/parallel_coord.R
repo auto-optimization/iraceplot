@@ -32,10 +32,6 @@
 #'
 #' @return parallel cordinates plot
 #' @export
-#' @importFrom GGally ggparcoord
-#' @importFrom ggplot2 element_text scale_color_viridis_d
-#' @importFrom plotly plot_ly add_trace
-#'
 #'
 #' @examples
 #' parallel_coord(iraceResults)

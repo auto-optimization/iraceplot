@@ -4,24 +4,26 @@
 #' A graph is created with all the settings and instance of the training data
 #'
 #' @template arg_irace_results
-#' 
+#'
 #' @param rpd
 #' Logical (default TRUE) to fit through an equation of minimum percentage distance
 #' between the values of each row of all configurations
 #' @param file_name
 #' String, A pdf will be created in the location and with the
 #' assigned name (example: "~/patch/example/file_name")
-#'
-#' @importFrom ggplot2 scale_shape_manual theme_bw scale_x_discrete scale_color_manual scale_size_manual scale_alpha_manual
-#' @importFrom grDevices rainbow
+#' @param interactive
+#' Logical (Default interactive() ), Allows you to decide when generating the graph, i
+#' t is generated interactively (It is created with the plotly package) which
+#' is the default option or it is generated statically (It is created with the ggplot2
+#' package). You must set interactive = FALSE.
 #'
 #' @return plot
 #' @export
 #'
 #' @examples
-#' #configurations_display(iraceResults)
+#' #configurations_display(iraceResults, interactive = interactive())
 
-configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL){
+configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, interactive = interactive()){
 
   #variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
@@ -107,7 +109,7 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL){
   tabla <- cbind(tabla,exe_factor)
 
   #point plot creation
-  q <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
+  p <- ggplot(tabla, aes(x = exe_factor,y = value,color = instance,text=text)) +
     geom_point(aes(shape = type, size = type, alpha = type)) +
     facet_grid(cols = vars(tabla$instance_it),scales = "free_x", space = "free_x") +
     scale_shape_manual(values = c(22,21,24,4)) +
@@ -129,14 +131,17 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL){
 
 
   #The graph is transformed to plotly
-  p <- plotly::ggplotly(q, tooltip = "text")
+  if(interactive == TRUE){
+    p <- plotly::ggplotly(q, tooltip = "text")
+  }
+
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    ggsave(file_name,plot = q)
+    ggsave(file_name,plot = p)
     #If you do not add the value of file_name, the plot is displayed
   }else{
-    q
-    return(q)
+    p
+    return(p)
   }
 }

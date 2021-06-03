@@ -31,9 +31,6 @@
 #' @return parallel coordinate category plot
 #' @export
 #'
-#' @importFrom dplyr group_by summarise n
-#' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
-#'
 #' @examples
 #' parallel_cat(iraceResults)
 #' parallel_cat(iraceResults,id_configuration = c(20,50,100,300,500,600,700))

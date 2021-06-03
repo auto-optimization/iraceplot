@@ -14,8 +14,6 @@
 #' String, A pdf will be created in the location and with the assigned
 #' name (example: "~/patch/example/file_name")
 #'
-#' @importFrom ggplot2 geom_line scale_x_continuous
-#'
 #' @return line or box plot
 #'
 #' @export

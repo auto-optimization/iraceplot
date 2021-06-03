@@ -119,7 +119,8 @@ The ``scatter_test`` function creates a scatter plot comparing the testing perfo
 scatter_test(irace_results,
               id_configurations,
               rpd = TRUE,
-              file_name = TRUE)
+              file_name = TRUE
+              interactive = interactive() )
 ```
 ### Arguments
 
@@ -131,13 +132,15 @@ id_configurations:   Numeric vector??, a pair of configuration ids to be compare
 rpd:                Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
 file_name:           String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+
+interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
 ```
 
 For example, to compare the performance of two configurations executed in the testing, use the following code:
 
 
 ```{r fig.align="center", fig.width= 7}
-scatter_test(irace_results  = iraceResults, id_configurations = c("92","119"))
+scatter_test(irace_results  = iraceResults, id_configurations = c("92","119"), interactive = interactive())
 ```
 
 <!-- ################################################### -->
@@ -228,7 +231,9 @@ scatter_training(irace_results = iraceResults, id_configurations = c(806,809))
 The ``plot_experiments_matrix`` function will return a heat map plot of all experimental data configurations
 
 ```
-plot_experiments_matrix(irace_results, file_name = NULL)
+plot_experiments_matrix(irace_results, 
+                        file_name = NULL,
+                        interactive = interactive() )
 ```
 
 ## Arguments
@@ -237,12 +242,14 @@ plot_experiments_matrix(irace_results, file_name = NULL)
 irace_results:   irace log, loaded from the irace log Rdata file
 
 file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+
+interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
 ```
 
 To visualize the experiments matrix, use the following code:
 
 ```{r fig.align="center", fig.width= 7}
-plot_experiments_matrix(irace_results = iraceResults)
+plot_experiments_matrix(irace_results = iraceResults, interactive = interactive())
 ```
 
 <!-- CONFIGURATION PROCESS  --> 
@@ -253,7 +260,8 @@ A graph is created with all the settings and instance of the training data
 ```
 configurations_display(irace_results, 
                        rpd = TRUE, 
-                       file_name = NULL)
+                       file_name = NULL,
+                       interactive = interactive() )
 ```
 ### Arguments
 
@@ -263,13 +271,15 @@ irace_results:   irace log, loaded from the irace log Rdata file
 rpd:            Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
 file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+
+interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
 ```
 
 To visualize the configuration process detail
 
 
 <!-- ```{r fig.align="center", fig.width= 7} -->
-<!-- configurations_display(irace_results = iraceResults) -->
+<!-- configurations_display(irace_results = iraceResults, interactive = interactive() ) -->
 <!-- ``` -->
 
 

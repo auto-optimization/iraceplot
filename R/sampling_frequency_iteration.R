@@ -17,9 +17,6 @@
 #' @return bar plot
 #' @export
 #'
-#' @importFrom ggplot2 scale_fill_manual vars guide_legend facet_grid
-#' @importFrom viridis viridis
-#'
 #' @examples
 #' sampling_frequency_iteration(iraceResults,parameter = "alpha")
 #'

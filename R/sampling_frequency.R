@@ -24,10 +24,6 @@
 #' @return Frequency and/or density plot
 #' @export
 #'
-#' @importFrom ggplot2 geom_bar geom_density geom_histogram ggtitle scale_y_continuous rel
-#' @importFrom stats na.omit
-#' @importFrom grDevices nclass.Sturges
-#'
 #' @examples
 #' sampling_frequency(iraceResults)
 #' sampling_frequency(iraceResults, n = 2)

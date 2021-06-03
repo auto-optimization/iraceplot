@@ -1,0 +1,14 @@
+template:
+  params:
+    bootswatch: cosmo
+
+navbar:
+  structure:
+    left:  [home, quick, Manual, Functions, Contact]
+    right: [github]
+  components:
+    home: ~
+    quick:
+      text: Quick Start
+      href: ../_pkgdown/index.md
+

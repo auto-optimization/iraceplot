@@ -14,16 +14,20 @@
 #' @param file_name
 #' String, A pdf will be created in the location and with the assigned
 #' name (example: "~/patch/example/file_name")
-#' @return scatter plot
+#' @param interactive
+#' Logical (Default interactive() ), Allows you to decide when generating the graph, i
+#' t is generated interactively (It is created with the plotly package) which
+#' is the default option or it is generated statically (It is created with the ggplot2
+#' package). You must set interactive = FALSE.
 #'
-#' @importFrom ggplot2 scale_color_viridis_c ggsave
+#' @return scatter plot
 #'
 #' @export
 #'
 #' @examples
-#' scatter_test(iraceResults, id_configurations = c("92","119"))
+#' scatter_test(iraceResults, id_configurations = c("92","119"), interactive = interactive())
 
-scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name = NULL){
+scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name = NULL, interactive = interactive() ){
 
   # verify that test this in irace_results
   if(!("testing" %in% names(irace_results))){
@@ -59,7 +63,7 @@ scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name =
     mutate(text = paste0("x: ", x, "\n", "y: ", y, "\n"))
 
   # the scatter graphics is created
-  q <- ggplot(datos, aes(x=x,y=y, color=y, text = text)) +
+  p <- ggplot(datos, aes(x=x,y=y, color=y, text = text)) +
       geom_point() +
       scale_color_viridis_c() +
   if(rpd == TRUE){
@@ -67,12 +71,15 @@ scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name =
   }else{
     labs(color = "",x = paste("Configuration",id_configurations[1],"Performance"), y = paste("Configuration",id_configurations[2],"Performance"))
   }
-  p <- plotly::ggplotly(q, tooltip="text")
+
+  if(interactive == TRUE){
+    p <- plotly::ggplotly(p, tooltip="text")
+  }
 
   #If the value in file_name is added the pdf file is created
   if(!is.null(file_name)){
-    ggsave(file_name,plot = q)
-    return(q)
+    ggsave(file_name,plot = p)
+    return(p)
     #If you do not add the value of file_name, the plot is displayed
   }else{
     p

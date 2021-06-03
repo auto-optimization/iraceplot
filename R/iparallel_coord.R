@@ -16,7 +16,6 @@
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @return parallel cordinates plot
-#' @export
 #'
 #'@importFrom dplyr arrange
 #'@importFrom parcoords parcoords

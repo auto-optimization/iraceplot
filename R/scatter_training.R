@@ -21,8 +21,6 @@
 #' @return plot
 #' @export
 #'
-#'@importFrom ggplot2 geom_point
-#'
 #' @examples
 #' scatter_training(iraceResults, id_configurations = c(806,809))
 

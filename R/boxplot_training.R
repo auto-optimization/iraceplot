@@ -23,10 +23,6 @@
 #'
 #'@return box plot
 #'
-#'@importFrom stats reshape
-#'@importFrom ggplot2 ggplot geom_boxplot geom_jitter position_jitter aes theme labs
-#'@importFrom grDevices dev.off pdf
-#'
 #'@export
 #'
 #'@examples
