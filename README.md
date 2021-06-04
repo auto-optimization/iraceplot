@@ -7,7 +7,7 @@
 
 Maintainers: Pablo Oñate Marín, Leslie Pérez Cáceres
 
-Creators: Manuel López-Ibáñez, Leslie Pérez Cáceres
+Creators: Pablo Oñate Marín, Leslie Pérez Cáceres
 
 Contact:
 

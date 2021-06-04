@@ -3,12 +3,19 @@ template:
     bootswatch: cosmo
 
 navbar:
-  structure:
-    left:  [home, quick, Manual, Functions, Contact]
-    right: [github]
-  components:
-    home: ~
-    quick:
-      text: Quick Start
-      href: ../_pkgdown/index.md
+  left:
+  - text: "Home"
+    href: index.html
+  - text: "Quick Start"
+    href: articles/quick_start.html
+  - text: "User Guide"
+    href: articles/iraceplot_package.html
+  - text: "Reference"
+    href: reference/index.html
+  - text: "Changelog"
+    href: news/index.html
+  right:
+  - icon: fa-github
+    href: https://github.com/pabloOnate/iraceplot
+
 

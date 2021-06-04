@@ -8,7 +8,7 @@ vignette: >
 ---
 ```{r include=FALSE}
 library(iraceplot)
-options(warn=-1)
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ## Introduction
