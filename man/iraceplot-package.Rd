@@ -36,6 +36,13 @@ Aqui debo colocar el link
 \details{
 License: MIT + file LICENSE
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/pabloOnate/iraceplot}
+}
+
+}
 \author{
 \strong{Maintainer}: Pablo Oñate Marín \email{pablo.onate.m@gmail.com}
 

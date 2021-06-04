@@ -27,7 +27,7 @@
 #' ?name_function
 #'
 #' If you need more information, go to the following page:
-#' Aqui debo colocar el link
+#' https://pabloonate.github.io/iraceplot/
 #'
 #' @name iraceplot-package
 #' @docType package
