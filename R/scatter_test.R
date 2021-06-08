@@ -25,22 +25,21 @@
 #' @export
 #'
 #' @examples
-#' scatter_test(iraceResults, id_configurations = c("92","119"), interactive = interactive())
-
-scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name = NULL, interactive = interactive() ){
+#' scatter_test(iraceResults, id_configurations = c("92", "119"), interactive = interactive())
+scatter_test <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, interactive = interactive()) {
 
   # verify that test this in irace_results
-  if(!("testing" %in% names(irace_results))){
+  if (!("testing" %in% names(irace_results))) {
     return("irace_results does not contain the testing data")
   }
   # verify that the data is correct
   id_configurations <- as.character(id_configurations)
-  if(length(id_configurations) != 2){
+  if (length(id_configurations) != 2) {
     return("You must enter a vector with 2 values")
-  }else if(!(id_configurations[1] %in% colnames(irace_results$testing$experiments))){
-    return(paste("Configuration",id_configurations[1],"not found"))
-  }else if(!(id_configurations[2] %in% colnames(irace_results$testing$experiments))){
-    return(paste("Configuration",id_configurations[2],"not found"))
+  } else if (!(id_configurations[1] %in% colnames(irace_results$testing$experiments))) {
+    return(paste("Configuration", id_configurations[1], "not found"))
+  } else if (!(id_configurations[2] %in% colnames(irace_results$testing$experiments))) {
+    return(paste("Configuration", id_configurations[2], "not found"))
   }
 
   x <- y <- NULL
@@ -48,8 +47,8 @@ scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name =
   tabla <- as.data.frame(irace_results$testing$experiments)
 
   # the table values are modified
-  if(rpd == TRUE){
-    tabla <- 100*(tabla - apply(tabla,1,min))/apply(tabla,1,min)
+  if (rpd == TRUE) {
+    tabla <- 100 * (tabla - apply(tabla, 1, min)) / apply(tabla, 1, min)
   }
 
   # the table is created based on the entered values
@@ -63,28 +62,26 @@ scatter_test <- function(irace_results,id_configurations,rpd = TRUE ,file_name =
     mutate(text = paste0("x: ", x, "\n", "y: ", y, "\n"))
 
   # the scatter graphics is created
-  p <- ggplot(datos, aes(x=x,y=y, color=y, text = text)) +
-      geom_point() +
-      scale_color_viridis_c() +
-  if(rpd == TRUE){
-    labs(color = "",x = paste("Configuration",id_configurations[1],"RPD"), y = paste("Configuration",id_configurations[2],"RPD"))
-  }else{
-    labs(color = "",x = paste("Configuration",id_configurations[1],"Performance"), y = paste("Configuration",id_configurations[2],"Performance"))
+  p <- ggplot(datos, aes(x = x, y = y, color = y, text = text)) +
+    geom_point() +
+    scale_color_viridis_c() +
+    if (rpd == TRUE) {
+      labs(color = "", x = paste("Configuration", id_configurations[1], "RPD"), y = paste("Configuration", id_configurations[2], "RPD"))
+    } else {
+      labs(color = "", x = paste("Configuration", id_configurations[1], "Performance"), y = paste("Configuration", id_configurations[2], "Performance"))
+    }
+
+  if (interactive == TRUE) {
+    p <- plotly::ggplotly(p, tooltip = "text")
   }
 
-  if(interactive == TRUE){
-    p <- plotly::ggplotly(p, tooltip="text")
-  }
-
-  #If the value in file_name is added the pdf file is created
-  if(!is.null(file_name)){
-    ggsave(file_name,plot = p)
+  # If the value in file_name is added the pdf file is created
+  if (!is.null(file_name)) {
+    ggsave(file_name, plot = p)
     return(p)
-    #If you do not add the value of file_name, the plot is displayed
-  }else{
+    # If you do not add the value of file_name, the plot is displayed
+  } else {
     p
     return(p)
   }
-
-
 }

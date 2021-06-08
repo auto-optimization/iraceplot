@@ -20,41 +20,38 @@
 #'
 #' @examples
 #' NULL
+report <- function(format = "html", irace_results = NULL, irace_file = NULL, file_name) {
 
-report <- function(format = "html",irace_results = NULL, irace_file = NULL,file_name){
 
-
-  #It is verified that only the location of the data file or its loaded form can be entered
-  if(is.null(irace_results) & is.null(irace_file)){
+  # It is verified that only the location of the data file or its loaded form can be entered
+  if (is.null(irace_results) & is.null(irace_file)) {
     return("You must enter irace_results or irace_file")
-  }else if(!is.null(irace_file) & is.null(irace_results)){
+  } else if (!is.null(irace_file) & is.null(irace_results)) {
     load(irace_file)
-  }else if(!is.null(irace_results) & !is.null(irace_file)){
+  } else if (!is.null(irace_results) & !is.null(irace_file)) {
     return("You can only enter irace_results or irace_file, but not both")
   }
 
-  if(format == "pdf"){
-    final_file <- path_rel2abs(paste0(file_name,".pdf"))
-    #Output file name is generated
+  if (format == "pdf") {
+    final_file <- path_rel2abs(paste0(file_name, ".pdf"))
+    # Output file name is generated
     reportes <- tibble(
-      file_name = stringr::str_c(paste0(file_name,".pdf"))
+      file_name = stringr::str_c(paste0(file_name, ".pdf"))
     )
-    #The output location of the file is placed as well as the location report_pdf.Rmd
+    # The output location of the file is placed as well as the location report_pdf.Rmd
     reportes %>%
       select(output_file = file_name) %>%
-      purrr::pwalk(rmarkdown::render, input = system.file("template","report_pdf.Rmd", package = 'iraceplot'))
-  }else if(format == "html"){
-    final_file <- path_rel2abs(paste0(file_name,".html"))
-    #Output file name is generated
+      purrr::pwalk(rmarkdown::render, input = system.file("template", "report_pdf.Rmd", package = "iraceplot"))
+  } else if (format == "html") {
+    final_file <- path_rel2abs(paste0(file_name, ".html"))
+    # Output file name is generated
     reportes <- tibble(
-      file_name = stringr::str_c(paste0(file_name,".html"))
+      file_name = stringr::str_c(paste0(file_name, ".html"))
     )
-    #The output location of the file is placed as well as the location report_html.Rmd
+    # The output location of the file is placed as well as the location report_html.Rmd
     reportes %>%
       select(output_file = file_name) %>%
-      purrr::pwalk(rmarkdown::render, input = system.file("template","report_html.Rmd", package = 'iraceplot'))
+      purrr::pwalk(rmarkdown::render, input = system.file("template", "report_html.Rmd", package = "iraceplot"))
     browseURL(final_file)
   }
-
-
 }

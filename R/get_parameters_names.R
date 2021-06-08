@@ -11,7 +11,6 @@
 #'
 #' @examples
 #' get_parameters_names(iraceResults)
-
-get_parameters_names <- function(irace_results){
+get_parameters_names <- function(irace_results) {
   return(irace_results$parameters$names)
 }
