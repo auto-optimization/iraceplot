@@ -283,15 +283,17 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     # The file_name value is worked to separate it and assign it to new values.
 
     nameFile <- basename(file_name)
+    ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
     directory <- paste0(dirname(file_name), sep = "/")
-    withr::with_dir(directory, orca(p, paste0(nameFile, ".pdf")))
+    withr::with_dir(directory, orca(p, paste0(nameFile,"." ,ext)))
 
     # If you do not add the value of file_name, the plot is displayed
   } else if (!is.null(file_name) & pdf_all_parameters == TRUE) {
     server <- plotly::orca_serve()
     for (i in 1:length(vectorP)) {
       part <- paste0("_plot-", i)
-      server$export(vectorP[[i]], paste0(file_name, part, ".pdf"))
+      ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
+      server$export(vectorP[[i]], paste0(file_name, part,"." ,ext))
     }
     server$close()
   } else {
