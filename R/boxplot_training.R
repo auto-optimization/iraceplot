@@ -73,7 +73,7 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
 
   # If the length of id is one, a different value must be added to the column
   if (length(id) == 1) {
-    colnames(matriz)[colnames(matriz) == "irace_results$experiments[, id]"] <- id
+    colnames(matriz)[colnames(matriz) == "distance[, id]"] <- id
   }
 
   # value of elements that the matrix contains
