@@ -8,22 +8,24 @@ configurations_display(
   irace_results,
   rpd = TRUE,
   file_name = NULL,
-  .interactive = interactive()
+  interactive = base::interactive()
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-best results, FALSE to plot raw performance}
+\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+percentage deviation to best results per instance, FALSE to plot raw
+performance.}
 
 \item{file_name}{String, File name to save plot (example: `"~/patch/example/file_name.png"`)}
 
-\item{.interactive}{Logical (Default `interactive()`), TRUE if the plot is generated interactively (plotly package) which
-is the default option, or FALSE it is generated statically.}
+\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
+interactively (using \code{plotly}) or FALSE it is generated
+statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-plot
+`ggplot()` object
 }
 \description{
 A graph is created with all the settings and instance of the training data

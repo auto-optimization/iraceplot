@@ -9,7 +9,7 @@ scatter_training(
   id_configurations,
   rpd = TRUE,
   file_name = NULL,
-  .interactive = interactive()
+  interactive = base::interactive()
 )
 }
 \arguments{
@@ -18,16 +18,18 @@ scatter_training(
 \item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed 
 (example: id_configurations = c("92","119"))}
 
-\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage 
-deviation to best results per instance, FALSE to plot raw performance}
+\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+percentage deviation to best results per instance, FALSE to plot raw
+performance.}
 
 \item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively 
-(plotly package), or FALSE it should be generated statically.}
+\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
+interactively (using \code{plotly}) or FALSE it is generated
+statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-scatter plot
+`ggplot()` object
 }
 \description{
 The function creates a scatter plot that displays the performance of two

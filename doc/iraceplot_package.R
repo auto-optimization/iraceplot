@@ -53,7 +53,7 @@ boxplot_test(iraceResults, type="best")
 boxplot_test(iraceResults, type="all", show_points=FALSE)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
-scatter_test(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
+scatter_test(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
 boxplot_training(iraceResults)

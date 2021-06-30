@@ -7,7 +7,7 @@
 plot_experiments_matrix(
   irace_results,
   file_name = NULL,
-  .interactive = interactive()
+  interactive = base::interactive()
 )
 }
 \arguments{
@@ -15,8 +15,9 @@ plot_experiments_matrix(
 
 \item{file_name}{string, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively 
-(plotly package), or FALSE it should be generated statically.}
+\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
+interactively (using \code{plotly}) or FALSE it is generated
+statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
 heatmap plot

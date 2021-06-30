@@ -24,9 +24,7 @@
 #' If no ids are provided, the configurations ids are set as the elite configuration ids 
 #' of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).
 #'
-#' @param rpd
-#' Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
-#' results per instance, FALSE to plot raw performance.
+#' @template arg_rpd
 #' 
 #' @param show_points
 #' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
@@ -82,7 +80,7 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   # A table is created with the values of all elite configurations of the id of the requested iteration
   experiments <- irace_results$experiments
 
-  if (rpd == TRUE) {
+  if (rpd) {
     experiments <- calculate_rpd(experiments)
   }
 

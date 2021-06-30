@@ -17,9 +17,7 @@
 #' of each iteration. Note that "ibest" requites that irace includes the iteration
 #' elites in the testing.
 #' 
-#' @param rpd
-#' Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
-#' to best results per instance, FALSE to plot raw performance.
+#' @template arg_rpd
 #' 
 #' @param show_points
 #' Logical, (default TRUE) TRUE to plot performance points together with the box plot.

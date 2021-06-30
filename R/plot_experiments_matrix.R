@@ -17,16 +17,14 @@
 #' @param file_name
 #' string, File name to save plot (example: "~/patch/example/file_name.png")
 #'
-#' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively 
-#' (plotly package), or FALSE it should be generated statically.
+#' @template arg_interactive
 #'
 #' @return heatmap plot
-#' @export
 #'
 #' @examples
 #' plot_experiments_matrix(iraceResults)
-plot_experiments_matrix <- function(irace_results, file_name = NULL, .interactive = interactive()) {
+#' @export
+plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = base::interactive()) {
   # Variable assignment
   C <- RANK <- text <- i_id <- union <- NULL
 
@@ -54,7 +52,7 @@ plot_experiments_matrix <- function(irace_results, file_name = NULL, .interactiv
     theme(axis.text.x = element_blank(), axis.ticks = element_blank())
 
   # The plot becomes interactive
-  if (.interactive) {
+  if (interactive) {
     p <- plotly::ggplotly(p, tooltip = "text")
   }
 
@@ -69,6 +67,6 @@ plot_experiments_matrix <- function(irace_results, file_name = NULL, .interactiv
     # If you do not add the value of file_name, the plot is displayed
   } else {
     p
-    return(p)
   }
+  return(p)
 }

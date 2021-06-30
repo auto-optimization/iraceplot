@@ -18,26 +18,21 @@
 #' String vector, configuration ids whose performance should be displayed 
 #' (example: id_configurations = c("92","119"))
 #' 
-#' @param rpd
-#' logical(default TRUE) TRUE to plot performance as the relative percentage
-#' deviation to best results per instance, FALSE to plot raw performance
+#' @template arg_rpd
 #' 
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
 #' 
-#' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively 
-#' (plotly package), or FALSE if it should be generated statically. The interactive
-#' plot version allows to visualize the instance and exact values of each plot.
+#' @template arg_interactive
 #'
-#' @return scatter plot
+#' @return `ggplot()` object
 #'
 #' @export
 #'
 #' @examples
 #' scatter_test(iraceResults, id_configurations = c("92", "119"))
 #' scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
-  scatter_test <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
+  scatter_test <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, interactive = base::interactive()) {
 
   conf1 <- conf2 <- best <- instance <- x_val <- y_val <- point_text <- NULL
     
@@ -98,7 +93,7 @@
       labs(color = "", x = paste("Configuration", id_configurations[1], "Performance"), y = paste("Configuration", id_configurations[2], "Performance"))
     }
 
-  if (.interactive) {
+  if (interactive) {
     q <- ggplotly(p=q, tooltip = "point_text")
     return(q)
   }

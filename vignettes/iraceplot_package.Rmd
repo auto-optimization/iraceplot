@@ -236,7 +236,7 @@ To investigate the difference in the performance of two configurations the `scat
 the performance of both configurations paired by instance (each point represents an instance):
 
 ```{r fig.align="center", fig.width=7}
-scatter_test(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
+scatter_test(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 ```
 
 This plot can help to identify subsets of instances in which a configuration clearly outperforms other.
@@ -272,7 +272,7 @@ a scatter plot using the `scatter_training` function:
 
 
 ```{r fig.align="center", fig.width=7}
-scatter_training(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
+scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 ```
 
 
@@ -283,7 +283,7 @@ In some cases, it might be interesting have a general visualization for the conf
 This can be obtained with the `plot_experiments_matrix` function:
 
 ```{r fig.align="center", fig.width=7}
-plot_experiments_matrix(iraceResults, .interactive = TRUE)
+plot_experiments_matrix(iraceResults, interactive = TRUE)
 ```
 
 The sampling distributions used by irace during the configuration process can be displayed using the 

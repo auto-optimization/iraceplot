@@ -18,40 +18,33 @@
 #' Numeric vector, configuration ids whose performance should be displayed 
 #' (example: id_configurations = c("92","119"))
 #'
-#' @param rpd
-#' logical(default TRUE) TRUE to plot performance as the relative percentage 
-#' deviation to best results per instance, FALSE to plot raw performance
+#' @template arg_rpd
 #'
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
 #'
-#' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively 
-#' (plotly package), or FALSE it should be generated statically.
+#' @template arg_interactive
 #'
-#' @return scatter plot
-#' @export
+#' @return `ggplot()` object
 #'
 #' @examples
 #' scatter_training(iraceResults, id_configurations = c(806, 809))
 #' scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
-scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
+#' @export
+scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, interactive = base::interactive()) {
 
   # Variable assignment
   iteracionFiltrada <- conf1 <- conf2<- instance <- best <- point_text <- NULL
 
   # Verify that a vector of length 2 is entered
   if (length(id_configurations) != 2) {
-    cat("Error: You must provide a vector with 2 values\n")
-    stop()
+    stop("Error: You must provide a vector with 2 values\n")
   }
   # Verify that the entered id are within the possible range
   if (!(id_configurations[1] %in% irace_results$allConfigurations[,".ID."])) {
-    cat(paste("Error: id out of range", id_configurations[1], "\n"))
-    stop()
+    stop(paste0("Error: id out of range", id_configurations[1], "\n"))
   } else if (!(id_configurations[2] %in% irace_results$allConfigurations[,".ID."])) {
-    cat(paste("Error: id out of range", id_configurations[2], "\n"))
-    stop()
+    stop(paste("Error: id out of range", id_configurations[2], "\n"))
   }
 
   distance <- irace_results$experiments
@@ -110,7 +103,7 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
       labs(color = " ", x = paste("Configuration", id_configurations[1], "Performance"), y = paste("Configuration", id_configurations[2], "Performance"))
     }
 
-  if (.interactive) {
+  if (interactive) {
     q <- ggplotly(p=q, tooltip = "point_text")
     return(q)
   }
@@ -118,10 +111,9 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
   # If the value in file_name is added the pdf file is created
   if (!is.null(file_name)) {
     ggsave(file_name, plot = q)
-    return(q)
     # If you do not add the value of file_name, the plot is displayed
   } else {
     q
-    return(q)
   }
+  return(q)
 }

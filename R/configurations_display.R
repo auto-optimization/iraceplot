@@ -5,25 +5,21 @@
 #'
 #' @template arg_irace_results
 #'
-#' @param rpd
-#' logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-#' best results, FALSE to plot raw performance
+#' @template arg_rpd
 #' 
 #' @param file_name
 #' String, File name to save plot (example: `"~/patch/example/file_name.png"`)
 #' 
-#' @param .interactive
-#' Logical (Default `interactive()`), TRUE if the plot is generated interactively (plotly package) which
-#' is the default option, or FALSE it is generated statically.
+#' @template arg_interactive
 #'
-#' @return plot
+#' @return `ggplot()` object
 #'
 #' @examples
 #' \dontrun{ # Takes a long time.
 #' configurations_display(iraceResults)
 #' }
 #' @export
-configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
+configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, interactive = base::interactive()) {
 
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
@@ -134,7 +130,7 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, 
 
 
   # The graph is transformed to plotly
-  if (.interactive == TRUE) {
+  if (interactive) {
     p <- plotly::ggplotly(p, tooltip = "text")
   }
 

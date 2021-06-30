@@ -21,8 +21,9 @@ configurations of the last iteration and "ibest" shows the elite configurations
 of each iteration. Note that "ibest" requites that irace includes the iteration
 elites in the testing.}
 
-\item{rpd}{Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
-to best results per instance, FALSE to plot raw performance.}
+\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+percentage deviation to best results per instance, FALSE to plot raw
+performance.}
 
 \item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
