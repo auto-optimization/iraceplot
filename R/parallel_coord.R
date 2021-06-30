@@ -285,7 +285,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     nameFile <- basename(file_name)
     ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
     directory <- paste0(dirname(file_name), sep = "/")
-    withr::with_dir(directory, orca(p, paste0(nameFile,"." ,ext)))
+    withr::with_dir(directory, orca(p, paste0(nameFile,"." ,ext), width = 550, height = 550))
 
     # If you do not add the value of file_name, the plot is displayed
   } else if (!is.null(file_name) & pdf_all_parameters == TRUE) {
