@@ -261,7 +261,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 
   # plot creation
   p <- tabla %>%
-    plot_ly(width = 1000, height = 600)
+    plot_ly(width = 600, height = 550)
   p <- p %>% add_trace(
     type = "parcoords",
     line = list(
