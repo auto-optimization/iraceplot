@@ -8,14 +8,12 @@
 #'
 #' @param type
 #' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
-#' "best" shows the best configurations of each iteration and
-#' "ibest" shows the configurations of the last iteration
+#' "best" shows the configurations of the last iteration and
+#' "ibest" shows the best configurations of each iteration
 #' @param rpd
-#' Logical (default TRUE) to fit through an equation of minimum percentage distance between
-#' the values of each row of all configurations
+#' Logical (default TRUE) to plot performance as the relative percentage deviation to best results
 #' @param file_name
-#' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/file_name")
+#' String, File name to save plot (example: "~/patch/example/file_name.png")
 #' @return box plot
 #' @export
 #'
@@ -24,109 +22,113 @@
 #' boxplot_test(iraceResults, type = "ibest")
 #' boxplot_test(iraceResults, type = "best")
 boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NULL) {
-
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
     return("irace_results does not contain the testing data")
   }
 
-  if (!(type == "all" | type == "best" | type == "ibest")) {
+  if (!(type %in% c("all", "best", "ibest"))) {
     print("The type parameter entered is incorrect")
+  }
+  
+  if (type=="ibest" && iraceResults$scenario$testIterationElites) {
+      cat("Warning: irace data does not contain iteration elites testing, changing plot type to \"best\"\n")
+      type <- "best"
   }
 
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
   # the table is created with all the data from testing experiments
-  tabla <- as.data.frame(irace_results$testing$experiments)
+  experiments <- as.data.frame(irace_results$testing$experiments)
 
-  # the table values are modified
-  if (rpd == TRUE) {
-    tabla <- 100 * (tabla - apply(tabla, 1, min)) / apply(tabla, 1, min)
+  # the experiments values are modified
+  if (rpd) {
+    experiments <- 100 * (experiments - apply(experiments, 1, min)) / apply(experiments, 1, min)
   }
 
   # all testing experiments settings
   if (type == "all") {
-    for (j in 1:length(irace_results$allElites)) {
-      v_allElites <- c(v_allElites, irace_results$allElites[[j]])
-    }
-    datos <- tabla[as.character(v_allElites)]
-
+    v_allElites <- unlist(irace_results$allElites)
+    v_allElites <- as.character(v_allElites[v_allElites %in% colnames(experiments)])
+    data <- experiments[,v_allElites, drop=FALSE]
+    
     # the last iteration of the elite settings
   } else if (type == "best") {
-    num_it <- length(irace_results$allElites)
-    v_allElites <- as.character(irace_results$allElites[[num_it]])
-    datos <- tabla[v_allElites]
-
+    test_elites <- irace_results$allElites[[length(irace_results$allElites)]]
+    v_allElites <- as.character(test_elites[test_elites %in% colnames(experiments)])
+    data <- experiments[,v_allElites, drop=FALSE]
+    
     # the best settings of each iteration
   } else if (type == "ibest") {
     v_allElites <- as.character(irace_results$iterationElites)
-    datos <- tabla[v_allElites]
+    data <- experiments[, v_allElites, drop=FALSE]
   } else {
     return("non existent type")
   }
 
-  names_col <- colnames(datos)
+  names_col <- colnames(data)
   # the data is processed
-  datos <- reshape(datos,
-    varying = as.vector(colnames(datos)),
+  data <- reshape(data,
+    varying = as.vector(colnames(data)),
     v.names = "performance",
     timevar = "ids",
-    times = as.vector(colnames(datos)),
-    new.row.names = 1:(dim(datos)[1] * dim(datos)[2]),
+    times = as.vector(colnames(data)),
+    new.row.names = 1:(dim(data)[1] * dim(data)[2]),
     direction = "long"
   )
 
   # column iteration is added
   if (type == "all" || type == "ibest") {
-    iteration <- sample(NA, size = dim(datos)[1], replace = TRUE)
-    datos <- cbind(datos, iteration)
+    iteration <- sample(NA, size = dim(data)[1], replace = TRUE)
+    data <- cbind(data, iteration)
 
     if (type == "all") {
       a <- 1
       for (i in 1:length(irace_results$allElites)) {
-        for (k in 1:length(irace_results$allElites[[i]])) {
-          datos$iteration[datos$ids == names_col[a]] <- i
+        test_elites <- irace_results$allElites[[i]][irace_results$allElites[[i]] %in% names_col]
+        for (k in 1:length(test_elites)) {
+          data$iteration[data$ids == names_col[a]] <- i
           a <- a + 1
         }
       }
     } else if (type == "ibest") {
-      for (i in 1:length(unique(datos$ids))) {
-        datos$iteration[datos$ids == unique(datos$ids)[i]] <- i
+      for (i in 1:length(unique(data$ids))) {
+        data$iteration[data$ids == unique(data$ids)[i]] <- i
       }
     }
 
-    datos$iteration_f <- factor(datos$iteration, levels = (unique(datos$iteration)))
+    data$iteration_f <- factor(data$iteration, levels = (unique(data$iteration)))
   }
 
   for (k in 1:length(names_col)) {
     if (!(names_col[k] == as.character(v_allElites)[k])) {
-      datos$ids[datos$ids == names_col[k]] <- as.character(v_allElites)[k]
+      data$ids[data$ids == names_col[k]] <- as.character(v_allElites)[k]
     }
   }
 
   if (type == "all" || type == "best") {
-    best_conf <- sample(NA, size = dim(datos)[1], replace = TRUE)
-    datos <- cbind(datos, best_conf)
+    best_conf <- sample(NA, size = dim(data)[1], replace = TRUE)
+    data <- cbind(data, best_conf)
     if (type == "all") {
       for (i in 1:length(irace_results$allElites)) {
-        datos$best_conf[datos$iteration == i & datos$ids == as.character(irace_results$iterationElites[i])] <- "best" # as.character(i)
+        data$best_conf[data$iteration == i & data$ids == as.character(irace_results$iterationElites[i])] <- "best" # as.character(i)
       }
     } else {
-      datos$best_conf[datos$ids == v_allElites[1]] <- "best" # as.character(1)
+      data$best_conf[data$ids == v_allElites[1]] <- "best" # as.character(1)
     }
   }
 
-  datos$ids_f <- factor(datos$ids, levels = unique(datos$ids))
+  data$ids_f <- factor(data$ids, levels = unique(data$ids))
 
   # the box plot is created
   if (type == "best") {
-    p <- ggplot(datos, aes(x = ids_f, y = performance, color = best_conf)) +
+    p <- ggplot(data, aes(x = ids_f, y = performance, color = best_conf)) +
       scale_color_hue(h = c(220, 270))
   } else if (type == "ibest") {
-    p <- ggplot(datos, aes(x = ids_f, y = performance, color = iteration_f)) +
+    p <- ggplot(data, aes(x = ids_f, y = performance, color = iteration_f)) +
       labs(subtitle = "iterations") +
       theme(plot.subtitle = element_text(hjust = 0.5))
   } else {
-    p <- ggplot(datos, aes(x = ids_f, y = performance, colour = best_conf)) +
+    p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) +
       labs(subtitle = "iterations") +
       theme(
         plot.subtitle = element_text(hjust = 0.5),
@@ -134,15 +136,18 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NU
       ) +
       scale_color_hue(h = c(220, 270))
   }
+  
+  y_lab <- "Performance"
+  if (rpd) y_lab <- "RPD performance"
 
   p <- p +
     geom_boxplot() +
     theme(legend.position = "none") +
-    labs(x = "ID", y = "Performance")
+    labs(x = "ID", y = y_lab)
 
   # each box plot is divided by iteration
   if (type == "all" || type == "ibest") {
-    p <- p + facet_grid(cols = vars(datos$iteration_f), scales = "free")
+    p <- p + facet_grid(cols = vars(data$iteration_f), scales = "free")
   }
 
   # If the value in file_name is added the pdf file is created

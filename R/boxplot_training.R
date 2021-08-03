@@ -6,20 +6,17 @@
 #' @template arg_irace_results
 #'
 #' @param number_iteration
-#' Numeric, It is the number referring to the iteration that you want to graph,
-#' the range of these varies according to the Rdata used (example: number_iteration = 5)
+#' Numeric, iteration number that should be included in the plot (example: number_iteration = 5)
 #'
 #' @param id_configurations
-#' Numeric vector, you need to put the configurations you want to analyze
+#' Numeric vector, configurations ids whose performance should be included in the plot
 #' (example: id_configurations = c(20,50,100,300,500,600,700))
 #'
 #' @param rpd
-#' Logical (default TRUE) to fit through an equation of minimum percentage distance
-#' between the values of each row of all configurations
+#' Logical (default TRUE) to plot performance as the relative percentage deviation to best results
 #'
 #' @param file_name
-#' String, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/file_name")
+#' String, File name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @return box plot
 #'
@@ -36,7 +33,8 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
   long <- length(irace_results$allElites)
 
   if (!is.null(number_iteration) & !is.null(id_configurations)) {
-    return("You cannot use id_configurations and number_iteration at the same time")
+    cat("Error: cannot use id_configurations and number_iteration at the same time\n")
+    return(NULL)
   }
 
   # It is checked if the file_name argument was added
@@ -46,7 +44,8 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
       long <- number_iteration
       # If number_iteration is out of range it delivers a message per screen
     } else {
-      return(print("iteration number out of range"))
+      cat("Error: iteration number out of range\n")
+      return(NULL)
     }
   }
 
@@ -56,24 +55,25 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
   if (!is.null(id_configurations)) {
     n_conf <- c(1:dim(irace_results$experiments)[2])
     if (FALSE %in% (id_configurations %in% n_conf)) {
-      return(paste("The following settings are out of range:", id_configurations[!(id_configurations %in% n_conf)]))
+      cat(paste("Error: the following settings are out of range:", id_configurations[!(id_configurations %in% n_conf)],"\n"))
+      return(NULL)
     } else {
       id <- id_configurations
     }
   }
 
   # A table is created with the values of all elite configurations of the id of the requested iteration
-  distance <- irace_results$experiments
+  experiments <- irace_results$experiments
 
   if (rpd == TRUE) {
-    distance <- 100 * (distance - apply(distance, 1, min, na.rm = TRUE)) / apply(distance, 1, min, na.rm = TRUE)
+    experiments <- 100 * (experiments - apply(experiments, 1, min, na.rm = TRUE)) / apply(experiments, 1, min, na.rm = TRUE)
   }
 
-  matriz <- as.data.frame(distance[, id])
+  matriz <- as.data.frame(experiments[, id])
 
   # If the length of id is one, a different value must be added to the column
   if (length(id) == 1) {
-    colnames(matriz)[colnames(matriz) == "distance[, id]"] <- id
+    colnames(matriz)[colnames(matriz) == "experiments[, id]"] <- id
   }
 
   # value of elements that the matrix contains
@@ -88,13 +88,15 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
     new.row.names = 1:n_row_col,
     direction = "long"
   )
-
+  y_lab <- "Performance"
+  if (rpd) y_lab <- "RPD performance"
+  
   # The plot scatter is created and assigned to p
   p <- ggplot(tabla, aes(x = Elite_configuration, y = Performance, color = Elite_configuration)) +
     geom_boxplot(na.rm = TRUE) +
     geom_jitter(shape = 16, position = position_jitter(0.2), na.rm = TRUE) +
     theme(legend.position = "none") +
-    labs(x = "Elite Configurations")
+    labs(x = "Elite Configurations", y=y_lab)
 
   # If the value in file_name is added the pdf file is created
   if (!is.null(file_name)) {

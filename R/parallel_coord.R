@@ -2,33 +2,32 @@
 #'
 #' @description
 #' The iparallelcoord function will return a parallel cordinates plot
-#' allowing the analysis of the set of parameters
+#' allowing the analysis of parameters settings
 #'
 #' @template arg_irace_results
 #'
 #' @param id_configuration
-#' Numeric vector, you need to put the configurations you want to analyze
+#' Numeric vector, configurations ids whose performance should be included in the plot
 #' (example: id_configuration = c(20,50,100,300,500,600,700))
 #'
 #' @param param_names
-#' String vector, you need to put the parameters you want to analyze
+#' String vector, names of the parameters that should be included in the plot
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @param iterations
-#' NUmeric vector, you need to put the iterations you want to analyze
+#' Numeric vector, iteration number that should be included in the plot
 #' (example: iterations = c(1,4,5))
 #'
 #' @param only_elite
-#' logical (default FALSE),
+#' logical (default TRUE), only print elite configurations
 #'
 #' @param pdf_all_parameters
-#' logical (default FALSE), If I want to create a pdf with all the parameters,
-#' I must put TRUE, otherwise it will be created only with the default
-#' parameters (15 or less) or those entered.
+#' logical (default FALSE), TRUE if all parameters should be included,
+#' otherwise in case of large parameter sets, it will be created only
+#' 15 parameters will be included.
 #'
 #' @param file_name
-#' A pdf will be created in the location and with
-#' the assigned name (example: "~/patch/example/file_name")
+#' File name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @return parallel cordinates plot
 #' @export
@@ -47,12 +46,10 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 
   if (is.null(param_names) & is.null(file_name)) {
     if (length(get_parameters_names(irace_results)) == 16) {
-      print("There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters")
-      print("The first 16 parameters will be displayed")
+      cat("Warning: There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters. The first 16 parameters will be displayed\n")
       param_names <- get_parameters_names(irace_results)[1:16]
     } else if (length(get_parameters_names(irace_results)) > 15) {
-      print("There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters")
-      print("The first 15 parameters will be displayed")
+      cat("There are too many parameters to display in a single coordinated parallel plot. It will select relevant parameters. The first 15 parameters will be displayed\n")
       param_names <- get_parameters_names(irace_results)[1:15]
     }
   }
@@ -61,14 +58,15 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     iterations <- c(length(irace_results$allElites))
 
     if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1) {
-      print("The final iteration only has an elite configuration")
+      cat("Note: The final iteration only has an elite configuration")
     }
   }
 
   if (!is.null(iterations)) {
     it <- c(1:length(irace_results$allElites))
     if (FALSE %in% (iterations %in% it)) {
-      return("The interactions entered are outside the possible range")
+      cat("Error: The interactions entered are outside the possible range\n")
+      return(NULL)
     }
   }
 
@@ -76,23 +74,26 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   if (!is.null(param_names)) {
     # verify that param_names contain the data entered
     if ("FALSE" %in% names(table(param_names %in% irace_results$parameters$names))) {
-      return("Some wrong parameter entered")
+      cat("Error: Unknown parameter names were encountered\n")
+      return(NULL)
       # verify that param_names contain more than one parameter
     } else if (length(param_names) < 2) {
-      return("You must enter at least two parameters")
+        cat("Error: Data must have at least two parameters")
+      return(NULL)
     }
   }
 
   if (!is.null(id_configuration)) {
-
     # Verify that the entered id are within the possible range
     if (length(id_configuration[id_configuration < 1]) >= 1 || length(id_configuration[id_configuration > dim(irace_results$allConfigurations)[1]]) >= 1) {
-      return("IDs entered are outside the range of settings")
+      cat("Error: IDs provided are outside the range of settings\n")
+      return(NULL)
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configuration) <= 1 || length(id_configuration) > dim(irace_results$allConfigurations)[1]) {
-      return("You must enter more than one id")
+      cat("Error: You must provide more than one configuration id\n")
+      return(NULL)
     }
 
     # the table to be used and the filter with the iterations and configuration is created
@@ -244,7 +245,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   iteration_f <- factor(as.character(tabla$iteration), ordered = TRUE)
   levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
   tabla <- cbind(tabla, iteration_f)
-
+  
   if (length(get_parameters_names(irace_results)) > 15 & !is.null(file_name) & pdf_all_parameters == TRUE) {
     inicio <- 1
     final <- 15
@@ -275,7 +276,6 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     dimensions = dim,
     labelangle = -25
   )
-
 
 
   # If the value in file_name is added the pdf file is created

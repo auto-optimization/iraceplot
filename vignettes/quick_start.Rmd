@@ -7,4 +7,74 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Escribir texto....
+
+```{r echo=FALSE}
+library(iraceplot)
+load("../data/iraceResults.rda")
+load("~/research/plot-test/experiments-model/acotsp-local/test-01/irace.Rdata")
+```
+
+This guide aims at showing different examples of how the data produced by the irace configurator
+can be visualized to obtain information about algorithm performance or high-performing parameters 
+settings.
+
+## About the execution of irace
+
+To use the methods provided by this package you must have an irace data object, 
+this object is saved as an Rdata file (irace.Rdata by default) after each irace 
+execution. 
+
+During the configuration procedure irace evaluates several candidate configurations 
+(parameter settings) on different training insrances, creating an algorithm performance 
+data set we call the *training data set*. This information is thus, the data
+that irace had access to when configuring the algorithm. 
+
+You can also enable the test evaluation option in irace, in which a set of elite 
+configurations will be evaluated on a set of test instances after the execution of 
+irace is finished. Nota that this option is not enabled by default and you
+must provide the test instances in order to enable it. The performance obtained 
+in this evalaution is called the *test data set*. This evaluation helps assess
+the results of the configuration in a more "real" setup. For example, we can assess 
+if the configuration process incurred in overtuning or if a type of instance
+was underrepresented in the training set. We note that irace allows to perform
+the test evaluations to the final elite configurations and to the elite configurations
+of each iterations. For information about the irace setup we refer you to the irace 
+package user guide. 
+
+Note: Before executing irace, consider setting the test evaluation option of irace. 
+
+Once irace is executed, you can load the irace data object in the R console by:
+
+```{r eval=FALSE} 
+load("path/to/irace.Rdata")
+```
+
+This will load in the console an object called `iraceResults` which contains all data
+generated and used by the configurator.
+
+## Configurations
+
+Once irace is executed, the first thing you might want to do is to visualize how the
+best configurations look like. You can do this with the `parallel_coord` method.
+
+```{r fig.align="center"}
+parallel_coord(iraceResults)
+```
+
+This plot shows the final elite configurations settings, each line represents one 
+configuration. Note that the number of iterations is shown in the scale on the right
+and the final elite configurations belong to the last iteration. To visualize 
+configurations  considered as elite in each iteration use the `iterations` option:
+
+```{r fig.align="center"}
+parallel_coord(iraceResults, iterations=1:iraceResults$state$nbIterations)
+```
+
+You can also visualize all configurations sampled in one or more iterations disabling the 
+`only_elite` option:
+
+```{r fig.align="center"}
+parallel_coord(iraceResults, iterations=4, only_elite=FALSE)
+```
+
+
