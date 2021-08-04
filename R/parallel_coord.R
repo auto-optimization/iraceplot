@@ -1,7 +1,7 @@
 #' Parallel Coordinates Plot static
 #'
 #' @description
-#' The iparallelcoord function will return a parallel cordinates plot
+#' The parallel_coord function will return a parallel cordinates plot
 #' allowing the analysis of parameters settings
 #'
 #' @template arg_irace_results
@@ -24,10 +24,10 @@
 #' @param pdf_all_parameters
 #' logical (default FALSE), TRUE if all parameters should be included,
 #' otherwise in case of large parameter sets, it will be created only
-#' 15 parameters will be included.
+#' 15 parameters will be included
 #'
 #' @param file_name
-#' File name to save plot (example: "~/patch/example/file_name.png")
+#' String, file name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @return parallel cordinates plot
 #' @export

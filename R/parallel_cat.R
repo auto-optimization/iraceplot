@@ -1,7 +1,7 @@
 #' Parallel Cordinate Category
 #'
 #' @description
-#' The parallel_coord_category function will return a graph of categorical
+#' The parallel_cat function will return a graph of categorical
 #' parallel coordinates allowing the analysis of the set of parameters
 #' allowing the visualization of the data and the filtering by iteration
 #'
@@ -25,8 +25,7 @@
 #' parameters (15 or less) or those entered.
 #'
 #' @param file_name
-#' A pdf will be created in the location and with
-#' the assigned name (example: "~/patch/example/file_name")
+#' String, file name to save plot (example: "~/patch/example/file_name")
 #'
 #' @return parallel coordinate category plot
 #' @export
@@ -61,102 +60,86 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
       return("You must enter at least two parameters")
     }
   }
+  
+  # adding discretization for numerical variables and replace NA values 
+  # FIXME: Add proper ordering for each axis
+  # FIXME: add number of bins as an argument (list)
+  configurations <- iraceResults$allConfigurations
+  for (pname in irace_results$parameters$names) {
+    n_bins <- 5
+    if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {
+      not.na <- !is.na(configurations[,pname])
+      snot.na <- sum(not.na) 
+      if(snot.na < nrow(configurations)) {
+        n_bins <- 3
+        if (snot.na < nrow(configurations)/3)
+          n_bins <- 2
+      }
+        
+      val <- c(iraceResults$parameters$domain[[pname]], configurations[not.na, pname])
+      bins <- cut(val, breaks=c(quantile(val, probs=seq(0,1, by=1/n_bins))),
+                  include.lowest = TRUE, ordered_result=TRUE)
+      bins <- as.character(bins[3:length(bins)],scientific = F)
+      configurations[not.na, pname] <- bins
+    }
 
+    # replace NA values
+    rna <- is.na(configurations[,pname])
+    if (any(rna)) {
+      configurations[rna,pname] <- "NA"
+    }
+    
+  }
+  
+  
+  tabla <- configurations
+  filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
+  
   if (!is.null(id_configuration)) {
-
     # Verify that the entered id are within the possible range
-    if (length(id_configuration[id_configuration < 1]) >= 1 || length(id_configuration[id_configuration > dim(irace_results$allConfigurations)[1]]) >= 1) {
-      return("IDs entered are outside the range of settings")
+    if (any(id_configuration < 1) || any(id_configuration > nrow(configurations))) {
+      cat("Error: IDs provided are outside the range\n")
+      return(NULL)
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
-    if (length(id_configuration) <= 1 || length(id_configuration) > dim(irace_results$allConfigurations)[1]) {
-      return("You must enter more than one id")
+    if (length(id_configuration) <= 1 || length(id_configuration) > nrow(configurations)) {
+      cat("Error: You must provide more than one id\n")
+      return(NULL)
     }
 
     # the table to be used and the filter with the iterations and configuration is created
-    selection <- irace_results$allConfigurations[, ".ID."] %in% id_configuration
-    tabla <- irace_results$allConfigurations[selection, ]
-    filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-    selection2 <- filtro[, "configuration"] %in% id_configuration
-    filtro <- filtro[selection2, ]
-    # table is created with all settings
-  } else {
-    tabla <- irace_results$allConfigurations
-    filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  }
-
-  # The filter table is created and ordered according to the configurations
-  filtro <- as.data.frame(filtro)
-  filtro <- arrange(filtro, configuration)
-
-  # An iteration table is created and added to the table
-  iteration <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  tabla <- cbind(tabla, iteration)
-
-  # The NA of the first row of the table is replaced in the iteration column
-  if (tabla$.ID.[1] == filtro$configuration[1]) {
-    tabla$iteration[1] <- filtro$iteration[1]
-  }
-
-  # memo is assigned the value of the filter table configuration
-  memo <- filtro$configuration[1]
-
-  # The NAs of the table are replaced in the iteration column
-  for (i in 2:dim(filtro)[1]) {
-
-    # if the same configuration has more than one iteration, a new row is created
-    if (memo == filtro$configuration[i]) {
-      add <- tabla[tabla$.ID. == memo, ]
-      add$iteration <- filtro$iteration[i]
-      tabla <- rbind(tabla, add)
-      # The iteration is assigned to the configuration
-    } else {
-      tabla$iteration[tabla$.ID. == filtro$configuration[i]] <- filtro$iteration[i]
-    }
-    memo <- filtro$configuration[i]
-  }
+    tabla <- configurations[configurations[, ".ID."] %in% id_configuration, ]
+    filtro <- filtro[filtro[, "configuration"] %in% id_configuration, ]
+  } 
+  
+  # merge iteration and configuration data
+  colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
+  tabla <- merge(filtro, tabla, by=".ID.")
 
   # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(names(tabla) %in% c(".ID.", ".PARENT."))]
+  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT."))]
   if (is.null(param_names) & length(get_parameters_names(irace_results)) > 15 & pdf_all_parameters == FALSE) {
     param_names <- get_parameters_names(irace_results)[1:15]
   }
+  # Selected parameters
   if (!is.null(param_names)) {
     param_names <- c(param_names, "iteration")
-    tabla <- tabla[, (names(tabla) %in% param_names)]
+    tabla <- tabla[, (colnames(tabla) %in% param_names)]
   }
 
-  # for(k in 1:(length(tabla))){
-  #    tabla[[k]][1] = as.character(tabla[[k]][1])
-  # }
-
+  # Selected iterations
   if (!is.null(iterations)) {
     tabla <- tabla[tabla$iteration %in% iterations, ]
   }
-
-  for (i in 1:(dim(tabla)[2] - 1)) {
-    if (class(irace_results$parameters$domain[colnames(tabla[i])][[1]]) == "numeric") {
-      valor <- paste(irace_results$parameters$domain[colnames(tabla[i])][[1]][1], "-", irace_results$parameters$domain[colnames(tabla[i])][[1]][2])
-      tabla[i][!is.na(tabla[i])] <- valor
-      tabla[i][is.na(tabla[i])] <- "NA"
-    }
-    if (TRUE %in% is.na(tabla[i])) {
-      tabla[i][is.na(tabla[i])] <- "NA"
-    }
-  }
-
-  iteration_f <- factor(as.character(tabla$iteration), ordered = TRUE)
-  levels(iteration_f) <- c(1:length(unique(tabla$iteration)))
-  tabla$iteration <- iteration_f
-
-  tabla$iteration[1] <- as.character(tabla$iteration[1])
-
+  tabla$iteration <- factor(tabla$iteration, ordered=TRUE)
+  
   tabla <- tabla %>%
-    group_by(tabla[1:dim(tabla)[2]]) %>%
+    group_by(tabla[1:ncol(tabla)]) %>%
     summarise(freq = n()) # %>% filter(freq > 1)
-
-  tabla <- gather_set_data(tabla, 1:(dim(tabla)[2] - 1))
+  
+  tabla <- gather_set_data(tabla, 1:(ncol(tabla) - 1))
+  
 
   tabla <- tabla[tabla$x != "iteration", ]
 
@@ -173,6 +156,7 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
       final <- (i + 1) * 15
     }
   }
+
   p <- ggplot(tabla, aes(x, id = id, split = y, value = freq)) +
     geom_parallel_sets(aes(fill = iteration), alpha = 0.8, axis.width = 0.2) +
     geom_parallel_sets_axes(axis.width = 0.5, alpha = 0.4) +

@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r echo=FALSE}
-#library(iraceplot)
+library(iraceplot)
 load("../data/iraceResults.rda")
 ```
 
@@ -63,7 +63,7 @@ parallel_coord(iraceResults)
 This plot shows the final elite configurations settings, each line represents one 
 configuration. Note that the number of iterations is shown in the scale on the right
 and the final elite configurations belong to the last iteration. To visualize 
-configurations  considered as elite in each iteration use the `iterations` option:
+configurations  considered as elites in each iteration use the `iterations` option:
 
 ```{r fig.align="center"}
 parallel_coord(iraceResults, iterations=1:iraceResults$state$nbIterations)
@@ -73,7 +73,32 @@ You can also visualize all configurations sampled in one or more iterations disa
 `only_elite` option:
 
 ```{r fig.align="center"}
-parallel_coord(iraceResults, iterations=4, only_elite=FALSE)
+parallel_coord(iraceResults, iterations=c(2,5), only_elite=FALSE)
 ```
 
+or by using the `parallel_cat` method:
 
+```{r fig.align="center"}
+parallel_cat(irace_results = iraceResults, iterations = c(2,5) )
+```
+
+## Sampling distributions
+
+In some cases in might be interesting to have a look to the values sampled during the 
+configuration procedure as they indicate the areas in the parameter space where irace
+detected a high performance.
+
+A general overview of the sampling of one parameter can be obtained with the `sampling_frequency`
+function:
+
+```{r fig.align="center"}
+ sampling_frequency(iraceResults, param_names = c("ants"))
+```
+
+A detailed plot showing the sampling by iteration can be obtained with the `sampling_frequency_iteration`
+function. This plot shows the convergence of the configuration process reflected in the sampled
+parameter values.
+
+```{r fig.align="center"}
+sampling_frequency_iteration(iraceResults, parameter = "ants")
+```
