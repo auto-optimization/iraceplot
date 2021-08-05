@@ -142,23 +142,20 @@ By default the graph of the last iteration is shown</p>
     </tr>
     <tr>
       <th>number_iteration</th>
-      <td><p>Numeric, It is the number referring to the iteration that you want to graph,
-the range of these varies according to the Rdata used (example: number_iteration = 5)</p></td>
+      <td><p>Numeric, iteration number that should be included in the plot (example: number_iteration = 5)</p></td>
     </tr>
     <tr>
       <th>id_configurations</th>
-      <td><p>Numeric vector, you need to put the configurations you want to analyze
+      <td><p>Numeric vector, configurations ids whose performance should be included in the plot
 (example: id_configurations = c(20,50,100,300,500,600,700))</p></td>
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>Logical (default TRUE) to fit through an equation of minimum percentage distance
-between the values of each row of all configurations</p></td>
+      <td><p>Logical (default TRUE) to plot performance as the relative percentage deviation to best results</p></td>
     </tr>
     <tr>
       <th>file_name</th>
-      <td><p>String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")</p></td>
+      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
     </tr>
     </table>
 
@@ -168,10 +165,9 @@ assigned name (example: "~/patch/example/file_name")</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>,number_iteration <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>,id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>50</span>,<span class='fl'>100</span>,<span class='fl'>300</span>,<span class='fl'>500</span>,<span class='fl'>600</span>,<span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+</div><div class='img'><img src='boxplot_training-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, number_iteration <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='img'><img src='boxplot_training-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>500</span>, <span class='fl'>600</span>, <span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='boxplot_training-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
