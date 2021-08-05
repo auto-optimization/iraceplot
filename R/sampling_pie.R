@@ -27,7 +27,7 @@ sampling_pie <- function(irace_results, param_names = NULL, file_name = NULL) {
   if (!is.null(param_names)) {
     if (any(!(param_names %in% irace_results$parameters$names))) {
       cat(paste("Error: The following parameters are not found:", param_names[!(param_names %in% irace_results$parameters$names)], "\n"))
-      return()
+      stop()
     } 
   } else {
     param_names <- irace_results$parameters$names

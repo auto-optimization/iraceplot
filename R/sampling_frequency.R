@@ -43,7 +43,7 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
 
   if (any(!(param_names %in% irace_results$parameters$names))) {
     cat("Error: Unknown parameter name provided\n")
-    return()
+    stop()
   }
   
   # Filter data by parameter names
@@ -52,7 +52,7 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
     if (n < 1 | n > ceiling(length(param_names) / max_p)) {
       cat(paste("Error: n cannot be less than 1 or greater than", ceiling(length(param_names) / max_p), 
                 "(", length(param_names),"parameters selected )\n"))
-      return()
+      stop()
     }
     inicio <- (max_p * n - 8)
     fin <- min(max_p * n, length(param_names))

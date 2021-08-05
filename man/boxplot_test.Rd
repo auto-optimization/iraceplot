@@ -13,7 +13,8 @@ boxplot_test(irace_results, type = "all", rpd = TRUE, file_name = NULL)
 "best" shows the configurations of the last iteration and
 "ibest" shows the best configurations of each iteration}
 
-\item{rpd}{Logical (default TRUE) to plot performance as the relative percentage deviation to best results}
+\item{rpd}{Logical (default TRUE) TRUE to plot performance as the relative percentage deviation to 
+best results, FALSE to plot raw performance}
 
 \item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }

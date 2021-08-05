@@ -163,8 +163,12 @@ To investigate the difference in the performance of two configurations the `scat
 the performance of both configurations paired by instance (each point represents an instance):
 
 ```{r fig.align="center"}
-scatter_test(iraceResults, id_configurations = c(808,809))
+scatter_test(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
 ```
+
+This plot can help to identify subsets of instances in which a configuration clearly outperforms other.
+To further understand the difference of these two configurations the trainig data might be explored to
+verify if such effect holds for the training set. 
 
 ### Training performance
 
@@ -178,4 +182,19 @@ which the configurations were evaluated might vary between elite configurations.
 boxplot_training(iraceResults)
 ```
 
+To observe the difference in the performance of two configurations you can also generate
+a scatter plot using the `scatter_training` function: 
 
+
+```{r fig.align="center"}
+scatter_training(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
+```
+
+### Configuration process
+
+In some cases, it might be interesting have a general visualization for the configuration process.
+This can be obtained with the `plot_experiments_matrix` function:
+
+```{r fig.align="center"}
+plot_experiments_matrix(iraceResults, .interactive = TRUE)
+```

@@ -34,7 +34,7 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
 
   if (!is.null(number_iteration) & !is.null(id_configurations)) {
     cat("Error: cannot use id_configurations and number_iteration at the same time\n")
-    return()
+    stop()
   }
 
   # It is checked if the file_name argument was added
@@ -45,7 +45,7 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
       # If number_iteration is out of range it delivers a message per screen
     } else {
       cat("Error: iteration number out of range\n")
-      return()
+      stop()
     }
   }
 
@@ -56,7 +56,7 @@ boxplot_training <- function(irace_results, number_iteration = NULL, id_configur
     n_conf <- c(1:dim(irace_results$experiments)[2])
     if (FALSE %in% (id_configurations %in% n_conf)) {
       cat(paste("Error: the following settings are out of range:", id_configurations[!(id_configurations %in% n_conf)],"\n"))
-      return()
+      stop()
     } else {
       id <- id_configurations
     }

@@ -21,11 +21,14 @@ distance_config <- function(irace_results, id_configurations, t = 0.05) {
 
   # restrictions
   if (length(id_configurations) != 2) {
-    return("You must enter two settings")
+    cat("Error: You must enter two settings\n")
+    stop()
   } else if (FALSE %in% (id_configurations[1] %in% irace_results$allConfigurations[[".ID."]])) {
-    return(paste("Configuration", id_configurations[1], "does not exist", sep = " "))
+    cat(paste("Error: Configuration", id_configurations[1], "does not exist\n", sep = " "))
+    stop()
   } else if (FALSE %in% (id_configurations[2] %in% irace_results$allConfigurations[[".ID."]])) {
-    return(paste("Configuration", id_configurations[2], "does not exist", sep = " "))
+    cat(paste("Configuration", id_configurations[2], "does not exist\n", sep = " "))
+    stop()
   }
 
   # variable assignment

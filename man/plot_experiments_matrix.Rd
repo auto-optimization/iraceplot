@@ -7,7 +7,7 @@
 plot_experiments_matrix(
   irace_results,
   file_name = NULL,
-  interactive = interactive()
+  .interactive = interactive()
 )
 }
 \arguments{
@@ -16,10 +16,8 @@ plot_experiments_matrix(
 \item{file_name}{string, A pdf will be created in the location and with the
 assigned name (example: "~/patch/example/file_name")}
 
-\item{interactive}{Logical (Default interactive() ), Allows you to decide when generating the graph, i
-t is generated interactively (It is created with the plotly package) which
-is the default option or it is generated statically (It is created with the ggplot2
-package). You must set interactive = FALSE.}
+\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.}
 }
 \value{
 heatmap plot
@@ -28,5 +26,5 @@ heatmap plot
 The function will return a heat map plot of all experimental data configurations
 }
 \examples{
-plot_experiments_matrix(iraceResults, interactive = interactive())
+plot_experiments_matrix(iraceResults, .interactive = interactive())
 }

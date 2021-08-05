@@ -8,22 +8,19 @@ configurations_display(
   irace_results,
   rpd = TRUE,
   file_name = NULL,
-  interactive = interactive()
+  .interactive = interactive()
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
-between the values of each row of all configurations}
+\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
+best results, FALSE to plot raw performance}
 
-\item{file_name}{String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{interactive}{Logical (Default interactive() ), Allows you to decide when generating the graph, i
-t is generated interactively (It is created with the plotly package) which
-is the default option or it is generated statically (It is created with the ggplot2
-package). You must set interactive = FALSE.}
+\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.}
 }
 \value{
 plot
@@ -32,5 +29,5 @@ plot
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-# configurations_display(iraceResults, interactive = interactive())
+# configurations_display(iraceResults, .interactive = interactive())
 }

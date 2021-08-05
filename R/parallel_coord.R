@@ -53,11 +53,11 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   # Check parameter values
   if (any(!(param_names %in% irace_results$parameters$names))) {
     cat("Error: Unknown parameter names were encountered\n")
-    return()
+    stop()
     # verify that param_names contain more than one parameter
   } else if (length(param_names) < 2) {
     cat("Error: Data must have at least two parameters\n")
-    return()
+    stop()
   }
   if (plot_all_parameters) {
     if (length(param_names) > 15) {
@@ -72,7 +72,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     it <- c(1:length(irace_results$allElites))
     if (any(!(iterations %in% it))) {
       cat("Error: The interactions entered are outside the possible range\n")
-      return()
+      stop()
     }
   }
   
@@ -81,13 +81,13 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     # Verify that the entered id are within the possible range
     if (any(id_configuration[id_configuration < 1]) || any(id_configuration[id_configuration > nrow(irace_results$allConfigurations)])) {
       cat("Error: IDs provided are outside the range of settings\n")
-      return()
+      stop()
     }
     
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configuration) <= 1 || length(id_configuration) > nrow(irace_results$allConfigurations)) {
       cat("Error: You must provide more than one configuration id\n")
-      return()
+      stop()
     }
   }
 

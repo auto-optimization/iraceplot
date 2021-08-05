@@ -4,19 +4,18 @@
 \alias{sampling_distance}
 \title{Distance Iteration Plot}
 \usage{
-sampling_distance(irace_results, type = "both", t = 0.05, file_name = NULL)
+sampling_distance(irace_results, type = "boxplot", t = 0.05, file_name = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{type}{String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
-points and lines, "boxplot" will show a box plot}
+\item{type}{String, either "line", "boxplot" or "both". by default it is "boxplot" will show both graphics, 
+"line" which will show a plot of points and lines, "boxplot" will show a box plots}
 
-\item{t}{Numeric, It is a percentage factor that will determine the range of difference
+\item{t}{Numeric, percentage factor that will determine the range of difference
 between settings (example: t = 0.05 is equivalent to 5 percent)}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }
 \value{
 line or box plot

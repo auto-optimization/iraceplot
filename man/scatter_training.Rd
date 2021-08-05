@@ -8,27 +8,30 @@ scatter_training(
   irace_results,
   id_configurations,
   rpd = TRUE,
-  file_name = NULL
+  file_name = NULL,
+  .interactive = interactive()
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{Numeric vector, you need to put the elite settings you
-want to compare, only 2 values are allowed (example: idVector = c(806,809))}
+\item{id_configurations}{Numeric vector,  configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))}
 
-\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage
-distance between the values of each row of all configurations}
+\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
+best results, FALSE to plot raw performance}
 
-\item{file_name}{String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")
+
+#' @param .interactive
+Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.}
 }
 \value{
-plot
+scatter plot
 }
 \description{
 The function will return a scatter plot
-comparing two elite configurations in training
+comparing two configurations in the training performance data
 }
 \examples{
 scatter_training(iraceResults, id_configurations = c(806, 809))

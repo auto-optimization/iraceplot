@@ -9,33 +9,29 @@ scatter_test(
   id_configurations,
   rpd = TRUE,
   file_name = NULL,
-  interactive = interactive()
+  .interactive = interactive()
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{String vector, you need to put the elite settings you
-want to compare, only 2 values are allowed (example: idVector = c("92","119"))}
+\item{id_configurations}{String vector, configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))}
 
-\item{rpd}{logical(default TRUE) to fit through an equation of minimum percentage distance
-between the values of each row of all configurations}
+\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
+best results, FALSE to plot raw performance}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{interactive}{Logical (Default interactive() ), Allows you to decide when generating the graph, i
-t is generated interactively (It is created with the plotly package) which
-is the default option or it is generated statically (It is created with the ggplot2
-package). You must set interactive = FALSE.}
+\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.}
 }
 \value{
 scatter plot
 }
 \description{
 The function will return a scatter plot
-comparing two elite configurations in testing
+comparing two configurations in testing
 }
 \examples{
-scatter_test(iraceResults, id_configurations = c("92", "119"), interactive = interactive())
+scatter_test(iraceResults, id_configurations = c("92", "119"), .interactive = interactive())
 }

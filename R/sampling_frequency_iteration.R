@@ -27,12 +27,12 @@ sampling_frequency_iteration <- function(irace_results, param_name, file_name = 
     # verify that param_names contain the data entered
     if (!(param_name %in% irace_results$parameters$names)) {
       cat("Error: Unknown parameter name provided\n")
-      return()
+      stop()
     }
     # verify that param_names contain more than one parameter
     else if (length(param_name) != 1) {
       cat("Error: You can only provide one parameter\n")
-      return()
+      stop()
     }
   }
 

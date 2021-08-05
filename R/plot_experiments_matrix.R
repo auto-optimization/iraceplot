@@ -9,18 +9,16 @@
 #' string, A pdf will be created in the location and with the
 #' assigned name (example: "~/patch/example/file_name")
 #'
-#' @param interactive
-#' Logical (Default interactive() ), Allows you to decide when generating the graph, i
-#' t is generated interactively (It is created with the plotly package) which
-#' is the default option or it is generated statically (It is created with the ggplot2
-#' package). You must set interactive = FALSE.
+#' @param .interactive
+#' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+#' is the default option, or FALSE it is generated statically.
 #'
 #' @return heatmap plot
 #' @export
 #'
 #' @examples
-#' plot_experiments_matrix(iraceResults, interactive = interactive())
-plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = interactive()) {
+#' plot_experiments_matrix(iraceResults, .interactive = interactive())
+plot_experiments_matrix <- function(irace_results, file_name = NULL, .interactive = interactive()) {
   # Variable assignment
   C <- RANK <- text <- i_id <- union <- NULL
 
@@ -48,7 +46,7 @@ plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive
     theme(axis.text.x = element_blank(), axis.ticks = element_blank())
 
   # The plot becomes interactive
-  if (interactive == TRUE) {
+  if (.interactive) {
     p <- plotly::ggplotly(p, tooltip = "text")
   }
 

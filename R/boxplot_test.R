@@ -10,10 +10,14 @@
 #' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
 #' "best" shows the configurations of the last iteration and
 #' "ibest" shows the best configurations of each iteration
+#' 
 #' @param rpd
-#' Logical (default TRUE) to plot performance as the relative percentage deviation to best results
+#' Logical (default TRUE) TRUE to plot performance as the relative percentage deviation to 
+#' best results, FALSE to plot raw performance
+#' 
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' 
 #' @return box plot
 #' @export
 #'
@@ -25,7 +29,7 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NU
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
     cat("Error: irace_results does not contain the testing data")
-    return()
+    stop()
   }
 
   if (!(type %in% c("all", "best", "ibest"))) {

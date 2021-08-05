@@ -5,14 +5,15 @@
 #'
 #' @template arg_irace_results
 #' @param type
-#' String, either "line", "boxplot" or "both". by default it is "both" will show both graphics, "line" which will show a plot of
-#' points and lines, "boxplot" will show a box plot
+#' String, either "line", "boxplot" or "both". by default it is "boxplot" will show both graphics, 
+#' "line" which will show a plot of points and lines, "boxplot" will show a box plots
+#' 
 #' @param t
-#' Numeric, It is a percentage factor that will determine the range of difference
+#' Numeric, percentage factor that will determine the range of difference
 #' between settings (example: t = 0.05 is equivalent to 5 percent)
+#' 
 #' @param file_name
-#' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/file_name")
+#' String, File name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @return line or box plot
 #'
@@ -21,18 +22,20 @@
 #' @examples
 #' # sampling_distance(iraceResults)
 #' # sampling_distance(iraceResults, type = "boxplot", t=0.2)
-sampling_distance <- function(irace_results, type = "both", t = 0.05, file_name = NULL) {
+sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_name = NULL) {
   if (!(type == "line" | type == "boxplot" | type == "both")) {
-    print("The type parameter entered is incorrect")
+    cat("Error: The type parameter entered is incorrect\n")
+    stop()
   }
 
   # variable assignment
   media <- allconf <- valor <- iterations <- tabla_box <- iteration <- vectorP <- NULL
   allconf <- irace_results$allConfigurations
   n_param <- length(allconf) - 2
+  niterations <- length(irace_results$allElites)
 
   # The value of the distance between each configuration is created
-  for (i in 1:length(irace_results$allElites)) {
+  for (i in 1:niterations) {
     distance <- NULL
     ids <- unique(subset(as.data.frame(irace_results$experimentLog),
       iteration %in% i,
@@ -70,7 +73,7 @@ sampling_distance <- function(irace_results, type = "both", t = 0.05, file_name 
         breaks = seq(1, length(irace_results$allElites), 1)
       ) +
       scale_color_viridis_c() +
-      labs(y = "RPD", x = "iteration", color = "IT.")
+      labs(y = "Mean distance", x = "iteration", color = "IT.")
     vectorP[1] <- list(p)
 
     # A box plot is created

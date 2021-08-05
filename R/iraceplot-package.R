@@ -20,7 +20,6 @@
 #' sampling_distance;
 #' boxplot_training;
 #' scatter_training;
-#' configurations_display;
 #' report;
 #'
 #' If you need information about any function you can put:

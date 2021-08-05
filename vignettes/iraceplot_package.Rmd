@@ -120,27 +120,28 @@ scatter_test(irace_results,
               id_configurations,
               rpd = TRUE,
               file_name = TRUE
-              interactive = interactive() )
+              .interactive = interactive() )
 ```
 ### Arguments
 
 ```
 irace_results:       irace log, loaded from the irace log Rdata file
 
-id_configurations:   Numeric vector??, a pair of configuration ids to be compared (example: idVector = c("92","119"))
+id_configurations:   Numeric vector, two configuration ids to be compared (example: idVector = c("92","119"))
 
 rpd:                Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
-file_name:           String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:           String, File name to save plot (example: "~/patch/example/file_name.png")
 
-interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
+.interactive:       Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+ is the default option, or FALSE it is generated statically.
 ```
 
 For example, to compare the performance of two configurations executed in the testing, use the following code:
 
 
 ```{r fig.align="center", fig.width= 7}
-scatter_test(irace_results  = iraceResults, id_configurations = c("92","119"), interactive = interactive())
+scatter_test(irace_results  = iraceResults, id_configurations = c("92","119"))
 ```
 
 <!-- ################################################### -->
@@ -205,7 +206,8 @@ The ``scatter_training`` function creates a scatter plot comparing the training 
 scatter_training(irace_results, 
                  id_configurations, 
                  rpd = TRUE, 
-                 file_name = NULL)
+                 file_name = NULL, 
+                 .interactive = interactive())
 ```
 ### Arguments
 
@@ -217,6 +219,9 @@ id_configurations: Numeric vector??, a pair of configuration ids to be compared 
 rpd:            Logical (default TRUE) displays performance as the relative percentage deviation from the best quality found by instance. FALSE displays raw performance.
 
 file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+
+.interactive:   Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+ is the default option, or FALSE it is generated statically.
 ```
 For example, to compare the performance of two configurations evaluated in the configuration process, use the following code:
 
@@ -233,7 +238,7 @@ The ``plot_experiments_matrix`` function will return a heat map plot of all expe
 ```
 plot_experiments_matrix(irace_results, 
                         file_name = NULL,
-                        interactive = interactive() )
+                        .interactive = interactive() )
 ```
 
 ## Arguments
@@ -241,19 +246,20 @@ plot_experiments_matrix(irace_results,
 ```
 irace_results:   irace log, loaded from the irace log Rdata file
 
-file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:       String,  File name to save plot (example: "~/patch/example/file_name.png")
 
-interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
+.interactive:   Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+ is the default option, or FALSE it is generated statically.
 ```
 
 To visualize the experiments matrix, use the following code:
 
 ```{r fig.align="center", fig.width= 7}
-plot_experiments_matrix(irace_results = iraceResults, interactive = interactive())
+plot_experiments_matrix(irace_results = iraceResults, .interactive = interactive())
 ```
 
 <!-- CONFIGURATION PROCESS  --> 
-## Configuration process progression
+<!--## Configuration process progression
 
 A graph is created with all the settings and instance of the training data
 
@@ -275,7 +281,7 @@ file_name:       String, file name indicating where to save a pdf file with the 
 interactive:         Logical (Default interactive() ), Allows you to decide when generating the graph, it is generated interactively (It is created with the plotly package) which is the default option or it is generated statically (It is created with the ggplot2 package). You must set interactive = FALSE.
 ```
 
-To visualize the configuration process detail
+To visualize the configuration process detail -->
 
 
 <!-- ```{r fig.align="center", fig.width= 7} -->
@@ -460,7 +466,7 @@ file_name:      (optional) String,  file name to save plot. If there are more th
 
 To visualize all sampling frequencies,  use the following code:
 
-```{r fig.align="center", fig.height= 7, fig.width=7}
+```{r fig.align="center", fig.height= 7, fig.width=7, message=FALSE, prompt=FALSE}
 sampling_frequency(irace_results = iraceResults)
 ```
 
@@ -476,7 +482,7 @@ sampling_frequency(irace_results = iraceResults, n = 1)
 
 To visualize the sampling frequencies of a set of selected parameters, use the following code:
 
-```{r  fig.align="center", fig.height= 5, fig.width=7}
+```{r  fig.align="center", fig.height= 5, fig.width=7, message=FALSE, prompt=FALSE}
 sampling_frequency(irace_results = iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
@@ -507,7 +513,7 @@ file_name:      (optional) String, file name indicating where to save the plot. 
 To visualize the sampling frequency of a parameter, use the following code:
 
 
-```{r fig.align="center", fig.width= 7,fig.height= 7}
+```{r fig.align="center", fig.width= 7,fig.height= 7, message=FALSE, prompt=FALSE}
 sampling_frequency_iteration(irace_results = iraceResults, param_name = "alpha")
 ```
 
@@ -535,7 +541,7 @@ file_name:       String, file name indicating where to save a pdf file with the 
 To visualize the sampling density of a parameter, use the following code:
 
 
-```{r fig.align="center", fig.width= 7,fig.height= 7}
+```{r fig.align="center", fig.width= 7,fig.height= 7, message=FALSE, prompt=FALSE}
 sampling_density(irace_results = iraceResults,parameter = "alpha")
 ```
 
@@ -611,7 +617,7 @@ The ``sampling_distance`` function creates a plot showing the mean distance betw
 
 ```
 sampling_distance(irace_results,
-                    type = "both",
+                    type = "boxplot",
                     t = 0.05,
                     file_name = NULL)
 ```
@@ -620,7 +626,7 @@ sampling_distance(irace_results,
 ```
 irace_results:   irace log, loaded from the irace log Rdata file
 
-type:           String, either "line","boxplot" or "both" (default type="both"). When set to "both" display both the boxplot and line plot, "line" display the line plot, "boxplot" display a box plot
+type:           String, either "line","boxplot" or "both" (default type="boxplot"). When set to "both" display both the boxplot and line plot, "line" display the line plot, "boxplot" display a box plot
 
 t:              Numeric [0,1], percentage that will determine the range to determine if two values are different (example: t = 0.05 is equivalent to 5%)
 

@@ -6,23 +6,22 @@
 #' @template arg_irace_results
 #'
 #' @param rpd
-#' Logical (default TRUE) to fit through an equation of minimum percentage distance
-#' between the values of each row of all configurations
+#' logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
+#' best results, FALSE to plot raw performance
+#' 
 #' @param file_name
-#' String, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/file_name")
-#' @param interactive
-#' Logical (Default interactive() ), Allows you to decide when generating the graph, i
-#' t is generated interactively (It is created with the plotly package) which
-#' is the default option or it is generated statically (It is created with the ggplot2
-#' package). You must set interactive = FALSE.
+#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' 
+#' @param .interactive
+#' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+#' is the default option, or FALSE it is generated statically.
 #'
 #' @return plot
 #' @export
 #'
 #' @examples
-#' # configurations_display(iraceResults, interactive = interactive())
-configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, interactive = interactive()) {
+#' # configurations_display(iraceResults, .interactive = interactive())
+configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
 
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
@@ -30,7 +29,7 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, 
   experiments <- as.data.frame(irace_results$experiments)
 
   # the table values are modified
-  if (rpd == TRUE) {
+  if (rpd) {
     experiments <- (experiments - apply(experiments, 1, min, na.rm = TRUE)) / apply(experiments, 1, min, na.rm = TRUE)
   }
 
@@ -133,8 +132,8 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, 
 
 
   # The graph is transformed to plotly
-  if (interactive == TRUE) {
-    p <- plotly::ggplotly(q, tooltip = "text")
+  if (.interactive == TRUE) {
+    p <- plotly::ggplotly(p, tooltip = "text")
   }
 
 

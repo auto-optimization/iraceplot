@@ -50,18 +50,18 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
     it <- c(1:length(irace_results$allElites))
     if (any(!(iterations %in% it))) {
       cat("Error: The interactions entered are outside the possible range\n")
-      return()
+      stop()
     }
   }
 
   # verify that param_names contain the data entered
   if (any(!(param_names %in% irace_results$parameters$names))) {
     cat("Error: Unknown parameter provided\n")
-    return()
+    stop()
     # verify that param_names contain more than one parameter
   } else if (length(param_names) < 2) {
     cat("Error: You must provide at least two parameters\n")
-    return()
+    stop()
   }
 
   # adding discretization for numerical variables and replace NA values 
@@ -100,13 +100,13 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
     # Verify that the entered id are within the possible range
     if (any(id_configuration < 1) || any(id_configuration > nrow(configurations))) {
       cat("Error: IDs provided are outside the range\n")
-      return(NULL)
+      stop()
     }
 
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configuration) <= 1 || length(id_configuration) > nrow(configurations)) {
       cat("Error: You must provide more than one id\n")
-      return(NULL)
+      stop()
     }
 
     # the table to be used and the filter with the iterations and configuration is created

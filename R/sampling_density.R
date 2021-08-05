@@ -26,11 +26,13 @@ sampling_density <- function(irace_results, parameter, file_name = NULL) {
   if (!is.null(parameter)) {
     # verify that param_names contain the data entered
     if ("FALSE" %in% names(table(parameter %in% irace_results$parameters$names))) {
-      return("Some wrong parameter entered")
+      cat("Error: Unknown parameter provided\n")
+      stop()
     }
     # verify that param_names contain more than one parameter
     else if (length(parameter) != 1) {
-      return("You can only enter one parameter")
+      cat("Error: You can only enter one parameter\n")
+      stop()
     }
   }
 
