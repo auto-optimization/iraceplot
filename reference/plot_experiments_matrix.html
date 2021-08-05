@@ -126,7 +126,7 @@
     <pre class="usage"><span class='fu'>plot_experiments_matrix</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+  .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -142,11 +142,9 @@
 assigned name (example: "~/patch/example/file_name")</p></td>
     </tr>
     <tr>
-      <th>interactive</th>
-      <td><p>Logical (Default interactive() ), Allows you to decide when generating the graph, i
-t is generated interactively (It is created with the plotly package) which
-is the default option or it is generated statically (It is created with the ggplot2
-package). You must set interactive = FALSE.</p></td>
+      <th>.interactive</th>
+      <td><p>Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.</p></td>
     </tr>
     </table>
 
@@ -155,7 +153,7 @@ package). You must set interactive = FALSE.</p></td>
     <p>heatmap plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>plot_experiments_matrix</span><span class='op'>(</span><span class='va'>iraceResults</span>, interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>plot_experiments_matrix</span><span class='op'>(</span><span class='va'>iraceResults</span>, .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='plot_experiments_matrix-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

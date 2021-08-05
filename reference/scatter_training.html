@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Scatter Plot Training — scatter_training" />
 <meta property="og:description" content="The function will return a scatter plot
-comparing two elite configurations in training" />
+comparing two configurations in the training performance data" />
 
 
 
@@ -122,14 +122,15 @@ comparing two elite configurations in training" />
 
     <div class="ref-description">
     <p>The function will return a scatter plot
-comparing two elite configurations in training</p>
+comparing two configurations in the training performance data</p>
     </div>
 
     <pre class="usage"><span class='fu'>scatter_training</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
   <span class='va'>id_configurations</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>
+  file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -141,24 +142,25 @@ comparing two elite configurations in training</p>
     </tr>
     <tr>
       <th>id_configurations</th>
-      <td><p>Numeric vector, you need to put the elite settings you
-want to compare, only 2 values are allowed (example: idVector = c(806,809))</p></td>
+      <td><p>Numeric vector,  configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))</p></td>
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>Logical (default TRUE) to fit through an equation of minimum percentage
-distance between the values of each row of all configurations</p></td>
+      <td><p>logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
+best results, FALSE to plot raw performance</p></td>
     </tr>
     <tr>
       <th>file_name</th>
-      <td><p>String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")</p></td>
+      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p>
+<p>#' @param .interactive
+Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+is the default option, or FALSE it is generated statically.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>plot</p>
+    <p>scatter plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>scatter_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>806</span>, <span class='fl'>809</span><span class='op'>)</span><span class='op'>)</span>
