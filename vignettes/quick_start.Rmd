@@ -79,7 +79,7 @@ parallel_coord(iraceResults, iterations=c(2,5), only_elite=FALSE)
 or by using the `parallel_cat` method:
 
 ```{r fig.align="center"}
-parallel_cat(irace_results = iraceResults, iterations = c(2,5) )
+parallel_cat(irace_results = iraceResults, iterations = c(3,5) )
 ```
 
 ## Sampling distributions
@@ -92,7 +92,7 @@ A general overview of the sampling of one parameter can be obtained with the `sa
 function:
 
 ```{r fig.align="center"}
- sampling_frequency(iraceResults, param_names = c("ants"))
+ sampling_frequency(iraceResults)
 ```
 
 A detailed plot showing the sampling by iteration can be obtained with the `sampling_frequency_iteration`
@@ -100,5 +100,5 @@ function. This plot shows the convergence of the configuration process reflected
 parameter values.
 
 ```{r fig.align="center"}
-sampling_frequency_iteration(iraceResults, parameter = "ants")
+sampling_frequency_iteration(iraceResults, param_name = "beta")
 ```

@@ -2,32 +2,32 @@
 #'
 #' @description
 #' The parallel_cat function will return a graph of categorical
-#' parallel coordinates allowing the analysis of the set of parameters
-#' allowing the visualization of the data and the filtering by iteration
+#' parallel coordinates allowing selecting configurations by id or iteration
+#' and selecting the parameter to be included in the plot
 #'
 #' @template arg_irace_results
 #'
 #' @param id_configuration
-#' Numeric vector, you need to put the configurations you want to analyze
+#' Numeric vector, configuration ids to be included in the plot
 #' (example: id_configuration = c(20,50,100,300,500,600,700))
 #'
 #' @param param_names
-#' String vector, you need to put the parameters you want to analyze
+#' String vector, parameters to be included in the plot
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @param iterations
-#' NUmeric vector, you need to put the iterations you want to analyze
+#' NUmeric vector, iterations from which configuration should be obtained
 #' (example: iterations = c(1,4,5))
 #'
-#' @param pdf_all_parameters
-#' logical (default FALSE), If I want to create a pdf with all the parameters,
-#' I must put TRUE, otherwise it will be created only with the default
-#' parameters (15 or less) or those entered.
+#' @param plot_all_parameters
+#' logical (default FALSE), TRUE if all parameter should be included or 
+#' FALSE if the first set of 15 parameters provided or in the data file should
+#' be displayed.
 #'
 #' @param file_name
-#' String, file name to save plot (example: "~/patch/example/file_name")
+#' String, file name to save plot (example: "~/path/to/file_name.png")
 #'
-#' @return parallel coordinate category plot
+#' @return parallel categories plot
 #' @export
 #'
 #' @examples
@@ -35,32 +35,35 @@
 #' parallel_cat(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
 #' parallel_cat(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' parallel_cat(iraceResults, iterations = c(1, 4, 6))
-parallel_cat <- function(irace_results, id_configuration = NULL, param_names = NULL, iterations = NULL, pdf_all_parameters = FALSE, file_name = NULL) {
+parallel_cat <- function(irace_results, id_configuration = NULL, param_names = NULL, iterations = NULL, plot_all_parameters = FALSE, file_name = NULL) {
 
   # Variable assignment
   memo <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
   id_configuration <- unlist(id_configuration)
-  param_names <- unlist(param_names)
-
+  
+  if (is.null(param_names))
+    param_names <- irace_results$parameters$names
+  else
+    param_names <- unlist(param_names)
 
   if (!is.null(iterations)) {
     it <- c(1:length(irace_results$allElites))
-    if (FALSE %in% (iterations %in% it)) {
-      return("The interactions entered are outside the possible range")
+    if (any(!(iterations %in% it))) {
+      cat("Error: The interactions entered are outside the possible range\n")
+      return()
     }
   }
 
-  # verify that param_names is other than null
-  if (!is.null(param_names)) {
-    # verify that param_names contain the data entered
-    if ("FALSE" %in% names(table(param_names %in% irace_results$parameters$names))) {
-      return("Some wrong parameter entered")
-      # verify that param_names contain more than one parameter
-    } else if (length(param_names) < 2) {
-      return("You must enter at least two parameters")
-    }
+  # verify that param_names contain the data entered
+  if (any(!(param_names %in% irace_results$parameters$names))) {
+    cat("Error: Unknown parameter provided\n")
+    return()
+    # verify that param_names contain more than one parameter
+  } else if (length(param_names) < 2) {
+    cat("Error: You must provide at least two parameters\n")
+    return()
   }
-  
+
   # adding discretization for numerical variables and replace NA values 
   # FIXME: Add proper ordering for each axis
   # FIXME: add number of bins as an argument (list)
@@ -91,7 +94,6 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
     
   }
   
-  
   tabla <- configurations
   filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
   
@@ -119,7 +121,7 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
 
   # Column .ID. and .PARENT. are removed
   tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT."))]
-  if (is.null(param_names) & length(get_parameters_names(irace_results)) > 15 & pdf_all_parameters == FALSE) {
+  if (is.null(param_names) & length(get_parameters_names(irace_results)) > 15 & plot_all_parameters == FALSE) {
     param_names <- get_parameters_names(irace_results)[1:15]
   }
   # Selected parameters
@@ -143,7 +145,7 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
 
   tabla <- tabla[tabla$x != "iteration", ]
 
-  if (!is.null(file_name) & pdf_all_parameters == TRUE & length(get_parameters_names(irace_results)) > 15) {
+  if (!is.null(file_name) & plot_all_parameters == TRUE & length(get_parameters_names(irace_results)) > 15) {
     inicio <- 1
     final <- 15
     for (i in 1:ceiling(length(get_parameters_names(irace_results)) / 15)) {

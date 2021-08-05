@@ -7,82 +7,53 @@
 #'
 #' @template arg_irace_results
 #'
-#' @param parameter
-#' String, value of the parameter to be analyzed (example: parameter = "algorithm")
+#' @param param_name
+#' String, name of the parameter to be included (example: param_name = "algorithm")
 #'
 #' @param file_name
-#' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/file_name")
+#' String, file name to save plot (example: "~/path/to/file_name.png")
 #'
-#' @return bar plot
+#' @return Frequency and/or density plot
 #' @export
 #'
 #' @examples
-#' sampling_frequency_iteration(iraceResults, parameter = "alpha")
-sampling_frequency_iteration <- function(irace_results, parameter, file_name = NULL) {
+#' sampling_frequency_iteration(iraceResults, param_name = "alpha")
+sampling_frequency_iteration <- function(irace_results, param_name, file_name = NULL) {
   # Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
 
   # verify that param_names is other than null
-  if (!is.null(parameter)) {
+  if (!is.null(param_name)) {
     # verify that param_names contain the data entered
-    if ("FALSE" %in% names(table(parameter %in% irace_results$parameters$names))) {
-      return("Some wrong parameter entered")
+    if (!(param_name %in% irace_results$parameters$names)) {
+      cat("Error: Unknown parameter name provided\n")
+      return()
     }
     # verify that param_names contain more than one parameter
-    else if (length(parameter) != 1) {
-      return("You can only enter one parameter")
+    else if (length(param_name) != 1) {
+      cat("Error: You can only provide one parameter\n")
+      return()
     }
   }
 
   # table is created with all settings
-  tabla <- irace_results$allConfigurations[c(".ID.", parameter)]
+  tabla <- irace_results$allConfigurations[,c(".ID.", param_name)]
   filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
 
-
-  # The filter table is created and ordered according to the configurations
-  filtro <- as.data.frame(filtro)
-  filtro <- arrange(filtro, configuration)
-
-  # An iteration table is created and added to the table
-  iteration <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  tabla <- cbind(tabla, iteration)
-
-  # The NA of the first row of the table is replaced in the iteration column
-  if (tabla$.ID.[1] == filtro$configuration[1]) {
-    tabla$iteration[1] <- filtro$iteration[1]
-  }
-
-  # memo is assigned the value of the filter table configuration
-  memo <- filtro$configuration[1]
-
-  # The NAs of the table are replaced in the iteration column
-  for (i in 2:dim(filtro)[1]) {
-
-    # if the same configuration has more than one iteration, a new row is created
-    if (memo == filtro$configuration[i]) {
-      add <- tabla[tabla$.ID. == memo, ]
-      add$iteration <- filtro$iteration[i]
-      tabla <- rbind(tabla, add)
-    }
-    # The iteration is assigned to the configuration
-    else {
-      tabla$iteration[tabla$.ID. == filtro$configuration[i]] <- filtro$iteration[i]
-    }
-    memo <- filtro$configuration[i]
-  }
+  # merge iteration and configuration data
+  colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
+  tabla <- merge(filtro, tabla, by=".ID.")
 
   # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(names(tabla) %in% c(".ID."))]
-
-  # the iteration column is scaled
-  tabla[["iteration"]][1] <- as.character(tabla[["iteration"]][1])
+  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.")), drop=FALSE]
 
   # The first column is renamed
-  colnames(tabla)[1] <- "x"
+  colnames(tabla)[colnames(tabla) %in% c(param_name)] <- "x"
+  niter <- length(unique(tabla$iteration))
+  tabla$iteration <- factor(tabla$iteration)
 
   # If the parameter is of type character a frequency graph is displayed
-  if (class(tabla[[1]]) == "character") {
+  if (irace_results$parameters$types[param_name] %in% c("c", "o")) {
     tabla <- as.data.frame(table(tabla))
     tabla$iteration_f <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
 
@@ -91,15 +62,15 @@ sampling_frequency_iteration <- function(irace_results, parameter, file_name = N
       facet_grid(vars(iteration_f), scales = "free") +
       scale_fill_manual(
         values = viridis(length(unique(tabla$x))),
-        guide = guide_legend(title = parameter)
+        guide = guide_legend(title = param_name)
       ) +
-      labs(y = "Frequency", x = parameter) +
+      labs(y = "Frequency", x = param_name) +
       scale_y_continuous(n.breaks = 3) +
       theme(strip.text.y = element_text(angle = 0))
 
     # The plot is saved in a list
     vectorPlot[1] <- list(p)
-  } else if (class(tabla[[1]]) == "numeric") {
+  } else if (irace_results$parameters$types[param_name] %in% c("i", "r", "i,log", "r,log")) {
     tabla <- na.omit(tabla)
     tabla$iteration_f <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
 
@@ -107,16 +78,17 @@ sampling_frequency_iteration <- function(irace_results, parameter, file_name = N
       n = nclass.Sturges(tabla$x),
       min.n = 1
     )
+    
     # density and histogram plot
     p <- ggplot(as.data.frame(tabla), aes(x = x, fill = iteration)) +
       geom_histogram(aes(y = ..density..),
-        breaks = nbreaks,
-        color = "black", fill = "gray"
+                     breaks = nbreaks,
+                     color = "black", fill = "gray"
       ) +
       geom_density(alpha = 0.7) +
       scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
       facet_grid(vars(iteration_f), scales = "free") +
-      labs(x = parameter, y = "Frequency") +
+      labs(x = param_name, y = "Frequency") +
       theme(
         axis.title.y = element_text(),
         axis.title.x = element_text(size = 10),

@@ -297,20 +297,19 @@ The following functions allow to visualize the parameter values evaluated by ira
 
 The ``parallel_coord`` function creates a parallel coordinate plot of a set of selected configurations. 
 
-If the ``id_configuration`` argument is not provided this function displays parameter values of elite configurations. When a set of ids is provided, 
-these selected configurations are displayed.
+If the ``id_configuration`` argument is not provided the function displays parameter values of elite configurations (``only_elite`` setting). When a set of ids is provided, these selected configurations are displayed.
 
-The ``iterations`` options allows to selecte the elite configurations displayed by iteration. If ``id_configuration`` is provided, 
+The ``iterations`` options allows to select the elite configurations by iteration. If ``id_configuration`` is provided, 
 this argument is ignored.
 
-When there are more than 15 parameters in the scenario, only the first 15 parameter are displayed. Parameters to display can be selected with the ``param_names`` argument. When saving the plot to pdf, all parameters can be included but parameters are displayed in groups of 15. 
+When there are more than 15 parameters in the scenario or selected by the ``param_names`` setting, only the first 15 parameter are displayed. When saving the plot to a file, all parameters can be included but parameters are displayed in groups of 15. 
 
 ```
 parallel_coord(irace_results,
                id_configuration = NULL,
                param_names = NULL,
                iterations = NULL,
-               pdf_all_parameters = FALSE,
+               plot_all_parameters = FALSE,
                file_name = NULL)
 ```
 ### Arguments
@@ -324,9 +323,12 @@ param_names:        (optional) String vector, you need to put the parameters you
 
 iterations:         (optional) Numeric vector, iterations  to select elite configurations to include in the plot (example: iterations = c(1,4,5))
 
-pdf_all_parameters:   Logical (default FALSE), If TRUE, several plots with groups of 15 parameters are created, otherwise it will be created with the first 15 parameters.
+only_elite:         Logical: TRUE indicates that only elite configurations should be included. While FALSE indicates all configurations in the selected
+iteration (last by default) will be included. This setting is ignored when id_configuration is provided.
 
-file_name:           String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/patch/example/file_name")
+plot_all_parameters:   Logical (default FALSE), If TRUE, several plots with groups of 15 parameters are created, otherwise it will be created with the first 15 parameters.
+
+file_name:           String, file name to save plot (example: "~/path/to/file_name.png")
 ```
 
 For example, to visualize all parameters values of the final elite configurations, use the following code:
@@ -366,10 +368,10 @@ The ``parallel_cat`` function creates a parallel categories plot a set of the pa
 If the ``id_configuration`` argument is not provided this function displays parameter values all sampled configurations. When a set of ids is provided, 
 these selected configurations are displayed.
 
-The ``iterations`` options allows to selecte the configurations displayed by iteration. If ``id_configuration`` is provided, 
+The ``iterations`` options allows to select the configurations displayed by iteration. If ``id_configuration`` is provided, 
 this argument is ignored.
 
-When there are more than 15 parameters in the scenario, only the first 15 parameter are displayed. Parameters to display can be selected with the ``param_names`` argument. When saving the plot to pdf, all parameters can be included but parameters are displayed in groups of 15. 
+When there are more than 15 parameters in the scenario, only the first 15 parameters are displayed. Parameters to display can be selected with the ``param_names`` argument. When saving the plot to a file, all parameters can be included but parameters are displayed in groups of 15. 
 
 
 
@@ -378,7 +380,7 @@ parallel_cat(irace_results,
                         id_configuration = NULL, 
                         param_names = NULL,
                         iterations = NULL,
-                        pdf_all_parameters = FALSE,
+                        plot_all_parameters = FALSE,
                         file_name = NULL)
 ```
 
@@ -393,9 +395,9 @@ param_names:        (optional) String vector, you need to put the parameters you
 
 iterations:         (optional) Numeric vector, iterations  to select elite configurations to include in the plot (example: iterations = c(1,4,5))
 
-pdf_all_parameters:   Logical (default FALSE), If TRUE, several plots with groups of 15 parameters are created, otherwise it will be created with the first 15 parameters.
+plot_all_parameters:   Logical (default FALSE), If TRUE, several plots with groups of 15 parameters are created, otherwise it will be created with the first 15 parameters.
 
-file_name:           String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:          (optional) String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
 ```
 
 To visualize all parameters values of all configurations, use the following code:
@@ -431,17 +433,17 @@ parallel_cat(irace_results = iraceResults, iterations =  c(1,4,6))
 <!-- SAMPLING FREQUENCY  --> 
 ## Sampling frequency
 
-The ``sampling_frequency`` function plots the sampling frequency plots of the parameter values sampled during the configuration process.
+The ``sampling_frequency`` function plots the frequency plots of the parameter values sampled during the configuration process.
 
 For categorical parameters frequency bar plot is displayed, while for of numerical parameters (integer and real) an histogram and density plot are shown.
 
-Plots are displayed by default in sets of 9 parameters. If the scenario has more parameters, the first 9 parameters are displayed. The set of parameters to be displayed can be selected using the ``param_names`` argument. When creating the pdf a set of different plots is created when the number of selected parameters is more than 9.
+Plots are displayed by default in sets of 9 parameters. Different sets can be displayed by setting the ``n`` argument. The set of parameters to be displayed can be selected using the ``param_names`` argument. 
 
 ```
 sampling_frequency(irace_results, 
-                param_names = NULL,
-                n = NULL,
-                file_name = NULL)
+                   param_names = NULL,
+                   n = NULL,
+                   file_name = NULL)
 ```
 
 ### Arguments
@@ -449,44 +451,46 @@ sampling_frequency(irace_results,
 ```
 irace_results:   irace log, loaded from the irace log Rdata file
 
-param_names:    (optional) String vector, you need to put the parameters you want to analyze (example: param_names = c("algorithm","alpha","rho","q0","rasrank")). By default all parameters are seletected.
+param_names:    (optional) String vector, parameter names to be included in the plot (example: param_names = c("algorithm","alpha","rho","q0","rasrank")). By default all parameters are seletected.
 
-n:              Numeric, set of 9 parameters to be displayed (example: if n = 1, parameters from 1 to 9 are displayed, n = 2 parameters from 10 to 18 are displayed)
+n:              (optional) Numeric, for scenarios with large parameter sets, it selected a subset of 9 parameters. For example, n=1 selects the first 9 (1 to 9) parameters, n=2 selects the next 9 (10 to 18) parameters and so on.
 
-file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:      (optional) String,  file name to save plot. If there are more than 9 parameters, a pdf file extension is recommended as it allows to create a multi-page document. Otherwise, you can use the n argument of the function to generate the plot of a subset of the parameters. (example: "~/path/to/file_name.pdf")
 ```
 
-To visualize the first 9 parameter sampling frequencies,  use the following code:
+To visualize all sampling frequencies,  use the following code:
 
 ```{r fig.align="center", fig.height= 7, fig.width=7}
 sampling_frequency(irace_results = iraceResults)
 ```
 
+You can set the ``file_name`` argument to save the plot in a file, the pdf format is recommended for large parameter sets.
 
-To visualize the second set of 9 parameter sampling frequencies (from 10 to 18), use n = 2
+
+To visualize only the first set of 9 parameter sampling frequencies (from 1 to 9), use n = 1
 
 ```{r  fig.align="center", fig.height= 3, fig.width=7}
-sampling_frequency(irace_results = iraceResults, n = 2)
+sampling_frequency(irace_results = iraceResults, n = 1)
 ```
 
 
-To visualize the sampling frequencies of a set of selected parameters,   use the following code:
+To visualize the sampling frequencies of a set of selected parameters, use the following code:
 
 ```{r  fig.align="center", fig.height= 5, fig.width=7}
-sampling_frequency(irace_results = iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
+sampling_frequency(irace_results = iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
 ```
 
 <!-- SAMPLING FREQUENCY BY ITERATION --> 
 ## Sampling frequency by iteration
 
-The ``sampling_frequency_iteration`` function plots the iteration sampling frequency of a selected parameter.
+The ``sampling_frequency_iteration`` function plots the sampling frequency by iteration of a selected parameter.
 
 For categorical parameters frequency bar plot is displayed, while for of numerical parameters (integer and real) an histogram and density plot are shown.
 
 
 ```
 sampling_frequency_iteration(irace_results,
-                             parameter,
+                             param_name,
                              file_name = NULL)
 ```
 
@@ -495,16 +499,16 @@ sampling_frequency_iteration(irace_results,
 ```
 irace_results:  irace log, loaded from the irace log Rdata file
 
-parameter:     String, parameter name whose sampling frequency should be displayed (example: parameter = "alpha") 
+param_name:     (optional) String, parameter name whose sampling frequency should be displayed (example: param_name = "alpha") 
 
-file_name:      String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:      (optional) String, file name indicating where to save the plot. (example: "~/path/to/file_name.png")
 ```
 
 To visualize the sampling frequency of a parameter, use the following code:
 
 
 ```{r fig.align="center", fig.width= 7,fig.height= 7}
-sampling_frequency_iteration(irace_results = iraceResults,parameter = "alpha")
+sampling_frequency_iteration(irace_results = iraceResults, param_name = "alpha")
 ```
 
 <!-- SAMPLING DENSITY  --> 
