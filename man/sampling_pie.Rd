@@ -23,5 +23,5 @@ The isunburst function will return a sunburst plot of the categorical parameters
 }
 \examples{
 sampling_pie(iraceResults)
-sampling_pie(iraceResults, parameters = c("algorithm","dlb"))
+sampling_pie(iraceResults, parameters = c("algorithm", "dlb"))
 }

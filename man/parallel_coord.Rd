@@ -10,42 +10,40 @@ parallel_coord(
   param_names = NULL,
   iterations = NULL,
   only_elite = TRUE,
-  pdf_all_parameters = FALSE,
+  plot_all_parameters = FALSE,
   file_name = NULL
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
+\item{id_configuration}{Numeric vector, configurations ids whose performance should be included in the plot
 (example: id_configuration = c(20,50,100,300,500,600,700))}
 
-\item{param_names}{String vector, you need to put the parameters you want to analyze
+\item{param_names}{String vector, names of the parameters that should be included in the plot
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
-\item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
+\item{iterations}{Numeric vector, iteration number that should be included in the plot
 (example: iterations = c(1,4,5))}
 
-\item{only_elite}{logical (default FALSE),}
+\item{only_elite}{logical (default TRUE), only print elite configurations (argument ignored when id_configuration is provided)}
 
-\item{pdf_all_parameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
-I must put TRUE, otherwise it will be created only with the default
-parameters (15 or less) or those entered.}
+\item{plot_all_parameters}{logical (default FALSE), TRUE if all parameter should be included or 
+FALSE if the first set of 15 parameters provided or in the data file should
+be displayed.}
 
-\item{file_name}{A pdf will be created in the location and with
-the assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{String, file name to save plot (example: "~/patch/example/file_name.png")}
 }
 \value{
-parallel cordinates plot
+parallel coordinates plot
 }
 \description{
-The iparallelcoord function will return a parallel cordinates plot
-allowing the analysis of the set of parameters
+The parallel_coord function returns a parallel cordinates plot
+of a set of configurations
 }
 \examples{
 parallel_coord(iraceResults)
-parallel_coord(iraceResults, id_configuration = c(20,50,100,300,500,600,700))
-parallel_coord(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
-parallel_coord(iraceResults, iterations = c(1,4,6))
-
+parallel_coord(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
+parallel_coord(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+parallel_coord(iraceResults, iterations = c(1, 4, 6))
 }

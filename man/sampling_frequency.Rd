@@ -14,28 +14,29 @@ sampling_frequency(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{param_names}{String vector, A set of parameters to be plotted
+\item{param_names}{String vector, A set of parameters to be included
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
-\item{n}{Numeric, It will allow going through the various parameters of 9 in 9 graphs
-(example: if we place an n = 1, it will show us the parameters from 1 to 9,
-in case an n = 2 it will show the parameters from 10 to 18 and so on)}
+\item{n}{Numeric, for scenarios with large parameter sets, it selected a subset 
+of 9 parameters. For example, n=1 selects the first 9 (1 to 9) parameters, n=2 selects
+the next 9 (10 to 18) parameters and so on.}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name. By default, all the parameters will be displayed appropriately, with nine
-graphics for each sheet. (example: "~/patch/example/file_name")}
+\item{file_name}{String,  file name to save plot. If there are more than 9 parameters, 
+a pdf file extension is recommended as it allows to create a multi-page
+document. Otherwise, you can use the n argument of the function to generate 
+the plot of a subset of the parameters. (example: "~/path/to/file_name.pdf")}
 }
 \value{
 Frequency and/or density plot
 }
 \description{
-The function will return a frequency and density plot,
-for categorical parameters (string) one of frequency is created,
-in case of numerical parameters it will show a histogram and its density
+The function will return a frequency or density plot,
+for categorical parameters a frequency plot is created,
+in case of numerical parameters a histogram and density 
+plot is created.
 }
 \examples{
 sampling_frequency(iraceResults)
 sampling_frequency(iraceResults, n = 2)
-sampling_frequency(iraceResults,param_names = c("algorithm","alpha","rho","q0","rasrank"))
-
+sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 }

@@ -37,5 +37,5 @@ The function will return a scatter plot
 comparing two elite configurations in testing
 }
 \examples{
-scatter_test(iraceResults, id_configurations = c("92","119"), interactive = interactive())
+scatter_test(iraceResults, id_configurations = c("92", "119"), interactive = interactive())
 }

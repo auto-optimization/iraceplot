@@ -4,18 +4,17 @@
 \alias{sampling_frequency_iteration}
 \title{Frequency and Density plot based on its iteration}
 \usage{
-sampling_frequency_iteration(irace_results, parameter, file_name = NULL)
+sampling_frequency_iteration(irace_results, param_name, file_name = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{parameter}{String, value of the parameter to be analyzed (example: parameter = "algorithm")}
+\item{param_name}{String, name of the parameter to be included (example: param_name = "algorithm")}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/file_name")}
+\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
 }
 \value{
-bar plot
+Frequency and/or density plot
 }
 \description{
 The function will return a frequency plot used
@@ -23,6 +22,5 @@ for categorical data (its values are string, show a bar plot) or
 numeric data (show a histogram and density plot) by each iteration
 }
 \examples{
-sampling_frequency_iteration(iraceResults,parameter = "alpha")
-
+sampling_frequency_iteration(iraceResults, param_name = "alpha")
 }

@@ -15,17 +15,14 @@ boxplot_training(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{number_iteration}{Numeric, It is the number referring to the iteration that you want to graph,
-the range of these varies according to the Rdata used (example: number_iteration = 5)}
+\item{number_iteration}{Numeric, iteration number that should be included in the plot (example: number_iteration = 5)}
 
-\item{id_configurations}{Numeric vector, you need to put the configurations you want to analyze
+\item{id_configurations}{Numeric vector, configurations ids whose performance should be included in the plot
 (example: id_configurations = c(20,50,100,300,500,600,700))}
 
-\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance
-between the values of each row of all configurations}
+\item{rpd}{Logical (default TRUE) to plot performance as the relative percentage deviation to best results}
 
-\item{file_name}{String, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }
 \value{
 box plot
@@ -36,7 +33,6 @@ By default the graph of the last iteration is shown
 }
 \examples{
 boxplot_training(iraceResults)
-boxplot_training(iraceResults,number_iteration = 5)
-boxplot_training(iraceResults,id_configurations = c(20,50,100,300,500,600,700))
-
+boxplot_training(iraceResults, number_iteration = 5)
+boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 }

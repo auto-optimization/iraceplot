@@ -28,5 +28,5 @@ heatmap plot
 The function will return a heat map plot of all experimental data configurations
 }
 \examples{
-plot_experiments_matrix(iraceResults, interactive = interactive() )
+plot_experiments_matrix(iraceResults, interactive = interactive())
 }

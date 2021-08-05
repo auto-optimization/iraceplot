@@ -10,14 +10,12 @@ boxplot_test(irace_results, type = "all", rpd = TRUE, file_name = NULL)
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{type}{String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
-"best" shows the best configurations of each iteration and
-"ibest" shows the configurations of the last iteration}
+"best" shows the configurations of the last iteration and
+"ibest" shows the best configurations of each iteration}
 
-\item{rpd}{Logical (default TRUE) to fit through an equation of minimum percentage distance between
-the values of each row of all configurations}
+\item{rpd}{Logical (default TRUE) to plot performance as the relative percentage deviation to best results}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/file_name")}
+\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }
 \value{
 box plot

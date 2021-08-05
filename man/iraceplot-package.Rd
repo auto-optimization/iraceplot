@@ -31,7 +31,7 @@ If you need information about any function you can put:
 ?name_function
 
 If you need more information, go to the following page:
-Aqui debo colocar el link
+https://pabloonate.github.io/iraceplot/
 }
 \details{
 License: MIT + file LICENSE

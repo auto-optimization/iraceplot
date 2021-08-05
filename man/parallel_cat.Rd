@@ -9,40 +9,39 @@ parallel_cat(
   id_configuration = NULL,
   param_names = NULL,
   iterations = NULL,
-  pdf_all_parameters = FALSE,
+  plot_all_parameters = FALSE,
   file_name = NULL
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configuration}{Numeric vector, you need to put the configurations you want to analyze
+\item{id_configuration}{Numeric vector, configuration ids to be included in the plot
 (example: id_configuration = c(20,50,100,300,500,600,700))}
 
-\item{param_names}{String vector, you need to put the parameters you want to analyze
+\item{param_names}{String vector, parameters to be included in the plot
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
 
-\item{iterations}{NUmeric vector, you need to put the iterations you want to analyze
+\item{iterations}{NUmeric vector, iterations from which configuration should be obtained
 (example: iterations = c(1,4,5))}
 
-\item{pdf_all_parameters}{logical (default FALSE), If I want to create a pdf with all the parameters,
-I must put TRUE, otherwise it will be created only with the default
-parameters (15 or less) or those entered.}
+\item{plot_all_parameters}{logical (default FALSE), TRUE if all parameter should be included or 
+FALSE if the first set of 15 parameters provided or in the data file should
+be displayed.}
 
-\item{file_name}{A pdf will be created in the location and with
-the assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
 }
 \value{
-parallel coordinate category plot
+parallel categories plot
 }
 \description{
-The parallel_coord_category function will return a graph of categorical
-parallel coordinates allowing the analysis of the set of parameters
-allowing the visualization of the data and the filtering by iteration
+The parallel_cat function will return a graph of categorical
+parallel coordinates allowing selecting configurations by id or iteration
+and selecting the parameter to be included in the plot
 }
 \examples{
 parallel_cat(iraceResults)
-parallel_cat(iraceResults,id_configuration = c(20,50,100,300,500,600,700))
-parallel_cat(iraceResults, param_names = c("algorithm","alpha","rho","q0","rasrank"))
-parallel_cat(iraceResults, iterations =  c(1,4,6))
+parallel_cat(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
+parallel_cat(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+parallel_cat(iraceResults, iterations = c(1, 4, 6))
 }

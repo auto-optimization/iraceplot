@@ -32,5 +32,5 @@ plot
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-#configurations_display(iraceResults, interactive = interactive())
+# configurations_display(iraceResults, interactive = interactive())
 }

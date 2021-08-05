@@ -31,5 +31,5 @@ The function will return a scatter plot
 comparing two elite configurations in training
 }
 \examples{
-scatter_training(iraceResults, id_configurations = c(806,809))
+scatter_training(iraceResults, id_configurations = c(806, 809))
 }

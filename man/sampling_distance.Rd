@@ -25,6 +25,6 @@ line or box plot
 Shows the mean of the difference between the configurations that were run for each iteration
 }
 \examples{
-#sampling_distance(iraceResults)
-#sampling_distance(iraceResults, type = "boxplot", t=0.2)
+# sampling_distance(iraceResults)
+# sampling_distance(iraceResults, type = "boxplot", t=0.2)
 }

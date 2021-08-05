@@ -22,5 +22,5 @@ The function will return a density plot for parameters numeric data
 in case of placing a categorical parameter, it will show a bar plot
 }
 \examples{
-sampling_density(iraceResults,parameter = "alpha")
+sampling_density(iraceResults, parameter = "alpha")
 }
