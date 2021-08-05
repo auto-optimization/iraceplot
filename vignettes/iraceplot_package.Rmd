@@ -469,7 +469,7 @@ You can set the ``file_name`` argument to save the plot in a file, the pdf forma
 
 To visualize only the first set of 9 parameter sampling frequencies (from 1 to 9), use n = 1
 
-```{r  fig.align="center", fig.height= 3, fig.width=7}
+```{r  fig.align="center", fig.height= 3, fig.width=7, message=FALSE, prompt=FALSE}
 sampling_frequency(irace_results = iraceResults, n = 1)
 ```
 
@@ -571,12 +571,12 @@ sampling_model_compare(irace_results = iraceResults, parameter = "alpha")
 <!-- SAMPLING DENSITY  --> 
 ## Sampling proportions
 
-The ``sampling_pie`` function creates a pie chart to visualize the proportion of the sampling values for categorical parameters in the configuration process.
+The ``sampling_pie`` function creates a pie chart to visualize the proportion of the sampling values for parameters in the configuration process.
 
 ```
 sampling_pie(irace_results, 
           dependency = FALSE,
-          parameters = NULL,
+          param_names = NULL,
           file_name = NULL)
 ```
 
@@ -585,11 +585,9 @@ sampling_pie(irace_results,
 ```
 irace_results:   irace log, loaded from the irace log Rdata file
 
-dependency:     Logical (default FALSE) that allows to verify if the parameters are dependent on others, modifying the visualization of the plot
+param_names:     String vector, the parameter names of parameter to be included in the plot (example: param_names = c("algorithm","dlb"))
 
-parameters:     String vector, a set of categorical parameters to be included in the plot (example: parameters = c("algorithm","dlb"))
-
-file_name:       String, file name indicating where to save a pdf file with the plot. A .pdf extension will be added to the file name provided (example: "~/path-to/file_name")
+file_name:       String, file name to save plot (example: "~/path/to/file_name.png")
 ```
 
 To visualize the sampling proportion of all categorical parameters, use the following code:
@@ -603,7 +601,7 @@ To visualize the sampling proportion of a selected categorical parameter, use th
 
 
 ```{r fig.align="center", fig.width= 7}
-sampling_pie(irace_results = iraceResults, parameters = c("algorithm","dlb"))
+sampling_pie(irace_results = iraceResults, param_names = c("algorithm","dlb"))
 ```
 
 

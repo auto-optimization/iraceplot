@@ -67,7 +67,7 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
   # adding discretization for numerical variables and replace NA values 
   # FIXME: Add proper ordering for each axis
   # FIXME: add number of bins as an argument (list)
-  configurations <- iraceResults$allConfigurations
+  configurations <- irace_results$allConfigurations
   for (pname in irace_results$parameters$names) {
     n_bins <- 5
     if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {
@@ -79,7 +79,7 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
           n_bins <- 2
       }
         
-      val <- c(iraceResults$parameters$domain[[pname]], configurations[not.na, pname])
+      val <- c(irace_results$parameters$domain[[pname]], configurations[not.na, pname])
       bins <- cut(val, breaks=c(quantile(val, probs=seq(0,1, by=1/n_bins))),
                   include.lowest = TRUE, ordered_result=TRUE)
       bins <- as.character(bins[3:length(bins)],scientific = F)
@@ -91,7 +91,6 @@ parallel_cat <- function(irace_results, id_configuration = NULL, param_names = N
     if (any(rna)) {
       configurations[rna,pname] <- "NA"
     }
-    
   }
   
   tabla <- configurations

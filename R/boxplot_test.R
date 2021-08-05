@@ -24,11 +24,12 @@
 boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NULL) {
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
-    return("irace_results does not contain the testing data")
+    cat("Error: irace_results does not contain the testing data")
+    return()
   }
 
   if (!(type %in% c("all", "best", "ibest"))) {
-    print("The type parameter entered is incorrect")
+    cat("The type argument provided is incorrect\n")
   }
   
   if (type=="ibest" && iraceResults$scenario$testIterationElites) {
@@ -62,7 +63,7 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NU
     v_allElites <- as.character(irace_results$iterationElites)
     data <- experiments[, v_allElites, drop=FALSE]
   } else {
-    return("non existent type")
+    cat("Error: non existent type argument\n")
   }
 
   names_col <- colnames(data)

@@ -52,6 +52,7 @@
 #' @importFrom viridis viridis
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom gridExtra grid.arrange
+#' @importFrom gridExtra marrangeGrob
 #' @importFrom utils browseURL
 #' @importFrom GGally ggparcoord
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data

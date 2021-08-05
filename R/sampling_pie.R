@@ -1,49 +1,58 @@
 #' Sunburst Plot
 #'
 #' @description
-#' The isunburst function will return a sunburst plot of the categorical parameters
+#' The isunburst function will return a sunburst plot of the selected parameters
 #'
 #' @template arg_irace_results
 #' @param parameters
-#' String vector, a set of categorical type parameters
-#' (example: parameters = c("algorithm","dlb"))
+#' String vector, the parameter names of parameter to be included in the plot
+#' (example: param_names = c("algorithm","dlb"))
 #' @param file_name
-#' String, A pdf will be created in the location and with the assigned
-#' name (example: "~/patch/example/file_name")
+#' String, file name to save plot (example: "~/path/to/file_name.png")
 #' @return sunburst plot
 #' @export
 #'
 #' @examples
 #' sampling_pie(iraceResults)
-#' sampling_pie(iraceResults, parameters = c("algorithm", "dlb"))
-sampling_pie <- function(irace_results, parameters = NULL, file_name = NULL) {
+#' sampling_pie(iraceResults, param_names = c("algorithm", "dlb"))
+sampling_pie <- function(irace_results, param_names = NULL, file_name = NULL) {
 
   # variable assignment
-  param_c <- parents <- labels <- values <- ids <- depend <- NULL
+  parents <- labels <- values <- ids <- depend <- NULL
 
   dependency <- FALSE
   # Logical (default FALSE) that allows to verify if the parameters
   # are dependent on others, modifying the visualization of the plot
 
-  # assigns categorical type parameters to param_c
-  for (i in 1:length(irace_results$parameters$types)) {
-    if (irace_results$parameters$types[[i]] == "c") {
-      param_c <- c(param_c, names(irace_results$parameters$types)[i])
-    }
-  }
-
-  if (!is.null(parameters)) {
-    if (FALSE %in% (parameters %in% param_c)) {
-      print("Only categorical data can be used")
-      return(paste("The following parameters are not found:", parameters[!(parameters %in% param_c)]))
-    } else {
-      param_c <- unique(parameters)
-    }
+  if (!is.null(param_names)) {
+    if (any(!(param_names %in% irace_results$parameters$names))) {
+      cat(paste("Error: The following parameters are not found:", param_names[!(param_names %in% irace_results$parameters$names)], "\n"))
+      return()
+    } 
+  } else {
+    param_names <- irace_results$parameters$names
   }
 
   # the table is generated only with categorical parameters
-  data <- as.data.frame(irace_results$allConfigurations[param_c])
-
+  data <- irace_results$allConfigurations[,param_names, drop=FALSE]
+  
+  # discretize numerical parameters
+  for (pname in param_names) {
+    n_bins <- 4
+    if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {
+      not.na <- !is.na(data[,pname])
+      if(any(!not.na)) {
+        n_bins <- 3
+      }
+      # FIXME: this cut might improved by using the median of the data
+      val <- data[not.na, pname]
+      bins <- cut(val, breaks=c(quantile(val, probs=seq(0,1, by=1/n_bins))),
+                  include.lowest = TRUE, ordered_result=TRUE)
+      bins <- as.character(bins,scientific = F)
+      data[not.na, pname] <- bins
+    }
+  }
+  
   # checks if there is dependency between the parameters
   if (dependency == TRUE) {
     for (i in 1:length(data)) {

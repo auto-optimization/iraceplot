@@ -4,24 +4,23 @@
 \alias{sampling_pie}
 \title{Sunburst Plot}
 \usage{
-sampling_pie(irace_results, parameters = NULL, file_name = NULL)
+sampling_pie(irace_results, param_names = NULL, file_name = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{parameters}{String vector, a set of categorical type parameters
-(example: parameters = c("algorithm","dlb"))}
+\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
 
-\item{file_name}{String, A pdf will be created in the location and with the assigned
-name (example: "~/patch/example/file_name")}
+\item{parameters}{String vector, the parameter names of parameter to be included in the plot
+(example: param_names = c("algorithm","dlb"))}
 }
 \value{
 sunburst plot
 }
 \description{
-The isunburst function will return a sunburst plot of the categorical parameters
+The isunburst function will return a sunburst plot of the selected parameters
 }
 \examples{
 sampling_pie(iraceResults)
-sampling_pie(iraceResults, parameters = c("algorithm", "dlb"))
+sampling_pie(iraceResults, param_names = c("algorithm", "dlb"))
 }
