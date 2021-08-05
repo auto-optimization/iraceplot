@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Sunburst Plot — sampling_pie" />
-<meta property="og:description" content="The isunburst function will return a sunburst plot of the selected parameters" />
+<meta property="og:description" content="The sampling_pie function will return a sunburst plot of the selected parameters" />
 
 
 
@@ -120,7 +120,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The isunburst function will return a sunburst plot of the selected parameters</p>
+    <p>The sampling_pie function will return a sunburst plot of the selected parameters</p>
     </div>
 
     <pre class="usage"><span class='fu'>sampling_pie</span><span class='op'>(</span><span class='va'>irace_results</span>, param_names <span class='op'>=</span> <span class='cn'>NULL</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -133,13 +133,13 @@
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, file name to save plot (example: "~/path/to/file_name.png")</p></td>
-    </tr>
-    <tr>
-      <th>parameters</th>
+      <th>param_names</th>
       <td><p>String vector, the parameter names of parameter to be included in the plot
 (example: param_names = c("algorithm","dlb"))</p></td>
+    </tr>
+    <tr>
+      <th>file_name</th>
+      <td><p>String, file name to save plot (example: "~/path/to/file_name.png")</p></td>
     </tr>
     </table>
 
