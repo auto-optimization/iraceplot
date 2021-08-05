@@ -1,12 +1,14 @@
 #' Sunburst Plot
 #'
 #' @description
-#' The isunburst function will return a sunburst plot of the selected parameters
+#' The sampling_pie function will return a sunburst plot of the selected parameters
 #'
 #' @template arg_irace_results
-#' @param parameters
+#' 
+#' @param param_names
 #' String vector, the parameter names of parameter to be included in the plot
 #' (example: param_names = c("algorithm","dlb"))
+#' 
 #' @param file_name
 #' String, file name to save plot (example: "~/path/to/file_name.png")
 #' @return sunburst plot

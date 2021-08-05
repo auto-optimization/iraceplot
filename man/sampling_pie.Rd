@@ -9,16 +9,16 @@ sampling_pie(irace_results, param_names = NULL, file_name = NULL)
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
-
-\item{parameters}{String vector, the parameter names of parameter to be included in the plot
+\item{param_names}{String vector, the parameter names of parameter to be included in the plot
 (example: param_names = c("algorithm","dlb"))}
+
+\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
 }
 \value{
 sunburst plot
 }
 \description{
-The isunburst function will return a sunburst plot of the selected parameters
+The sampling_pie function will return a sunburst plot of the selected parameters
 }
 \examples{
 sampling_pie(iraceResults)

@@ -16,7 +16,7 @@
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
 #'
-#'#' @param .interactive
+#' @param .interactive
 #' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
 #' is the default option, or FALSE it is generated statically.
 #'
