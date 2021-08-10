@@ -2,18 +2,21 @@
 % Please edit documentation in R/sampling_distance.R
 \name{sampling_distance}
 \alias{sampling_distance}
-\title{Distance Iteration Plot}
+\title{Sampling distance Plot}
 \usage{
 sampling_distance(irace_results, type = "boxplot", t = 0.05, file_name = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{type}{String, either "line", "boxplot" or "both". by default it is "boxplot" will show both graphics, 
-"line" which will show a plot of points and lines, "boxplot" will show a box plots}
+\item{type}{String, (default "boxplot") Type of plot to be produces, either "line", "boxplot" 
+or "both". The "boxplot" setting shows a boxplot of the mean distance of all
+configurations, "line" shows the mean distance of the solution population in each 
+iteration, "both" shows both plots.}
 
-\item{t}{Numeric, percentage factor that will determine the range of difference
-between settings (example: t = 0.05 is equivalent to 5 percent)}
+\item{t}{Numeric, (default 0.05) percentage factor that will determine a distance to 
+define equal numerical parameter values. If the numerical parameter values to be 
+compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`.}
 
 \item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }
@@ -21,9 +24,14 @@ between settings (example: t = 0.05 is equivalent to 5 percent)}
 line or box plot
 }
 \description{
-Shows the mean of the difference between the configurations that were run for each iteration
+The `sampling_distance` function creates a plot that displays the mean of the 
+distance between the configurations that were executed in each iteration.
+
+For categorical parameters the distance is calculated as the hamming distance, 
+for numerical parameters a equality interval is defined by a threshold
+specified by argument t and hamming distance is calculated using this interval.
 }
 \examples{
 # sampling_distance(iraceResults)
-# sampling_distance(iraceResults, type = "boxplot", t=0.2)
+# sampling_distance(iraceResults, type = "boxplot", t=0.07)
 }

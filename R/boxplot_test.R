@@ -1,19 +1,25 @@
 #' Box Plot Testing
 #'
 #' @description
-#' The function will return a box plot, using the data generated in the test
-#' settings coloring the best configuration in each iteration
+#' The `boxplot_test` function creates a box plot that displays the performance 
+#' of a set of configurations on the test instances. 
+#' 
+#' The performance data is obtained from the test evaluations performed 
+#' by irace. Note that the testing is not a default feature in irace and should 
+#' enabled in the setup (see the irace package user guide for more details).
 #'
 #' @template arg_irace_results
 #'
 #' @param type
-#' String, either "all", "ibest" or "best". By default it is "all" which shows all the configurations,
-#' "best" shows the configurations of the last iteration and
-#' "ibest" shows the best configurations of each iteration
+#' String, (default "all") possible values are "all", "ibest" or "best". "all" 
+#' shows all the configurations included in the test, "best" shows the elite 
+#' configurations of the last iteration and "ibest" shows the elite configurations 
+#' of each iteration. Note that "ibest" requites that irace includes the iteration
+#' elites in the testing.
 #' 
 #' @param rpd
-#' Logical (default TRUE) TRUE to plot performance as the relative percentage deviation to 
-#' best results, FALSE to plot raw performance
+#' Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
+#' to best results per instance, FALSE to plot raw performance.
 #' 
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
@@ -23,6 +29,7 @@
 #'
 #' @examples
 #' boxplot_test(iraceResults)
+#' boxplot_test(iraceResults, rpd = FALSE)
 #' boxplot_test(iraceResults, type = "ibest")
 #' boxplot_test(iraceResults, type = "best")
 boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NULL) {

@@ -13,18 +13,26 @@ plot_experiments_matrix(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{file_name}{string, A pdf will be created in the location and with the
-assigned name (example: "~/patch/example/file_name")}
+\item{file_name}{string, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
-is the default option, or FALSE it is generated statically.}
+\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively 
+(plotly package), or FALSE it should be generated statically.}
 }
 \value{
 heatmap plot
 }
 \description{
-The function will return a heat map plot of all experimental data configurations
+The `plot_experiments_matrix` function creates a plot that shows all experimental 
+data configurations in a heat map fashion. Configurations are shown in the x 
+axis in the order in which are created in the configuration process. Instances 
+are shown in the y axis in the order in which where executed in the configuration 
+process. The colors show the overall rank (across the all performance data) of the 
+performance evaluation displayed.
+
+This plot gives a general idea of the configuration process progression, the
+number of evaluations of each configuration show how long they survived in the 
+iterated racing procedure.
 }
 \examples{
-plot_experiments_matrix(iraceResults, .interactive = interactive())
+plot_experiments_matrix(iraceResults)
 }

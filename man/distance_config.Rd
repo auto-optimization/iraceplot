@@ -4,23 +4,23 @@
 \alias{distance_config}
 \title{Distance between configurations}
 \usage{
-distance_config(irace_results, id_configurations, t = 0.05)
+distance_config(irace_results, id_configuration, t = 0.05)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{Numeric vector, you need to put the settings you
-want to compare, only 2 values are allowed (example: idVector = c(806,809))}
+\item{id_configuration}{Numeric, configuration id which should be compared to others 
+(example: id_configuration = c(806,809))}
 
-\item{t}{Numeric, It is a percentage factor that will determine the range of difference
-between settings (example: t = 0.05 is equivalent to 5 percent)}
+\item{t}{Numeric, (default 0.05) threshold that defines the distance (percentage of the domain size) 
+to consider a parameter value equal to other.}
 }
 \value{
 numeric
 }
 \description{
-Calculate the difference between two settings. Calculate the difference between two configurations. The greater
-the number, the greater the difference
+The `distance_config` function calculates the difference between a configuration 
+and the others in the irace data.
 }
 \examples{
 NULL

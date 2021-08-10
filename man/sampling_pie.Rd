@@ -2,25 +2,33 @@
 % Please edit documentation in R/sampling_pie.R
 \name{sampling_pie}
 \alias{sampling_pie}
-\title{Sunburst Plot}
+\title{Sampling pie plot}
 \usage{
-sampling_pie(irace_results, param_names = NULL, file_name = NULL)
+sampling_pie(irace_results, param_names = NULL, n_bins = 3, file_name = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{param_names}{String vector, the parameter names of parameter to be included in the plot
-(example: param_names = c("algorithm","dlb"))}
+\item{param_names}{String vector, A set of parameters to be included (example: param_names = c("algorithm","dlb"))}
 
-\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
+\item{n_bins}{Numeric (default 3), number of intervals to generate for numerical parameters.}
+
+\item{file_name}{String,  File name to save plot (example: "~/path/to/file_name.png")}
 }
 \value{
-sunburst plot
+Sampling pie plot
 }
 \description{
-The sampling_pie function will return a sunburst plot of the selected parameters
+The `sampling_pie` function creates a pie plot of the values sampled of a set 
+of selected parameters. Numerical parameters are discretized to maximum n_bins 
+intervals.
+
+The size of the slices are proportional to the number of configurations that 
+have assigned a parameter value within the rank or the value assigned to that
+slice. Parameters can be selected by providing their names in the param_names
+argument.
 }
 \examples{
 sampling_pie(iraceResults)
-sampling_pie(iraceResults, param_names = c("algorithm", "dlb"))
+sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
 }

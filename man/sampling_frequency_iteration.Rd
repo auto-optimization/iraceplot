@@ -4,12 +4,21 @@
 \alias{sampling_frequency_iteration}
 \title{Frequency and Density plot based on its iteration}
 \usage{
-sampling_frequency_iteration(irace_results, param_name, file_name = NULL)
+sampling_frequency_iteration(
+  irace_results,
+  param_name,
+  numerical_type = "both",
+  file_name = NULL
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{param_name}{String, name of the parameter to be included (example: param_name = "algorithm")}
+
+\item{numerical_type}{String, (default "both") Indicates the type of plot to be displayed for numerical
+parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
+"both" show both frequency and density.}
 
 \item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
 }
@@ -23,4 +32,5 @@ numeric data (show a histogram and density plot) by each iteration
 }
 \examples{
 sampling_frequency_iteration(iraceResults, param_name = "alpha")
+sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
 }

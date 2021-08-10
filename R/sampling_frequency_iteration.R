@@ -9,6 +9,11 @@
 #'
 #' @param param_name
 #' String, name of the parameter to be included (example: param_name = "algorithm")
+#' 
+#' @param numerical_type
+#' String, (default "both") Indicates the type of plot to be displayed for numerical
+#' parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
+#' "both" show both frequency and density.
 #'
 #' @param file_name
 #' String, file name to save plot (example: "~/path/to/file_name.png")
@@ -18,9 +23,16 @@
 #'
 #' @examples
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
-sampling_frequency_iteration <- function(irace_results, param_name, file_name = NULL) {
+#' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
+sampling_frequency_iteration <- function(irace_results, param_name, numerical_type="both", 
+                                         file_name = NULL) {
   # Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
+  
+  if (!(numerical_type %in% c("both", "density", "frequency"))){
+    cat("Error: unknown numerical_type, values must be either both, density ot frequency.\n")
+    stop()
+  }
 
   # verify that param_names is other than null
   if (!is.null(param_name)) {
@@ -66,7 +78,8 @@ sampling_frequency_iteration <- function(irace_results, param_name, file_name = 
       ) +
       labs(y = "Frequency", x = param_name) +
       scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0))
+      theme(strip.text.y = element_text(angle = 0),
+            legend.position = "none")
 
     # The plot is saved in a list
     vectorPlot[1] <- list(p)
@@ -80,13 +93,19 @@ sampling_frequency_iteration <- function(irace_results, param_name, file_name = 
     )
     
     # density and histogram plot
-    p <- ggplot(as.data.frame(tabla), aes(x = x, fill = iteration)) +
-      geom_histogram(aes(y = ..density..),
-                     breaks = nbreaks,
-                     color = "black", fill = "gray"
-      ) +
-      geom_density(alpha = 0.7) +
-      scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
+    p <- ggplot(as.data.frame(tabla), aes(x = x, fill = iteration)) 
+    if (numerical_type %in% c("both", "frequency"))
+        p <- p + geom_histogram(aes(y = ..density..),
+                       breaks = nbreaks,
+                       color = "black", fill = "gray"
+         ) 
+    if (numerical_type %in% c("both", "density")) {
+        # Note: We can use also density ridges for a different (nicer) looking density plot
+        # ggplot(tabla, aes(x, y = iteration, height = stat(density))) +
+        # geom_density_ridges(aes(fill = iteration), na.rm = TRUE, stat = "density") +
+        p <- p + geom_density(alpha = 0.7) 
+    }
+    p <- p + scale_fill_manual(values = viridis(length(unique(tabla$iteration)))) +
       facet_grid(vars(iteration_f), scales = "free") +
       labs(x = param_name, y = "Frequency") +
       theme(
@@ -96,7 +115,8 @@ sampling_frequency_iteration <- function(irace_results, param_name, file_name = 
         axis.ticks.x = element_blank()
       ) +
       scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0))
+      theme(strip.text.y = element_text(angle = 0),
+            legend.position = "none")
 
     # The plot is saved in a list
     vectorPlot[1] <- list(p)

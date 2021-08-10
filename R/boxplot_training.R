@@ -1,22 +1,35 @@
-#' Box Plot
+#' Box Plot Training
 #'
-#' Create a graphic of box plot of irace using the best quality id
-#' By default the graph of the last iteration is shown
+#' The `boxplot_training` function creates a box plot that displays the performance
+#' of a set of configurations on the training instances. Performance data is obtained 
+#' from the evaluations performed by irace during the execution process. This implies 
+#' that the number of evaluations can differ between configurations. 
+#' 
 #'
 #' @template arg_irace_results
 #'
-#' @param number_iteration
-#' Numeric, iteration number that should be included in the plot (example: number_iteration = 5)
+#' @param iteration
+#' Numeric, iteration number that should be included in the plot (example: iteration = 5)
+#' When no iteration and no id_condigurations are provided, the iterations is assumed to be
+#' the last one performed by irace. 
+#' 
+#' The performance data is obtained from the evaluations performed by irace 
+#' during the execution process. This implies that the number of evaluations 
+#' can differ between configurations due to the elimination process applied by 
+#' irace. This plot, consequently, does not provide a complete compaarison of
+#' two configurations, for a fair comparison use the test data plot.
 #'
 #' @param id_configurations
-#' Numeric vector, configurations ids whose performance should be included in the plot
-#' (example: id_configurations = c(20,50,100,300,500,600,700))
+#' Numeric vector, configurations ids whose performance should be included in the plot.
+#' If no ids are provided, the configurations ids are set as the elite configuration ids 
+#' of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).
 #'
 #' @param rpd
-#' Logical (default TRUE) to plot performance as the relative percentage deviation to best results
+#' Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
+#' results per instance, FALSE to plot raw performance.
 #'
 #' @param file_name
-#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' String, file name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @return box plot
 #'
@@ -24,25 +37,26 @@
 #'
 #' @examples
 #' boxplot_training(iraceResults)
-#' boxplot_training(iraceResults, number_iteration = 5)
+#' boxplot_training(iraceResults, rpd = FALSE)
+#' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
-boxplot_training <- function(irace_results, number_iteration = NULL, id_configurations = NULL, rpd = TRUE, file_name = NULL) {
+boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, file_name = NULL) {
 
   # Variable assignment
   Performance <- Elite_configuration <- NULL
   long <- length(irace_results$allElites)
 
-  if (!is.null(number_iteration) & !is.null(id_configurations)) {
-    cat("Error: cannot use id_configurations and number_iteration at the same time\n")
+  if (!is.null(iteration) & !is.null(id_configurations)) {
+    cat("Error: cannot use id_configurations and iteration at the same time\n")
     stop()
   }
 
   # It is checked if the file_name argument was added
-  if (!is.null(number_iteration)) {
-    # We verify that number_iteration is within the range of values it can take
-    if (number_iteration > 0 && number_iteration <= long) {
-      long <- number_iteration
-      # If number_iteration is out of range it delivers a message per screen
+  if (!is.null(iteration)) {
+    # We verify that iteration is within the range of values it can take
+    if (iteration > 0 && iteration <= long) {
+      long <- iteration
+      # If iteration is out of range it delivers a message per screen
     } else {
       cat("Error: iteration number out of range\n")
       stop()

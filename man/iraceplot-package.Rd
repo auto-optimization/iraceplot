@@ -10,15 +10,12 @@ For the creation of various types of graphs that facilitates to understand the d
 
 The different functions used in iraceplot will allow the creation of different graphics. The functions are as follows:
 
-get_parameters_names;
 boxplot_test;
 scatter_test;
 parallel_coord;
 parallel_cat;
 sampling_frequency;
 sampling_frequency_iteration;
-sampling_density;
-sampling_model_compare;
 sampling_pie;
 plot_experiments_matrix;
 sampling_distance;

@@ -1,23 +1,31 @@
 #' Heat Map Plot
 #'
 #' @description
-#' The function will return a heat map plot of all experimental data configurations
+#' The `plot_experiments_matrix` function creates a plot that shows all experimental 
+#' data configurations in a heat map fashion. Configurations are shown in the x 
+#' axis in the order in which are created in the configuration process. Instances 
+#' are shown in the y axis in the order in which where executed in the configuration 
+#' process. The colors show the overall rank (across the all performance data) of the 
+#' performance evaluation displayed.
+#' 
+#' This plot gives a general idea of the configuration process progression, the
+#' number of evaluations of each configuration show how long they survived in the 
+#' iterated racing procedure.
 #'
 #' @template arg_irace_results
 #'
 #' @param file_name
-#' string, A pdf will be created in the location and with the
-#' assigned name (example: "~/patch/example/file_name")
+#' string, File name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
-#' is the default option, or FALSE it is generated statically.
+#' Logical (Default interactive()), TRUE if the plot is generated interactively 
+#' (plotly package), or FALSE it should be generated statically.
 #'
 #' @return heatmap plot
 #' @export
 #'
 #' @examples
-#' plot_experiments_matrix(iraceResults, .interactive = interactive())
+#' plot_experiments_matrix(iraceResults)
 plot_experiments_matrix <- function(irace_results, file_name = NULL, .interactive = interactive()) {
   # Variable assignment
   C <- RANK <- text <- i_id <- union <- NULL

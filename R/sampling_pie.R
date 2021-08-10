@@ -1,26 +1,42 @@
-#' Sunburst Plot
+#' Sampling pie plot
 #'
 #' @description
-#' The sampling_pie function will return a sunburst plot of the selected parameters
+#' The `sampling_pie` function creates a pie plot of the values sampled of a set 
+#' of selected parameters. Numerical parameters are discretized to maximum n_bins 
+#' intervals.
+#' 
+#' The size of the slices are proportional to the number of configurations that 
+#' have assigned a parameter value within the rank or the value assigned to that
+#' slice. Parameters can be selected by providing their names in the param_names
+#' argument.
+#' 
 #'
 #' @template arg_irace_results
 #' 
 #' @param param_names
-#' String vector, the parameter names of parameter to be included in the plot
-#' (example: param_names = c("algorithm","dlb"))
+#' String vector, A set of parameters to be included (example: param_names = c("algorithm","dlb"))
+#' 
+#' @param n_bins
+#' Numeric (default 3), number of intervals to generate for numerical parameters.
 #' 
 #' @param file_name
-#' String, file name to save plot (example: "~/path/to/file_name.png")
-#' @return sunburst plot
+#' String,  File name to save plot (example: "~/path/to/file_name.png")
+#' 
+#' @return Sampling pie plot
 #' @export
 #'
 #' @examples
 #' sampling_pie(iraceResults)
-#' sampling_pie(iraceResults, param_names = c("algorithm", "dlb"))
-sampling_pie <- function(irace_results, param_names = NULL, file_name = NULL) {
+#' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
+sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, file_name = NULL) {
 
   # variable assignment
   parents <- labels <- values <- ids <- depend <- NULL
+  
+  if (!is.numeric(n_bins) || n_bins < 1) {
+    cat("Error: n_bins must be numeric > 0")
+    stop()
+  }
 
   dependency <- FALSE
   # Logical (default FALSE) that allows to verify if the parameters
@@ -40,16 +56,23 @@ sampling_pie <- function(irace_results, param_names = NULL, file_name = NULL) {
   
   # discretize numerical parameters
   for (pname in param_names) {
-    n_bins <- 4
+    n_bins_param <- n_bins
     if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {
       not.na <- !is.na(data[,pname])
       if(any(!not.na)) {
-        n_bins <- 3
+        n_bins_param <- max(1, n_bins_param - 1)
       }
       # FIXME: this cut might improved by using the median of the data
       val <- data[not.na, pname]
-      bins <- cut(val, breaks=c(quantile(val, probs=seq(0,1, by=1/n_bins))),
-                  include.lowest = TRUE, ordered_result=TRUE)
+      #same size bins
+      ss <- seq(irace_results$parameters$domain[[pname]][1], irace_results$parameters$domain[[pname]][2], length.out=n_bins_param+1)
+      if (irace_results$parameters$types[pname] %in% c("i", "i,log")) {
+        ss <- round(ss)
+      } 
+      bins <- cut(val, breaks=ss, include.lowest=TRUE, ordered_result=TRUE)
+      # quatile-based bins
+      #bins <- cut(val, breaks=c(quantile(val, probs=seq(0,1, by=1/n_bins_param))),
+      #            include.lowest = TRUE, ordered_result=TRUE)
       bins <- as.character(bins,scientific = F)
       data[not.na, pname] <- bins
     }
@@ -98,7 +121,7 @@ sampling_pie <- function(irace_results, param_names = NULL, file_name = NULL) {
     }
   }
 
-  # the graph is created
+  # Create plot
   p <- plot_ly(
     type = "sunburst",
     ids = data_f$ids,

@@ -1,10 +1,14 @@
 #' Parameter Frequency and density Plot
 #'
 #' @description
-#' The function will return a frequency or density plot,
-#' for categorical parameters a frequency plot is created,
-#' in case of numerical parameters a histogram and density 
-#' plot is created.
+#' The `sampling_frequency` function creates a frequency or density plot that 
+#' depicts the sampling performed by irace across the iterations of the configuration 
+#' process.
+#' 
+#' For categorical parameters a frequency plot is created, while for numerical 
+#' parameters a histogram and density plots are created. The plots are shown in
+#' groups of maximum 9, the parameters included in the plot can be specified by
+#' setting the param_names argument.
 #'
 #' @template arg_irace_results
 #'
@@ -13,7 +17,7 @@
 #' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
 #'
 #' @param n
-#' Numeric, for scenarios with large parameter sets, it selected a subset 
+#' Numeric, for scenarios with large parameter sets, it selects a subset 
 #' of 9 parameters. For example, n=1 selects the first 9 (1 to 9) parameters, n=2 selects
 #' the next 9 (10 to 18) parameters and so on.
 #'
@@ -29,11 +33,12 @@
 #' @examples
 #' sampling_frequency(iraceResults)
 #' sampling_frequency(iraceResults, n = 2)
+#' sampling_frequency(iraceResults, param_names = c("alpha"))
 #' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file_name = NULL) {
 
   # Variable assignment
-  vectorG <- tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
+  tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
   max_p <- 9
   
   if (is.null(param_names))
@@ -80,7 +85,6 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
         ) +
         scale_y_continuous(n.breaks = 3)
       # the plot is saved in a list
-      vectorG[i] <- list(p)
       plot.list[[i]] <- p
     } else if (irace_results$parameters$types[pnames] %in% c("i", "r", "i,log", "r,log")) {
       # histogram and density plot
@@ -105,7 +109,6 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
         ) +
         scale_y_continuous(n.breaks = 3)
       # the plot is saved in a list
-      vectorG[i] <- list(q)
       plot.list[[i]] <- q
     }
   }
@@ -122,6 +125,8 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
   # Generate plots
   if (npar > 9)
     wp <- do.call("marrangeGrob", list(grobs=plot.list, ncol = col, nrow = row, as.table=FALSE))
+  else if (length(plot.list) ==1)
+    wp <- plot.list[[1]]
   else
     wp <- do.call("grid.arrange", c(plot.list))
   

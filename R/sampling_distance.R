@@ -1,16 +1,24 @@
-#' Distance Iteration Plot
+#' Sampling distance Plot
 #'
 #' @description
-#' Shows the mean of the difference between the configurations that were run for each iteration
+#' The `sampling_distance` function creates a plot that displays the mean of the 
+#' distance between the configurations that were executed in each iteration.
+#' 
+#' For categorical parameters the distance is calculated as the hamming distance, 
+#' for numerical parameters a equality interval is defined by a threshold
+#' specified by argument t and hamming distance is calculated using this interval. 
 #'
 #' @template arg_irace_results
 #' @param type
-#' String, either "line", "boxplot" or "both". by default it is "boxplot" will show both graphics, 
-#' "line" which will show a plot of points and lines, "boxplot" will show a box plots
+#' String, (default "boxplot") Type of plot to be produces, either "line", "boxplot" 
+#' or "both". The "boxplot" setting shows a boxplot of the mean distance of all
+#' configurations, "line" shows the mean distance of the solution population in each 
+#' iteration, "both" shows both plots.
 #' 
 #' @param t
-#' Numeric, percentage factor that will determine the range of difference
-#' between settings (example: t = 0.05 is equivalent to 5 percent)
+#' Numeric, (default 0.05) percentage factor that will determine a distance to 
+#' define equal numerical parameter values. If the numerical parameter values to be 
+#' compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`. 
 #' 
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
@@ -21,7 +29,7 @@
 #'
 #' @examples
 #' # sampling_distance(iraceResults)
-#' # sampling_distance(iraceResults, type = "boxplot", t=0.2)
+#' # sampling_distance(iraceResults, type = "boxplot", t=0.07)
 sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_name = NULL) {
   if (!(type == "line" | type == "boxplot" | type == "both")) {
     cat("Error: The type parameter entered is incorrect\n")
@@ -33,35 +41,33 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_na
   allconf <- irace_results$allConfigurations
   n_param <- length(allconf) - 2
   niterations <- length(irace_results$allElites)
+  
+  all.distance <- matrix(0, ncol=nrow(allconf), nrow=nrow(allconf))
+  a <- 1:nrow(allconf)
+  for (confid in allconf$.ID.) {
+    all.distance[confid,a[-confid]] <- distance_config(irace_results, id_configuration=confid, t=t)
+  }
 
   # The value of the distance between each configuration is created
   for (i in 1:niterations) {
-    distance <- NULL
-    ids <- unique(subset(as.data.frame(irace_results$experimentLog),
-      iteration %in% i,
-      select = c("configuration"),
-      drop = TRUE
-    ))
+    ids <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% i, "configuration"])
     iterations <- c(iterations, i)
 
-    for (j in 1:(length(ids))) {
-      for (k in j:(length(ids))) {
-        valor <- distance_config(irace_results, id_configurations = c(ids[j], ids[k]), t)
-        distance <- c(distance, valor)
-      }
-    }
-
+    dd <- all.distance[ids,ids]
+    distance <- dd[upper.tri(dd)]
     it <- i
     datos <- data.frame(it, distance)
     tabla_box <- rbind(tabla_box, datos)
-    media <- c(media, mean(distance))
+    tabla_box[,"it"] <- as.character(tabla_box[,"it"])
+    media <-  c(media, mean(distance))
   }
+  
 
   # A graph of points and lines is created
   if (type == "line" | type == "both") {
-    tabla <- data.frame(iterations, media)
-
-    p <- ggplot(tabla, aes(x = iterations, y = media, color = iterations)) +
+    tabla <- as.data.frame(cbind(iterations, media))
+    colnames(tabla) <- c("iterations", "media")
+    p <- ggplot(tabla, aes(x = iterations, y = media)) +
       geom_point() +
       geom_line() +
       scale_y_continuous(
@@ -69,11 +75,12 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_na
         breaks = seq(0, n_param, 2)
       ) +
       scale_x_continuous(
-        limits = c(0.8, length(irace_results$allElites) + 0.2),
-        breaks = seq(1, length(irace_results$allElites), 1)
+        limits = c(1, niterations),
+        breaks = seq(1, niterations, by=1)
       ) +
       scale_color_viridis_c() +
-      labs(y = "Mean distance", x = "iteration", color = "IT.")
+      labs(y = "Distance", x = "iteration", color = "IT.") + 
+      theme (legend.position = "none")
     vectorP[1] <- list(p)
 
     # A box plot is created
@@ -81,16 +88,13 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_na
   if (type == "boxplot" | type == "both") {
     p <- ggplot(tabla_box, aes(x = it, y = distance, group = it, color = it)) +
       geom_boxplot(na.rm = TRUE) +
-      scale_color_viridis_c() +
+      scale_color_viridis_d() +
       scale_y_continuous(
         limits = c(0, n_param),
         breaks = seq(0, n_param, 2)
       ) +
-      scale_x_continuous(
-        limits = c(0.6, length(irace_results$allElites) + 0.4),
-        breaks = seq(1, length(irace_results$allElites), 1)
-      ) +
-      labs(x = "iteration", y = "RPD", color = "IT.")
+      labs(x = "iteration", y = "Distance", color = "IT.") +
+      theme (legend.position = "none")
     vectorP[2] <- list(p)
   }
 

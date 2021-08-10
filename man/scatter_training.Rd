@@ -15,23 +15,33 @@ scatter_training(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{Numeric vector,  configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))}
+\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed 
+(example: id_configurations = c("92","119"))}
 
-\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-best results, FALSE to plot raw performance}
+\item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage 
+deviation to best results per instance, FALSE to plot raw performance}
 
 \item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 
-\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
-is the default option, or FALSE it is generated statically.}
+\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively 
+(plotly package), or FALSE it should be generated statically.}
 }
 \value{
 scatter plot
 }
 \description{
-The function will return a scatter plot
-comparing two configurations in the training performance data
+The function creates a scatter plot that displays the performance of two
+configurations on the training performance. Each point in the plot represents an 
+instance and the color of the points indicates if one configuration is better 
+than the other.
+
+The performance data is obtained from the evaluations performed by irace 
+during the execution process, consequently the number of evaluations 
+can differ between configurations due to the elimination process applied by 
+irace. This plot only shows performance data only for instances in which both
+configurations are executed.
 }
 \examples{
 scatter_training(iraceResults, id_configurations = c(806, 809))
+scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
 }

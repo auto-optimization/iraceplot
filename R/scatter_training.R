@@ -1,34 +1,44 @@
 #' Scatter Plot Training
 #'
 #' @description
-#' The function will return a scatter plot
-#' comparing two configurations in the training performance data
+#' The function creates a scatter plot that displays the performance of two
+#' configurations on the training performance. Each point in the plot represents an 
+#' instance and the color of the points indicates if one configuration is better 
+#' than the other.
+#' 
+#' The performance data is obtained from the evaluations performed by irace 
+#' during the execution process, consequently the number of evaluations 
+#' can differ between configurations due to the elimination process applied by 
+#' irace. This plot only shows performance data only for instances in which both
+#' configurations are executed.
 #'
 #' @template arg_irace_results
 #'
 #' @param id_configurations
-#' Numeric vector,  configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))
+#' Numeric vector, configuration ids whose performance should be displayed 
+#' (example: id_configurations = c("92","119"))
 #'
 #' @param rpd
-#' logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-#' best results, FALSE to plot raw performance
+#' logical(default TRUE) TRUE to plot performance as the relative percentage 
+#' deviation to best results per instance, FALSE to plot raw performance
 #'
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
 #'
 #' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
-#' is the default option, or FALSE it is generated statically.
+#' Logical (Default interactive()), TRUE if the plot is generated interactively 
+#' (plotly package), or FALSE it should be generated statically.
 #'
 #' @return scatter plot
 #' @export
 #'
 #' @examples
 #' scatter_training(iraceResults, id_configurations = c(806, 809))
+#' scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
 scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
 
   # Variable assignment
-  iteracionFiltrada <- NULL
+  iteracionFiltrada <- conf1 <- conf2<- instance <- best <- NULL
 
   # Verify that a vector of length 2 is entered
   if (length(id_configurations) != 2) {
@@ -74,7 +84,11 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
   instances.ids <- iraceResults$state$.irace$instancesList[iteracionFiltrada, "instance"]
   instances.names <- basename(iraceResults$scenario$instances[instances.ids])
   tabla <- cbind(tabla, instances.names)
-  tabla <- cbind(tabla, tabla[,1]>tabla[,2])
+  best <- rep(NA, nrow(tabla))
+  best[tabla[,1]>tabla[,2]] <- "conf2"
+  best[tabla[,1]<tabla[,2]] <- "conf1"
+  best[tabla[,1]==tabla[,2]] <- "equal"
+  tabla <- cbind(tabla, best)
   
   # column names are changed
   colnames(tabla)[1] <- "conf1"
