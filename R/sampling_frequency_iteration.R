@@ -27,7 +27,7 @@
 sampling_frequency_iteration <- function(irace_results, param_name, numerical_type="both", 
                                          file_name = NULL) {
   # Variable assignment
-  memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- ..density.. <- NULL
+  memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- ..density.. <- NULL
   
   if (!(numerical_type %in% c("both", "density", "frequency"))){
     cat("Error: unknown numerical_type, values must be either both, density ot frequency.\n")

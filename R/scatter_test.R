@@ -39,7 +39,7 @@
 #' scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
   scatter_test <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
 
-  conf1 <- conf2 <- best <- instance <- NULL
+  conf1 <- conf2 <- best <- instance <- x_val <- y_val <- point_text <- NULL
     
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {

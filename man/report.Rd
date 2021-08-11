@@ -4,7 +4,7 @@
 \alias{report}
 \title{Report Iraceplot}
 \usage{
-report(irace_results = NULL, file_name)
+report(irace_results, file_name)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}

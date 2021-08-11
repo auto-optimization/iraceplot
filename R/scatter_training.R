@@ -38,7 +38,7 @@
 scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
 
   # Variable assignment
-  iteracionFiltrada <- conf1 <- conf2<- instance <- best <- NULL
+  iteracionFiltrada <- conf1 <- conf2<- instance <- best <- point_text <- NULL
 
   # Verify that a vector of length 2 is entered
   if (length(id_configurations) != 2) {
@@ -81,8 +81,8 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
   } 
   
   # instances
-  instances.ids <- iraceResults$state$.irace$instancesList[iteracionFiltrada, "instance"]
-  instances.names <- basename(iraceResults$scenario$instances[instances.ids])
+  instances.ids <- irace_results$state$.irace$instancesList[iteracionFiltrada, "instance"]
+  instances.names <- basename(irace_results$scenario$instances[instances.ids])
   tabla <- cbind(tabla, instances.names)
   best <- rep(NA, nrow(tabla))
   best[tabla[,1]>tabla[,2]] <- "conf2"
