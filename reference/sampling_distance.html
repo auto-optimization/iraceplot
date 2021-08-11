@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Distance Iteration Plot — sampling_distance • iraceplot</title>
+<title>Sampling distance Plot — sampling_distance • iraceplot</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Distance Iteration Plot — sampling_distance" />
-<meta property="og:description" content="Shows the mean of the difference between the configurations that were run for each iteration" />
+<meta property="og:title" content="Sampling distance Plot — sampling_distance" />
+<meta property="og:description" content="The `sampling_distance` function creates a plot that displays the mean of the 
+distance between the configurations that were executed in each iteration.
+For categorical parameters the distance is calculated as the hamming distance, 
+for numerical parameters a equality interval is defined by a threshold
+specified by argument t and hamming distance is calculated using this interval." />
 
 
 
@@ -114,13 +118,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Distance Iteration Plot</h1>
+    <h1>Sampling distance Plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/sampling_distance.R'><code>R/sampling_distance.R</code></a></small>
     <div class="hidden name"><code>sampling_distance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Shows the mean of the difference between the configurations that were run for each iteration</p>
+    <p>The `sampling_distance` function creates a plot that displays the mean of the 
+distance between the configurations that were executed in each iteration.</p>
+<p>For categorical parameters the distance is calculated as the hamming distance, 
+for numerical parameters a equality interval is defined by a threshold
+specified by argument t and hamming distance is calculated using this interval.</p>
     </div>
 
     <pre class="usage"><span class='fu'>sampling_distance</span><span class='op'>(</span><span class='va'>irace_results</span>, type <span class='op'>=</span> <span class='st'>"boxplot"</span>, t <span class='op'>=</span> <span class='fl'>0.05</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -134,13 +142,16 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>String, either "line", "boxplot" or "both". by default it is "boxplot" will show both graphics, 
-"line" which will show a plot of points and lines, "boxplot" will show a box plots</p></td>
+      <td><p>String, (default "boxplot") Type of plot to be produces, either "line", "boxplot" 
+or "both". The "boxplot" setting shows a boxplot of the mean distance of all
+configurations, "line" shows the mean distance of the solution population in each 
+iteration, "both" shows both plots.</p></td>
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Numeric, percentage factor that will determine the range of difference
-between settings (example: t = 0.05 is equivalent to 5 percent)</p></td>
+      <td><p>Numeric, (default 0.05) percentage factor that will determine a distance to 
+define equal numerical parameter values. If the numerical parameter values to be 
+compared are v1 and v2 they are considered equal if `|v1-v2| &lt;= |ub-lb|*t`.</p></td>
     </tr>
     <tr>
       <th>file_name</th>
@@ -154,7 +165,7 @@ between settings (example: t = 0.05 is equivalent to 5 percent)</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># sampling_distance(iraceResults)</span>
-<span class='co'># sampling_distance(iraceResults, type = "boxplot", t=0.2)</span>
+<span class='co'># sampling_distance(iraceResults, type = "boxplot", t=0.07)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

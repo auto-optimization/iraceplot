@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Report Iraceplot — report" />
-<meta property="og:description" content="Report Iraceplot" />
+<meta property="og:description" content="The `report` function creates an HTML report of the most relevant irace log
+data." />
 
 
 
@@ -120,33 +121,22 @@
     </div>
 
     <div class="ref-description">
-    <p>Report Iraceplot</p>
+    <p>The `report` function creates an HTML report of the most relevant irace log
+data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>report</span><span class='op'>(</span>format <span class='op'>=</span> <span class='st'>"html"</span>, irace_results <span class='op'>=</span> <span class='cn'>NULL</span>, irace_file <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>file_name</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>report</span><span class='op'>(</span>irace_results <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>file_name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>format</th>
-      <td><p>String, either "pdf" or "html". The parameter according to its
-value is how the output file format will be. By default it is "html"</p></td>
-    </tr>
-    <tr>
       <th>irace_results</th>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>irace_file</th>
-      <td><p>String, indicate the location where the Rdata file is located
-(example: "~/path-to/file.Rdata")</p></td>
-    </tr>
-    <tr>
       <th>file_name</th>
-      <td><p>String, file name indicating where to save a pdf file with the plot.
-A pdf extension will be added to the file name provided
-(example: "~/path-to/file_name")</p></td>
+      <td><p>String, file name indicating where to save the report (example: "~/path-to/file_name")</p></td>
     </tr>
     </table>
 

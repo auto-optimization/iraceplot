@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Box Plot Testing — boxplot_test • iraceplot</title>
+<title>Plot the sampling models used by irace — plot_model • iraceplot</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,17 @@
 
 
 
-<meta property="og:title" content="Box Plot Testing — boxplot_test" />
-<meta property="og:description" content="The `boxplot_test` function creates a box plot that displays the performance 
-of a set of configurations on the test instances.
-The performance data is obtained from the test evaluations performed 
-by irace. Note that the testing is not a default feature in irace and should 
-enabled in the setup (see the irace package user guide for more details)." />
+<meta property="og:title" content="Plot the sampling models used by irace — plot_model" />
+<meta property="og:description" content="The `plot_model` function creates a plot that displays the sampling
+models from which irace generated parameter values for new configurations 
+during the configurations process.
+For categorical parameters a stacked bar plot is created. This plot shows
+the sampling probabilities of the parameter values for the elite
+configurations in the iterations of the configuration process.
+For numerical parameters a sampling distributions plot of the
+numerical parameters for the elite configurations of an iteration.
+This plot shows de density function of the truncated normal distributions
+associated to each parameter for each elite configuration on each iteration." />
 
 
 
@@ -118,20 +123,25 @@ enabled in the setup (see the irace package user guide for more details)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Box Plot Testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/boxplot_test.R'><code>R/boxplot_test.R</code></a></small>
-    <div class="hidden name"><code>boxplot_test.Rd</code></div>
+    <h1>Plot the sampling models used by irace</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/plot_model.R'><code>R/plot_model.R</code></a></small>
+    <div class="hidden name"><code>plot_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `boxplot_test` function creates a box plot that displays the performance 
-of a set of configurations on the test instances.</p>
-<p>The performance data is obtained from the test evaluations performed 
-by irace. Note that the testing is not a default feature in irace and should 
-enabled in the setup (see the irace package user guide for more details).</p>
+    <p>The `plot_model` function creates a plot that displays the sampling
+models from which irace generated parameter values for new configurations 
+during the configurations process.</p>
+<p>For categorical parameters a stacked bar plot is created. This plot shows
+the sampling probabilities of the parameter values for the elite
+configurations in the iterations of the configuration process.</p>
+<p>For numerical parameters a sampling distributions plot of the
+numerical parameters for the elite configurations of an iteration.
+This plot shows de density function of the truncated normal distributions
+associated to each parameter for each elite configuration on each iteration.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>irace_results</span>, type <span class='op'>=</span> <span class='st'>"all"</span>, rpd <span class='op'>=</span> <span class='cn'>TRUE</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>plot_model</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>param_name</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,34 +151,33 @@ enabled in the setup (see the irace package user guide for more details).</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>String, (default "all") possible values are "all", "ibest" or "best". "all" 
-shows all the configurations included in the test, "best" shows the elite 
-configurations of the last iteration and "ibest" shows the elite configurations 
-of each iteration. Note that "ibest" requites that irace includes the iteration
-elites in the testing.</p></td>
-    </tr>
-    <tr>
-      <th>rpd</th>
-      <td><p>Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
-to best results per instance, FALSE to plot raw performance.</p></td>
+      <th>param_name</th>
+      <td><p>String, parameter to be included in the plot (example: param_name = "algorithm"))</p></td>
     </tr>
     <tr>
       <th>file_name</th>
-      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <td><p>String, file name to save plot (example: "~/path/to/file_name.png")</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>box plot</p>
+    <p>sampling model plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, rpd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, type <span class='op'>=</span> <span class='st'>"ibest"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Warning: irace data does not contain iteration elites testing, changing plot type to "best"</div><div class='img'><img src='boxplot_test-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, type <span class='op'>=</span> <span class='st'>"best"</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>plot_model</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_name<span class='op'>=</span><span class='st'>"algorithm"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot_model-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_model</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_name<span class='op'>=</span><span class='st'>"alpha"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot_model-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; TableGrob (8 x 2) "arrange": 9 grobs
+#&gt;   z     cells    name                 grob
+#&gt; 1 1 (1-1,2-2) arrange       gtable[layout]
+#&gt; 2 2 (2-2,2-2) arrange       gtable[layout]
+#&gt; 3 3 (3-3,2-2) arrange       gtable[layout]
+#&gt; 4 4 (4-4,2-2) arrange       gtable[layout]
+#&gt; 5 5 (5-5,2-2) arrange       gtable[layout]
+#&gt; 6 6 (6-6,2-2) arrange       gtable[layout]
+#&gt; 7 7 (7-7,2-2) arrange       gtable[layout]
+#&gt; 8 8 (8-8,2-2) arrange       gtable[layout]
+#&gt; 9 9 (1-8,1-1) arrange text[GRID.text.3010]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

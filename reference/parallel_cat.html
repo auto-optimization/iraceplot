@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parallel Cordinate Category — parallel_cat • iraceplot</title>
+<title>Parallel Coordinates Category — parallel_cat • iraceplot</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,17 @@
 
 
 
-<meta property="og:title" content="Parallel Cordinate Category — parallel_cat" />
-<meta property="og:description" content="The parallel_cat function will return a graph of categorical
-parallel coordinates allowing selecting configurations by id or iteration
-and selecting the parameter to be included in the plot" />
+<meta property="og:title" content="Parallel Coordinates Category — parallel_cat" />
+<meta property="og:description" content="The `parallel_cat` function creates a parallel categories plot of a set of 
+selected configurations. Numerical parameters are discretized to maximum n_bins 
+intervals. To visualize configurations of other iterations these must be 
+provided setting the argument iterations, groups of configurations of different 
+iterations are shown in different colors. Specific configurations can be 
+selected providing their ids in the id_configurations argument.
+The parameters to be included in the plot can be selected with the param_names
+argument. Additionally, the maximum number of parameters to be displayed in one
+plot. A list of plots is returned by this function in several plots are required
+to display the selected data." />
 
 
 
@@ -116,23 +123,31 @@ and selecting the parameter to be included in the plot" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parallel Cordinate Category</h1>
+    <h1>Parallel Coordinates Category</h1>
     <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/parallel_cat.R'><code>R/parallel_cat.R</code></a></small>
     <div class="hidden name"><code>parallel_cat.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The parallel_cat function will return a graph of categorical
-parallel coordinates allowing selecting configurations by id or iteration
-and selecting the parameter to be included in the plot</p>
+    <p>The `parallel_cat` function creates a parallel categories plot of a set of 
+selected configurations. Numerical parameters are discretized to maximum n_bins 
+intervals. To visualize configurations of other iterations these must be 
+provided setting the argument iterations, groups of configurations of different 
+iterations are shown in different colors. Specific configurations can be 
+selected providing their ids in the id_configurations argument.</p>
+<p>The parameters to be included in the plot can be selected with the param_names
+argument. Additionally, the maximum number of parameters to be displayed in one
+plot. A list of plots is returned by this function in several plots are required
+to display the selected data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>parallel_cat</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
-  id_configuration <span class='op'>=</span> <span class='cn'>NULL</span>,
+  id_configurations <span class='op'>=</span> <span class='cn'>NULL</span>,
   param_names <span class='op'>=</span> <span class='cn'>NULL</span>,
   iterations <span class='op'>=</span> <span class='cn'>NULL</span>,
-  plot_all_parameters <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  by_n_param <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n_bins <span class='op'>=</span> <span class='fl'>3</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -144,9 +159,9 @@ and selecting the parameter to be included in the plot</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>id_configuration</th>
+      <th>id_configurations</th>
       <td><p>Numeric vector, configuration ids to be included in the plot
-(example: id_configuration = c(20,50,100,300,500,600,700))</p></td>
+(example: id_configurations = c(20,50,100,300,500,600,700))</p></td>
     </tr>
     <tr>
       <th>param_names</th>
@@ -155,14 +170,16 @@ and selecting the parameter to be included in the plot</p>
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>NUmeric vector, iterations from which configuration should be obtained
+      <td><p>Numeric vector, iterations from which configuration should be obtained
 (example: iterations = c(1,4,5))</p></td>
     </tr>
     <tr>
-      <th>plot_all_parameters</th>
-      <td><p>logical (default FALSE), TRUE if all parameter should be included or 
-FALSE if the first set of 15 parameters provided or in the data file should
-be displayed.</p></td>
+      <th>by_n_param</th>
+      <td><p>Numeric (optional), maximum number of parameters to be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>n_bins</th>
+      <td><p>Numeric (default 3), number of intervals to generate for numerical parameters.</p></td>
     </tr>
     <tr>
       <th>file_name</th>
@@ -176,10 +193,12 @@ be displayed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
-</div><div class='img'><img src='parallel_cat-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configuration <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>500</span>, <span class='fl'>600</span>, <span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='parallel_cat-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"algorithm"</span>, <span class='st'>"alpha"</span>, <span class='st'>"rho"</span>, <span class='st'>"q0"</span>, <span class='st'>"rasrank"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='parallel_cat-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, iterations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='parallel_cat-4.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='parallel_cat-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, by_n_param <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='parallel_cat-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; [[2]]</div><div class='img'><img src='parallel_cat-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>500</span>, <span class='fl'>600</span>, <span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='parallel_cat-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"algorithm"</span>, <span class='st'>"alpha"</span>, <span class='st'>"rho"</span>, <span class='st'>"q0"</span>, <span class='st'>"rasrank"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='parallel_cat-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>parallel_cat</span><span class='op'>(</span><span class='va'>iraceResults</span>, iterations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span>, n_bins<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='img'><img src='parallel_cat-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

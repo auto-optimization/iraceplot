@@ -40,8 +40,15 @@
 
 
 <meta property="og:title" content="Scatter Plot Testing — scatter_test" />
-<meta property="og:description" content="The function will return a scatter plot
-comparing two configurations in testing" />
+<meta property="og:description" content="The function creates a scatter plot comparing the performance of two 
+configurations in the test instances. Each point in the plot represents an instance
+and the color of the points indicates if one configuration is better than the other.
+The performance data is obtained from the test evaluations performed by irace. 
+Note that the testing is not a default feature in irace and should enabled in 
+the setup.
+Configuration ids provided in `id_configurations` should belong to 
+elite configuration set evaluated in the test (see the irace package user 
+guide for more details)." />
 
 
 
@@ -121,8 +128,15 @@ comparing two configurations in testing" />
     </div>
 
     <div class="ref-description">
-    <p>The function will return a scatter plot
-comparing two configurations in testing</p>
+    <p>The function creates a scatter plot comparing the performance of two 
+configurations in the test instances. Each point in the plot represents an instance
+and the color of the points indicates if one configuration is better than the other.</p>
+<p>The performance data is obtained from the test evaluations performed by irace. 
+Note that the testing is not a default feature in irace and should enabled in 
+the setup.</p>
+<p>Configuration ids provided in `id_configurations` should belong to 
+elite configuration set evaluated in the test (see the irace package user 
+guide for more details).</p>
     </div>
 
     <pre class="usage"><span class='fu'>scatter_test</span><span class='op'>(</span>
@@ -142,12 +156,13 @@ comparing two configurations in testing</p>
     </tr>
     <tr>
       <th>id_configurations</th>
-      <td><p>String vector, configuration ids whose performance should be displayed (example: id_configurations = c("92","119"))</p></td>
+      <td><p>String vector, configuration ids whose performance should be displayed 
+(example: id_configurations = c("92","119"))</p></td>
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-best results, FALSE to plot raw performance</p></td>
+      <td><p>logical(default TRUE) TRUE to plot performance as the relative percentage
+deviation to best results per instance, FALSE to plot raw performance</p></td>
     </tr>
     <tr>
       <th>file_name</th>
@@ -155,8 +170,9 @@ best results, FALSE to plot raw performance</p></td>
     </tr>
     <tr>
       <th>.interactive</th>
-      <td><p>Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
-is the default option, or FALSE it is generated statically.</p></td>
+      <td><p>Logical (Default interactive()), TRUE if the plot is generated interactively 
+(plotly package), or FALSE if it should be generated statically. The interactive
+plot version allows to visualize the instance and exact values of each plot.</p></td>
     </tr>
     </table>
 
@@ -165,8 +181,9 @@ is the default option, or FALSE it is generated statically.</p></td>
     <p>scatter plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>scatter_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"92"</span>, <span class='st'>"119"</span><span class='op'>)</span>, .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='scatter_test-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>scatter_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"92"</span>, <span class='st'>"119"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='scatter_test-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>scatter_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"92"</span>, <span class='st'>"119"</span><span class='op'>)</span>, rpd<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='scatter_test-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

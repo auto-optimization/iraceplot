@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Distance between configurations — distance_config" />
-<meta property="og:description" content="Calculate the difference between two settings. Calculate the difference between two configurations. The greater
-the number, the greater the difference" />
+<meta property="og:description" content="The `distance_config` function calculates the difference between a configuration 
+and the others in the irace data." />
 
 
 
@@ -121,11 +121,11 @@ the number, the greater the difference" />
     </div>
 
     <div class="ref-description">
-    <p>Calculate the difference between two settings. Calculate the difference between two configurations. The greater
-the number, the greater the difference</p>
+    <p>The `distance_config` function calculates the difference between a configuration 
+and the others in the irace data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>distance_config</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>id_configurations</span>, t <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>distance_config</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>id_configuration</span>, t <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,14 +135,14 @@ the number, the greater the difference</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>id_configurations</th>
-      <td><p>Numeric vector, you need to put the settings you
-want to compare, only 2 values are allowed (example: idVector = c(806,809))</p></td>
+      <th>id_configuration</th>
+      <td><p>Numeric, configuration id which should be compared to others 
+(example: id_configuration = c(806,809))</p></td>
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Numeric, It is a percentage factor that will determine the range of difference
-between settings (example: t = 0.05 is equivalent to 5 percent)</p></td>
+      <td><p>Numeric, (default 0.05) threshold that defines the distance (percentage of the domain size) 
+to consider a parameter value equal to other.</p></td>
     </tr>
     </table>
 

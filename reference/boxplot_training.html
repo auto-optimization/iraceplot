@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Box Plot — boxplot_training • iraceplot</title>
+<title>Box Plot Training — boxplot_training • iraceplot</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Box Plot — boxplot_training" />
-<meta property="og:description" content="Create a graphic of box plot of irace using the best quality id
-By default the graph of the last iteration is shown" />
+<meta property="og:title" content="Box Plot Training — boxplot_training" />
+<meta property="og:description" content="The `boxplot_training` function creates a box plot that displays the performance
+of a set of configurations on the training instances. Performance data is obtained 
+from the evaluations performed by irace during the execution process. This implies 
+that the number of evaluations can differ between configurations." />
 
 
 
@@ -115,19 +117,21 @@ By default the graph of the last iteration is shown" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Box Plot</h1>
+    <h1>Box Plot Training</h1>
     <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/boxplot_training.R'><code>R/boxplot_training.R</code></a></small>
     <div class="hidden name"><code>boxplot_training.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a graphic of box plot of irace using the best quality id
-By default the graph of the last iteration is shown</p>
+    <p>The `boxplot_training` function creates a box plot that displays the performance
+of a set of configurations on the training instances. Performance data is obtained 
+from the evaluations performed by irace during the execution process. This implies 
+that the number of evaluations can differ between configurations.</p>
     </div>
 
     <pre class="usage"><span class='fu'>boxplot_training</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
-  number_iteration <span class='op'>=</span> <span class='cn'>NULL</span>,
+  iteration <span class='op'>=</span> <span class='cn'>NULL</span>,
   id_configurations <span class='op'>=</span> <span class='cn'>NULL</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -141,21 +145,30 @@ By default the graph of the last iteration is shown</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>number_iteration</th>
-      <td><p>Numeric, iteration number that should be included in the plot (example: number_iteration = 5)</p></td>
+      <th>iteration</th>
+      <td><p>Numeric, iteration number that should be included in the plot (example: iteration = 5)
+When no iteration and no id_condigurations are provided, the iterations is assumed to be
+the last one performed by irace.</p>
+<p>The performance data is obtained from the evaluations performed by irace 
+during the execution process. This implies that the number of evaluations 
+can differ between configurations due to the elimination process applied by 
+irace. This plot, consequently, does not provide a complete compaarison of
+two configurations, for a fair comparison use the test data plot.</p></td>
     </tr>
     <tr>
       <th>id_configurations</th>
-      <td><p>Numeric vector, configurations ids whose performance should be included in the plot
-(example: id_configurations = c(20,50,100,300,500,600,700))</p></td>
+      <td><p>Numeric vector, configurations ids whose performance should be included in the plot.
+If no ids are provided, the configurations ids are set as the elite configuration ids 
+of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).</p></td>
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>Logical (default TRUE) to plot performance as the relative percentage deviation to best results</p></td>
+      <td><p>Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
+results per instance, FALSE to plot raw performance.</p></td>
     </tr>
     <tr>
       <th>file_name</th>
-      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <td><p>String, file name to save plot (example: "~/patch/example/file_name.png")</p></td>
     </tr>
     </table>
 
@@ -165,9 +178,10 @@ By default the graph of the last iteration is shown</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, number_iteration <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>500</span>, <span class='fl'>600</span>, <span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_training-3.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='boxplot_training-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, rpd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='boxplot_training-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, iteration <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='img'><img src='boxplot_training-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_training</span><span class='op'>(</span><span class='va'>iraceResults</span>, id_configurations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>500</span>, <span class='fl'>600</span>, <span class='fl'>700</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='boxplot_training-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Box Plot Testing — boxplot_test • iraceplot</title>
+<title>Categorical model generation — getCategoricalModel • iraceplot</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,10 @@
 
 
 
-<meta property="og:title" content="Box Plot Testing — boxplot_test" />
-<meta property="og:description" content="The `boxplot_test` function creates a box plot that displays the performance 
-of a set of configurations on the test instances.
-The performance data is obtained from the test evaluations performed 
-by irace. Note that the testing is not a default feature in irace and should 
-enabled in the setup (see the irace package user guide for more details)." />
+<meta property="og:title" content="Categorical model generation — getCategoricalModel" />
+<meta property="og:description" content="The `getCategoricalModel` function rebuilds the probabilities of
+the sampling models used in irace to generate configurations in each
+iteration." />
 
 
 
@@ -118,20 +116,18 @@ enabled in the setup (see the irace package user guide for more details)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Box Plot Testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/boxplot_test.R'><code>R/boxplot_test.R</code></a></small>
-    <div class="hidden name"><code>boxplot_test.Rd</code></div>
+    <h1>Categorical model generation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/plot_model.R'><code>R/plot_model.R</code></a></small>
+    <div class="hidden name"><code>getCategoricalModel.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `boxplot_test` function creates a box plot that displays the performance 
-of a set of configurations on the test instances.</p>
-<p>The performance data is obtained from the test evaluations performed 
-by irace. Note that the testing is not a default feature in irace and should 
-enabled in the setup (see the irace package user guide for more details).</p>
+    <p>The `getCategoricalModel` function rebuilds the probabilities of
+the sampling models used in irace to generate configurations in each
+iteration.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>irace_results</span>, type <span class='op'>=</span> <span class='st'>"all"</span>, rpd <span class='op'>=</span> <span class='cn'>TRUE</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>getCategoricalModel</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>param_name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,34 +137,18 @@ enabled in the setup (see the irace package user guide for more details).</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>String, (default "all") possible values are "all", "ibest" or "best". "all" 
-shows all the configurations included in the test, "best" shows the elite 
-configurations of the last iteration and "ibest" shows the elite configurations 
-of each iteration. Note that "ibest" requites that irace includes the iteration
-elites in the testing.</p></td>
-    </tr>
-    <tr>
-      <th>rpd</th>
-      <td><p>Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
-to best results per instance, FALSE to plot raw performance.</p></td>
-    </tr>
-    <tr>
-      <th>file_name</th>
-      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <th>param_name</th>
+      <td><p>String, parameter to be included in the plot (example: param_name = "algorithm"))</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>box plot</p>
+    <p>data frame with columns "iteration", "elite", "parameter", "value", "prob"</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, rpd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, type <span class='op'>=</span> <span class='st'>"ibest"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Warning: irace data does not contain iteration elites testing, changing plot type to "best"</div><div class='img'><img src='boxplot_test-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boxplot_test</span><span class='op'>(</span><span class='va'>iraceResults</span>, type <span class='op'>=</span> <span class='st'>"best"</span><span class='op'>)</span>
-</div><div class='img'><img src='boxplot_test-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='cn'>NULL</span>
+</div><div class='output co'>#&gt; NULL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

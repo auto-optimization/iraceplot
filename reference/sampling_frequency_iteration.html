@@ -127,7 +127,12 @@ for categorical data (its values are string, show a bar plot) or
 numeric data (show a histogram and density plot) by each iteration</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sampling_frequency_iteration</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>param_name</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sampling_frequency_iteration</span><span class='op'>(</span>
+  <span class='va'>irace_results</span>,
+  <span class='va'>param_name</span>,
+  numerical_type <span class='op'>=</span> <span class='st'>"both"</span>,
+  file_name <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +146,12 @@ numeric data (show a histogram and density plot) by each iteration</p>
       <td><p>String, name of the parameter to be included (example: param_name = "algorithm")</p></td>
     </tr>
     <tr>
+      <th>numerical_type</th>
+      <td><p>String, (default "both") Indicates the type of plot to be displayed for numerical
+parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
+"both" show both frequency and density.</p></td>
+    </tr>
+    <tr>
       <th>file_name</th>
       <td><p>String, file name to save plot (example: "~/path/to/file_name.png")</p></td>
     </tr>
@@ -152,7 +163,8 @@ numeric data (show a histogram and density plot) by each iteration</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>sampling_frequency_iteration</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_name <span class='op'>=</span> <span class='st'>"alpha"</span><span class='op'>)</span>
-</div><div class='img'><img src='sampling_frequency_iteration-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='sampling_frequency_iteration-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>sampling_frequency_iteration</span><span class='op'>(</span><span class='va'>iraceResults</span>, param_name <span class='op'>=</span> <span class='st'>"alpha"</span>, numerical_type<span class='op'>=</span><span class='st'>"density"</span><span class='op'>)</span>
+</div><div class='img'><img src='sampling_frequency_iteration-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
