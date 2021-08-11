@@ -27,6 +27,7 @@ Imports: ggplot2,
          gridExtra, 
          ggforce, 
          purrr,
+         truncnorm,
          utils,
          irace
 Suggests: 

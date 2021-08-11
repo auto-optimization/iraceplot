@@ -14,7 +14,7 @@
 #' @return data frame with columns "iteration", "elite", "parameter", "value", "prob"
 #' 
 #' @examples
-#' getCategoricalModel(iraceResults, param_name="algorithm")
+#' NULL
 getCategoricalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("c"))) {
@@ -88,7 +88,7 @@ getCategoricalModel <- function(irace_results, param_name)
 #' @return data frame with columns "iteration", "elite", "parameter", "mean", "sd"
 #' 
 #' @examples
-#' getNumericalModel(iraceResults, param_name="alpha")
+#' NULL
 getNumericalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("i", "r", "i,log", "r,log"))) {
@@ -222,14 +222,14 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
   if (xlabel_iteration==iteration){
     p <- p + ggplot2::ylab(as.character(iteration+1)) +
          theme(axis.title.x = element_blank(), 
-               axis.title.y = element_text(vjust = -8),
+               axis.title.y = element_text(vjust = 0),
                axis.text.y = element_blank(),
                axis.ticks.y = element_blank())
   } else {
     p <- p + theme(axis.text.x = element_blank(),
                    axis.title.x = element_blank(),
                    axis.ticks.x = element_blank(),
-                   axis.title.y = element_text(vjust = -8),
+                   axis.title.y = element_text(vjust = 0),
                    axis.text.y = element_blank(), 
                    axis.ticks.y = element_blank()) 
     p <- p + labs(y = as.character(iteration+1))
@@ -281,12 +281,11 @@ plot_model <- function(irace_results, param_name, file_name=NULL) {
     X <- getCategoricalModel(irace_results, param_name)
     q <- plotCategoricalModel(model_data=X, domain=irace_results$parameters$domain[[param_name]])
   } else {
-    X      <- getNumericalModel(irace_results, param_name)
+    X <- getNumericalModel(irace_results, param_name)
     p <- lapply((iterations-1):1, plotNumericalModel, model_data=X, 
                 domain=irace_results$parameters$domain[[param_name]], 
                 xlabel_iteration=1)
-    q <- ggpubr::ggarrange(plotlist = p, ncol=1)
-    q <- ggpubr::annotate_figure(q, left = ggpubr::text_grob("Iterations", rot = 90))
+    q <- do.call("grid.arrange", c(p, ncol = 1, left="Iterations"))
 
   }
   

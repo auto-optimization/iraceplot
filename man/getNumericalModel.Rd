@@ -20,5 +20,5 @@ of the models used by irace to sampling configurations during the configuration
 process.
 }
 \examples{
-getNumericalModel(iraceResults, param_name="alpha")
+NULL
 }

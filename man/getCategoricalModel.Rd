@@ -20,5 +20,5 @@ the sampling models used in irace to generate configurations in each
 iteration.
 }
 \examples{
-getCategoricalModel(iraceResults, param_name="algorithm")
+NULL
 }
