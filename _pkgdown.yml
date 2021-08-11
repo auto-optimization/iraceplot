@@ -6,10 +6,10 @@ navbar:
   left:
   - text: "Home"
     href: index.html
-  - text: "Quick Start"
-    href: articles/quick_start.html
   - text: "User Guide"
     href: articles/iraceplot_package.html
+  - text: "Report example"
+    href: articles/report_example.html
   - text: "Reference"
     href: reference/index.html
   - text: "Changelog"

@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include= FALSE}
-library(iraceplot)
+library(iraceplot, quietly = TRUE)
+load("../data/iraceResults.rda")
 niterations <- length(iraceResults$allElites)
 ninstances <- nrow(iraceResults$experiments)
 irace_log <- iraceResults$experimentLog
@@ -124,8 +125,6 @@ Final elite configurations performance on the training set:
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 boxplot_training(iraceResults)
 ```
-
-
 
 
 

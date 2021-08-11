@@ -18,6 +18,10 @@ document
 The `report` function creates an HTML report of the most relevant irace log
 data.
 }
+\details{
+This report provides general statistics and plots that show the best configurations
+and their performance.
+}
 \examples{
 NULL
 }

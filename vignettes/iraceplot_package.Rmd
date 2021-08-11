@@ -285,7 +285,18 @@ These plots display the the density function of the truncated normal distributio
 models of each elite configuration in each instance:
 
 
-```{r fig.align="center", fig.width=7, fig.height=6}
+```{r fig.align="center", fig.width=7, fig.height=6, message=FALSE, prompt=FALSE, results='hide'}
 plot_model(iraceResults, param_name="alpha")
+```
+
+# Report
+
+The `report` function generates an HTML report with a summary of the configuration 
+process executed by irace. The function will create an html file in the path
+provided in the `file_name` argument and appending the ".html" extension to it.
+
+
+```{r fig.align="center", eval=FALSE}
+report(iraceResults, file_name="report")
 ```
 
