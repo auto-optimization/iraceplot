@@ -18,6 +18,7 @@
 #' boxplot_training;
 #' scatter_training;
 #' report;
+#' plot_model;
 #'
 #' If you need information about any function you can put:
 #' ?name_function
@@ -52,6 +53,7 @@
 #' @importFrom utils browseURL
 #' @importFrom GGally ggparcoord
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
+#' @importFrom truncnorm dtruncnorm
 #'
 #'
 NULL

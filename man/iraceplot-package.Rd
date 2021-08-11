@@ -22,6 +22,7 @@ sampling_distance;
 boxplot_training;
 scatter_training;
 report;
+plot_model;
 
 If you need information about any function you can put:
 ?name_function

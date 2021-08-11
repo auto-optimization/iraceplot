@@ -148,13 +148,13 @@ configurations.
 sampling_pie(irace_results = iraceResults)
 ```
 
-## Sampling distributions
+## Sampled parameter values
 
 In some cases in might be interesting to have a look at the values sampled during the 
 configuration procedure as they show the areas in the parameter space where irace
 detected a high performance.
 
-A general overview of the sampling of parameters can be obtained with the `sampling_frequency`
+A general overview of the samples parameters values can be obtained with the `sampling_frequency`
 function which generates frequency and density plots for the sampled values:
 
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE}
@@ -273,7 +273,19 @@ This can be obtained with the `plot_experiments_matrix` function:
 plot_experiments_matrix(iraceResults, .interactive = TRUE)
 ```
 
+The sampling distributions used by irace during the configuration process can be displayed using the 
+`plot_model` function. For categorical parameters, this function displays the sampling probabilities associated to each parameter value by iteration (x axis top) in each elite configuration model (bars):
+
+```{r fig.align="center", fig.width=7}
+plot_model(iraceResults, param_name="algorithm")
+```
+
+For numerical parameters, this function shows the sampling distributions associated to each parameter.
+These plots display the the density function of the truncated normal distribution associated to the 
+models of each elite configuration in each instance:
 
 
-
+```{r fig.align="center", fig.width=7, fig.height=6}
+plot_model(iraceResults, param_name="alpha")
+```
 

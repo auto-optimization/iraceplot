@@ -1,6 +1,8 @@
 ---
 title: "Report Iraceplot Package"
-output: html_document
+output: 
+  html_document:
+    toc: true
 ---
 
 ```{r, include = FALSE}
@@ -14,51 +16,69 @@ knitr::opts_chunk$set(
 library(iraceplot)
 ```
 
-## Testing performance box plot
+# General information
 
-  The ``boxplot_test`` function creates a box plot using the performance of the configurations tested. Note that the performance that can be displayed is restricted to the testing performed by irace.
-  
-```{r,fig.align="center", fig.width= 7}
-boxplot_test(iraceResults, type = "best")
+The provided execution of irace statistics are: 
+
+- Iterations: `r {length(iraceResults$allElites)}`
+- Configurations: `r {nrow(iraceResults$allConfigurations)}`
+- Instances: `r {nrow(iraceResults$experiments)}`
+- Experiments: `r {nrow(iraceResults$experimentLog)}`
+- Elite configurations: `r {length(iraceResults$allElites[[length(iraceResults$allElites)]])}`
+
+## Elite configurations
+The final best configurations found by irace are:
+
+```{r,fig.align="center", echo=FALSE}
+knitr::kable(iraceResults$allConfigurations[iraceResults$allElites[[length(iraceResults$allElites)]],])
 ```
 
-```{r,fig.align="center", fig.width= 7}
-boxplot_test(iraceResults, type = "ibest")
+The ``parallel_coord`` function creates a parallel coordinate plot of a set of selected configurations. 
+
+```{r,fig.align="center", fig.width= 7, echo=FALSE}
+parallel_coord(iraceResults)
 ```
 
-## Training performance box plot
+## Parameter values sampling
+The frequency of the parameter values sampled by irace may indicate high performing areas:
 
-The ``boxplot_training`` function creates a box plot using the performance of the configurations obtained in the configuration process. Note that this function can only plot the performance of elite configurations.
+```{r,fig.align="center", fig.width= 7, echo=FALSE}
+sampling_frequency(iraceResults)
+```
+
+## Testing performance
+
+The test performance allows to evaluate if the configurations found by irace. 
+
+The final elite configuration performance on the test set:
+
+```{r,fig.align="center", fig.width= 7, echo=FALSE}
+if (iraceResults$scenario$testInstances == "" || is.null(iraceResults$scenario$testInstances)) {
+  cat("No test performed.\n")
+} else {
+  boxplot_test(iraceResults, type = "best")
+}
+```
+
+Iteration elite configuration performance on the test set:
+
+```{r,fig.align="center", fig.width= 7, echo=FALSE}
+if (iraceResults$scenario$testIterationElites) {
+   boxplot_test(iraceResults, type = "all")
+} else{
+  cat("No iteration test performed.\n")
+}
+```
+
+## Training performance 
+
+Final elite configurations performance on the training set. 
 
 ```{r,fig.align="center", fig.width= 7}
 boxplot_training(iraceResults)
 ```
 
-## Parallel coordinates 
-
-The ``parallel_coord`` function creates a parallel coordinate plot of a set of selected configurations. 
-
-```{r,fig.align="center", fig.width= 7}
-parallel_coord(iraceResults)
-```
-
-## Sampling proportions
-
-The ``sampling_pie`` function creates a pie chart to visualize the proportion of the sampling values for categorical parameters in the configuration process.
 
 
-```{r,fig.align="center", fig.width= 7}
-sampling_pie(iraceResults)
-```
 
-## Sampling frequency
-
-The ``sampling_frequency`` function plots the sampling frequency plots of the parameter values sampled during the configuration process.
-
-For categorical parameters frequency bar plot is displayed, while for of numerical parameters (integer and real) an histogram and density plot are shown.
-
-
-```{r,fig.align="center", fig.width= 7}
-sampling_frequency(iraceResults)
-```
 
