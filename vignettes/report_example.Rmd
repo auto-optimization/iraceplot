@@ -1,5 +1,5 @@
 ---
-title: "Report Iraceplot Package"
+title: "Example report provided by iraceplot package"
 output: 
   html_document:
     toc: true

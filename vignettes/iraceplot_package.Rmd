@@ -1,5 +1,5 @@
 ---
-title: iraceplot_package
+title: The iraceplot package
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{iraceplot_package}
@@ -120,6 +120,16 @@ You can also visualize all configurations sampled in one or more iterations disa
 parallel_coord(iraceResults, iterations=1:9, only_elite=FALSE)
 ```
 
+The `parallel_coord2` function generates a similar parallel coordinates plot when
+provided with an arbitrary set of configurations without the irace execution context. 
+For example, to display all elite configurations:
+
+```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE}
+all_elite <- iraceResults$allConfigurations[unlist(iraceResults$allElites),]
+parallel_coord2(all_elite, iraceResults$parameters)
+```
+
+
 A similar display can be obtained using the `parallel_cat` function. For example, to visualize configurations sampled on iterations 3, 4 and 5.
 
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE}
@@ -147,6 +157,7 @@ configurations.
 ```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE}
 sampling_pie(irace_results = iraceResults)
 ```
+
 
 ## Sampled parameter values
 

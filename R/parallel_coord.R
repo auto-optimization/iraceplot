@@ -226,22 +226,21 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     }
   }
   
-  n_parts <- ceiling(length(param_names) / by_n_param)
-  start_i <- 1
-  end_i <- by_n_param
+
   plot_list = list()
+  plot_params <- param_names
   # Create plots
-  for (i in 1:n_parts) {
-    # stop if we reach the end
-    if (end_i > length(param_names))
-      break;
+  i <- 1
+  while(length(plot_params)>0) {
+    start_i <- 1
+    end_i <- min(by_n_param, length(plot_params))
+    params <- plot_params[start_i:end_i]
+    plot_params <- plot_params[-(start_i:end_i)]
+    if (length(plot_params) == 1) {
+      params <- c(params, plot_params)
+      plot_params <- c()
+    }
     
-    # add las parameter as we cant  plot 
-    # one parameter in the next plot
-    if (length(param_names) == (end_i+1))
-      end_i <- end_i + 1
-    
-    params <- param_names[start_i:end_i]
     ctabla <- tabla[,c(params, "iteration")]
     dim <- get_dimensions(ctabla)
 
@@ -261,8 +260,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
       labelangle = -25
     )
     plot_list[[i]] <- p
-    start_i <- start_i + by_n_param 
-    end_i   <- min(end_i + by_n_param, length(param_names))
+    i <- i + 1
   }
   
   # Save plot file
@@ -285,6 +283,212 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   return(plot_list)
 }
 
+#' Parallel Coordinates Plot (configurations)
+#'
+#' @description
+#' The `parallel_coord2` function creates a parallel coordinates plot of a set of 
+#' provided configurations. Each line in the plot represents a configuration. 
+#' 
+#' The parameters to be included in the plot can be selected with the param_names
+#' argument. Additionally, the maximum number of parameters to be displayed in one
+#' plot. A list of plots is returned by this function in several plots are required
+#' to display the selected data.
+#' 
+#' To export the plot to a file, it is possible to do it so manually using the
+#' functionality provided by plotly in the plot. If a file_name is provided,  
+#' orca server will be used to export the plots and thus, it requires the library
+#' to be installed (https://github.com/plotly/orca).
+#' 
+#'
+#' @param configurations
+#' Data frame, configurations in irace format 
+#' (example: configurations = iraceResults$allConfigurations)
+#'
+#' @param parameters
+#' List, parameter object in irace format
+#' (example: configurations = iraceResults$parameters)
+#'
+#' @param param_names
+#' String vector, names of the parameters that should be included in the plot
+#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#'
+#' @param by_n_param
+#' Numeric (optional), maximum number of parameters to be displayed
+#'
+#' @param file_name
+#' String, file name to save plot (example: "~/patch/example/file_name.png"). 
+#' Orca is required. See more details in: https://github.com/plotly/orca
+#'
+#' @return parallel coordinates plot
+#' @export
+#'
+#' @examples
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters)
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, by_n_param = 5)
+parallel_coord2 <- function(configurations, parameters, param_names = parameters$names,
+                            by_n_param = NULL, file_name = NULL) {
+  
+  # The function get_dimensions creates a list of settings for each vertical axis
+  # in the parallel coordinates plot
+  get_dimensions <- function(data) {
+    # Create plot dimensions
+    for (i in 1:ncol(data)) {
+      pname <- colnames(data)[i]
+      if (parameters$types[pname] %in% c("c", "o")) {
+        if (any(is.na(data[,pname]))) {
+          tickT <- c(as.character(parameters$domain[[pname]]), "NA")
+          tickV <- 1:(length(parameters$domain[[pname]]) + 1)
+        } else {
+          tickT <- as.character(parameters$domain[[pname]])
+          tickV <- 1:length(parameters$domain[[pname]])
+        }
+        
+        data[,pname] <- as.character(data[,pname])
+        rdata <- rep(NA, nrow(data)) 
+        for (v in 1:length(tickT)){
+          rdata[data[,pname] == tickT[v]] <- v
+        }
+        
+        dim[[i]] <- list(
+          range = c(1, max(tickV)),
+          label = pname,
+          tickvals = tickV,
+          ticktext = tickT,
+          values = rdata
+        )
+        # if the column is of type numeric
+      } else {
+        if ((as.numeric(parameters$domain[[pname]][2]) + 1) %in% data[,pname]) {
+          minimo <- parameters$domain[[pname]][1]
+          maximo <- parameters$domain[[pname]][2] + 1
+          medio <- round(((maximo - 1) / 4), 1)
+          medio2 <- round(((maximo - 1) / 2), 1)
+          medio3 <- round(((maximo - 1) * (3 / 4)), 1)
+          
+          dim[[i]] <- list(
+            range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2] + 1),
+            tickvals = c(minimo, medio, medio2, medio3, maximo),
+            ticktext = c(minimo, medio, medio2, medio3, "NA"),
+            values = data[,pname],
+            label = pname
+          )
+        } else {
+          minimo <- parameters$domain[[pname]][1]
+          maximo <- parameters$domain[[pname]][2]
+          medio <- round((maximo / 4), 1)
+          medio2 <- round((maximo / 2), 1)
+          medio3 <- round(maximo * (3 / 4), 1)
+          dim[[i]] <- list(
+            range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2]),
+            tickvals = c(minimo, medio, medio2, medio3, maximo),
+            ticktext = c(minimo, medio, medio2, medio3, maximo),
+            values = data[,pname],
+            label = pname
+          )
+        }
+      } 
+    }
+    return(dim)
+  }
+  
+  # Variable assignment
+  configuration <- dim <- tickV <- vectorP <- NULL
+  
+  # set parameter values 
+  if (is.null(param_names)) {
+    param_names <- parameters$names
+  } else {
+    param_names <- unlist(param_names)
+  }
+  
+  # Check parameter values
+  if (any(!(param_names %in% parameters$names))) {
+    cat("Error: Unknown parameter names were encountered\n")
+    stop()
+    # verify that param_names contain more than one parameter
+  } else if (length(param_names) < 2) {
+    cat("Error: Data must have at least two parameters\n")
+    stop()
+  }
+  
+  # Check by_n_param
+  if (is.null(by_n_param))
+    by_n_param <- length(param_names)
+  if (!is.numeric(by_n_param)){
+    cat("Error: argument by_n_param must be numeric\n")
+    stop()
+  } else if (by_n_param < 2) {
+    cat("Error: number of parameters and argument by_n_param must > 1\n")
+    stop()
+  }
+  by_n_param <- min(length(param_names), by_n_param)
 
+  # Column .ID. and .PARENT. are removed
+  configurations <- configurations[, !(colnames(configurations) %in% c(".ID.", ".PARENT."))]
+  
+  # NA data processing
+  for (k in 1:ncol(configurations)) {
+    pname <- colnames(configurations)[k]
+    if (parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
+      ina <- is.na(configurations[,pname])
+      if (any(ina)) configurations[ina,pname] <- (parameters$domain[[pname]][2] + 1)
+      
+    } else if (parameters$types[pname] %in% c("c", "o")) {
+      ina <- is.na(configurations[,pname])
+      if (any(ina)) configurations[ina,pname] <- "NA"
+    }
+  }
 
+  plot_list = list()
+  plot_params <- param_names
+  # Create plots
+  i <- 1
+  while(length(plot_params) > 0) {
+    start_i <- 1
+    end_i <- min(by_n_param, length(plot_params))
+    params <- plot_params[start_i:end_i]
+    plot_params <- plot_params[-(start_i:end_i)]
+    if (length(plot_params) == 1) {
+      params <- c(params, plot_params)
+      plot_params <- c()
+    }
+    
+    ctabla <- configurations[,params]
+    dim <- get_dimensions(ctabla)
+    
+    # plot creation
+    p <- ctabla %>% plot_ly()
+    p <- p %>% add_trace(
+      type = "parcoords",
+      line = list(
+        color = "#60D0E1"
+      ),
+      dimensions = dim,
+      labelangle = -25
+    )
+    p <- p %>% plotly::layout(margin = list(r=40))
+    plot_list[[i]] <- p
+    i <- i + 1
+  }
+  
+  # Save plot file
+  if (!is.null(file_name)) {
+    directory <- paste0(dirname(file_name), sep = "/")
+    if (length(plot_list)==1) {
+      withr::with_dir(directory, orca(plot_list[[1]], file_name, width = 550, height = 550))
+    } else {
+      base_name = strsplit(basename(file_name),split = '[.]')[[1]][1]
+      ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
+      for (i in 1:length(plot_list)) {
+        part <- paste0("-", i)
+        withr::with_dir(directory, orca(plot_list[[i]], paste0(directory, "/", base_name, part,"." ,ext), width = 550, height = 550))
+      }
+    }
+  }
+  
+  if (length(plot_list) == 1)
+    return(plot_list[[1]])
+  return(plot_list)
+}
 

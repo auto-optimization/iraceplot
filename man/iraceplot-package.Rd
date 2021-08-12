@@ -4,7 +4,7 @@
 \name{iraceplot-package}
 \alias{iraceplot}
 \alias{iraceplot-package}
-\title{iraceplot: Make Various Types of Graphics}
+\title{iraceplot: Plots for visualizing the data produced by the irace package}
 \description{
 For the creation of various types of graphs that facilitates to understand the data produced by irace.
 
@@ -13,6 +13,7 @@ The different functions used in iraceplot will allow the creation of different g
 boxplot_test;
 scatter_test;
 parallel_coord;
+parallel_coord2;
 parallel_cat;
 sampling_frequency;
 sampling_frequency_iteration;
@@ -45,7 +46,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Leslie Pérez Cáceres
+  \item Leslie Pérez Cáceres \email{leslie.perez@pucv.cl}
 }
 
 

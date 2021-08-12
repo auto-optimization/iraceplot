@@ -9,6 +9,7 @@
 #' boxplot_test;
 #' scatter_test;
 #' parallel_coord;
+#' parallel_coord2;
 #' parallel_cat;
 #' sampling_frequency;
 #' sampling_frequency_iteration;
