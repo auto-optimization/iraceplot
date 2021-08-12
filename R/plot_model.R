@@ -1,20 +1,20 @@
-#' Categorical model generation
-#'
-#' @description
-#' 
-#' The `getCategoricalModel` function rebuilds the probabilities of
-#' the sampling models used in irace to generate configurations in each
-#' iteration.
-#' 
-#' @template arg_irace_results
-#'
-#' @param param_name
-#' String, parameter to be included in the plot (example: param_name = "algorithm"))
-#' 
-#' @return data frame with columns "iteration", "elite", "parameter", "value", "prob"
-#' 
-#' @examples
-#' NULL
+# Categorical model generation
+#
+# @description
+# 
+# The `getCategoricalModel` function rebuilds the probabilities of
+# the sampling models used in irace to generate configurations in each
+# iteration.
+# 
+# @template arg_irace_results
+#
+# @param param_name
+# String, parameter to be included in the plot (example: param_name = "algorithm"))
+# 
+# @return data frame with columns "iteration", "elite", "parameter", "value", "prob"
+# 
+# @examples
+# NULL
 getCategoricalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("c"))) {
@@ -72,23 +72,23 @@ getCategoricalModel <- function(irace_results, param_name)
   return(X)
 }
 
-#' Numerical model generation
-#'
-#' @description
-#' 
-#' The `getNumericalModel` function rebuilds the sampling distribution parameters
-#' of the models used by irace to sampling configurations during the configuration 
-#' process.
-#' 
-#' @template arg_irace_results
-#'
-#' @param param_name
-#' String, parameter to be included in the plot (example: param_name = "algorithm"))
-#' 
-#' @return data frame with columns "iteration", "elite", "parameter", "mean", "sd"
-#' 
-#' @examples
-#' NULL
+# Numerical model generation
+#
+# @description
+# 
+# The `getNumericalModel` function rebuilds the sampling distribution parameters
+# of the models used by irace to sampling configurations during the configuration 
+# process.
+# 
+# @template arg_irace_results
+#
+# @param param_name
+# String, parameter to be included in the plot (example: param_name = "algorithm"))
+# 
+# @return data frame with columns "iteration", "elite", "parameter", "mean", "sd"
+# 
+# @examples
+# NULL
 getNumericalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("i", "r", "i,log", "r,log"))) {
@@ -133,21 +133,21 @@ getNumericalModel <- function(irace_results, param_name)
   return(X)
 }
 
-#' Plot a categorical model
-#'
-#' @description
-#' 
-#' The `plotCategoricalModel` function creates a stacked bar plot showing
-#' the sampling probabilities of the parameter values for the elite
-#' configurations in the iterations of the configuration process. 
-#' 
-#' @param model_data
-#' String, data frame obtained from the `getCategoricalModel` function
-#'
-#' @param domain
-#' String Vector, domain of the parameter whose model will be plotted
-#' 
-#' @return bar plot
+# Plot a categorical model
+#
+# @description
+# 
+# The `plotCategoricalModel` function creates a stacked bar plot showing
+# the sampling probabilities of the parameter values for the elite
+# configurations in the iterations of the configuration process. 
+# 
+# @param model_data
+# String, data frame obtained from the `getCategoricalModel` function
+#
+# @param domain
+# String Vector, domain of the parameter whose model will be plotted
+# 
+# @return bar plot
 plotCategoricalModel <- function(model_data, domain) 
 {
   model_data$elite <- factor(model_data$elite)
@@ -168,29 +168,29 @@ plotCategoricalModel <- function(model_data, domain)
 }
 
 
-#' Plot a categorical model
-#'
-#' @description
-#' 
-#' The `plotNumericalModel` function creates a sampling distributions plot of the
-#' numerical parameters for the elite configurations of an iteration.
-#' 
-#' This plot shows de density function of the truncated normal distributions
-#' associated to each parameter for each elite configuration.
-#' 
-#' @param iteration
-#' Numeric, iteration that should considered in the plot
-#' 
-#' @param model_data
-#' String, data frame obtained from the `getNumericalModel` function
-#'
-#' @param domain
-#' Numeric vector, domain of the parameter whose model will be plotted
-#' 
-#' @param xlabel_iteration
-#' Numeric, iteration in which the x axis labels should be included
-#' 
-#' @return sampling distribution plot
+# Plot a categorical model
+#
+# @description
+# 
+# The `plotNumericalModel` function creates a sampling distributions plot of the
+# numerical parameters for the elite configurations of an iteration.
+# 
+# This plot shows de density function of the truncated normal distributions
+# associated to each parameter for each elite configuration.
+# 
+# @param iteration
+# Numeric, iteration that should considered in the plot
+# 
+# @param model_data
+# String, data frame obtained from the `getNumericalModel` function
+#
+# @param domain
+# Numeric vector, domain of the parameter whose model will be plotted
+# 
+# @param xlabel_iteration
+# Numeric, iteration in which the x axis labels should be included
+# 
+# @return sampling distribution plot
 plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 {
   model_data <- model_data[model_data[,"iteration"] == iteration, ]

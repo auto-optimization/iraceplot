@@ -6,7 +6,7 @@
 #' 
 #' The performance data is obtained from the test evaluations performed 
 #' by irace. Note that the testing is not a default feature in irace and should 
-#' enabled in the setup (see the irace package user guide for more details).
+#' be enabled in the setup (see the irace package user guide for more details).
 #'
 #' @template arg_irace_results
 #'

@@ -36,7 +36,7 @@ configurations in the test instances. Each point in the plot represents an insta
 and the color of the points indicates if one configuration is better than the other.
 
 The performance data is obtained from the test evaluations performed by irace. 
-Note that the testing is not a default feature in irace and should enabled in 
+Note that the testing is not a default feature in irace and should be enabled in 
 the setup. 
 
 Configuration ids provided in `id_configurations` should belong to 
