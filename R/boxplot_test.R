@@ -154,6 +154,7 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NU
 
   p <- p +
     geom_boxplot() +
+    geom_jitter(shape = 16, position = position_jitter(0.2), na.rm = TRUE) +
     theme(legend.position = "none") +
     labs(x = "ID", y = y_lab)
 

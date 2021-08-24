@@ -62,6 +62,7 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_na
     media <-  c(media, mean(distance))
   }
   
+  tabla_box[,"it"] <- factor(tabla_box[,"it"] , levels=as.character(1:niterations))
 
   # A graph of points and lines is created
   if (type == "line" | type == "both") {

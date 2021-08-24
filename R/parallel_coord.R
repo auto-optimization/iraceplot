@@ -201,17 +201,17 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   } 
   
   # Select data 
-  tabla <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ]
+  tabla <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ,drop=FALSE]
   filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  filtro <- filtro[filtro[, "configuration"] %in% id_configuration, ]
-  filtro <- filtro[filtro[, "iteration"] %in% iterations, ]
+  filtro <- filtro[filtro[, "configuration"] %in% id_configuration, ,drop=FALSE]
+  filtro <- filtro[filtro[, "iteration"] %in% iterations, ,drop=FALSE]
   
   # Merge iteration and configuration data
   colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
   tabla <- merge(filtro, tabla, by=".ID.")
   
   # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT."))]
+  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT.")),drop=FALSE]
   
   # NA data processing
   for (k in 1:ncol(tabla)) {
@@ -241,7 +241,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
       plot_params <- c()
     }
     
-    ctabla <- tabla[,c(params, "iteration")]
+    ctabla <- tabla[,c(params, "iteration"),drop=FALSE]
     dim <- get_dimensions(ctabla)
 
     # plot creation
@@ -267,13 +267,14 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   if (!is.null(file_name)) {
     directory <- paste0(dirname(file_name), sep = "/")
     if (length(plot_list)==1) {
-      withr::with_dir(directory, orca(plot_list[[1]], file_name, width = 550, height = 550))
+      orca(plot_list[[1]], file_name)
     } else {
-      base_name = strsplit(basename(file_name),split = '[.]')[[1]][1]
+      base_name <- strsplit(basename(file_name),split = '[.]')[[1]][1]
       ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
-        withr::with_dir(directory, orca(plot_list[[i]], paste0(directory, "/", base_name, part,"." ,ext), width = 550, height = 550))
+        cfile <- paste0(directory, "/", base_name, part,"." ,ext)
+        orca(plot_list[[i]], cfile)
       }
     }
   }
@@ -425,7 +426,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
   by_n_param <- min(length(param_names), by_n_param)
 
   # Column .ID. and .PARENT. are removed
-  configurations <- configurations[, !(colnames(configurations) %in% c(".ID.", ".PARENT."))]
+  configurations <- configurations[, !(colnames(configurations) %in% c(".ID.", ".PARENT.")), drop=FALSE]
   
   # NA data processing
   for (k in 1:ncol(configurations)) {
@@ -454,7 +455,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
       plot_params <- c()
     }
     
-    ctabla <- configurations[,params]
+    ctabla <- configurations[,params, drop=FALSE]
     dim <- get_dimensions(ctabla)
     
     # plot creation
@@ -476,13 +477,14 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
   if (!is.null(file_name)) {
     directory <- paste0(dirname(file_name), sep = "/")
     if (length(plot_list)==1) {
-      withr::with_dir(directory, orca(plot_list[[1]], file_name, width = 550, height = 550))
+      orca(plot_list[[1]], file_name)
     } else {
       base_name = strsplit(basename(file_name),split = '[.]')[[1]][1]
       ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
-        withr::with_dir(directory, orca(plot_list[[i]], paste0(directory, "/", base_name, part,"." ,ext), width = 550, height = 550))
+        cfile <- paste0(directory, "/", base_name, part,"." ,ext)
+        orca(plot_list[[i]], cfile)
       }
     }
   }
