@@ -118,7 +118,7 @@ that the number of evaluations can differ between configurations." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Box Plot Training</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pabloOnate/iraceplot/blob/master/R/boxplot_training.R'><code>R/boxplot_training.R</code></a></small>
+    
     <div class="hidden name"><code>boxplot_training.Rd</code></div>
     </div>
 
@@ -134,6 +134,7 @@ that the number of evaluations can differ between configurations.</p>
   iteration <span class='op'>=</span> <span class='cn'>NULL</span>,
   id_configurations <span class='op'>=</span> <span class='cn'>NULL</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  show_points <span class='op'>=</span> <span class='cn'>TRUE</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -164,7 +165,9 @@ of the selected iteration (last iteration by default) (example: id_configuration
     <tr>
       <th>rpd</th>
       <td><p>Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
-results per instance, FALSE to plot raw performance.</p></td>
+results per instance, FALSE to plot raw performance.</p>
+<p>@param show_points
+Logical, (default TRUE) TRUE to plot performance points together with the box plot.</p></td>
     </tr>
     <tr>
       <th>file_name</th>
