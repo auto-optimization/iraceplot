@@ -216,7 +216,7 @@ of elite configurations across the iterations. The best elite configuration on e
 is displayed in blue:
 
 ```{r fig.align="center", fig.width=7}
-boxplot_test(iraceResults, type="all")
+boxplot_test(iraceResults, type="all", show_points=FALSE)
 ```
 
 This plot allows to assess the progress of the configuration process regarding the test set performance, 

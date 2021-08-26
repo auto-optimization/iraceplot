@@ -21,6 +21,9 @@
 #' Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
 #' to best results per instance, FALSE to plot raw performance.
 #' 
+#' @param show_points
+#' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
+#' 
 #' @param file_name
 #' String, File name to save plot (example: "~/patch/example/file_name.png")
 #' 
@@ -32,7 +35,7 @@
 #' boxplot_test(iraceResults, rpd = FALSE)
 #' boxplot_test(iraceResults, type = "ibest")
 #' boxplot_test(iraceResults, type = "best")
-boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NULL) {
+boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, file_name = NULL) {
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
     cat("Error: irace_results does not contain the testing data")
@@ -154,9 +157,11 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, file_name = NU
 
   p <- p +
     geom_boxplot() +
-    geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.5, na.rm = TRUE) +
     theme(legend.position = "none") +
     labs(x = "ID", y = y_lab)
+  
+  if (show_points) 
+    p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
 
   # each box plot is divided by iteration
   if (type == "all" || type == "ibest") {

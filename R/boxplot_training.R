@@ -27,6 +27,9 @@
 #' @param rpd
 #' Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
 #' results per instance, FALSE to plot raw performance.
+#' 
+#'  @param show_points
+#' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
 #'
 #' @param file_name
 #' String, file name to save plot (example: "~/patch/example/file_name.png")
@@ -40,7 +43,7 @@
 #' boxplot_training(iraceResults, rpd = FALSE)
 #' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
-boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, file_name = NULL) {
+boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, show_points=TRUE, file_name = NULL) {
 
   # Variable assignment
   Performance <- Elite_configuration <- NULL
@@ -108,9 +111,11 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   # The plot scatter is created and assigned to p
   p <- ggplot(tabla, aes(x = Elite_configuration, y = Performance, color = Elite_configuration)) +
     geom_boxplot(na.rm = TRUE) +
-    geom_jitter(shape = 16, position = position_jitter(0.2), na.rm = TRUE) +
     theme(legend.position = "none") +
     labs(x = "Elite Configurations", y=y_lab)
+  
+  if (show_points) 
+    p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
 
   # If the value in file_name is added the pdf file is created
   if (!is.null(file_name)) {
