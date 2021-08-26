@@ -77,7 +77,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
       } else if (irace_results$parameters$types[pname] %in% c("c", "o")) {
         if (any(is.na(data[,pname]))) {
           tickT <- c(as.character(irace_results$parameters$domain[[pname]]), "NA")
-          tickV <- 1:(length(irace_results$parameters$domain[[pname]]) + 1)
+          tickV <- 1:(1 + length(irace_results$parameters$domain[[pname]]))
         } else {
           tickT <- as.character(irace_results$parameters$domain[[pname]])
           tickV <- 1:length(irace_results$parameters$domain[[pname]])
@@ -161,20 +161,18 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     cat("Error: argument by_n_param must be numeric\n")
     stop()
   } else if (by_n_param < 2) {
-    cat("Error: number of parameters and argument by_n_param must > 1\n")
-    stop()
+    stop("Number of parameters and argument by_n_param must > 1")
   }
   by_n_param <- min(length(param_names), by_n_param)
   
   # Check iterations
   if (!is.null(iterations)) {
-    it <- c(1:length(irace_results$allElites))
+    it <- 1:length(irace_results$allElites)
     if (any(!(iterations %in% it))) {
-      cat("Error: The interactions entered are outside the possible range\n")
-      stop()
+      stop("The interactions entered are outside the possible range")
     }
   } else {
-    iterations <- c(length(irace_results$allElites))
+    iterations <- length(irace_results$allElites)
     if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1) {
       cat("Note: The final iteration only has one elite configuration\n")
     }
@@ -184,13 +182,11 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   if (!is.null(id_configuration)) {
     # Verify that the entered id are within the possible range
     if (any(id_configuration[id_configuration < 1]) || any(id_configuration[id_configuration > nrow(irace_results$allConfigurations)])) {
-      cat("Error: IDs provided are outside the range of settings\n")
-      stop()
+      stop("Error: IDs provided are outside the range of settings")
     }
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configuration) <= 1 || length(id_configuration) > nrow(irace_results$allConfigurations)) {
-      cat("Error: You must provide more than one configuration id\n")
-      stop()
+      stop("Error: You must provide more than one configuration id")
     }
     iterations <- 1:length(irace_results$allElites)
   } else {
@@ -218,7 +214,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     pname <- colnames(tabla)[k]
     if (irace_results$parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
       ina <- is.na(tabla[,pname])
-      if (any(ina)) tabla[ina,pname] <- (irace_results$parameters$domain[[pname]][2] + 1)
+      if (any(ina)) tabla[ina,pname] <- irace_results$parameters$domain[[pname]][2] + 1
       
     } else if (irace_results$parameters$types[pname] %in% c("c", "o")) {
       ina <- is.na(tabla[,pname])
@@ -231,7 +227,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   plot_params <- param_names
   # Create plots
   i <- 1
-  while(length(plot_params)>0) {
+  while (length(plot_params) > 0) {
     start_i <- 1
     end_i <- min(by_n_param, length(plot_params))
     params <- plot_params[start_i:end_i]

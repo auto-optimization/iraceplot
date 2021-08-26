@@ -10,17 +10,19 @@
 #' best results, FALSE to plot raw performance
 #' 
 #' @param file_name
-#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' String, File name to save plot (example: `"~/patch/example/file_name.png"`)
 #' 
 #' @param .interactive
-#' Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+#' Logical (Default `interactive()`), TRUE if the plot is generated interactively (plotly package) which
 #' is the default option, or FALSE it is generated statically.
 #'
 #' @return plot
-#' @export
 #'
 #' @examples
-#' # configurations_display(iraceResults, .interactive = interactive())
+#' \dontrun{ # Takes a long time.
+#' configurations_display(iraceResults)
+#' }
+#' @export
 configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, .interactive = interactive()) {
 
   # variable assignment

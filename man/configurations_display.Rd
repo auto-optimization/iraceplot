@@ -17,9 +17,9 @@ configurations_display(
 \item{rpd}{logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
 best results, FALSE to plot raw performance}
 
-\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
+\item{file_name}{String, File name to save plot (example: `"~/patch/example/file_name.png"`)}
 
-\item{.interactive}{Logical (Default interactive()), TRUE if the plot is generated interactively (plotly package) which
+\item{.interactive}{Logical (Default `interactive()`), TRUE if the plot is generated interactively (plotly package) which
 is the default option, or FALSE it is generated statically.}
 }
 \value{
@@ -29,5 +29,7 @@ plot
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-# configurations_display(iraceResults, .interactive = interactive())
+\dontrun{ # Takes a long time.
+configurations_display(iraceResults)
+}
 }
