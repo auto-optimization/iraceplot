@@ -42,11 +42,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Pablo Oñate Marín \email{pablo.onate.m@gmail.com}
+\strong{Maintainer}: Leslie Pérez Cáceres \email{leslie.perez@pucv.cl}
 
 Authors:
 \itemize{
-  \item Leslie Pérez Cáceres \email{leslie.perez@pucv.cl}
+  \item Pablo Oñate Marín \email{pablo.onate.m@gmail.com}
 }
 
 

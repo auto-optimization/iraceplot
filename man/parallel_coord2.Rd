@@ -45,7 +45,11 @@ orca server will be used to export the plots and thus, it requires the library
 to be installed (https://github.com/plotly/orca).
 }
 \examples{
-parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters)
-parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
-parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, by_n_param = 5)
+parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+                iraceResults$parameters)
+parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+                iraceResults$parameters, 
+                param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+                iraceResults$parameters, by_n_param = 5)
 }

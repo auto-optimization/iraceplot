@@ -11,7 +11,7 @@ navbar:
   - text: "User Guide"
     href: articles/iraceplot_package.html
   - text: "Report example"
-    href: articles/report_example.html
+    href: articles/example/report_example.html
   - text: "Changelog"
     href: news/index.html
   right:

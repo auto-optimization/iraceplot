@@ -134,7 +134,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   }
   
   # Variable assignment
-  configuration <- dim <- tickV <- vectorP <- NULL
+  configuration <- iteration <- dim <- tickV <- vectorP <- NULL
   id_configuration <- unlist(id_configuration)
   
   # set parameter values 
@@ -227,7 +227,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   }
   
 
-  plot_list = list()
+  plot_list <- list()
   plot_params <- param_names
   # Create plots
   i <- 1
@@ -263,22 +263,23 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     i <- i + 1
   }
   
+  
   # Save plot file
   if (!is.null(file_name)) {
     directory <- paste0(dirname(file_name), sep = "/")
     if (length(plot_list)==1) {
-      orca(plot_list[[1]], file_name)
+      orca(plot_list[[1]], path_rel2abs(file_name))
     } else {
       base_name <- strsplit(basename(file_name),split = '[.]')[[1]][1]
       ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
-        cfile <- paste0(directory, "/", base_name, part,"." ,ext)
+        cfile <- path_rel2abs(paste0(directory, "/", base_name, part,"." ,ext))
         orca(plot_list[[i]], cfile)
       }
     }
   }
-  
+
   if (length(plot_list) == 1)
     return(plot_list[[1]])
   return(plot_list)
@@ -324,9 +325,13 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' @export
 #'
 #' @examples
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters)
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], iraceResults$parameters, by_n_param = 5)
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#'                 iraceResults$parameters)
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#'                 iraceResults$parameters, 
+#'                 param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#'                 iraceResults$parameters, by_n_param = 5)
 parallel_coord2 <- function(configurations, parameters, param_names = parameters$names,
                             by_n_param = NULL, file_name = NULL) {
   
@@ -441,7 +446,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     }
   }
 
-  plot_list = list()
+  plot_list <- list()
   plot_params <- param_names
   # Create plots
   i <- 1

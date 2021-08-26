@@ -2,9 +2,9 @@ Package: iraceplot
 Type: Package
 Title: Plots for visualizing the data produced by the irace package
 Version: 0.1.0
-Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut", "cre"),
+Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut"),
                     email = "pablo.onate.m@gmail.com"),
-            person("Leslie", "Pérez Cáceres", role = "aut",
+            person("Leslie", "Pérez Cáceres", role = c("aut", "cre"),
                     email = "leslie.perez@pucv.cl")
            )
 Description: For the creation of various types of graphs that facilitates to understand the data produced by irace.
