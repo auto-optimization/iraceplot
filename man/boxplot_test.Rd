@@ -4,7 +4,13 @@
 \alias{boxplot_test}
 \title{Box Plot Testing}
 \usage{
-boxplot_test(irace_results, type = "all", rpd = TRUE, file_name = NULL)
+boxplot_test(
+  irace_results,
+  type = "all",
+  rpd = TRUE,
+  show_points = TRUE,
+  file_name = NULL
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
@@ -17,6 +23,8 @@ elites in the testing.}
 
 \item{rpd}{Logical, (default TRUE) TRUE to plot performance as the relative percentage deviation 
 to best results per instance, FALSE to plot raw performance.}
+
+\item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
 \item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
 }
