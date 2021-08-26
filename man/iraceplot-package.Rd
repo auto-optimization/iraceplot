@@ -37,7 +37,7 @@ License: MIT + file LICENSE
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/pabloOnate/iraceplot}
+  \item \url{https://auto-optimization.github.io/iraceplot/}
 }
 
 }

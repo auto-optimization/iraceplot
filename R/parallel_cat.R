@@ -51,7 +51,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
                          iterations = NULL,  by_n_param = NULL, n_bins=3, file_name = NULL) {
 
   # Variable assignment
-  configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
+  iteration <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
   id_configurations <- unlist(id_configurations)
   
   # Parameters to be included

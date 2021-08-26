@@ -150,6 +150,7 @@ getNumericalModel <- function(irace_results, param_name)
 # @return bar plot
 plotCategoricalModel <- function(model_data, domain) 
 {
+  value <- prob <- elite <- NULL 
   model_data$elite <- factor(model_data$elite)
   p <- ggplot(model_data, aes(fill=value, y=prob, x=elite, group=value)) +
     geom_bar(position="stack", stat="identity") + 

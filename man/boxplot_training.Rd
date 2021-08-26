@@ -31,10 +31,9 @@ If no ids are provided, the configurations ids are set as the elite configuratio
 of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).}
 
 \item{rpd}{Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
-results per instance, FALSE to plot raw performance.
+results per instance, FALSE to plot raw performance.}
 
- @param show_points
-Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
+\item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
 \item{file_name}{String, file name to save plot (example: "~/patch/example/file_name.png")}
 }

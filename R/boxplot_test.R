@@ -46,7 +46,7 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TR
     cat("The type argument provided is incorrect\n")
   }
   
-  if (type=="ibest" && !iraceResults$scenario$testIterationElites) {
+  if (type=="ibest" && !irace_results$scenario$testIterationElites) {
       cat("Warning: irace data does not contain iteration elites testing, changing plot type to \"best\"\n")
       type <- "best"
   }

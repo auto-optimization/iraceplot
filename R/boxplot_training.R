@@ -28,7 +28,7 @@
 #' Logical (default TRUE), TRUE to plot performance as the relative percentage deviation to best 
 #' results per instance, FALSE to plot raw performance.
 #' 
-#'  @param show_points
+#' @param show_points
 #' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
 #'
 #' @param file_name
