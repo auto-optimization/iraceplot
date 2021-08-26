@@ -9,3 +9,4 @@
 ^\.github$
 ^Makefile$
 ^man-roxygen$
+^git_version$
