@@ -112,7 +112,7 @@ Iteration elite configuration performance on the test set:
 
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 if (iraceResults$scenario$testIterationElites) {
-   boxplot_test(iraceResults, type = "all")
+   boxplot_test(iraceResults, type = "all", show_points=FALSE)
 } else{
   cat("No iteration test performed.\n")
 }

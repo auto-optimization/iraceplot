@@ -16,6 +16,6 @@ navbar:
     href: news/index.html
   right:
   - icon: fa-github
-    href: https://github.com/pabloOnate/iraceplot
+    href: https://auto-optimization.github.io/iraceplot/
 
 

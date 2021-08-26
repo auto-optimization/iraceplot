@@ -40,7 +40,7 @@ install.packages("devtools")
 Currently, the iraceplot package can be installed from Github:
 
 ```
-devtools::install_github("pabloOnate/iraceplot")
+devtools::install_github("auto-optimization/iraceplot/")
 ```
 ## How to use
 
