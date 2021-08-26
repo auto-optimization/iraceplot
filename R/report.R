@@ -24,6 +24,11 @@ report <- function(irace_results,  file_name) {
     stop()
   } 
   
+  if (is.null(file_name)) {
+    cat("Error: You must provide a file_name \n")
+    stop()
+  } 
+  
   final_file <- path_rel2abs(paste0(file_name, ".html"))
   # Output file name is generated
   reportes <- tibble(
@@ -31,9 +36,11 @@ report <- function(irace_results,  file_name) {
   )
   cat("Creating file", final_file, "\n")
   # The output location of the file is placed as well as the location report_html.Rmd
-  reportes %>%
-    select(output_file = filename) %>%
-    purrr::pwalk(rmarkdown::render, input = system.file("template", "report_html.Rmd", package = "iraceplot"))
+ # reportes %>%
+#    select(output_file = filename) %>%
+#    purrr::pwalk(rmarkdown::render, input = system.file("template", "report_html.Rmd", package = "iraceplot"))
+  
+  rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=final_file)
   
   browseURL(final_file)
   
