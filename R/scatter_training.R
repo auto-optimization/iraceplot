@@ -57,7 +57,7 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE, file_
   distance <- irace_results$experiments
 
   if (rpd) {
-    distance <- 100 * (distance - apply(distance, 1, min, na.rm = TRUE)) / apply(distance, 1, min, na.rm = TRUE)
+    distance <- calculate_rpd(distance)
   }
 
   # An array of true and/or false to display if the field has data

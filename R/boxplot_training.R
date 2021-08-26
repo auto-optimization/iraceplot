@@ -70,7 +70,7 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   id <- irace_results$allElites[[long]]
 
   if (!is.null(id_configurations)) {
-    n_conf <- c(1:dim(irace_results$experiments)[2])
+    n_conf <- 1:dim(irace_results$experiments)[2]
     if (FALSE %in% (id_configurations %in% n_conf)) {
       cat(paste("Error: the following settings are out of range:", id_configurations[!(id_configurations %in% n_conf)],"\n"))
       stop()
@@ -83,7 +83,7 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   experiments <- irace_results$experiments
 
   if (rpd == TRUE) {
-    experiments <- 100 * (experiments - apply(experiments, 1, min, na.rm = TRUE)) / apply(experiments, 1, min, na.rm = TRUE)
+    experiments <- calculate_rpd(experiments)
   }
 
   matriz <- as.data.frame(experiments[, id])
@@ -125,4 +125,9 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
     p
     return(p)
   }
+}
+
+calculate_rpd <- function(x)
+{
+  100 * (x - apply(x, 1, min, na.rm = TRUE)) / apply(x, 1, min, na.rm = TRUE)
 }

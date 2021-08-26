@@ -64,7 +64,7 @@
 
   # the table values are modified
   if (rpd) {
-    tabla <- 100 * (tabla - apply(tabla, 1, min)) / apply(tabla, 1, min)
+    tabla <- calculate_rpd(tabla)
   }
 
   # the table is created based on the entered values

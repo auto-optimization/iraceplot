@@ -57,7 +57,7 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TR
 
   # the experiments values are modified
   if (rpd) {
-    experiments <- 100 * (experiments - apply(experiments, 1, min)) / apply(experiments, 1, min)
+    experiments <- calculate_rpd(experiments)
   }
 
   # all testing experiments settings
