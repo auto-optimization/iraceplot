@@ -2,7 +2,7 @@
 title: The iraceplot package
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{iraceplot_package}
+  %\VignetteIndexEntry{The iraceplot package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
