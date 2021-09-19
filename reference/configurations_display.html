@@ -127,7 +127,7 @@
   <span class='va'>irace_results</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+  interactive <span class='op'>=</span> <span class='fu'>base</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,23 +139,25 @@
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>logical(default TRUE) TRUE to plot performance as the relative percentage deviation to 
-best results, FALSE to plot raw performance</p></td>
+      <td><p>(`logical(1)`) TRUE to plot performance as the relative
+percentage deviation to best results per instance, FALSE to plot raw
+performance.</p></td>
     </tr>
     <tr>
       <th>file_name</th>
       <td><p>String, File name to save plot (example: `"~/patch/example/file_name.png"`)</p></td>
     </tr>
     <tr>
-      <th>.interactive</th>
-      <td><p>Logical (Default `interactive()`), TRUE if the plot is generated interactively (plotly package) which
-is the default option, or FALSE it is generated statically.</p></td>
+      <th>interactive</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) TRUE if the plot is generated
+interactively (using <code>plotly</code>) or FALSE it is generated
+statically. Defaults to the value returned by <code><a href='https://rdrr.io/r/base/interactive.html'>interactive()</a></code>,</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>plot</p>
+    <p>`ggplot()` object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span>  <span class='co'># Takes a long time.</span>

@@ -142,7 +142,7 @@ iterated racing procedure.</p>
     <pre class="usage"><span class='fu'>plot_experiments_matrix</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
   file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  .interactive <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
+  interactive <span class='op'>=</span> <span class='fu'>base</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,9 +157,10 @@ iterated racing procedure.</p>
       <td><p>string, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
     </tr>
     <tr>
-      <th>.interactive</th>
-      <td><p>Logical (Default interactive()), TRUE if the plot is generated interactively 
-(plotly package), or FALSE it should be generated statically.</p></td>
+      <th>interactive</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) TRUE if the plot is generated
+interactively (using <code>plotly</code>) or FALSE it is generated
+statically. Defaults to the value returned by <code><a href='https://rdrr.io/r/base/interactive.html'>interactive()</a></code>,</p></td>
     </tr>
     </table>
 
