@@ -105,6 +105,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Deploy package
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
