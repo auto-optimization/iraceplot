@@ -61,19 +61,54 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Check
+      - name: Check (CRAN)
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          NOT_CRAN: false
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
+
+      - name: Check (NOT CRAN)
+        if: success()
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          NOT_CRAN: true
+        run: |
+          options(crayon.enabled = TRUE)
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--run-donttest","--timings"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Install pkgdown
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
+        run: |
+          remotes::install_cran("pkgdown")
+        shell: Rscript {0}
+
+      - name: Install package
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
+        run: R CMD INSTALL .
+
+      - name: Test coverage
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
+        run: |
+          remotes::install_cran('covr')
+          covr::codecov(type="all", quiet=FALSE)
+        shell: Rscript {0}
+
+      - name: Deploy package
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
 
       - name: Upload check results
         if: failure()
