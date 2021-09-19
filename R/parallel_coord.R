@@ -295,20 +295,20 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' To export the plot to a file, it is possible to do it so manually using the
 #' functionality provided by plotly in the plot. If a file_name is provided,  
 #' orca server will be used to export the plots and thus, it requires the library
-#' to be installed (https://github.com/plotly/orca).
+#' to be installed (<https://github.com/plotly/orca>).
 #' 
 #'
 #' @param configurations
-#' Data frame, configurations in irace format 
-#' (example: configurations = iraceResults$allConfigurations)
+#' Data frame, configurations in `irace` format 
+#' (example: `configurations = iraceResults$allConfigurations`)
 #'
 #' @param parameters
 #' List, parameter object in irace format
-#' (example: configurations = iraceResults$parameters)
+#' (example: `configurations = iraceResults$parameters`)
 #'
 #' @param param_names
 #' String vector, names of the parameters that should be included in the plot
-#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' (example: `param_names = c("algorithm","alpha","rho","q0","rasrank")`)
 #'
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed
@@ -318,7 +318,6 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' Orca is required. See more details in: https://github.com/plotly/orca
 #'
 #' @return parallel coordinates plot
-#' @export
 #'
 #' @examples
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
@@ -328,6 +327,8 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #'                 param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters, by_n_param = 5)
+#' @export
+#' @md
 parallel_coord2 <- function(configurations, parameters, param_names = parameters$names,
                             by_n_param = NULL, file_name = NULL) {
   
