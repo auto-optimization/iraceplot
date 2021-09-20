@@ -10,7 +10,7 @@ boxplot_training(
   id_configurations = NULL,
   rpd = TRUE,
   show_points = TRUE,
-  file_name = NULL
+  filename = NULL
 )
 }
 \arguments{
@@ -30,13 +30,13 @@ two configurations, for a fair comparison use the test data plot.}
 If no ids are provided, the configurations ids are set as the elite configuration ids 
 of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).}
 
-\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+\item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.}
 
 \item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
-\item{file_name}{String, file name to save plot (example: "~/patch/example/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }
 \value{
 box plot

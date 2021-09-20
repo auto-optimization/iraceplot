@@ -261,8 +261,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @param param_name
 #' String, parameter to be included in the plot (example: param_name = "algorithm"))
 #' 
-#' @param file_name
-#' String, file name to save plot (example: "~/path/to/file_name.png")
+#' @template arg_filename
 #' 
 #' @return sampling model plot
 #' @export
@@ -270,7 +269,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @examples
 #' plot_model(iraceResults, param_name="algorithm")
 #' plot_model(iraceResults, param_name="alpha")
-plot_model <- function(irace_results, param_name, file_name=NULL) {
+plot_model <- function(irace_results, param_name, filename=NULL) {
   if (!(param_name %in% irace_results$parameters$names)) {
     cat("Error: Unknown parameter name provided\n")
     stop()
@@ -290,8 +289,8 @@ plot_model <- function(irace_results, param_name, file_name=NULL) {
 
   }
   
-  if(!is.null(file_name))
-    ggsave(file_name, plot = q)
+  if(!is.null(filename))
+    ggsave(filename, plot = q)
   return(q)
   
 }

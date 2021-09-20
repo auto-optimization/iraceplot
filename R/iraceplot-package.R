@@ -4,7 +4,7 @@
 #' The iraceplot package: \packageTitle{iraceplot}
 #' @description
 #'
-#' The different functions used in iraceplot will allow the creation of different graphics. The functions are as follows:
+#' Graphical visualization tools for analysing the data produced by irace.
 #'
 #' boxplot_test;
 #' scatter_test;
@@ -21,7 +21,7 @@
 #' report;
 #' plot_model;
 #'
-#' If you need information about any function you can put:
+#' If you need information about any function you can write:
 #' ?name_function
 #'
 #' If you need more information, go to the following page:
@@ -51,7 +51,6 @@
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom gridExtra grid.arrange
 #' @importFrom gridExtra marrangeGrob
-#' @importFrom utils browseURL
 #' @importFrom GGally ggparcoord
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
 #' @importFrom truncnorm dtruncnorm

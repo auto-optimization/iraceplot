@@ -35,8 +35,7 @@
 #' @param n_bins
 #' Numeric (default 3), number of intervals to generate for numerical parameters.
 #'
-#' @param file_name
-#' String, file name to save plot (example: "~/path/to/file_name.png")
+#' @template arg_filename
 #'
 #' @return parallel categories plot
 #' @export
@@ -48,7 +47,7 @@
 #' parallel_cat(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' parallel_cat(iraceResults, iterations = c(1, 4, 6), n_bins=4)
 parallel_cat <- function(irace_results, id_configurations = NULL, param_names = NULL, 
-                         iterations = NULL,  by_n_param = NULL, n_bins=3, file_name = NULL) {
+                         iterations = NULL,  by_n_param = NULL, n_bins=3, filename = NULL) {
 
   # Variable assignment
   iteration <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
@@ -212,14 +211,14 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   }
   
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
     if (length(plot_list) == 1) {
-      ggsave(file_name, plot = plot_list[[1]])
+      ggsave(filename, plot = plot_list[[1]])
     } else {
-      directory <- paste0(dirname(file_name), sep = "/")
-      base_name = strsplit(basename(file_name),split = '[.]')[[1]][1]
-      ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
+      directory <- paste0(dirname(filename), sep = "/")
+      base_name <- strsplit(basename(filename),split = '[.]')[[1]][1]
+      ext <- strsplit(basename(filename),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
         ggsave(paste0(directory, "/", base_name, part,"." ,ext), plot = plot_list[[i]])

@@ -20,8 +20,7 @@
 #' define equal numerical parameter values. If the numerical parameter values to be 
 #' compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`. 
 #' 
-#' @param file_name
-#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' @template arg_filename
 #'
 #' @return line or box plot
 #'
@@ -30,7 +29,7 @@
 #' @examples
 #' # sampling_distance(iraceResults)
 #' # sampling_distance(iraceResults, type = "boxplot", t=0.07)
-sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_name = NULL) {
+sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, filename = NULL) {
   if (!(type == "line" | type == "boxplot" | type == "both")) {
     cat("Error: The type parameter entered is incorrect\n")
     stop()
@@ -99,18 +98,18 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, file_na
     vectorP[2] <- list(p)
   }
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
     if (type == "both") {
-      pdf(paste0(file_name, ".pdf"), width = 12)
+      pdf(paste0(filename, ".pdf"), width = 12)
       do.call("grid.arrange", c(vectorP[1], ncol = 1))
       do.call("grid.arrange", c(vectorP[2], ncol = 1))
       dev.off()
     } else {
-      ggsave(file_name, plot = p)
+      ggsave(filename, plot = p)
     }
 
-    # If you do not add the value of file_name, the plot is displayed
+    # If you do not add the value of filename, the plot is displayed
   } else {
     if (type == "both") {
       do.call("grid.arrange", c(vectorP, nrow = 2))

@@ -8,7 +8,7 @@ scatter_test(
   irace_results,
   id_configurations,
   rpd = TRUE,
-  file_name = NULL,
+  filename = NULL,
   interactive = base::interactive()
 )
 }
@@ -18,11 +18,11 @@ scatter_test(
 \item{id_configurations}{String vector, configuration ids whose performance should be displayed 
 (example: id_configurations = c("92","119"))}
 
-\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+\item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.}
 
-\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{plotly}) or FALSE it is generated

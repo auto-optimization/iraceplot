@@ -22,8 +22,7 @@
 #' @param show_points
 #' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
 #' 
-#' @param file_name
-#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' @template arg_filename
 #' 
 #' @return box plot
 #' @export
@@ -33,7 +32,7 @@
 #' boxplot_test(iraceResults, rpd = FALSE)
 #' boxplot_test(iraceResults, type = "ibest")
 #' boxplot_test(iraceResults, type = "best")
-boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, file_name = NULL) {
+boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, filename = NULL) {
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
     cat("Error: irace_results does not contain the testing data")
@@ -166,10 +165,10 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TR
     p <- p + facet_grid(cols = vars(data$iteration_f), scales = "free")
   }
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    ggsave(file_name, plot = p)
-    # If you do not add the value of file_name, the plot is displayed
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    ggsave(filename, plot = p)
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
     return(p)

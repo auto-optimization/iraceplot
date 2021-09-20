@@ -19,8 +19,7 @@
 #' @param n_bins
 #' Numeric (default 3), number of intervals to generate for numerical parameters.
 #' 
-#' @param file_name
-#' String,  File name to save plot (example: "~/path/to/file_name.png")
+#' @template arg_filename
 #' 
 #' @return Sampling pie plot
 #' @export
@@ -28,7 +27,7 @@
 #' @examples
 #' sampling_pie(iraceResults)
 #' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
-sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, file_name = NULL) {
+sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL) {
 
   # variable assignment
   parents <- labels <- values <- ids <- depend <- NULL
@@ -131,14 +130,14 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, file_name 
     branchvalues = "total"
   )
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    # The file_name value is worked to separate it and assign it to new values.
-    nameFile <- basename(file_name)
-    directory <- paste0(dirname(file_name), sep = "/")
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    # The filename value is worked to separate it and assign it to new values.
+    nameFile <- basename(filename)
+    directory <- paste0(dirname(filename), sep = "/")
     withr::with_dir(directory, orca(p, paste0(nameFile, ".pdf")))
 
-    # If you do not add the value of file_name, the plot is displayed
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
     return(p)

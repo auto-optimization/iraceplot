@@ -15,8 +15,7 @@
 #' parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
 #' "both" show both frequency and density.
 #'
-#' @param file_name
-#' String, file name to save plot (example: "~/path/to/file_name.png")
+#' @template arg_filename
 #'
 #' @return Frequency and/or density plot
 #' @export
@@ -25,7 +24,7 @@
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
 sampling_frequency_iteration <- function(irace_results, param_name, numerical_type="both", 
-                                         file_name = NULL) {
+                                         filename = NULL) {
   # Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- ..density.. <- NULL
   
@@ -122,10 +121,10 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
     vectorPlot[1] <- list(p)
   }
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    ggsave(file_name, plot = do.call("grid.arrange", c(vectorPlot, ncol = 1)))
-    # If you do not add the value of file_name, the plot is displayed
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    ggsave(filename, plot = do.call("grid.arrange", c(vectorPlot, ncol = 1)))
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
     return(p)

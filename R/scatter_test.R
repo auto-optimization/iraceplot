@@ -20,8 +20,7 @@
 #' 
 #' @template arg_rpd
 #' 
-#' @param file_name
-#' String, File name to save plot (example: "~/patch/example/file_name.png")
+#' @template arg_filename
 #' 
 #' @template arg_interactive
 #'
@@ -32,7 +31,7 @@
 #' @examples
 #' scatter_test(iraceResults, id_configurations = c("92", "119"))
 #' scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
-  scatter_test <- function(irace_results, id_configurations, rpd = TRUE, file_name = NULL, interactive = base::interactive()) {
+  scatter_test <- function(irace_results, id_configurations, rpd = TRUE, filename = NULL, interactive = base::interactive()) {
 
   conf1 <- conf2 <- best <- instance <- x_val <- y_val <- point_text <- NULL
     
@@ -98,11 +97,11 @@
     return(q)
   }
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    ggsave(file_name, plot = q)
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    ggsave(filename, plot = q)
     return(q)
-    # If you do not add the value of file_name, the plot is displayed
+    # If you do not add the value of filename, the plot is displayed
   } else {
     q
     return(q)

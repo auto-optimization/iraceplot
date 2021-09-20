@@ -16,7 +16,7 @@
 #' to display the selected data.
 #' 
 #' To export the plot to a file, it is possible to do it so manually using the
-#' functionality provided by plotly in the plot. If a file_name is provided,  
+#' functionality provided by plotly in the plot. If a filename is provided,  
 #' orca server will be used to export the plots and thus, it requires the library
 #' to be installed (https://github.com/plotly/orca).
 #' 
@@ -42,9 +42,8 @@
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed.
 #'
-#' @param file_name
-#' String, file name to save plot (example: "~/patch/example/file_name.png"). 
-#' Orca is required. See more details in: https://github.com/plotly/orca.
+#' @template arg_filename
+#' @template orca_required
 #'
 #' @return parallel coordinates plot
 #' @export
@@ -58,7 +57,7 @@
 #' parallel_coord(iraceResults, iterations = c(1, 4, 6))
 parallel_coord <- function(irace_results, id_configuration = NULL, param_names = NULL,
                            iterations = NULL, only_elite = TRUE, by_n_param = NULL, 
-                           file_name = NULL) {
+                           filename = NULL) {
   
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
@@ -261,13 +260,13 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   
   
   # Save plot file
-  if (!is.null(file_name)) {
-    directory <- paste0(dirname(file_name), sep = "/")
+  if (!is.null(filename)) {
+    directory <- paste0(dirname(filename), sep = "/")
     if (length(plot_list)==1) {
-      orca(plot_list[[1]], path_rel2abs(file_name))
+      orca(plot_list[[1]], path_rel2abs(filename))
     } else {
-      base_name <- strsplit(basename(file_name),split = '[.]')[[1]][1]
-      ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
+      base_name <- strsplit(basename(filename),split = '[.]')[[1]][1]
+      ext <- strsplit(basename(filename),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
         cfile <- path_rel2abs(paste0(directory, "/", base_name, part,"." ,ext))
@@ -293,7 +292,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' to display the selected data.
 #' 
 #' To export the plot to a file, it is possible to do it so manually using the
-#' functionality provided by plotly in the plot. If a file_name is provided,  
+#' functionality provided by plotly in the plot. If a filename is provided,  
 #' orca server will be used to export the plots and thus, it requires the library
 #' to be installed (<https://github.com/plotly/orca>).
 #' 
@@ -313,9 +312,8 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed
 #'
-#' @param file_name
-#' String, file name to save plot (example: "~/patch/example/file_name.png"). 
-#' Orca is required. See more details in: https://github.com/plotly/orca
+#' @template arg_filename
+#' @template orca_required
 #'
 #' @return parallel coordinates plot
 #'
@@ -330,7 +328,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #' @export
 #' @md
 parallel_coord2 <- function(configurations, parameters, param_names = parameters$names,
-                            by_n_param = NULL, file_name = NULL) {
+                            by_n_param = NULL, filename = NULL) {
   
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
@@ -476,13 +474,14 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
   }
   
   # Save plot file
-  if (!is.null(file_name)) {
-    directory <- paste0(dirname(file_name), sep = "/")
+  if (!is.null(filename)) {
+    directory <- paste0(dirname(filename), sep = "/")
     if (length(plot_list)==1) {
-      orca(plot_list[[1]], file_name)
+      orca(plot_list[[1]], filename)
     } else {
-      base_name = strsplit(basename(file_name),split = '[.]')[[1]][1]
-      ext <- strsplit(basename(file_name),split = '[.]')[[1]][2]
+      # FIXME: Create a function to get basename and extension.
+      base_name <- strsplit(basename(filename),split = '[.]')[[1]][1]
+      ext <- strsplit(basename(filename),split = '[.]')[[1]][2]
       for (i in 1:length(plot_list)) {
         part <- paste0("-", i)
         cfile <- paste0(directory, "/", base_name, part,"." ,ext)

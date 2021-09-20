@@ -306,9 +306,9 @@ plot_model(iraceResults, param_name="alpha")
 
 The `report` function generates an HTML report with a summary of the configuration 
 process executed by irace. The function will create an html file in the path
-provided in the `file_name` argument and appending the ".html" extension to it.
+provided in the `filename` argument and appending the ".html" extension to it.
 
 
 ```{r fig.align="center", eval=FALSE}
-report(iraceResults, file_name="report")
+report(iraceResults, filename="report")
 ```

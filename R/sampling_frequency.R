@@ -14,28 +14,30 @@
 #'
 #' @param param_names
 #' String vector, A set of parameters to be included
-#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' (example: `param_names = c("algorithm","alpha","rho","q0","rasrank")`)
 #'
 #' @param n
 #' Numeric, for scenarios with large parameter sets, it selects a subset 
-#' of 9 parameters. For example, n=1 selects the first 9 (1 to 9) parameters, n=2 selects
+#' of 9 parameters. For example, `n=1` selects the first 9 (1 to 9) parameters, n=2 selects
 #' the next 9 (10 to 18) parameters and so on.
 #'
-#' @param file_name
-#' String,  file name to save plot. If there are more than 9 parameters, 
-#' a pdf file extension is recommended as it allows to create a multi-page
-#' document. Otherwise, you can use the n argument of the function to generate 
-#' the plot of a subset of the parameters. (example: "~/path/to/file_name.pdf")
+#' @template arg_filename
+#'
+#' @note If there are more than 9 parameters, a pdf file extension is
+#'   recommended as it allows to create a multi-page document. Otherwise, you
+#'   can use the `n` argument of the function to generate the plot of a subset
+#'   of the parameters.
 #'
 #' @return Frequency and/or density plot
-#' @export
 #'
 #' @examples
 #' sampling_frequency(iraceResults)
 #' sampling_frequency(iraceResults, n = 2)
 #' sampling_frequency(iraceResults, param_names = c("alpha"))
 #' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
-sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file_name = NULL) {
+#' @export
+#' @md
+sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, filename = NULL) {
 
   # Variable assignment
   tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
@@ -130,15 +132,15 @@ sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, file
   else
     wp <- do.call("grid.arrange", c(plot.list))
   
-  # If the value in file_name is added
-  if (!is.null(file_name)) {
+  # If the value in filename is added
+  if (!is.null(filename)) {
     if (npar > 9) {
-      cat("Warning: multiple plots generated. If a file_name with a pdf extension was provided a multi page plot 
+      cat("Warning: multiple plots generated. If a filename with a pdf extension was provided a multi page plot 
           will be generated. Otherwise, only the last plot set will be saved. Use the n argument of this function 
           to plot by parameter set.")
     }
     # FIXME: we could save in multiple files with a counter in their name,
-    ggsave(file_name, wp)
+    ggsave(filename, wp)
   } else {
     return(wp)
   }

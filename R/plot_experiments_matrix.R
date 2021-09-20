@@ -14,8 +14,7 @@
 #'
 #' @template arg_irace_results
 #'
-#' @param file_name
-#' string, File name to save plot (example: "~/patch/example/file_name.png")
+#' @template arg_filename
 #'
 #' @template arg_interactive
 #'
@@ -24,7 +23,7 @@
 #' @examples
 #' plot_experiments_matrix(iraceResults)
 #' @export
-plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive = base::interactive()) {
+plot_experiments_matrix <- function(irace_results, filename = NULL, interactive = base::interactive()) {
   # Variable assignment
   C <- RANK <- text <- i_id <- union <- NULL
 
@@ -57,14 +56,14 @@ plot_experiments_matrix <- function(irace_results, file_name = NULL, interactive
   }
 
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    # The file_name value is worked to separate it and assign it to new values.
-    nameFile <- basename(file_name)
-    directory <- paste0(dirname(file_name), sep = "/")
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    # The filename value is worked to separate it and assign it to new values.
+    nameFile <- basename(filename)
+    directory <- paste0(dirname(filename), sep = "/")
     withr::with_dir(directory, orca(p, paste0(nameFile, ".pdf")))
 
-    # If you do not add the value of file_name, the plot is displayed
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
   }

@@ -9,7 +9,7 @@ boxplot_test(
   type = "all",
   rpd = TRUE,
   show_points = TRUE,
-  file_name = NULL
+  filename = NULL
 )
 }
 \arguments{
@@ -21,13 +21,13 @@ configurations of the last iteration and "ibest" shows the elite configurations
 of each iteration. Note that "ibest" requites that irace includes the iteration
 elites in the testing.}
 
-\item{rpd}{(`logical(1)`) TRUE to plot performance as the relative
+\item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.}
 
 \item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
-\item{file_name}{String, File name to save plot (example: "~/patch/example/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }
 \value{
 box plot

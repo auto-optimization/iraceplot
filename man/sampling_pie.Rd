@@ -4,7 +4,7 @@
 \alias{sampling_pie}
 \title{Sampling pie plot}
 \usage{
-sampling_pie(irace_results, param_names = NULL, n_bins = 3, file_name = NULL)
+sampling_pie(irace_results, param_names = NULL, n_bins = 3, filename = NULL)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
@@ -13,7 +13,7 @@ sampling_pie(irace_results, param_names = NULL, n_bins = 3, file_name = NULL)
 
 \item{n_bins}{Numeric (default 3), number of intervals to generate for numerical parameters.}
 
-\item{file_name}{String,  File name to save plot (example: "~/path/to/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }
 \value{
 Sampling pie plot

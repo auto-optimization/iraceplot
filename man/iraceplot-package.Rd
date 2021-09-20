@@ -6,9 +6,9 @@
 \alias{iraceplot-package}
 \title{iraceplot: Plots for visualizing the data produced by the irace package}
 \description{
-For the creation of various types of graphs that facilitates to understand the data produced by irace.
+Graphical visualization tools for analysing the data produced by irace.
 
-The different functions used in iraceplot will allow the creation of different graphics. The functions are as follows:
+Graphical visualization tools for analysing the data produced by irace.
 
 boxplot_test;
 scatter_test;
@@ -25,7 +25,7 @@ scatter_training;
 report;
 plot_model;
 
-If you need information about any function you can put:
+If you need information about any function you can write:
 ?name_function
 
 If you need more information, go to the following page:
@@ -37,7 +37,9 @@ License: MIT + file LICENSE
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://auto-optimization.github.io/iraceplot/}
+  \item \url{https://auto-optimization.github.io/iraceplot}
+  \item \url{https://github.com/auto-optimization/iraceplot}
+  \item Report bugs at \url{https://github.com/auto-optimization/iraceplot/issues}
 }
 
 }
@@ -47,6 +49,7 @@ Useful links:
 Authors:
 \itemize{
   \item Pablo Oñate Marín \email{pablo.onate.m@gmail.com}
+  \item Manuel López-Ibáñez \email{manuel.lopez-ibanez@uma.es} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
 }
 
 

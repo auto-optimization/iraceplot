@@ -29,9 +29,8 @@
 #' @param show_points
 #' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
 #'
-#' @param file_name
-#' String, file name to save plot (example: "~/patch/example/file_name.png")
-#'
+#' @template arg_filename
+#' 
 #' @return box plot
 #'
 #' @export
@@ -41,7 +40,7 @@
 #' boxplot_training(iraceResults, rpd = FALSE)
 #' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
-boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, show_points=TRUE, file_name = NULL) {
+boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, show_points=TRUE, filename = NULL) {
 
   # Variable assignment
   Performance <- Elite_configuration <- NULL
@@ -52,7 +51,7 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
     stop()
   }
 
-  # It is checked if the file_name argument was added
+  # It is checked if the filename argument was added
   if (!is.null(iteration)) {
     # We verify that iteration is within the range of values it can take
     if (iteration > 0 && iteration <= long) {
@@ -115,10 +114,10 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   if (show_points) 
     p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    ggsave(file_name, plot = p)
-    # If you do not add the value of file_name, the plot is displayed
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    ggsave(filename, plot = p)
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
     return(p)

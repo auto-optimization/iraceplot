@@ -8,7 +8,7 @@ sampling_frequency_iteration(
   irace_results,
   param_name,
   numerical_type = "both",
-  file_name = NULL
+  filename = NULL
 )
 }
 \arguments{
@@ -20,7 +20,7 @@ sampling_frequency_iteration(
 parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
 "both" show both frequency and density.}
 
-\item{file_name}{String, file name to save plot (example: "~/path/to/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }
 \value{
 Frequency and/or density plot

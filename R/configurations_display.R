@@ -7,8 +7,7 @@
 #'
 #' @template arg_rpd
 #' 
-#' @param file_name
-#' String, File name to save plot (example: `"~/patch/example/file_name.png"`)
+#' @template arg_filename
 #' 
 #' @template arg_interactive
 #'
@@ -19,7 +18,7 @@
 #' configurations_display(iraceResults)
 #' }
 #' @export
-configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, interactive = base::interactive()) {
+configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, interactive = base::interactive()) {
 
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
@@ -135,10 +134,10 @@ configurations_display <- function(irace_results, rpd = TRUE, file_name = NULL, 
   }
 
 
-  # If the value in file_name is added the pdf file is created
-  if (!is.null(file_name)) {
-    ggsave(file_name, plot = p)
-    # If you do not add the value of file_name, the plot is displayed
+  # If the value in filename is added the pdf file is created
+  if (!is.null(filename)) {
+    ggsave(filename, plot = p)
+    # If you do not add the value of filename, the plot is displayed
   } else {
     p
     return(p)

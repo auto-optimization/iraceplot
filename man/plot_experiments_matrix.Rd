@@ -6,14 +6,14 @@
 \usage{
 plot_experiments_matrix(
   irace_results,
-  file_name = NULL,
+  filename = NULL,
   interactive = base::interactive()
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{file_name}{string, File name to save plot (example: "~/patch/example/file_name.png")}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{plotly}) or FALSE it is generated

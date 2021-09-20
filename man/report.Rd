@@ -4,18 +4,19 @@
 \alias{report}
 \title{Report Iraceplot}
 \usage{
-report(irace_results, file_name)
+report(irace_results, filename)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{file_name}{String, file name indicating where to save the report (example: "~/path-to/file_name")}
+\item{filename}{(\code{character(1)})
+String, file name indicating where to save the report (example: "~/path-to/filename")}
 }
 \value{
 document
 }
 \description{
-The `report` function creates an HTML report of the most relevant irace log
+The \code{report} function creates an HTML report of the most relevant irace log
 data.
 }
 \details{

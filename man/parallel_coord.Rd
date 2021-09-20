@@ -11,7 +11,7 @@ parallel_coord(
   iterations = NULL,
   only_elite = TRUE,
   by_n_param = NULL,
-  file_name = NULL
+  filename = NULL
 )
 }
 \arguments{
@@ -31,8 +31,7 @@ id_configuration is provided)}
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed.}
 
-\item{file_name}{String, file name to save plot (example: "~/patch/example/file_name.png"). 
-Orca is required. See more details in: https://github.com/plotly/orca.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }
 \value{
 parallel coordinates plot
@@ -53,7 +52,7 @@ plot. A list of plots is returned by this function in several plots are required
 to display the selected data.
 
 To export the plot to a file, it is possible to do it so manually using the
-functionality provided by plotly in the plot. If a file_name is provided,  
+functionality provided by plotly in the plot. If a filename is provided,  
 orca server will be used to export the plots and thus, it requires the library
 to be installed (https://github.com/plotly/orca).
 }

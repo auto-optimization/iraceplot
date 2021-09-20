@@ -8,15 +8,16 @@
 #'
 #' @template arg_irace_results
 #'
-#' @param file_name
-#' String, file name indicating where to save the report (example: "~/path-to/file_name")
+#' @param filename (`character(1)`)
+#' String, file name indicating where to save the report (example: "~/path-to/filename")
 #'
 #' @return document
-#' @export
 #'
 #' @examples
 #' NULL
-report <- function(irace_results,  file_name) {
+#' @export
+#' @md
+report <- function(irace_results,  filename) {
 
   # It is verified that only the location of the data file or its loaded form can be entered
   if (is.null(irace_results)) {
@@ -24,15 +25,15 @@ report <- function(irace_results,  file_name) {
     stop()
   } 
   
-  if (is.null(file_name)) {
-    cat("Error: You must provide a file_name \n")
+  if (is.null(filename)) {
+    cat("Error: You must provide a filename \n")
     stop()
   } 
   
-  final_file <- path_rel2abs(paste0(file_name, ".html"))
+  final_file <- path_rel2abs(paste0(filename, ".html"))
   # Output file name is generated
   reportes <- tibble(
-    filename = stringr::str_c(paste0(file_name, ".html"))
+    filename = stringr::str_c(paste0(filename, ".html"))
   )
   cat("Creating file", final_file, "\n")
   # The output location of the file is placed as well as the location report_html.Rmd
@@ -42,6 +43,6 @@ report <- function(irace_results,  file_name) {
   
   rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=final_file)
   
-  browseURL(final_file)
+  utils::browseURL(final_file)
   
 }
