@@ -115,7 +115,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>The configurations by iteration and instance</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/configurations_display.R'><code>R/configurations_display.R</code></a></small>
     <div class="hidden name"><code>configurations_display.Rd</code></div>
     </div>
 
@@ -126,7 +126,7 @@
     <pre class="usage"><span class='fu'>configurations_display</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
   interactive <span class='op'>=</span> <span class='fu'>base</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -139,13 +139,13 @@
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>(`logical(1)`) TRUE to plot performance as the relative
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, File name to save plot (example: `"~/patch/example/file_name.png"`)</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     <tr>
       <th>interactive</th>
@@ -175,7 +175,7 @@ statically. Defaults to the value returned by <code><a href='https://rdrr.io/r/b
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

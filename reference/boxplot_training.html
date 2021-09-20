@@ -118,7 +118,7 @@ that the number of evaluations can differ between configurations." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Box Plot Training</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/boxplot_training.R'><code>R/boxplot_training.R</code></a></small>
     <div class="hidden name"><code>boxplot_training.Rd</code></div>
     </div>
 
@@ -135,7 +135,7 @@ that the number of evaluations can differ between configurations.</p>
   id_configurations <span class='op'>=</span> <span class='cn'>NULL</span>,
   rpd <span class='op'>=</span> <span class='cn'>TRUE</span>,
   show_points <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -164,7 +164,7 @@ of the selected iteration (last iteration by default) (example: id_configuration
     </tr>
     <tr>
       <th>rpd</th>
-      <td><p>(`logical(1)`) TRUE to plot performance as the relative
+      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.</p></td>
     </tr>
@@ -173,8 +173,8 @@ performance.</p></td>
       <td><p>Logical, (default TRUE) TRUE to plot performance points together with the box plot.</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, file name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     </table>
 
@@ -199,7 +199,7 @@ performance.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

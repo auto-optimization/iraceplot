@@ -40,10 +40,10 @@
 
 
 <meta property="og:title" content="Parameter Frequency and density Plot — sampling_frequency" />
-<meta property="og:description" content="The `sampling_frequency` function creates a frequency or density plot that 
-depicts the sampling performed by irace across the iterations of the configuration 
+<meta property="og:description" content="The sampling_frequency function creates a frequency or density plot that
+depicts the sampling performed by irace across the iterations of the configuration
 process.
-For categorical parameters a frequency plot is created, while for numerical 
+For categorical parameters a frequency plot is created, while for numerical
 parameters a histogram and density plots are created. The plots are shown in
 groups of maximum 9, the parameters included in the plot can be specified by
 setting the param_names argument." />
@@ -121,15 +121,15 @@ setting the param_names argument." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameter Frequency and density Plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/sampling_frequency.R'><code>R/sampling_frequency.R</code></a></small>
     <div class="hidden name"><code>sampling_frequency.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `sampling_frequency` function creates a frequency or density plot that 
-depicts the sampling performed by irace across the iterations of the configuration 
+    <p>The <code>sampling_frequency</code> function creates a frequency or density plot that
+depicts the sampling performed by irace across the iterations of the configuration
 process.</p>
-<p>For categorical parameters a frequency plot is created, while for numerical 
+<p>For categorical parameters a frequency plot is created, while for numerical
 parameters a histogram and density plots are created. The plots are shown in
 groups of maximum 9, the parameters included in the plot can be specified by
 setting the param_names argument.</p>
@@ -139,7 +139,7 @@ setting the param_names argument.</p>
   <span class='va'>irace_results</span>,
   param_names <span class='op'>=</span> <span class='cn'>NULL</span>,
   n <span class='op'>=</span> <span class='cn'>NULL</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -152,26 +152,29 @@ setting the param_names argument.</p>
     <tr>
       <th>param_names</th>
       <td><p>String vector, A set of parameters to be included
-(example: param_names = c("algorithm","alpha","rho","q0","rasrank"))</p></td>
+(example: <code>param_names = c("algorithm","alpha","rho","q0","rasrank")</code>)</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Numeric, for scenarios with large parameter sets, it selects a subset 
-of 9 parameters. For example, n=1 selects the first 9 (1 to 9) parameters, n=2 selects
+      <td><p>Numeric, for scenarios with large parameter sets, it selects a subset
+of 9 parameters. For example, <code>n=1</code> selects the first 9 (1 to 9) parameters, n=2 selects
 the next 9 (10 to 18) parameters and so on.</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String,  file name to save plot. If there are more than 9 parameters, 
-a pdf file extension is recommended as it allows to create a multi-page
-document. Otherwise, you can use the n argument of the function to generate 
-the plot of a subset of the parameters. (example: "~/path/to/file_name.pdf")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Frequency and/or density plot</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>If there are more than 9 parameters, a pdf file extension is
+recommended as it allows to create a multi-page document. Otherwise, you
+can use the <code>n</code> argument of the function to generate the plot of a subset
+of the parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>sampling_frequency</span><span class='op'>(</span><span class='va'>iraceResults</span><span class='op'>)</span>
@@ -199,7 +202,7 @@ the plot of a subset of the parameters. (example: "~/path/to/file_name.pdf")</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

@@ -119,7 +119,7 @@ specified by argument t and hamming distance is calculated using this interval."
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sampling distance Plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/sampling_distance.R'><code>R/sampling_distance.R</code></a></small>
     <div class="hidden name"><code>sampling_distance.Rd</code></div>
     </div>
 
@@ -131,7 +131,7 @@ for numerical parameters a equality interval is defined by a threshold
 specified by argument t and hamming distance is calculated using this interval.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sampling_distance</span><span class='op'>(</span><span class='va'>irace_results</span>, type <span class='op'>=</span> <span class='st'>"boxplot"</span>, t <span class='op'>=</span> <span class='fl'>0.05</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sampling_distance</span><span class='op'>(</span><span class='va'>irace_results</span>, type <span class='op'>=</span> <span class='st'>"boxplot"</span>, t <span class='op'>=</span> <span class='fl'>0.05</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,8 +154,8 @@ define equal numerical parameter values. If the numerical parameter values to be
 compared are v1 and v2 they are considered equal if `|v1-v2| &lt;= |ub-lb|*t`.</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     </table>
 
@@ -178,7 +178,7 @@ compared are v1 and v2 they are considered equal if `|v1-v2| &lt;= |ub-lb|*t`.</
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

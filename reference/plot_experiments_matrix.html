@@ -123,7 +123,7 @@ iterated racing procedure." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Heat Map Plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/plot_experiments_matrix.R'><code>R/plot_experiments_matrix.R</code></a></small>
     <div class="hidden name"><code>plot_experiments_matrix.Rd</code></div>
     </div>
 
@@ -141,7 +141,7 @@ iterated racing procedure.</p>
 
     <pre class="usage"><span class='fu'>plot_experiments_matrix</span><span class='op'>(</span>
   <span class='va'>irace_results</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
   interactive <span class='op'>=</span> <span class='fu'>base</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -153,8 +153,8 @@ iterated racing procedure.</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>string, File name to save plot (example: "~/patch/example/file_name.png")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     <tr>
       <th>interactive</th>
@@ -182,7 +182,7 @@ statically. Defaults to the value returned by <code><a href='https://rdrr.io/r/b
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

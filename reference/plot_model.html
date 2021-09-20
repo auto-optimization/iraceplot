@@ -124,7 +124,7 @@ associated to each parameter for each elite configuration on each iteration." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot the sampling models used by irace</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/plot_model.R'><code>R/plot_model.R</code></a></small>
     <div class="hidden name"><code>plot_model.Rd</code></div>
     </div>
 
@@ -141,7 +141,7 @@ This plot shows de density function of the truncated normal distributions
 associated to each parameter for each elite configuration on each iteration.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_model</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>param_name</span>, file_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>plot_model</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>param_name</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,8 +155,8 @@ associated to each parameter for each elite configuration on each iteration.</p>
       <td><p>String, parameter to be included in the plot (example: param_name = "algorithm"))</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, file name to save plot (example: "~/path/to/file_name.png")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     </table>
 
@@ -189,7 +189,7 @@ associated to each parameter for each elite configuration on each iteration.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

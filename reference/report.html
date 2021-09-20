@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Report Iraceplot — report" />
-<meta property="og:description" content="The `report` function creates an HTML report of the most relevant irace log
+<meta property="og:description" content="The report function creates an HTML report of the most relevant irace log
 data." />
 
 
@@ -116,16 +116,16 @@ data." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Report Iraceplot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/report.R'><code>R/report.R</code></a></small>
     <div class="hidden name"><code>report.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `report` function creates an HTML report of the most relevant irace log
+    <p>The <code>report</code> function creates an HTML report of the most relevant irace log
 data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>report</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>file_name</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>report</span><span class='op'>(</span><span class='va'>irace_results</span>, <span class='va'>filename</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,8 +135,9 @@ data.</p>
       <td><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, file name indicating where to save the report (example: "~/path-to/file_name")</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)
+String, file name indicating where to save the report (example: "~/path-to/filename")</p></td>
     </tr>
     </table>
 
@@ -162,7 +163,7 @@ and their performance.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">

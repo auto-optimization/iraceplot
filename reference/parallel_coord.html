@@ -53,7 +53,7 @@ argument. Additionally, the maximum number of parameters to be displayed in one
 plot. A list of plots is returned by this function in several plots are required
 to display the selected data.
 To export the plot to a file, it is possible to do it so manually using the
-functionality provided by plotly in the plot. If a file_name is provided,  
+functionality provided by plotly in the plot. If a filename is provided,  
 orca server will be used to export the plots and thus, it requires the library
 to be installed (https://github.com/plotly/orca)." />
 
@@ -130,7 +130,7 @@ to be installed (https://github.com/plotly/orca)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parallel Coordinates Plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/auto-optimization/iraceplot/blob/master/R/parallel_coord.R'><code>R/parallel_coord.R</code></a></small>
     <div class="hidden name"><code>parallel_coord.Rd</code></div>
     </div>
 
@@ -148,7 +148,7 @@ argument. Additionally, the maximum number of parameters to be displayed in one
 plot. A list of plots is returned by this function in several plots are required
 to display the selected data.</p>
 <p>To export the plot to a file, it is possible to do it so manually using the
-functionality provided by plotly in the plot. If a file_name is provided,  
+functionality provided by plotly in the plot. If a filename is provided,  
 orca server will be used to export the plots and thus, it requires the library
 to be installed (https://github.com/plotly/orca).</p>
     </div>
@@ -160,7 +160,7 @@ to be installed (https://github.com/plotly/orca).</p>
   iterations <span class='op'>=</span> <span class='cn'>NULL</span>,
   only_elite <span class='op'>=</span> <span class='cn'>TRUE</span>,
   by_n_param <span class='op'>=</span> <span class='cn'>NULL</span>,
-  file_name <span class='op'>=</span> <span class='cn'>NULL</span>
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -195,9 +195,8 @@ id_configuration is provided)</p></td>
       <td><p>Numeric (optional), maximum number of parameters to be displayed.</p></td>
     </tr>
     <tr>
-      <th>file_name</th>
-      <td><p>String, file name to save plot (example: "~/patch/example/file_name.png"). 
-Orca is required. See more details in: https://github.com/plotly/orca.</p></td>
+      <th>filename</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>) File name to save the plot, for example <code>"~/patch/example/filename.png"</code>.</p></td>
     </tr>
     </table>
 
@@ -227,7 +226,7 @@ Orca is required. See more details in: https://github.com/plotly/orca.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres.</p>
+  <p>Developed by Pablo Oñate Marín, Leslie Pérez Cáceres, Manuel López-Ibáñez.</p>
 </div>
 
 <div class="pkgdown">
