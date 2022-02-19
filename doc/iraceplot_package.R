@@ -43,6 +43,13 @@ sampling_pie(irace_results = iraceResults)
 ## ----fig.align="center", fig.width= 7, fig.height=6---------------------------
 sampling_frequency_iteration(iraceResults, param_name = "beta")
 
+## ----fig.align="center", fig.width= 7, fig.height=6---------------------------
+sampling_heatmap(iraceResults, param_names = c("beta","alpha"))
+
+## ----fig.align="center", fig.width= 7, fig.height=6---------------------------
+sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+                  param_names = c("algorithm","q0"), sizes=c(0,5))
+
 ## ----fig.align="center", fig.width= 7-----------------------------------------
 sampling_distance(iraceResults, t=0.05)
 
@@ -59,10 +66,10 @@ scatter_test(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 boxplot_training(iraceResults)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
-scatter_training(iraceResults, id_configurations = c(808,809), .interactive=TRUE)
+scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
-plot_experiments_matrix(iraceResults, .interactive = TRUE)
+plot_experiments_matrix(iraceResults, interactive = TRUE)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
 plot_model(iraceResults, param_name="algorithm")
@@ -71,5 +78,5 @@ plot_model(iraceResults, param_name="algorithm")
 plot_model(iraceResults, param_name="alpha")
 
 ## ----fig.align="center", eval=FALSE-------------------------------------------
-#  report(iraceResults, file_name="report")
+#  report(iraceResults, filename="report")
 
