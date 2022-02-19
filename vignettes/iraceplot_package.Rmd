@@ -187,6 +187,24 @@ parameter values.
 sampling_frequency_iteration(iraceResults, param_name = "beta")
 ```
 
+To visualize the joint sampling frequency of two parameters using the `sampling_heatmap`
+function. This plot can be generated using information only of elite configurations
+and filtering the iterations to be considered. This function allows to filter configurations
+by iteration and whether if they are elite configurations.
+
+```{r fig.align="center", fig.width= 7, fig.height=6}
+sampling_heatmap(iraceResults, param_names = c("beta","alpha"))
+```
+
+The configurations can be provided directly to the `sampling_heatmap2` function. In both
+functions, the parameter sizes can be used to adjust the number of intervals to be
+displayed.
+
+```{r fig.align="center", fig.width= 7, fig.height=6}
+sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+                  param_names = c("localsearch","nnls"), sizes=c(0,5))
+```
+
 The mean distance between the sampled configurations can be visualized using the
 `sampling_distance` function. The argument `t` defines a percentage used to define 
 a domain interval to assess equality of numerical parameters. For example, if the 

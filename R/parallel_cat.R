@@ -61,31 +61,26 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   
   # Check parameter values
   if (any(!(param_names %in% irace_results$parameters$names))) {
-    cat("Error: Unknown parameter names were encountered\n")
-    stop()
+    stop("Error: Unknown parameter names were encountered\n")
     # verify that param_names contain more than one parameter
   } else if (length(param_names) < 2) {
-    cat("Error: Data must have at least two parameters\n")
-    stop()
+    stop("Error: Data must have at least two parameters\n")
   }
   
   # Check by_n_param
   if (is.null(by_n_param)) 
     by_n_param <- length(param_names)
   if (!is.numeric(by_n_param)){
-    cat("Error: argument by_n_param must be numeric\n")
-    stop()
+    stop("Error: argument by_n_param must be numeric\n")
   } else if (by_n_param < 2) {
-    cat("Error: argument by_n_param must > 1\n")
-    stop()
+    stop("Error: argument by_n_param must > 1\n")
   }
   by_n_param <- min(length(param_names), by_n_param)
   
   # Check iterations
   if (!is.null(iterations)) {
     if (any(!(iterations %in% 1:length(irace_results$allElites)))) {
-      cat("Error: The interactions entered are outside the possible range\n")
-      stop()
+      stop("Error: The interactions entered are outside the possible range\n")
     }
   } else {
     iterations <- 1:length(irace_results$allElites)
@@ -95,13 +90,11 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   if (!is.null(id_configurations)) {
     # Verify that the entered id are within the possible range
     if (any(id_configurations[id_configurations < 1]) || any(id_configurations[id_configurations > nrow(irace_results$allConfigurations)])) {
-      cat("Error: IDs provided are outside the range of settings\n")
-      stop()
+      stop("Error: IDs provided are outside the range of settings\n")
     }
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configurations) <= 1 || length(id_configurations) > nrow(irace_results$allConfigurations)) {
-      cat("Error: You must provide more than one configuration id\n")
-      stop()
+      stop("Error: You must provide more than one configuration id\n")
     }
     iterations <- 1:length(irace_results$allElites)
   } else {
@@ -109,8 +102,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   }
 
   if (!is.numeric(n_bins) || n_bins < 1) {
-    cat("Error: n_bins must be numeric > 0")
-    stop()
+    stop("Error: n_bins must be numeric > 0")
   }
   
   # Select data 

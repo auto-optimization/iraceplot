@@ -20,6 +20,8 @@ sampling_frequency_iteration;
 sampling_pie;
 plot_experiments_matrix;
 sampling_distance;
+sampling_heatmap;
+sampling_heatmap2;
 boxplot_training;
 scatter_training;
 report;
@@ -29,7 +31,7 @@ If you need information about any function you can write:
 ?name_function
 
 If you need more information, go to the following page:
-https://pabloonate.github.io/iraceplot/
+https://auto-optimization.github.io/iraceplot/
 }
 \details{
 License: MIT + file LICENSE
@@ -54,7 +56,7 @@ Authors:
 
 
 Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres
-        \email{pablo.onate.m@gmail.com}
+        \email{leslie.perez@gmail.com}
 }
 \keyword{automatic}
 \keyword{configuration}

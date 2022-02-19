@@ -21,13 +21,11 @@ report <- function(irace_results,  filename) {
 
   # It is verified that only the location of the data file or its loaded form can be entered
   if (is.null(irace_results)) {
-    cat("Error: You must provide irace_results \n")
-    stop()
+    stop("Error: You must provide irace_results \n")
   } 
   
   if (is.null(filename)) {
-    cat("Error: You must provide a filename \n")
-    stop()
+    stop("Error: You must provide a filename \n")
   } 
   
   final_file <- path_rel2abs(paste0(filename, ".html"))

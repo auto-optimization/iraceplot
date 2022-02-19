@@ -21,16 +21,13 @@
 distance_config <- function(irace_results, id_configuration, t = 0.05) {
   
   if (length(id_configuration) != 1) {
-    cat("Error: You must enter one configuration id\n")
-    stop()
+    stop("Error: You must enter one configuration id\n")
   } else if (FALSE %in% (id_configuration %in% irace_results$allConfigurations[[".ID."]])) {
-    cat(paste("Error: Configuration", id_configuration[1], "does not exist\n", sep = " "))
-    stop()
+    stop(paste("Error: Configuration", id_configuration[1], "does not exist\n", sep = " "))
   } 
   
   if (t < 0 || t > 1){
-    cat("Error: threshold t should be in [0,1]\n")
-    stop()
+    stop("Error: threshold t should be in [0,1]\n")
   }
   
   distance <- .ID. <- .PARENT. <- NULL

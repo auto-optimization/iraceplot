@@ -37,20 +37,16 @@
     
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
-    cat("Error: irace_results does not contain the testing data\n")
-    stop()
+    stop("Error: irace_results does not contain the testing data\n")
   }
   # verify that the data is correct
   id_configurations <- as.character(id_configurations)
   if (length(id_configurations) != 2) {
-    cat("Error: You must enter a vector with 2 values \n")
-    stop()
+    stop("Error: You must enter a vector with 2 values \n")
   } else if (!(id_configurations[1] %in% colnames(irace_results$testing$experiments))) {
-    cat(paste("Error: Configuration", id_configurations[1], "not found\n"))
-    stop()
+    stop(paste("Error: Configuration", id_configurations[1], "not found\n"))
   } else if (!(id_configurations[2] %in% colnames(irace_results$testing$experiments))) {
-    cat(paste("Error: Configuration", id_configurations[2], "not found\n"))
-    stop()
+    stop(paste("Error: Configuration", id_configurations[2], "not found\n"))
   }
 
   # the table is created with all the data from testing experiments

@@ -145,20 +145,17 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   
   # Check parameter values
   if (any(!(param_names %in% irace_results$parameters$names))) {
-    cat("Error: Unknown parameter names were encountered\n")
-    stop()
+    stop("Error: Unknown parameter names were encountered\n")
     # verify that param_names contain more than one parameter
   } else if (length(param_names) < 2) {
-    cat("Error: Data must have at least two parameters\n")
-    stop()
+    stop("Error: Data must have at least two parameters\n")
   }
   
   # Check by_n_param
   if (is.null(by_n_param))
     by_n_param <- length(param_names)
   if (!is.numeric(by_n_param)){
-    cat("Error: argument by_n_param must be numeric\n")
-    stop()
+    stop("Error: argument by_n_param must be numeric\n")
   } else if (by_n_param < 2) {
     stop("Number of parameters and argument by_n_param must > 1")
   }
@@ -168,7 +165,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   if (!is.null(iterations)) {
     it <- 1:length(irace_results$allElites)
     if (any(!(iterations %in% it))) {
-      stop("The interactions entered are outside the possible range")
+      stop("The iterations entered are outside the possible range")
     }
   } else {
     iterations <- length(irace_results$allElites)
@@ -331,7 +328,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
                             by_n_param = NULL, filename = NULL) {
   
   # The function get_dimensions creates a list of settings for each vertical axis
-  # in the parallel coordinates plot
+  # in the parallelcoordinates plot
   get_dimensions <- function(data) {
     # Create plot dimensions
     for (i in 1:ncol(data)) {
@@ -342,7 +339,13 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
           tickV <- 1:(length(parameters$domain[[pname]]) + 1)
         } else {
           tickT <- as.character(parameters$domain[[pname]])
-          tickV <- 1:length(parameters$domain[[pname]])
+          if (length(tickT) == 1) {
+            # handle fixed paramters
+            tickT <- c("", tickT)
+            tickV <- 1:2
+          } else {
+            tickV <- 1:length(parameters$domain[[pname]])
+          }
         }
         
         data[,pname] <- as.character(data[,pname])
@@ -352,7 +355,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
         }
         
         dim[[i]] <- list(
-          range = c(1, max(tickV)),
+          range = c(1, max(tickV)) ,
           label = pname,
           tickvals = tickV,
           ticktext = tickT,
@@ -405,23 +408,19 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
   
   # Check parameter values
   if (any(!(param_names %in% parameters$names))) {
-    cat("Error: Unknown parameter names were encountered\n")
-    stop()
+    stop("Error: Unknown parameter names were encountered\n")
     # verify that param_names contain more than one parameter
   } else if (length(param_names) < 2) {
-    cat("Error: Data must have at least two parameters\n")
-    stop()
+    stop("Error: Data must have at least two parameters\n")
   }
   
   # Check by_n_param
   if (is.null(by_n_param))
     by_n_param <- length(param_names)
   if (!is.numeric(by_n_param)){
-    cat("Error: argument by_n_param must be numeric\n")
-    stop()
+    stop("Error: argument by_n_param must be numeric\n")
   } else if (by_n_param < 2) {
-    cat("Error: number of parameters and argument by_n_param must > 1\n")
-    stop()
+    stop("Error: number of parameters and argument by_n_param must > 1\n")
   }
   by_n_param <- min(length(param_names), by_n_param)
 
@@ -457,7 +456,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     
     ctabla <- configurations[,params, drop=FALSE]
     dim <- get_dimensions(ctabla)
-    
+
     # plot creation
     p <- ctabla %>% plot_ly()
     p <- p %>% add_trace(

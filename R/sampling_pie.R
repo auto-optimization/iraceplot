@@ -33,8 +33,8 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename =
   parents <- labels <- values <- ids <- depend <- NULL
   
   if (!is.numeric(n_bins) || n_bins < 1) {
-    cat("Error: n_bins must be numeric > 0")
-    stop()
+    cat()
+    stop("Error: n_bins must be numeric > 0")
   }
 
   dependency <- FALSE
@@ -43,8 +43,8 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename =
 
   if (!is.null(param_names)) {
     if (any(!(param_names %in% irace_results$parameters$names))) {
-      cat(paste("Error: The following parameters are not found:", param_names[!(param_names %in% irace_results$parameters$names)], "\n"))
-      stop()
+      stop(paste("Error: The following parameters are not found:", 
+                 param_names[!(param_names %in% irace_results$parameters$names)], "\n"))
     } 
   } else {
     param_names <- irace_results$parameters$names

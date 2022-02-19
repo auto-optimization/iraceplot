@@ -35,8 +35,7 @@
 boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, filename = NULL) {
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
-    cat("Error: irace_results does not contain the testing data")
-    stop()
+    stop("Error: irace_results does not contain the testing data")
   }
 
   if (!(type %in% c("all", "best", "ibest"))) {

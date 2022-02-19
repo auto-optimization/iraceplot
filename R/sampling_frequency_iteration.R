@@ -29,21 +29,18 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- ..density.. <- NULL
   
   if (!(numerical_type %in% c("both", "density", "frequency"))){
-    cat("Error: unknown numerical_type, values must be either both, density ot frequency.\n")
-    stop()
+    stop("Error: unknown numerical_type, values must be either both, density ot frequency.\n")
   }
 
   # verify that param_names is other than null
   if (!is.null(param_name)) {
     # verify that param_names contain the data entered
     if (!(param_name %in% irace_results$parameters$names)) {
-      cat("Error: Unknown parameter name provided\n")
-      stop()
+      stop("Error: Unknown parameter name provided\n")
     }
     # verify that param_names contain more than one parameter
     else if (length(param_name) != 1) {
-      cat("Error: You can only provide one parameter\n")
-      stop()
+      stop("Error: You can only provide one parameter\n")
     }
   }
 

@@ -18,8 +18,7 @@
 getCategoricalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("c"))) {
-    cat("Error: Parameter is not categorical\n")
-    stop()
+    stop("Error: Parameter is not categorical\n")
   }
   iterations <- length(irace_results$allElites)
   domain <- irace_results$parameters$domain[[param_name]] 
@@ -92,8 +91,7 @@ getCategoricalModel <- function(irace_results, param_name)
 getNumericalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("i", "r", "i,log", "r,log"))) {
-    cat("Error: Parameter is not numerical\n")
-    stop()
+    stop("Error: Parameter is not numerical\n")
   }
   
   iterations <- length(irace_results$allElites)
@@ -271,8 +269,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' plot_model(iraceResults, param_name="alpha")
 plot_model <- function(irace_results, param_name, filename=NULL) {
   if (!(param_name %in% irace_results$parameters$names)) {
-    cat("Error: Unknown parameter name provided\n")
-    stop()
+    stop("Error: Unknown parameter name provided\n")
   }
   iterations <- length(irace_results$allElites)
 
