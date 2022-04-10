@@ -116,7 +116,7 @@ parallel_coord(iraceResults, iterations=1:iraceResults$state$nbIterations)
 ```
 
 By default, the plot colors the lines using the number of instances evaluated by
-the configuration. You can use the `color_by_instances` to choose between coloring 
+the configuration. You can use the `color_by_instances` argument to choose between coloring 
 the lines by the number of instances executed or the last iteration the configuration
 was executed on.
 
