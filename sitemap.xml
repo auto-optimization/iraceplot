@@ -28,6 +28,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/boxplot_performance.html</loc>
+  </url>
+  <url>
     <loc>/reference/boxplot_test.html</loc>
   </url>
   <url>
@@ -73,6 +76,9 @@
     <loc>/reference/sampling_frequency.html</loc>
   </url>
   <url>
+    <loc>/reference/sampling_frequency2.html</loc>
+  </url>
+  <url>
     <loc>/reference/sampling_frequency_iteration.html</loc>
   </url>
   <url>
@@ -83,6 +89,9 @@
   </url>
   <url>
     <loc>/reference/sampling_pie.html</loc>
+  </url>
+  <url>
+    <loc>/reference/scatter_performance.html</loc>
   </url>
   <url>
     <loc>/reference/scatter_test.html</loc>
