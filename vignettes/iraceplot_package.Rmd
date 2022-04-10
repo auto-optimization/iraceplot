@@ -115,6 +115,11 @@ configurations  considered as elites in each iteration use the `iterations` opti
 parallel_coord(iraceResults, iterations=1:iraceResults$state$nbIterations)
 ```
 
+By default, the plot colors the lines using the number of instances evaluated by
+the configuration. You can use the `color_by_instances` to choose between coloring 
+the lines by the number of instances executed or the last iteration the configuration
+was executed on.
+
 You can also visualize all configurations sampled in one or more iterations disabling the 
 `only_elite` option. For example, to visualize configurations sampled in iterations 1 to 9:
 
@@ -173,6 +178,13 @@ function which generates frequency and density plots for the sampled values:
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE}
  sampling_frequency(iraceResults)
 ```
+
+The same plot can be obtained using the `sampling_frequency2` function which receives
+directly a set of configurations and a parameters object.
+```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE, eval=FALSE}
+ sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters)
+```
+
 Included parameters specified with the param_names argument. These plots give a general idea of the area of the parameter space in which the sampling performance by irace was focused. For example:
 
 ```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE}
@@ -262,7 +274,6 @@ To further understand the difference of these two configurations the trainig dat
 verify if such effect holds for the training set.
 
 
-
 ## Training performance (all configurations)
 
 The following functions create plots of the training data in the irace log. 
@@ -288,12 +299,32 @@ boxplot_training(iraceResults)
 To observe the difference in the performance of two configurations you can also generate
 a scatter plot using the `scatter_training` function: 
 
-
 ```{r fig.align="center", fig.width=7}
 scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
 ```
 
+## General performance 
+To plot the performance of a selected set of configurations in an experiment matrix, 
+you can use the `boxplot_performance` function. The configurations can be selected
+in a vector (allElites):
 
+```{r fig.align="center", fig.width=7}
+boxplot_performance(iraceResults$experiments, allElites=c(808,809))
+```
+
+If the configurations are provided in a list, then the different elements will be
+considered as iterations. 
+
+```{r fig.align="center", fig.width=7}
+boxplot_performance(iraceResults$experiments, allElites=as.list(c(803,808,809)))
+```
+
+In the same way, you can use the `scatter_perfomance` function to plot the difference
+between configurations:
+
+```{r fig.align="center", fig.width=7}
+scatter_performance(iraceResults$experiments, id_configurations = c(803,809), interactive=TRUE)
+```
 
 # Visualizing the configuration process
 

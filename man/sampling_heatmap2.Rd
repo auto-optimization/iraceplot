@@ -37,5 +37,6 @@ The `sampling_heatmap2` function creates a heat map that display the
 frequency of sampling values of two parameters.
 }
 \examples{
-sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, param_names=c("beta", "alpha"))
+sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+                  param_names=c("beta", "alpha"))
 }

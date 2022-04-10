@@ -11,6 +11,7 @@ parallel_coord(
   iterations = NULL,
   only_elite = TRUE,
   by_n_param = NULL,
+  color_by_instances = TRUE,
   filename = NULL
 )
 }
@@ -30,6 +31,10 @@ parallel_coord(
 id_configuration is provided)}
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed.}
+
+\item{color_by_instances}{Logical (default TRUE), choose how to color the lines. TRUE shows the number 
+of instances evaluated by the configuration in the colores. FALSE to show
+the iteration number where the configuration was sampled.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
 }

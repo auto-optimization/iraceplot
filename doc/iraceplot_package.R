@@ -37,6 +37,9 @@ sampling_pie(irace_results = iraceResults)
 ## ----fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE----
  sampling_frequency(iraceResults)
 
+## ----fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE, eval=FALSE----
+#   sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters)
+
 ## ----fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE------------
  sampling_frequency(iraceResults, param_names = c("beta"))
 
@@ -48,7 +51,7 @@ sampling_heatmap(iraceResults, param_names = c("beta","alpha"))
 
 ## ----fig.align="center", fig.width= 7, fig.height=6---------------------------
 sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
-                  param_names = c("algorithm","q0"), sizes=c(0,5))
+                  param_names = c("localsearch","nnls"), sizes=c(0,5))
 
 ## ----fig.align="center", fig.width= 7-----------------------------------------
 sampling_distance(iraceResults, t=0.05)
@@ -67,6 +70,15 @@ boxplot_training(iraceResults)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
 scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
+
+## ----fig.align="center", fig.width=7------------------------------------------
+boxplot_performance(iraceResults$experiments, allElites=c(808,809))
+
+## ----fig.align="center", fig.width=7------------------------------------------
+boxplot_performance(iraceResults$experiments, allElites=as.list(c(803,808,809)))
+
+## ----fig.align="center", fig.width=7------------------------------------------
+scatter_performance(iraceResults$experiments, id_configurations = c(803,809), interactive=TRUE)
 
 ## ----fig.align="center", fig.width=7------------------------------------------
 plot_experiments_matrix(iraceResults, interactive = TRUE)

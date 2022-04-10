@@ -32,7 +32,7 @@ statically. Defaults to the value returned by \code{interactive()},}
 `ggplot()` object
 }
 \description{
-The function creates a scatter plot comparing the performance of two 
+The `scatter_test` function creates a scatter plot comparing the performance of two 
 configurations in the test instances. Each point in the plot represents an instance
 and the color of the points indicates if one configuration is better than the other.
 

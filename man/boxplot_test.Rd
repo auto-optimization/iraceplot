@@ -2,7 +2,7 @@
 % Please edit documentation in R/boxplot_test.R
 \name{boxplot_test}
 \alias{boxplot_test}
-\title{Box Plot Testing}
+\title{Box Plot Testing Performance}
 \usage{
 boxplot_test(
   irace_results,
@@ -18,7 +18,7 @@ boxplot_test(
 \item{type}{String, (default "all") possible values are "all", "ibest" or "best". "all" 
 shows all the configurations included in the test, "best" shows the elite 
 configurations of the last iteration and "ibest" shows the elite configurations 
-of each iteration. Note that "ibest" requites that irace includes the iteration
+of each iteration. Note that "ibest" requires that irace includes the iteration
 elites in the testing.}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative

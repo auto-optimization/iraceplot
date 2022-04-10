@@ -28,7 +28,8 @@ two configurations, for a fair comparison use the test data plot.}
 
 \item{id_configurations}{Numeric vector, configurations ids whose performance should be included in the plot.
 If no ids are provided, the configurations ids are set as the elite configuration ids 
-of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).}
+of the selected iteration (last iteration by default) 
+(example: id_configurations = c(20,50,100,300,500,600,700)).}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -52,4 +53,5 @@ boxplot_training(iraceResults)
 boxplot_training(iraceResults, rpd = FALSE)
 boxplot_training(iraceResults, iteration = 5)
 boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
+
 }

@@ -1,4 +1,4 @@
-#' Box Plot Testing
+#' Box Plot Testing Performance
 #'
 #' @description
 #' The `boxplot_test` function creates a box plot that displays the performance 
@@ -14,7 +14,7 @@
 #' String, (default "all") possible values are "all", "ibest" or "best". "all" 
 #' shows all the configurations included in the test, "best" shows the elite 
 #' configurations of the last iteration and "ibest" shows the elite configurations 
-#' of each iteration. Note that "ibest" requites that irace includes the iteration
+#' of each iteration. Note that "ibest" requires that irace includes the iteration
 #' elites in the testing.
 #' 
 #' @template arg_rpd
@@ -37,139 +37,29 @@ boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TR
   if (!("testing" %in% names(irace_results))) {
     stop("Error: irace_results does not contain the testing data")
   }
-
   if (!(type %in% c("all", "best", "ibest"))) {
-    cat("The type argument provided is incorrect\n")
+    stop("The type argument provided is incorrect\n")
   }
   
   if (type=="ibest" && !irace_results$scenario$testIterationElites) {
-      cat("Warning: irace data does not contain iteration elites testing, changing plot type to \"best\"\n")
-      type <- "best"
-  }
-
-  ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
-  # the table is created with all the data from testing experiments
-  experiments <- as.data.frame(irace_results$testing$experiments)
-
-  # the experiments values are modified
-  if (rpd) {
-    experiments <- calculate_rpd(experiments)
-  }
-
-  # all testing experiments settings
-  if (type == "all") {
-    v_allElites <- unlist(irace_results$allElites)
-    v_allElites <- as.character(v_allElites[v_allElites %in% colnames(experiments)])
-    data <- experiments[,v_allElites, drop=FALSE]
-    
-    # the last iteration of the elite settings
-  } else if (type == "best") {
-    test_elites <- irace_results$allElites[[length(irace_results$allElites)]]
-    v_allElites <- as.character(test_elites[test_elites %in% colnames(experiments)])
-    data <- experiments[,v_allElites, drop=FALSE]
-    
-    # the best settings of each iteration
-  } else if (type == "ibest") {
-    v_allElites <- as.character(irace_results$iterationElites)
-    data <- experiments[, v_allElites, drop=FALSE]
-  } else {
-    cat("Error: non existent type argument\n")
-  }
-
-  names_col <- colnames(data)
-  # the data is processed
-  data <- reshape(data,
-    varying = as.vector(colnames(data)),
-    v.names = "performance",
-    timevar = "ids",
-    times = as.vector(colnames(data)),
-    new.row.names = 1:(dim(data)[1] * dim(data)[2]),
-    direction = "long"
-  )
-
-  # column iteration is added
-  if (type == "all" || type == "ibest") {
-    iteration <- sample(NA, size = dim(data)[1], replace = TRUE)
-    data <- cbind(data, iteration)
-
-    if (type == "all") {
-      a <- 1
-      for (i in 1:length(irace_results$allElites)) {
-        test_elites <- irace_results$allElites[[i]][irace_results$allElites[[i]] %in% names_col]
-        for (k in 1:length(test_elites)) {
-          data$iteration[data$ids == names_col[a]] <- i
-          a <- a + 1
-        }
-      }
-    } else if (type == "ibest") {
-      for (i in 1:length(unique(data$ids))) {
-        data$iteration[data$ids == unique(data$ids)[i]] <- i
-      }
-    }
-
-    data$iteration_f <- factor(data$iteration, levels = (unique(data$iteration)))
-  }
-
-  for (k in 1:length(names_col)) {
-    if (!(names_col[k] == as.character(v_allElites)[k])) {
-      data$ids[data$ids == names_col[k]] <- as.character(v_allElites)[k]
-    }
-  }
-
-  if (type == "all" || type == "best") {
-    best_conf <- sample(NA, size = dim(data)[1], replace = TRUE)
-    data <- cbind(data, best_conf)
-    if (type == "all") {
-      for (i in 1:length(irace_results$allElites)) {
-        data$best_conf[data$iteration == i & data$ids == as.character(irace_results$iterationElites[i])] <- "best" # as.character(i)
-      }
-    } else {
-      data$best_conf[data$ids == v_allElites[1]] <- "best" # as.character(1)
-    }
-  }
-
-  data$ids_f <- factor(data$ids, levels = unique(data$ids))
-
-  # the box plot is created
-  if (type == "best") {
-    p <- ggplot(data, aes(x = ids_f, y = performance, color = best_conf)) +
-      scale_color_hue(h = c(220, 270))
-  } else if (type == "ibest") {
-    p <- ggplot(data, aes(x = ids_f, y = performance, color = iteration_f)) +
-      labs(subtitle = "iterations") +
-      theme(plot.subtitle = element_text(hjust = 0.5))
-  } else {
-    p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) +
-      labs(subtitle = "iterations") +
-      theme(
-        plot.subtitle = element_text(hjust = 0.5),
-        axis.text.x = element_text(size = 6.4, angle = 90)
-      ) +
-      scale_color_hue(h = c(220, 270))
+    cat("Warning: irace data does not contain iteration elites testing, changing plot type to \"best\"\n")
+    type <- "best"
   }
   
-  y_lab <- "Performance"
-  if (rpd) y_lab <- "RPD performance"
-
-  p <- p +
-    geom_boxplot() +
-    theme(legend.position = "none") +
-    labs(x = "ID", y = y_lab)
+  experiments <- irace_results$testing$experiments
   
-  if (show_points) 
-    p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
-
-  # each box plot is divided by iteration
-  if (type == "all" || type == "ibest") {
-    p <- p + facet_grid(cols = vars(data$iteration_f), scales = "free")
-  }
-
-  # If the value in filename is added the pdf file is created
-  if (!is.null(filename)) {
-    ggsave(filename, plot = p)
-    # If you do not add the value of filename, the plot is displayed
+  if (type=="all" || type=="ibest") {
+    id_configurations <- irace_results$allElites
   } else {
-    p
-    return(p)
+    id_configurations <- irace_results$allElites[[length(irace_results$allElites)]]
+    type <- "all"
   }
+  
+  boxplot_performance(experiments = experiments,
+                      allElites = id_configurations,
+                      type = type,
+                      first_is_best = TRUE,
+                      rpd = rpd, 
+                      show_points = show_points,
+                      filename = filename)
 }

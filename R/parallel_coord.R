@@ -42,6 +42,11 @@
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed.
 #'
+#' @param color_by_instances
+#' Logical (default TRUE), choose how to color the lines. TRUE shows the number 
+#' of instances evaluated by the configuration in the colores. FALSE to show
+#' the iteration number where the configuration was sampled.
+#' 
 #' @template arg_filename
 #' @template orca_required
 #'
@@ -57,7 +62,7 @@
 #' parallel_coord(iraceResults, iterations = c(1, 4, 6))
 parallel_coord <- function(irace_results, id_configuration = NULL, param_names = NULL,
                            iterations = NULL, only_elite = TRUE, by_n_param = NULL, 
-                           filename = NULL) {
+                           color_by_instances =TRUE, filename = NULL) {
   
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
@@ -193,28 +198,34 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   } 
   
   # Select data 
-  tabla <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ,drop=FALSE]
-  filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  filtro <- filtro[filtro[, "configuration"] %in% id_configuration, ,drop=FALSE]
-  filtro <- filtro[filtro[, "iteration"] %in% iterations, ,drop=FALSE]
+  data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ,drop=FALSE]
+  config_iter <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
+  config_iter <- config_iter[config_iter[, "configuration"] %in% id_configuration, ,drop=FALSE]
+  config_iter <- config_iter[config_iter[, "iteration"] %in% iterations, ,drop=FALSE]
+  
+  experiments <- irace_results$experiments[,as.character(id_configuration),drop=FALSE]
+  fitness     <- colSums(!is.na(experiments))
   
   # Merge iteration and configuration data
-  colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
-  tabla <- merge(filtro, tabla, by=".ID.")
+  colnames(config_iter)[colnames(config_iter) == "configuration"] <- ".ID."
+  data <- merge(config_iter, data, by=".ID.")
+  
+  # Merge fitness measure
+  data[,"fitness"] <- fitness[as.character(data[,".ID."])]
   
   # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT.")),drop=FALSE]
+  data <- data[, !(colnames(data) %in% c(".ID.", ".PARENT.")),drop=FALSE]
   
   # NA data processing
-  for (k in 1:ncol(tabla)) {
-    pname <- colnames(tabla)[k]
+  for (k in 1:ncol(data)) {
+    pname <- colnames(data)[k]
     if (irace_results$parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
-      ina <- is.na(tabla[,pname])
-      if (any(ina)) tabla[ina,pname] <- irace_results$parameters$domain[[pname]][2] + 1
+      ina <- is.na(data[,pname])
+      if (any(ina)) data[ina,pname] <- irace_results$parameters$domain[[pname]][2] + 1
       
     } else if (irace_results$parameters$types[pname] %in% c("c", "o")) {
-      ina <- is.na(tabla[,pname])
-      if (any(ina)) tabla[ina,pname] <- "NA"
+      ina <- is.na(data[,pname])
+      if (any(ina)) data[ina,pname] <- "NA"
     }
   }
   
@@ -233,24 +244,40 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
       plot_params <- c()
     }
     
-    ctabla <- tabla[,c(params, "iteration"),drop=FALSE]
-    dim <- get_dimensions(ctabla)
+    cdata <- data[,c(params, "fitness", "iteration"),drop=FALSE]
+    dim <- get_dimensions(cdata)
 
     # plot creation
-    p <- ctabla %>% plot_ly()
-    p <- p %>% add_trace(
-      type = "parcoords",
-      line = list(
-        color = ~iteration,
-        colorscale = "Viridis",
-        showscale = TRUE,
-        reversescale = TRUE,
-        cmin = 1,
-        cmax = length(irace_results$allElites)
-      ),
-      dimensions = dim,
-      labelangle = -25
-    )
+    p <- cdata %>% plot_ly()
+    if (color_by_instances) {
+      p <- p %>% add_trace(
+        type = "parcoords",
+        line = list(
+          color = ~fitness,
+          colorscale = "Viridis",
+          showscale = TRUE,
+          reversescale = TRUE,
+          cmin = min(data[,"fitness"]),
+          cmax = max(data[,"fitness"])
+        ),
+        dimensions = dim,
+        labelangle = -25
+      )
+    } else {
+      p <- p %>% add_trace(
+        type = "parcoords",
+        line = list(
+          color = ~iteration,
+          colorscale = "Viridis",
+          showscale = TRUE,
+          reversescale = TRUE,
+          cmin = 1,
+          cmax = length(irace_results$allElites)
+        ),
+        dimensions = dim,
+        labelangle = -25
+      )
+    }
     plot_list[[i]] <- p
     i <- i + 1
   }
@@ -276,6 +303,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
     return(plot_list[[1]])
   return(plot_list)
 }
+
 
 #' Parallel Coordinates Plot (configurations)
 #'
@@ -308,6 +336,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
 #'
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed
+#' 
 #'
 #' @template arg_filename
 #' @template orca_required

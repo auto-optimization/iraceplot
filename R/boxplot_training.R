@@ -22,7 +22,8 @@
 #' @param id_configurations
 #' Numeric vector, configurations ids whose performance should be included in the plot.
 #' If no ids are provided, the configurations ids are set as the elite configuration ids 
-#' of the selected iteration (last iteration by default) (example: id_configurations = c(20,50,100,300,500,600,700)).
+#' of the selected iteration (last iteration by default) 
+#' (example: id_configurations = c(20,50,100,300,500,600,700)).
 #'
 #' @template arg_rpd
 #' 
@@ -40,88 +41,42 @@
 #' boxplot_training(iraceResults, rpd = FALSE)
 #' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
-boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, rpd = TRUE, show_points=TRUE, filename = NULL) {
-
-  # Variable assignment
-  Performance <- Elite_configuration <- NULL
-  long <- length(irace_results$allElites)
+#' 
+boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, 
+                             rpd = TRUE, show_points=TRUE, filename = NULL) {
 
   if (!is.null(iteration) & !is.null(id_configurations)) {
     stop("Error: cannot use id_configurations and iteration at the same time\n")
   }
-
+  
   # It is checked if the filename argument was added
   if (!is.null(iteration)) {
     # We verify that iteration is within the range of values it can take
-    if (iteration > 0 && iteration <= long) {
-      long <- iteration
-      # If iteration is out of range it delivers a message per screen
-    } else {
+    if (iteration < 0 || iteration > length(irace_results$allElites)) {
       stop("Error: iteration number out of range\n")
     }
+  } else{
+    iteration <- length(irace_results$allElites)
   }
-
-  # A vector is created with the id of all elite configurations from the iteration entered
-  id <- irace_results$allElites[[long]]
-
+  
+  # Check configurations
   if (!is.null(id_configurations)) {
-    n_conf <- 1:dim(irace_results$experiments)[2]
-    if (FALSE %in% (id_configurations %in% n_conf)) {
-      stop(paste("Error: the following settings are out of range:", id_configurations[!(id_configurations %in% n_conf)],"\n"))
-    } else {
-      id <- id_configurations
-    }
+    if (any(!(as.character(id_configurations) %in% colnames(irace_results$experiments)))) {
+      stop(paste("Error: provided configurations id not found in experiments\n"))
+    } 
+  } else {
+    id_configurations <- irace_results$allElites[[iteration]]
   }
-
+  
   # A table is created with the values of all elite configurations of the id of the requested iteration
   experiments <- irace_results$experiments
-
-  if (rpd) {
-    experiments <- calculate_rpd(experiments)
-  }
-
-  matriz <- as.data.frame(experiments[, id])
-
-  # If the length of id is one, a different value must be added to the column
-  if (length(id) == 1) {
-    colnames(matriz)[colnames(matriz) == "experiments[, id]"] <- id
-  }
-
-  # value of elements that the matrix contains
-  n_row_col <- as.numeric(dim(matriz)[1] * dim(matriz)[2])
-
-  # A restructured table is created
-  tabla <- reshape(matriz,
-    varying = c(as.character(id)),
-    v.names = "Performance",
-    timevar = "Elite_configuration",
-    times = c(as.character(id)),
-    new.row.names = 1:n_row_col,
-    direction = "long"
-  )
-  y_lab <- "Performance"
-  if (rpd) y_lab <- "RPD performance"
   
-  # The plot scatter is created and assigned to p
-  p <- ggplot(tabla, aes(x = Elite_configuration, y = Performance, color = Elite_configuration)) +
-    geom_boxplot(na.rm = TRUE) +
-    theme(legend.position = "none") +
-    labs(x = "Elite Configurations", y=y_lab)
-  
-  if (show_points) 
-    p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
+  boxplot_performance(experiments = experiments,
+                      allElites = id_configurations,
+                      type = "all",
+                      first_is_best = TRUE,
+                      rpd = rpd, 
+                      show_points = show_points,
+                      filename = filename)
 
-  # If the value in filename is added the pdf file is created
-  if (!is.null(filename)) {
-    ggsave(filename, plot = p)
-    # If you do not add the value of filename, the plot is displayed
-  } else {
-    p
-    return(p)
-  }
-}
-
-calculate_rpd <- function(x)
-{
-  100 * (x - apply(x, 1, min, na.rm = TRUE)) / apply(x, 1, min, na.rm = TRUE)
 }

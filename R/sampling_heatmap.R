@@ -282,7 +282,8 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 #' @export
 #'
 #' @examples
-#' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, param_names=c("beta", "alpha"))
+#' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+#'                   param_names=c("beta", "alpha"))
 sampling_heatmap2 <- function(configurations, parameters, param_names, 
                               sizes = c(0,0), filename = NULL) {
   
