@@ -24,6 +24,8 @@ sampling_heatmap;
 sampling_heatmap2;
 boxplot_training;
 scatter_training;
+boxplot_performance;
+scatter_performance;
 report;
 plot_model;
 
