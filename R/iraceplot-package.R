@@ -4,7 +4,7 @@
 #' The iraceplot package: \packageTitle{iraceplot}
 #' @description
 #'
-#' Graphical visualization tools for analysing the data produced by irace.
+#' Graphical Visualization Tools for Analysing the Data Produced by Irace.
 #'
 #' boxplot_test;
 #' scatter_test;
@@ -20,6 +20,8 @@
 #' sampling_heatmap2;
 #' boxplot_training;
 #' scatter_training;
+#' boxplot_performance;
+#' scatter_performance;
 #' report;
 #' plot_model;
 #'
@@ -56,6 +58,7 @@
 #' @importFrom GGally ggparcoord
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
 #' @importFrom truncnorm dtruncnorm
+#' @importFrom irace getConfigurationById
 #'
 #'
 NULL

@@ -4,11 +4,11 @@
 \name{iraceplot-package}
 \alias{iraceplot}
 \alias{iraceplot-package}
-\title{iraceplot: Plots for visualizing the data produced by the irace package}
+\title{iraceplot: Plots for Visualizing the Data Produced by the Irace Package}
 \description{
 Graphical visualization tools for analysing the data produced by irace.
 
-Graphical visualization tools for analysing the data produced by irace.
+Graphical Visualization Tools for Analysing the Data Produced by Irace.
 
 boxplot_test;
 scatter_test;
@@ -39,8 +39,8 @@ License: MIT + file LICENSE
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://auto-optimization.github.io/iraceplot}
-  \item \url{https://github.com/auto-optimization/iraceplot}
+  \item \url{https://auto-optimization.github.io/iraceplot/}
+  \item \url{https://github.com/auto-optimization/iraceplot/}
   \item Report bugs at \url{https://github.com/auto-optimization/iraceplot/issues}
 }
 

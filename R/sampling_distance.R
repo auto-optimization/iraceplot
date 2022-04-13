@@ -35,7 +35,7 @@ sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, filenam
   }
 
   # variable assignment
-  media <- allconf <- valor <- iterations <- tabla_box <- iteration <- vectorP <- NULL
+  ids <- media <- allconf <- valor <- iterations <- tabla_box <- iteration <- vectorP <- NULL
   allconf <- irace_results$allConfigurations
   n_param <- length(allconf) - 2
   niterations <- length(irace_results$allElites)

@@ -34,11 +34,7 @@ report <- function(irace_results,  filename) {
     filename = stringr::str_c(paste0(filename, ".html"))
   )
   cat("Creating file", final_file, "\n")
-  # The output location of the file is placed as well as the location report_html.Rmd
- # reportes %>%
-#    select(output_file = filename) %>%
-#    purrr::pwalk(rmarkdown::render, input = system.file("template", "report_html.Rmd", package = "iraceplot"))
-  
+
   rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=final_file)
   
   utils::browseURL(final_file)

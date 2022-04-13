@@ -1,5 +1,5 @@
 Package: iraceplot
-Title: Plots for visualizing the data produced by the irace package
+Title: Plots for Visualizing the Data Produced by the Irace Package
 Version: 0.1.0
 Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut"),
                     email = "pablo.onate.m@gmail.com"),
@@ -17,6 +17,7 @@ RoxygenNote: 7.1.2
 Depends: 
     R (>= 2.10)
 Imports:
+    irace,
     GGally, 
     dplyr, 
     forcats, 
@@ -24,10 +25,7 @@ Imports:
     ggplot2, 
     ggridges, 
     gridExtra, 
-    htmlwidgets, 
-    irace,
     plotly, 
-    purrr,
     stats, 
     stringr, 
     tibble, 
@@ -42,6 +40,6 @@ Suggests:
     markdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-URL: https://auto-optimization.github.io/iraceplot, https://github.com/auto-optimization/iraceplot
+URL: https://auto-optimization.github.io/iraceplot/, https://github.com/auto-optimization/iraceplot/
 BugReports: https://github.com/auto-optimization/iraceplot/issues
 Config/testthat/edition: 3
