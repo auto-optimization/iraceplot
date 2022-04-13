@@ -18,7 +18,7 @@ parallel_cat(
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{id_configurations}{Numeric vector, configuration ids to be included in the plot
-(example: id_configurations = c(20,50,100,300,500,600,700))}
+(example: `id_configurations = c(20,50,100,300,500,600,700)`)}
 
 \item{param_names}{String vector, parameters to be included in the plot
 (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
@@ -37,11 +37,11 @@ parallel categories plot
 }
 \description{
 The `parallel_cat` function creates a parallel categories plot of a set of 
-selected configurations. Numerical parameters are discretized to maximum n_bins 
+selected configurations. Numerical parameters are discretized to maximum `n_bins` 
 intervals. To visualize configurations of other iterations these must be 
 provided setting the argument iterations, groups of configurations of different 
 iterations are shown in different colors. Specific configurations can be 
-selected providing their ids in the id_configurations argument.
+selected providing their ids in the `id_configurations` argument.
 
 The parameters to be included in the plot can be selected with the param_names
 argument. Additionally, the maximum number of parameters to be displayed in one
