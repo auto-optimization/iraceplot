@@ -173,7 +173,7 @@ which_domain <- function(param_values, domain) {
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), iterations = c(3,4))
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = TRUE)
 sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0), 
-                             iterations = NULL, only_elite = FALSE, 
+                             iterations = NULL, only_elite = TRUE, 
                              filename = NULL) {
   
   param1 <- param2 <- NULL 

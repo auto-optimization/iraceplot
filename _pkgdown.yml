@@ -9,7 +9,7 @@ navbar:
   - text: "Reference"
     href: reference/index.html
   - text: "User Guide"
-    href: articles/iraceplot_package.html
+    href: articles/user_guide/guide.html
   - text: "Report example"
     href: articles/example/report_example.html
   - text: "Changelog"

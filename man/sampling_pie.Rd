@@ -30,5 +30,7 @@ argument.
 }
 \examples{
 sampling_pie(iraceResults)
+\dontrun{
 sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
+}
 }

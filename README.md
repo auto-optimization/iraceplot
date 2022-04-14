@@ -45,10 +45,9 @@ Requisites
 User guide
 ----------
 
-A [user guide](https://auto-optimization.github.io/iraceplot/articles/iraceplot_package.html)
+A [user guide](https://auto-optimization.github.io/iraceplot/articles/user_guide/guide.html)
 comes with the package. The following is a quick-start guide. The user guide gives more detailed
 instructions.
-
 
 
 Installing R
@@ -81,8 +80,8 @@ from the science tap (unfortunately it does not come already bottled
 so you need to have Xcode installed to compile it):
 
 ```bash
-    $ brew tap homebrew/science
-    $ brew install r
+$ brew tap homebrew/science
+$ brew install r
 ```
 
 Once R is installed, you can launch R from the Terminal (or from your
@@ -115,10 +114,10 @@ devtools::install_github("auto-optimization/iraceplot")
 
 ```
 2. Manually
-   [download the package from CRAN]()
+   [download the package from CRAN](https://cran.r-project.org/web/packages/iraceplot/)
    and invoke at the command-line:
 ```bash
-        $ R CMD INSTALL <package>
+$ R CMD INSTALL <package>
 ```
    where `<package>` is one of the three versions available: `.tar.gz`
    (Unix/BSD/GNU/Linux), `.tgz` (MacOS X), or `.zip` (Windows).
@@ -145,7 +144,12 @@ objects currently loaded to verify that `iraceResults` is loaded:
 ls()
 ```
 
-Check the [documentation](https://auto-optimization.github.io/iraceplot/reference/index.html) and the [user guide] (https://auto-optimization.github.io/iraceplot/articles/iraceplot_package.html) to find the plot most suited to your needs or generate a general-purpose report with:
+For example you can plot the training performance with:
+```r
+boxplot_training(iraceResults)
+```
+
+Check the [documentation](https://auto-optimization.github.io/iraceplot/reference/index.html) and the [user guide] (https://auto-optimization.github.io/iraceplot/articles/user_guide/guide.html) to find the plot most suited to your needs or generate a general-purpose report with:
 
 ``` r
 iraceplot::report(iraceResults, "path/to/my_report")

@@ -9,7 +9,7 @@ sampling_heatmap(
   param_names,
   sizes = c(0, 0),
   iterations = NULL,
-  only_elite = FALSE,
+  only_elite = TRUE,
   filename = NULL
 )
 }

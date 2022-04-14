@@ -26,7 +26,9 @@
 #'
 #' @examples
 #' sampling_pie(iraceResults)
+#' \dontrun{
 #' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
+#' }
 sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL) {
 
   # variable assignment
