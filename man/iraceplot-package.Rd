@@ -24,6 +24,8 @@ sampling_heatmap;
 sampling_heatmap2;
 boxplot_training;
 scatter_training;
+boxplot_performance;
+scatter_performance;
 report;
 plot_model;
 
@@ -46,7 +48,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Leslie Pérez Cáceres \email{leslie.perez@pucv.cl}
+\strong{Maintainer}: Leslie Pérez Cáceres \email{leslie.perez@pucv.cl} (\href{https://orcid.org/0000-0001-5553-6150}{ORCID})
 
 Authors:
 \itemize{
@@ -55,8 +57,8 @@ Authors:
 }
 
 
-Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres
-        \email{leslie.perez@gmail.com}
+Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres and Manuel López-Ibañez
+        \email{leslie.perez@pucv.cl}
 }
 \keyword{automatic}
 \keyword{configuration}

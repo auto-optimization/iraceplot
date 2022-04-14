@@ -33,5 +33,7 @@ specified by argument t and hamming distance is calculated using this interval.
 }
 \examples{
 # sampling_distance(iraceResults)
+\dontrun{ 
 # sampling_distance(iraceResults, type = "boxplot", t=0.07)
+}
 }

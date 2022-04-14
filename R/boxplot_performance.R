@@ -54,7 +54,9 @@
 #'
 #' @examples
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
-#' boxplot_performance(iraceResults$experiments, iraceResults$allElites, type = "ibest")
+#' \dontrun{ 
+#' boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
+#' }
 boxplot_performance <- function(experiments, allElites= NULL, type = "all",
                                 first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", 

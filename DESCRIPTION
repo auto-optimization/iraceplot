@@ -4,7 +4,8 @@ Version: 0.1.0
 Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut"),
                     email = "pablo.onate.m@gmail.com"),
             person("Leslie", "Pérez Cáceres", role = c("aut", "cre"),
-                    email = "leslie.perez@pucv.cl"),
+                    email = "leslie.perez@pucv.cl",
+                    comment = c(ORCID = "0000-0001-5553-6150")),
             person("Manuel", "López-Ibáñez", role = c("aut"),
                     email = "manuel.lopez-ibanez@uma.es",
                     comment = c(ORCID = "0000-0001-9974-1295"))

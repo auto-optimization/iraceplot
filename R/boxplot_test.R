@@ -29,9 +29,6 @@
 #'
 #' @examples
 #' boxplot_test(iraceResults)
-#' boxplot_test(iraceResults, rpd = FALSE)
-#' boxplot_test(iraceResults, type = "ibest")
-#' boxplot_test(iraceResults, type = "best")
 boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, filename = NULL) {
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {

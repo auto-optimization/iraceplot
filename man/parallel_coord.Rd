@@ -63,9 +63,11 @@ to be installed (https://github.com/plotly/orca).
 }
 \examples{
 parallel_coord(iraceResults)
+\dontrun{ 
 parallel_coord(iraceResults, by_n_param = 5)
 parallel_coord(iraceResults, only_elite = FALSE)
 parallel_coord(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
 parallel_coord(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 parallel_coord(iraceResults, iterations = c(1, 4, 6))
+}
 }

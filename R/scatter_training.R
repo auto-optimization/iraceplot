@@ -28,7 +28,9 @@
 #'
 #' @examples
 #' scatter_training(iraceResults, id_configurations = c(806, 809))
+#' \dontrun{ 
 #' scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
+#' }
 #' @export
 #' 
 scatter_training <- function(irace_results, id_configurations, rpd = TRUE, 

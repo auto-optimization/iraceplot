@@ -32,5 +32,7 @@ associated to each parameter for each elite configuration on each iteration.
 }
 \examples{
 plot_model(iraceResults, param_name="algorithm")
+\dontrun{ 
 plot_model(iraceResults, param_name="alpha")
+}
 }

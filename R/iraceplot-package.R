@@ -36,8 +36,8 @@
 #'
 #' @details  License: MIT + file LICENSE
 #'
-#' @author Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres
-#'         \email{leslie.perez@gmail.com}
+#' @author Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres and Manuel López-Ibañez
+#'         \email{leslie.perez@pucv.cl}
 #'
 #' @keywords package plot automatic configuration
 #'

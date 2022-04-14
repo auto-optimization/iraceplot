@@ -48,9 +48,11 @@ of the parameters.
 }
 \examples{
 sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters)
+\dontrun{ 
 sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
 sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
                     param_names = c("alpha"))
 sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+}
 }

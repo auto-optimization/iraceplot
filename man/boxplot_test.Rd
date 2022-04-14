@@ -42,7 +42,4 @@ be enabled in the setup (see the irace package user guide for more details).
 }
 \examples{
 boxplot_test(iraceResults)
-boxplot_test(iraceResults, rpd = FALSE)
-boxplot_test(iraceResults, type = "ibest")
-boxplot_test(iraceResults, type = "best")
 }

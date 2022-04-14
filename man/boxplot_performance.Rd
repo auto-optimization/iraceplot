@@ -66,5 +66,7 @@ elite configuration was evaluated.
 }
 \examples{
 boxplot_performance(iraceResults$experiments, iraceResults$allElites)
-boxplot_performance(iraceResults$experiments, iraceResults$allElites, type = "ibest")
+\dontrun{ 
+boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
+}
 }

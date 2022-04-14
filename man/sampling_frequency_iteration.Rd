@@ -32,5 +32,7 @@ numeric data (show a histogram and density plot) by each iteration
 }
 \examples{
 sampling_frequency_iteration(iraceResults, param_name = "alpha")
+\dontrun{ 
 sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
+}
 }

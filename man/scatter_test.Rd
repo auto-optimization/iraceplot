@@ -46,5 +46,7 @@ guide for more details).
 }
 \examples{
 scatter_test(iraceResults, id_configurations = c("92", "119"))
+\dontrun{ 
 scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
+}
 }

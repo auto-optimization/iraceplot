@@ -266,7 +266,9 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #'
 #' @examples
 #' plot_model(iraceResults, param_name="algorithm")
+#' \dontrun{ 
 #' plot_model(iraceResults, param_name="alpha")
+#' }
 plot_model <- function(irace_results, param_name, filename=NULL) {
   if (!(param_name %in% irace_results$parameters$names)) {
     stop("Error: Unknown parameter name provided\n")

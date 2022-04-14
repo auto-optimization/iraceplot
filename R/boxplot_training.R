@@ -38,9 +38,10 @@
 #'
 #' @examples
 #' boxplot_training(iraceResults)
-#' boxplot_training(iraceResults, rpd = FALSE)
+#' \dontrun{ 
 #' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
+#' }
 #' 
 boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, 
                              rpd = TRUE, show_points=TRUE, filename = NULL) {

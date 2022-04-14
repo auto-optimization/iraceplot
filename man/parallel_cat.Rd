@@ -50,8 +50,10 @@ to display the selected data.
 }
 \examples{
 parallel_cat(iraceResults)
+\dontrun{ 
 parallel_cat(iraceResults, by_n_param = 6)
 parallel_cat(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 parallel_cat(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 parallel_cat(iraceResults, iterations = c(1, 4, 6), n_bins=4)
+}
 }

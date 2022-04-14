@@ -30,7 +30,9 @@
 #'
 #' @examples
 #' scatter_test(iraceResults, id_configurations = c("92", "119"))
+#' \dontrun{ 
 #' scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
+#' }
   scatter_test <- function(irace_results, id_configurations, rpd = TRUE, 
                            filename = NULL, interactive = base::interactive()) {
 

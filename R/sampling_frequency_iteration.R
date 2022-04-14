@@ -22,7 +22,9 @@
 #'
 #' @examples
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
+#' \dontrun{ 
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
+#' }
 sampling_frequency_iteration <- function(irace_results, param_name, numerical_type="both", 
                                          filename = NULL) {
   # Variable assignment

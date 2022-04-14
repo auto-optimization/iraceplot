@@ -37,11 +37,13 @@
 #'
 #' @examples
 #' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters)
+#' \dontrun{ 
 #' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
 #' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                     param_names = c("alpha"))
 #' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+#' }
 #' @export
 #' @md
 sampling_frequency2 <- function(configurations, parameters, param_names = NULL, n = NULL, filename = NULL) {
@@ -189,9 +191,11 @@ sampling_frequency2 <- function(configurations, parameters, param_names = NULL, 
 #'
 #' @examples
 #' sampling_frequency(iraceResults)
+#' \dontrun{ 
 #' sampling_frequency(iraceResults, n = 2)
 #' sampling_frequency(iraceResults, param_names = c("alpha"))
 #' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+#' }
 #' @export
 #' @md
 sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, filename = NULL) {

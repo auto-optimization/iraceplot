@@ -45,5 +45,7 @@ configurations are executed.
 }
 \examples{
 scatter_training(iraceResults, id_configurations = c(806, 809))
+\dontrun{ 
 scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
+}
 }
