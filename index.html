@@ -46,7 +46,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="articles/iraceplot_package.html">User Guide</a>
+  <a href="articles/user_guide/guide.html">User Guide</a>
 </li>
 <li>
   <a href="articles/example/report_example.html">Report example</a>
@@ -109,7 +109,7 @@
 <div class="section level2">
 <h2 id="user-guide">User guide<a class="anchor" aria-label="anchor" href="#user-guide"></a>
 </h2>
-<p>A <a href="https://auto-optimization.github.io/iraceplot/articles/iraceplot_package.html" class="external-link">user guide</a> comes with the package. The following is a quick-start guide. The user guide gives more detailed instructions.</p>
+<p>A <a href="https://auto-optimization.github.io/iraceplot/articles/user_guide/guide.html" class="external-link">user guide</a> comes with the package. The following is a quick-start guide. The user guide gives more detailed instructions.</p>
 </div>
 </div>
 <div class="section level1">
@@ -128,8 +128,8 @@
 </h2>
 <p>You can install R directly from a CRAN mirror (<a href="https://cran.r-project.org/bin/macosx/" class="external-link uri">https://cran.r-project.org/bin/macosx/</a>).</p>
 <p>Alternatively, if you use homebrew, you can just brew the R formula from the science tap (unfortunately it does not come already bottled so you need to have Xcode installed to compile it):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>    $ <span class="ex">brew</span> tap homebrew/science</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    $ <span class="ex">brew</span> install r</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">brew</span> tap homebrew/science</span>
+<span id="cb2-2"><a href="#cb2-2"></a>$ <span class="ex">brew</span> install r</span></code></pre></div>
 <p>Once R is installed, you can launch R from the Terminal (or from your Applications), and from the R prompt install the iraceplot package. See instructions below.</p>
 </div>
 <div class="section level2">
@@ -150,9 +150,9 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"auto-optimization/iraceplot"</span><span class="op">)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>Manually <a href="">download the package from CRAN</a> and invoke at the command-line:</li>
+<li>Manually <a href="https://cran.r-project.org/web/packages/iraceplot/" class="external-link">download the package from CRAN</a> and invoke at the command-line:</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>        $ <span class="ex">R</span> CMD INSTALL <span class="op">&lt;</span>package<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ <span class="ex">R</span> CMD INSTALL <span class="op">&lt;</span>package<span class="op">&gt;</span></span></code></pre></div>
 <p>where <code>&lt;package&gt;</code> is one of the three versions available: <code>.tar.gz</code> (Unix/BSD/GNU/Linux), <code>.tgz</code> (MacOS X), or <code>.zip</code> (Windows).</p>
 </div>
 <div class="section level1">
@@ -167,8 +167,11 @@
 <p>Once the data is loaded in the console, you should be able to access the <code>iraceResults</code> object. List the objects currently loaded to verify that <code>iraceResults</code> is loaded:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Check the <a href="https://auto-optimization.github.io/iraceplot/reference/index.html" class="external-link">documentation</a> and the <a href="#user-guide">user guide</a> (<a href="https://auto-optimization.github.io/iraceplot/articles/iraceplot_package.html" class="external-link uri">https://auto-optimization.github.io/iraceplot/articles/iraceplot_package.html</a>) to find the plot most suited to your needs or generate a general-purpose report with:</p>
+<p>For example you can plot the training performance with:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/boxplot_training.html">boxplot_training</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></code></pre></div>
+<p>Check the <a href="https://auto-optimization.github.io/iraceplot/reference/index.html" class="external-link">documentation</a> and the <a href="#user-guide">user guide</a> (<a href="https://auto-optimization.github.io/iraceplot/articles/user_guide/guide.html" class="external-link uri">https://auto-optimization.github.io/iraceplot/articles/user_guide/guide.html</a>) to find the plot most suited to your needs or generate a general-purpose report with:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">iraceplot</span><span class="fu">::</span><span class="fu"><a href="reference/report.html">report</a></span><span class="op">(</span><span class="va">iraceResults</span>, <span class="st">"path/to/my_report"</span><span class="op">)</span></code></pre></div>
 </div>
 
