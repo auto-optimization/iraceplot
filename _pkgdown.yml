@@ -10,17 +10,19 @@ development:
 
 navbar:
   structure:
-    left:
-      - text: "Home"
-        href: index.html
-      - text: "Reference"
-        href: reference/index.html
-      - text: "User Guide"
-        href: articles/user_guide/guide.html
-      - text: "Report example"
-        href: articles/example/report_example.html
-      - text: "Changelog"
-        href: news/index.html
+    left: [home, guide, example, reference, news]
     right: [github]
+  components:
+    home: ~
+    reference:
+      text: Reference
+      href: reference/index.html
+    guide:
+      text: User Guide
+      href: articles/user_guide/guide.html
+    example:
+      text: Report example
+      href: articles/example/report_example.html
+    
 
 

@@ -72,10 +72,9 @@ pkgdown: gendoc
 	$(Reval) 'pkgdown::build_site(run_dont_run = TRUE)'
 	@$(MAKE) clean
 
-build : version
-	@$(MAKE) gendoc
+build: gendoc
 	cd $(BINDIR) &&	R CMD build $(BUILD_FLAGS) $(PACKAGEDIR)
-	#@$(MAKE) clean
+	@$(MAKE) clean
 
 closeversion:
 	git push origin :refs/tags/v$(PACKAGEVERSION) # Remove any existing tag
@@ -98,7 +97,7 @@ else
 endif
 
 clean: 
-	cd $(PACKAGEDIR) && (./cleanup; make -C src -f Makevars clean)
+	#cd $(PACKAGEDIR) && (./cleanup; make -C src -f Makevars clean)
 
 ## FIXME: building the vignettes is a bit complicated and sometimes fails.
 # If \setboolean{Release}{false}, entries are taken from optbib and everything
