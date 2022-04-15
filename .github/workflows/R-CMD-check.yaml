@@ -79,7 +79,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
         with:
-          extra-packages: any::pkgdown
+          extra-packages: any::pkgdown any::remotes
           needs: website
 
       - name: Install package
