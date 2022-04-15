@@ -2,20 +2,25 @@ template:
   params:
     bootswatch: cosmo
 
+development:
+  mode: unreleased
+  destination: devel
+  version_label: default
+  version_tooltip: "Github version"
+
 navbar:
-  left:
-  - text: "Home"
-    href: index.html
-  - text: "Reference"
-    href: reference/index.html
-  - text: "User Guide"
-    href: articles/user_guide/guide.html
-  - text: "Report example"
-    href: articles/example/report_example.html
-  - text: "Changelog"
-    href: news/index.html
-  right:
-  - icon: fa-github
-    href: https://auto-optimization.github.io/iraceplot/
+  structure:
+    left:
+      - text: "Home"
+        href: index.html
+      - text: "Reference"
+        href: reference/index.html
+      - text: "User Guide"
+        href: articles/user_guide/guide.html
+      - text: "Report example"
+        href: articles/example/report_example.html
+      - text: "Changelog"
+        href: news/index.html
+    right: [github]
 
 
