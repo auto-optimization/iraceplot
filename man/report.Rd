@@ -2,7 +2,7 @@
 % Please edit documentation in R/report.R
 \name{report}
 \alias{report}
-\title{Report Iraceplot}
+\title{Create HTML Report from irace data}
 \usage{
 report(irace_results, filename)
 }
@@ -10,18 +10,12 @@ report(irace_results, filename)
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{filename}{(\code{character(1)})
-String, file name indicating where to save the report (example: "~/path-to/filename")}
-}
-\value{
-document
+Filename indicating where to save the report (example: \code{"~/path-to/filename"})}
 }
 \description{
-The \code{report} function creates an HTML report of the most relevant irace log
-data.
-}
-\details{
-This report provides general statistics and plots that show the best configurations
-and their performance.
+This function creates an HTML report of the most relevant irace data.  This
+report provides general statistics and plots that show the best
+configurations and their performance. Example: \url{https://auto-optimization.github.io/iraceplot/articles/example/report_example.html}
 }
 \examples{
 NULL
