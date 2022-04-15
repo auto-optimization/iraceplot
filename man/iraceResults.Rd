@@ -3,7 +3,7 @@
 \docType{data}
 \name{iraceResults}
 \alias{iraceResults}
-\title{data created by the irace package
+\title{Data created by the irace package
 Large list with 11 elements}
 \format{
 An object of class \code{list} of length 11.
@@ -12,7 +12,7 @@ An object of class \code{list} of length 11.
 iraceResults
 }
 \description{
-data created by the irace package
+Data created by the irace package
 Large list with 11 elements
 }
 \keyword{datasets}

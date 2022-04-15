@@ -7,7 +7,7 @@
 boxplot_performance(
   experiments,
   allElites = NULL,
-  type = "all",
+  type = c("all", "ibest"),
   first_is_best = FALSE,
   rpd = TRUE,
   show_points = TRUE,
@@ -28,11 +28,9 @@ assumed without iteration unless argument type="ibest" is provided, in which cas
 each configuration is assumed to be from a different iteration. If allElites 
 is a list, each element of the  list is assumed as an iteration.}
 
-\item{type}{String, (default "all") possible values are "all", "ibest" or "best". "all" 
+\item{type}{String, (default "all") possible values are "all" or "ibest". "all" 
 shows all the selected configurations showing iterations if the information 
-is provided. "best" shows the elite configurations of the last iteration, note
-that the best configuration is always assumed to be first in the vector.
-"ibest" shows the elite configurations of each iteration, note
+is provided. "ibest" shows the elite configurations of each iteration, note
 that the best configuration is always assumed to be first in the vector of 
 each iteration.}
 
@@ -56,9 +54,10 @@ performance.}
 box plot
 }
 \description{
-The `boxplot_performance` function creates a box plot that displays the 
-performance of a set of configurations which can be displayed by iteration. 
-
+Creates a box plot that displays the performance of a set of configurations
+which can be displayed by iteration.
+}
+\details{
 The performance data is obtained from the experiment matrix provided in the 
 experiments argument. The configurations can be selected using the allElites
 argument and this argument can be also used to define the iteration of each

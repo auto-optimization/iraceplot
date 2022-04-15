@@ -1,8 +1,7 @@
 #' Box Plot Performance of a set of configurations
 #'
-#' @description
-#' The `boxplot_performance` function creates a box plot that displays the 
-#' performance of a set of configurations which can be displayed by iteration. 
+#' Creates a box plot that displays the performance of a set of configurations
+#' which can be displayed by iteration.
 #' 
 #' The performance data is obtained from the experiment matrix provided in the 
 #' experiments argument. The configurations can be selected using the allElites
@@ -23,11 +22,9 @@
 #' is a list, each element of the  list is assumed as an iteration.
 #'
 #' @param type
-#' String, (default "all") possible values are "all", "ibest" or "best". "all" 
+#' String, (default "all") possible values are "all" or "ibest". "all" 
 #' shows all the selected configurations showing iterations if the information 
-#' is provided. "best" shows the elite configurations of the last iteration, note
-#' that the best configuration is always assumed to be first in the vector.
-#' "ibest" shows the elite configurations of each iteration, note
+#' is provided. "ibest" shows the elite configurations of each iteration, note
 #' that the best configuration is always assumed to be first in the vector of 
 #' each iteration.
 #' 
@@ -50,25 +47,23 @@
 #' @template arg_filename
 #' 
 #' @return box plot
-#' @export
 #'
 #' @examples
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 #' \dontrun{ 
 #' boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
 #' }
-boxplot_performance <- function(experiments, allElites= NULL, type = "all",
+#' @export
+boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", 
-                                filename = NULL) {
+                                filename = NULL)
+{
+  type <- match.arg(type)
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
   
   if (!(is.matrix(experiments) || is.data.frame(experiments))) {
     stop("Error: experiments must be a matrix or a data frame")
-  }
-  
-  if (!(type %in% c("all", "ibest"))) {
-    stop("Error: The type argument provided is incorrect\n")
   }
   
   if (type=="ibest" && !first_is_best) {
@@ -166,10 +161,9 @@ boxplot_performance <- function(experiments, allElites= NULL, type = "all",
     data$iteration <- 0
   }
   
-  # Marcar las mejores configuraciones
+  # Mark best configurations
   if (type == "all") {
-    best_conf <- rep("none", nrow(data))
-    data <- cbind(data, best_conf)
+    data$best_conf <- rep("none", nrow(data))
     if (first_is_best) {
       if (is.list(allElites)) {
         for (i in 1:length(allElites)) {
@@ -193,13 +187,12 @@ boxplot_performance <- function(experiments, allElites= NULL, type = "all",
     # type="all"
     if (first_is_best) {
       p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) 
+    } else if (is.list(allElites)){
+      p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) 
     } else {
-      if (is.list(allElites)){
-        p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) 
-      } else {
-        p <- ggplot(data, aes(x = ids_f, y = performance, colour = ids_f)) 
-      }
+      p <- ggplot(data, aes(x = ids_f, y = performance, colour = ids_f)) 
     }
+    
     if (is.list(allElites)) {
       p <- p + labs(subtitle = "Iterations")
       p <- p + theme(plot.subtitle = element_text(hjust = 0.5),
@@ -211,8 +204,6 @@ boxplot_performance <- function(experiments, allElites= NULL, type = "all",
     if (first_is_best) 
       p <- p +  scale_color_manual(values=c("#08bfaa", "#999999"))
           #scale_color_hue(h = c(220, 270))
-    
-    
   }
   
   y_lab <- "Performance"

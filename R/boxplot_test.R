@@ -1,8 +1,6 @@
 #' Box Plot Testing Performance
 #'
-#' @description
-#' The `boxplot_test` function creates a box plot that displays the performance 
-#' of a set of configurations on the test instances. 
+#' Creates a box plot that displays the performance of a set of configurations on the test instances.
 #' 
 #' The performance data is obtained from the test evaluations performed 
 #' by irace. Note that the testing is not a default feature in irace and should 
@@ -11,7 +9,7 @@
 #' @template arg_irace_results
 #'
 #' @param type
-#' String, (default "all") possible values are "all", "ibest" or "best". "all" 
+#' String, (default `"all"`) possible values are `"all"`, "ibest" or "best". "all" 
 #' shows all the configurations included in the test, "best" shows the elite 
 #' configurations of the last iteration and "ibest" shows the elite configurations 
 #' of each iteration. Note that "ibest" requires that irace includes the iteration
@@ -25,21 +23,23 @@
 #' @template arg_filename
 #' 
 #' @return box plot
-#' @export
 #'
 #' @examples
+#' 
 #' boxplot_test(iraceResults)
-boxplot_test <- function(irace_results, type = "all", rpd = TRUE, show_points=TRUE, filename = NULL) {
+#' @export
+boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),
+                         rpd = TRUE, show_points=TRUE, filename = NULL)
+{
+  type <- match.arg(type)
+  
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
     stop("Error: irace_results does not contain the testing data")
   }
-  if (!(type %in% c("all", "best", "ibest"))) {
-    stop("The type argument provided is incorrect\n")
-  }
   
   if (type=="ibest" && !irace_results$scenario$testIterationElites) {
-    cat("Warning: irace data does not contain iteration elites testing, changing plot type to \"best\"\n")
+    warning("irace data does not contain iteration elites testing, changing plot type to \"best\"")
     type <- "best"
   }
   
