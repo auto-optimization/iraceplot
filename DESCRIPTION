@@ -1,6 +1,6 @@
 Package: iraceplot
 Title: Plots for Visualizing the Data Produced by the Irace Package
-Version: 0.1.0
+Version: 1.0
 Authors@R: c(person("Pablo", "Oñate Marín", role = c("aut"),
                     email = "pablo.onate.m@gmail.com"),
             person("Leslie", "Pérez Cáceres", role = c("aut", "cre"),
