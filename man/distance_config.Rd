@@ -9,17 +9,17 @@ distance_config(irace_results, id_configuration, t = 0.05)
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configuration}{Numeric, configuration id which should be compared to others 
+\item{id_configuration}{Numeric, configuration id which should be compared to others
 (example: id_configuration = c(806,809))}
 
-\item{t}{Numeric, (default 0.05) threshold that defines the distance (percentage of the domain size) 
+\item{t}{Numeric, (default 0.05) threshold that defines the distance (percentage of the domain size)
 to consider a parameter value equal to other.}
 }
 \value{
 numeric
 }
 \description{
-The `distance_config` function calculates the difference between a configuration 
+The \code{distance_config} function calculates the difference between a configuration
 and the others in the irace data.
 }
 \examples{

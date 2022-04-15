@@ -15,7 +15,7 @@ scatter_test(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{String vector, configuration ids whose performance should be displayed 
+\item{id_configurations}{String vector, configuration ids whose performance should be displayed
 (example: id_configurations = c("92","119"))}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
@@ -29,19 +29,19 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-`ggplot()` object
+\code{ggplot()} object
 }
 \description{
-The `scatter_test` function creates a scatter plot comparing the performance of two 
+The \code{scatter_test} function creates a scatter plot comparing the performance of two
 configurations in the test instances. Each point in the plot represents an instance
 and the color of the points indicates if one configuration is better than the other.
 
-The performance data is obtained from the test evaluations performed by irace. 
-Note that the testing is not a default feature in irace and should be enabled in 
-the setup. 
+The performance data is obtained from the test evaluations performed by irace.
+Note that the testing is not a default feature in irace and should be enabled in
+the setup.
 
-Configuration ids provided in `id_configurations` should belong to 
-elite configuration set evaluated in the test (see the irace package user 
+Configuration ids provided in \code{id_configurations} should belong to
+elite configuration set evaluated in the test (see the irace package user
 guide for more details).
 }
 \examples{

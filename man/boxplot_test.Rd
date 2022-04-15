@@ -15,9 +15,9 @@ boxplot_test(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{type}{String, (default `"all"`) possible values are `"all"`, "ibest" or "best". "all" 
-shows all the configurations included in the test, "best" shows the elite 
-configurations of the last iteration and "ibest" shows the elite configurations 
+\item{type}{String, (default \code{"all"}) possible values are \code{"all"}, "ibest" or "best". "all"
+shows all the configurations included in the test, "best" shows the elite
+configurations of the last iteration and "ibest" shows the elite configurations
 of each iteration. Note that "ibest" requires that irace includes the iteration
 elites in the testing.}
 
@@ -36,8 +36,8 @@ box plot
 Creates a box plot that displays the performance of a set of configurations on the test instances.
 }
 \details{
-The performance data is obtained from the test evaluations performed 
-by irace. Note that the testing is not a default feature in irace and should 
+The performance data is obtained from the test evaluations performed
+by irace. Note that the testing is not a default feature in irace and should
 be enabled in the setup (see the irace package user guide for more details).
 }
 \examples{

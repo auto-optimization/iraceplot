@@ -58,7 +58,7 @@ Authors:
 
 
 Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres and Manuel López-Ibañez
-        \email{leslie.perez@pucv.cl}
+\email{leslie.perez@pucv.cl}
 }
 \keyword{automatic}
 \keyword{configuration}

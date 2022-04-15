@@ -17,21 +17,21 @@ boxplot_performance(
 )
 }
 \arguments{
-\item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations 
-in columns and instances in rows. As in irace, column names (configurations ids) 
+\item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations
+in columns and instances in rows. As in irace, column names (configurations ids)
 should be characters.}
 
 \item{allElites}{List or vector of configuration ids, (default NULL). These configurations
 should be included in the plot. If the argument is not provided all configurations
 in experiments are included. If allElites is a vector all configurations are
 assumed without iteration unless argument type="ibest" is provided, in which case
-each configuration is assumed to be from a different iteration. If allElites 
+each configuration is assumed to be from a different iteration. If allElites
 is a list, each element of the  list is assumed as an iteration.}
 
-\item{type}{String, (default "all") possible values are "all" or "ibest". "all" 
-shows all the selected configurations showing iterations if the information 
+\item{type}{String, (default "all") possible values are "all" or "ibest". "all"
+shows all the selected configurations showing iterations if the information
 is provided. "ibest" shows the elite configurations of each iteration, note
-that the best configuration is always assumed to be first in the vector of 
+that the best configuration is always assumed to be first in the vector of
 each iteration.}
 
 \item{first_is_best}{Boolean (default TRUE) Enables the display in a different color the best configuration
@@ -58,7 +58,7 @@ Creates a box plot that displays the performance of a set of configurations
 which can be displayed by iteration.
 }
 \details{
-The performance data is obtained from the experiment matrix provided in the 
+The performance data is obtained from the experiment matrix provided in the
 experiments argument. The configurations can be selected using the allElites
 argument and this argument can be also used to define the iteration of each
 elite configuration was evaluated.

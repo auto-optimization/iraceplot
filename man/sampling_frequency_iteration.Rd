@@ -17,7 +17,7 @@ sampling_frequency_iteration(
 \item{param_name}{String, name of the parameter to be included (example: param_name = "algorithm")}
 
 \item{numerical_type}{String, (default "both") Indicates the type of plot to be displayed for numerical
-parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
+parameters. "density" shows a density plot, "frequency" shows a frequency plot and
 "both" show both frequency and density.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}

@@ -9,14 +9,14 @@ sampling_distance(irace_results, type = "boxplot", t = 0.05, filename = NULL)
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{type}{String, (default "boxplot") Type of plot to be produces, either "line", "boxplot" 
+\item{type}{String, (default "boxplot") Type of plot to be produces, either "line", "boxplot"
 or "both". The "boxplot" setting shows a boxplot of the mean distance of all
-configurations, "line" shows the mean distance of the solution population in each 
+configurations, "line" shows the mean distance of the solution population in each
 iteration, "both" shows both plots.}
 
-\item{t}{Numeric, (default 0.05) percentage factor that will determine a distance to 
-define equal numerical parameter values. If the numerical parameter values to be 
-compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`.}
+\item{t}{Numeric, (default 0.05) percentage factor that will determine a distance to
+define equal numerical parameter values. If the numerical parameter values to be
+compared are v1 and v2 they are considered equal if \verb{|v1-v2| <= |ub-lb|*t}.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
@@ -24,10 +24,10 @@ compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`.}
 line or box plot
 }
 \description{
-The `sampling_distance` function creates a plot that displays the mean of the 
+The \code{sampling_distance} function creates a plot that displays the mean of the
 distance between the configurations that were executed in each iteration.
 
-For categorical parameters the distance is calculated as the hamming distance, 
+For categorical parameters the distance is calculated as the hamming distance,
 for numerical parameters a equality interval is defined by a threshold
 specified by argument t and hamming distance is calculated using this interval.
 }

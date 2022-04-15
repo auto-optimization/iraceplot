@@ -15,7 +15,7 @@ scatter_training(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed 
+\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed
 (example: id_configurations = c("92","119"))}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
@@ -29,17 +29,17 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-`ggplot()` object
+\code{ggplot()} object
 }
 \description{
-The `scatter_training` function creates a scatter plot that displays the performance of two
-configurations on the training performance. Each point in the plot represents an 
-instance and the color of the points indicates if one configuration is better 
+The \code{scatter_training} function creates a scatter plot that displays the performance of two
+configurations on the training performance. Each point in the plot represents an
+instance and the color of the points indicates if one configuration is better
 than the other.
 
-The performance data is obtained from the evaluations performed by irace 
-during the execution process, consequently the number of evaluations 
-can differ between configurations due to the elimination process applied by 
+The performance data is obtained from the evaluations performed by irace
+during the execution process, consequently the number of evaluations
+can differ between configurations due to the elimination process applied by
 irace. This plot only shows performance data only for instances in which both
 configurations are executed.
 }

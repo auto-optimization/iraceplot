@@ -13,11 +13,11 @@ scatter_performance(
 )
 }
 \arguments{
-\item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations 
-in columns and instances in rows. As in irace, column names (configurations ids) 
+\item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations
+in columns and instances in rows. As in irace, column names (configurations ids)
 should be characters. Row names will be used as instance names.}
 
-\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed 
+\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed
 (example: id_configurations = c("92","119"))}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
@@ -31,17 +31,17 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-`ggplot()` object
+\code{ggplot()} object
 }
 \description{
-The `scatter_performance` function creates a scatter plot that displays the performance of two
-configurations on a provided experiment matrix. Each point in the plot represents an 
-instance and the color of the points indicates if one configuration is better 
+The \code{scatter_performance} function creates a scatter plot that displays the performance of two
+configurations on a provided experiment matrix. Each point in the plot represents an
+instance and the color of the points indicates if one configuration is better
 than the other.
 
-The performance matrix is assumed to be provided in the format of the irace 
-experiment matrix thus, NA values are allowed. Consequently the number of evaluations 
-can differ between configurations due to the elimination process applied by 
+The performance matrix is assumed to be provided in the format of the irace
+experiment matrix thus, NA values are allowed. Consequently the number of evaluations
+can differ between configurations due to the elimination process applied by
 irace. This plot only shows performance data only for instances in which both
 configurations are executed.
 }

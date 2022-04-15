@@ -19,11 +19,11 @@ sampling_pie(irace_results, param_names = NULL, n_bins = 3, filename = NULL)
 Sampling pie plot
 }
 \description{
-The `sampling_pie` function creates a pie plot of the values sampled of a set 
-of selected parameters. Numerical parameters are discretized to maximum n_bins 
+The \code{sampling_pie} function creates a pie plot of the values sampled of a set
+of selected parameters. Numerical parameters are discretized to maximum n_bins
 intervals.
 
-The size of the slices are proportional to the number of configurations that 
+The size of the slices are proportional to the number of configurations that
 have assigned a parameter value within the rank or the value assigned to that
 slice. Parameters can be selected by providing their names in the param_names
 argument.

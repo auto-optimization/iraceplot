@@ -13,17 +13,17 @@ sampling_heatmap2(
 )
 }
 \arguments{
-\item{configurations}{Data frame, configurations in `irace` format 
-(example: `configurations = iraceResults$allConfigurations`)}
+\item{configurations}{Data frame, configurations in \code{irace} format
+(example: \code{configurations = iraceResults$allConfigurations})}
 
 \item{parameters}{List, parameter object in irace format
-(example: `configurations = iraceResults$parameters`)}
+(example: \code{configurations = iraceResults$parameters})}
 
 \item{param_names}{String vector of size 2, names of the parameters that should be included in the plot
 (example: param_names = c("beta","alpha"))}
 
-\item{sizes}{Numeric vector that indicated the number of intervals to be considered for numerical 
-parameters. This argument is positional with respect to param_names. By default, 
+\item{sizes}{Numeric vector that indicated the number of intervals to be considered for numerical
+parameters. This argument is positional with respect to param_names. By default,
 numerical parameters are displayed using 10 intervals.
 (example sizes = c(0,10))}
 
@@ -33,7 +33,7 @@ numerical parameters are displayed using 10 intervals.
 sampling heat map plot
 }
 \description{
-The `sampling_heatmap2` function creates a heat map that display the 
+The \code{sampling_heatmap2} function creates a heat map that display the
 frequency of sampling values of two parameters.
 }
 \examples{

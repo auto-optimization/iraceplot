@@ -25,7 +25,7 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-[ggplot2::ggplot()] object
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 A graph is created with all the settings and instance of the training data
