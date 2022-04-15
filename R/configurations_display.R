@@ -11,7 +11,7 @@
 #' 
 #' @template arg_interactive
 #'
-#' @return `ggplot()` object
+#' @return [ggplot2::ggplot()] object
 #'
 #' @examples
 #' \dontrun{ # Takes a long time.
