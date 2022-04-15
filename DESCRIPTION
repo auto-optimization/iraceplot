@@ -16,10 +16,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 Depends: 
-    R (>= 2.10)
+    R (>= 3.4)
 Imports:
-    irace,
-    GGally, 
+    irace (>= 3.4),
     dplyr, 
     forcats, 
     ggforce, 

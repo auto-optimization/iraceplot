@@ -83,7 +83,7 @@ closeversion:
 
 
 releasebuild: BUILD_FLAGS=--compact-vignettes=qpdf
-releasebuild: 
+releasebuild: gendoc 
 	cd $(BINDIR) &&	R CMD build $(BUILD_FLAGS) $(PACKAGEDIR) && tar -atvf $(PACKAGE)_$(PACKAGEVERSION).tar.gz
 
 cran: releasebuild
