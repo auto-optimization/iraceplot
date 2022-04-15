@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 
 ```{r setup, include= FALSE}
 library(iraceplot)
+library(tidyr, quietly = TRUE)
+library(dplyr, quietly = TRUE)
 niterations <- length(iraceResults$allElites)
 ninstances <- nrow(iraceResults$experiments)
 irace_log <- iraceResults$experimentLog
@@ -41,7 +43,7 @@ for (i in 1:length(instances)) {
   byinstance <- rbind(byinstance, c(iname, nexperiments, imean, imedian, ibest, iworst, bestid))
 }
 colnames(byinstance) <- c("instance", "experiments", "mean", "median", "best", "worst", "best id" )
-
+best_elites <- as.character(iraceResults$allElites[[length(iraceResults$allElites)]])
 ```
 
 # General information
@@ -70,13 +72,24 @@ knitr::kable(byinstance)
 
 # Parameter settings
 ## Elite configurations
+
 The final best configurations found by irace are:
 
 ```{r,fig.align="center", echo=FALSE}
-knitr::kable(iraceResults$allConfigurations[iraceResults$allElites[[length(iraceResults$allElites)]],])
+knitr::kable(iraceResults$allConfigurations[best_elites, , drop=FALSE],
+             row.names = FALSE)
 ```
 
-Parallel coordinates visualization
+Performance of the best configurations on the training instances:
+
+```{r,fig.align="center", echo=FALSE}
+best_results <- as_tibble(iraceResults$experiments[, best_elites])
+best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
+best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
+knitr::kable(best_results, row.names = FALSE)
+```
+
+# Parallel coordinates visualization
 
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 parallel_coord(iraceResults)
@@ -91,9 +104,6 @@ sampling_frequency(iraceResults)
 
 
 
-
-
-
 # Performance
 ## Testing performance
 
@@ -101,7 +111,7 @@ The final elite configuration performance on the test set:
 
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 if (iraceResults$scenario$testInstances == "" || is.null(iraceResults$scenario$testInstances)) {
-  cat("No test performed.\n")
+  cat("No test instances given.\n")
 } else {
   boxplot_test(iraceResults, type = "best")
 }
@@ -113,7 +123,7 @@ Iteration elite configuration performance on the test set:
 if (iraceResults$scenario$testIterationElites) {
    boxplot_test(iraceResults, type = "all", show_points=FALSE)
 } else{
-  cat("No iteration test performed.\n")
+  cat("Iteration elites were not tested.\n")
 }
 ```
 
@@ -124,8 +134,6 @@ Final elite configurations performance on the training set:
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 boxplot_training(iraceResults)
 ```
-
-
 
 
 
