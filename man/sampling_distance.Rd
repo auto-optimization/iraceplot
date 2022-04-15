@@ -18,7 +18,7 @@ iteration, "both" shows both plots.}
 define equal numerical parameter values. If the numerical parameter values to be 
 compared are v1 and v2 they are considered equal if `|v1-v2| <= |ub-lb|*t`.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 line or box plot

@@ -36,7 +36,7 @@ id_configuration is provided)}
 of instances evaluated by the configuration in the colores. FALSE to show
 the iteration number where the configuration was sampled.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 parallel coordinates plot

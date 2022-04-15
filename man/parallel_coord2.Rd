@@ -24,7 +24,7 @@ parallel_coord2(
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 parallel coordinates plot

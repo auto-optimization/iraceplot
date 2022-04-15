@@ -37,7 +37,7 @@ performance.}
 
 \item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 box plot

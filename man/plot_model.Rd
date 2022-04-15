@@ -11,7 +11,7 @@ plot_model(irace_results, param_name, filename = NULL)
 
 \item{param_name}{String, parameter to be included in the plot (example: param_name = "algorithm"))}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 sampling model plot

@@ -21,7 +21,7 @@ sampling_frequency(
 of 9 parameters. For example, \code{n=1} selects the first 9 (1 to 9) parameters, n=2 selects
 the next 9 (10 to 18) parameters and so on.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 Frequency and/or density plot

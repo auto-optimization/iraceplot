@@ -50,7 +50,7 @@ performance.}
 
 \item{x_lab}{String, (default "Configurations") label for the x axis.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 box plot

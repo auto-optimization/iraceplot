@@ -18,14 +18,14 @@ configurations_display(
 percentage deviation to best results per instance, FALSE to plot raw
 performance.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-`ggplot()` object
+[ggplot2::ggplot()] object
 }
 \description{
 A graph is created with all the settings and instance of the training data

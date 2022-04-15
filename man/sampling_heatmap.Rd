@@ -30,7 +30,7 @@ numerical parameters are displayed using 10 intervals.
 \item{only_elite}{logical (default TRUE), only print elite configurations (argument ignored when 
 id_configuration is provided)}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 sampling heat map plot

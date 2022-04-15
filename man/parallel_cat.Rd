@@ -30,7 +30,7 @@ parallel_cat(
 
 \item{n_bins}{Numeric (default 3), number of intervals to generate for numerical parameters.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 parallel categories plot

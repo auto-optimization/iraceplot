@@ -27,7 +27,7 @@ parameters. This argument is positional with respect to param_names. By default,
 numerical parameters are displayed using 10 intervals.
 (example sizes = c(0,10))}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 sampling heat map plot

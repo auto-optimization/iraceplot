@@ -20,7 +20,7 @@ sampling_frequency_iteration(
 parameters. "density" shows a density plot, "frequency" shows a frequency plot and 
 "both" show both frequency and density.}
 
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/patch/example/filename.png"}.}
+\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
 Frequency and/or density plot
