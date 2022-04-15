@@ -1,9 +1,9 @@
-.Rproj.user
-.Rhistory
+.DS_Store
 .RData
+.Rhistory
+.Rproj.user
 .Ruserdata
+/Meta/
 Meta
 docs
 git_version
-/Meta/
-.DS_Store
