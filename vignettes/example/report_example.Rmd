@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, include= FALSE}
 library(iraceplot, quietly = TRUE)
-load("../../data/iraceResults.rda")
+data("iraceResults", package="iraceplot")
 niterations <- length(iraceResults$allElites)
 ninstances <- nrow(iraceResults$experiments)
 irace_log <- iraceResults$experimentLog
