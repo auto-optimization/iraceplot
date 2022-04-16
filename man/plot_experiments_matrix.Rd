@@ -23,13 +23,14 @@ statically. Defaults to the value returned by \code{interactive()},}
 heatmap plot
 }
 \description{
-The \code{plot_experiments_matrix} function creates a plot that shows all experimental
-data configurations in a heat map fashion. Configurations are shown in the x
-axis in the order in which are created in the configuration process. Instances
-are shown in the y axis in the order in which where executed in the configuration
-process. The colors show the overall rank (across the all performance data) of the
-performance evaluation displayed.
-
+Creates a heatmap plot that shows all performance data seen by irace.
+Configurations are shown in the x axis in the order in which are created in
+the configuration process. Instances are shown in the y axis in the order in
+which where executed in the configuration process. The colors show the
+overall rank (across all performance data) of the performance evaluation
+displayed.
+}
+\details{
 This plot gives a general idea of the configuration process progression, the
 number of evaluations of each configuration show how long they survived in the
 iterated racing procedure.

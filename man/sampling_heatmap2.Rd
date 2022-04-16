@@ -33,8 +33,7 @@ numerical parameters are displayed using 10 intervals.
 sampling heat map plot
 }
 \description{
-The \code{sampling_heatmap2} function creates a heat map that display the
-frequency of sampling values of two parameters.
+Heatmap that displays the frequency of sampling values of two parameters.
 }
 \examples{
 sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 

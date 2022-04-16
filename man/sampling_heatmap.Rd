@@ -35,11 +35,10 @@ numerical parameters are displayed using 10 intervals.
 sampling heat map plot
 }
 \description{
-The \code{sampling_heatmap} function creates a heat map that display the
-frequency of sampling values of two parameters.
+Heatmap that displays the frequency of sampling values of two parameters.
 }
 \examples{
 sampling_heatmap(iraceResults, param_names=c("beta", "alpha"))
 sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), iterations = c(3,4))
-sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = TRUE)
+sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = FALSE)
 }

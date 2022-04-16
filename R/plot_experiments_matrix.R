@@ -1,12 +1,11 @@
 #' Heat Map Plot
 #'
-#' @description
-#' The `plot_experiments_matrix` function creates a plot that shows all experimental 
-#' data configurations in a heat map fashion. Configurations are shown in the x 
-#' axis in the order in which are created in the configuration process. Instances 
-#' are shown in the y axis in the order in which where executed in the configuration 
-#' process. The colors show the overall rank (across the all performance data) of the 
-#' performance evaluation displayed.
+#' Creates a heatmap plot that shows all performance data seen by irace.
+#' Configurations are shown in the x axis in the order in which are created in
+#' the configuration process. Instances are shown in the y axis in the order in
+#' which where executed in the configuration process. The colors show the
+#' overall rank (across all performance data) of the performance evaluation
+#' displayed.
 #' 
 #' This plot gives a general idea of the configuration process progression, the
 #' number of evaluations of each configuration show how long they survived in the 
@@ -23,7 +22,8 @@
 #' @examples
 #' plot_experiments_matrix(iraceResults)
 #' @export
-plot_experiments_matrix <- function(irace_results, filename = NULL, interactive = base::interactive()) {
+plot_experiments_matrix <- function(irace_results, filename = NULL, interactive = base::interactive())
+{
   # Variable assignment
   C <- RANK <- text <- i_id <- union <- NULL
 
@@ -55,17 +55,14 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, interactive 
     p <- plotly::ggplotly(p, tooltip = "text")
   }
 
-
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
     # The filename value is worked to separate it and assign it to new values.
     nameFile <- basename(filename)
     directory <- paste0(dirname(filename), sep = "/")
     withr::with_dir(directory, orca(p, paste0(nameFile, ".pdf")))
-
-    # If you do not add the value of filename, the plot is displayed
   } else {
-    p
+    p # Display the plot
   }
-  return(p)
+  invisible(p)
 }

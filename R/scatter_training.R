@@ -25,7 +25,6 @@
 #' scatter_training(iraceResults, id_configurations = c(806, 809), rpd = FALSE)
 #' }
 #' @export
-#' 
 scatter_training <- function(irace_results, id_configurations, rpd = TRUE, 
                              filename = NULL, interactive = base::interactive()) {
   
@@ -35,9 +34,9 @@ scatter_training <- function(irace_results, id_configurations, rpd = TRUE,
   }
   # Verify that the entered id are within the possible range
   if (!(id_configurations[1] %in% irace_results$allConfigurations[,".ID."])) {
-    stop(paste0("Error: id out of range", id_configurations[1], "\n"))
+    stop("id out of range", id_configurations[1])
   } else if (!(id_configurations[2] %in% irace_results$allConfigurations[,".ID."])) {
-    stop(paste("Error: id out of range", id_configurations[2], "\n"))
+    stop("id out of range", id_configurations[2])
   }
   
   experiments <- irace_results$experiments
