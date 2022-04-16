@@ -153,9 +153,9 @@
 <p>A general overview of the sampled parameters values can be obtained with the <code>sampling_frequency</code> function which generates frequency and density plots for the sampled values:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="fu"><a href="../reference/sampling_frequency.html">sampling_frequency</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>The same plot can be obtained using the <code>sampling_frequency2</code> function which receives directly a set of configurations and a parameters object:</p>
+<p>If you would like to visualize the distribution of a particular set of configurations, you can pass directly a set of configurations and a parameters object in the irace format to the <code>sampling_frequency</code> function:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="../reference/sampling_frequency2.html">sampling_frequency2</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">parameters</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alpha"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"> <span class="fu"><a href="../reference/sampling_frequency.html">sampling_frequency</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">parameters</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alpha"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>A detailed plot showing the sampling by iteration can be obtained with the <code>sampling_frequency_iteration</code> function. This plot shows the convergence of the configuration process reflected in the sampled parameter values.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/sampling_frequency_iteration.html">sampling_frequency_iteration</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_name <span class="op">=</span> <span class="st">"beta"</span><span class="op">)</span></code></pre></div>
@@ -226,7 +226,7 @@
 <div class="section level2">
 <h2 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
 </h2>
-<p>The <code>report</code> function generates an HTML report with a summary of the configuration process executed by irace. The function will create an HTML file in the path provided in the <code>filename</code> argument and appending the “.html” extension to it.</p>
+<p>The <code>report</code> function generates an HTML report with a summary of the configuration process executed by irace. The function will create an HTML file in the path provided in the <code>filename</code> argument and appending the <code>".html"</code> extension to it.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/report.html">report</a></span><span class="op">(</span><span class="va">iraceResults</span>, filename<span class="op">=</span><span class="st">"report"</span><span class="op">)</span></code></pre></div>
 </div>
