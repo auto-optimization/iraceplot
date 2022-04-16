@@ -18,10 +18,10 @@ parallel_cat(
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{id_configurations}{Configuration ids to be included in the
-plot. Example: \code{id_configurations = c(20,50,100,300,500,600,700)}}
+plot. Example: \code{c(20,50,100,300,500,600,700)}}
 
-\item{param_names}{String vector, parameters to be included in the plot
-(example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
+\item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
+\code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{iterations}{Numeric vector, iterations from which configuration should be obtained
 (example: iterations = c(1,4,5))}

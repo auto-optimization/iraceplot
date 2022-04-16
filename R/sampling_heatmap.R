@@ -144,10 +144,7 @@ which_domain <- function(param_values, domain) {
 #' 
 #'
 #' @template arg_irace_results
-#'
-#' @param param_names
-#' String vector of size 2, names of the parameters that should be included in the plot
-#' (example: param_names = c("beta","alpha"))
+#' @template arg_param_names
 #' 
 #' @param sizes
 #' Numeric vector that indicated the number of intervals to be considered for numerical 
@@ -160,8 +157,7 @@ which_domain <- function(param_values, domain) {
 #' (example: iterations = c(1,4,5))
 #'
 #' @param only_elite
-#' logical (default TRUE), only print elite configurations (argument ignored when 
-#' id_configuration is provided)
+#' logical (default TRUE), only print elite configurations.
 #'
 #' @template arg_filename
 #'

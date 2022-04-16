@@ -54,7 +54,6 @@ boxplot_training(iraceResults)
 boxplot_training(iraceResults, iteration = 5)
 boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 }
-
 }
 \seealso{
 \code{\link[=boxplot_test]{boxplot_test()}} \code{\link[=boxplot_performance]{boxplot_performance()}}

@@ -17,8 +17,8 @@ scatter_performance(
 in columns and instances in rows. As in irace, column names (configurations ids)
 should be characters. Row names will be used as instance names.}
 
-\item{id_configurations}{Numeric vector, configuration ids whose performance should be displayed
-(example: id_configurations = c("92","119"))}
+\item{id_configurations}{Configuration ids to be included in the
+plot. Example: \code{c(20,50,100,300,500,600,700)}}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -31,19 +31,20 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-\code{ggplot()} object
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
-The \code{scatter_performance} function creates a scatter plot that displays the performance of two
-configurations on a provided experiment matrix. Each point in the plot represents an
-instance and the color of the points indicates if one configuration is better
-than the other.
-
+Create a scatter plot that displays the performance of two configurations on
+a provided experiment matrix. Each point in the plot represents an instance
+and the color of the points indicates if one configuration is better than
+the other.
+}
+\details{
 The performance matrix is assumed to be provided in the format of the irace
-experiment matrix thus, NA values are allowed. Consequently the number of evaluations
-can differ between configurations due to the elimination process applied by
-irace. This plot only shows performance data only for instances in which both
-configurations are executed.
+experiment matrix thus, NA values are allowed. Consequently the number of
+evaluations can differ between configurations due to the elimination process
+applied by irace. This plot only shows performance data only for instances
+in which both configurations are executed.
 }
 \examples{
 scatter_performance(iraceResults$experiments, id_configurations = c(806, 809))

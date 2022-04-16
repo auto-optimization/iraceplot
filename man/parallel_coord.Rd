@@ -6,7 +6,7 @@
 \usage{
 parallel_coord(
   irace_results,
-  id_configuration = NULL,
+  id_configurations = NULL,
   param_names = NULL,
   iterations = NULL,
   only_elite = TRUE,
@@ -18,17 +18,17 @@ parallel_coord(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configuration}{Numeric vector, configurations ids whose performance should be included in the plot
-(example: id_configuration = c(20,50,100,300,500,600,700))}
+\item{id_configurations}{Configuration ids to be included in the
+plot. Example: \code{c(20,50,100,300,500,600,700)}}
 
-\item{param_names}{String vector, names of the parameters that should be included in the plot
-(example: param_names = c("algorithm","alpha","rho","q0","rasrank"))}
+\item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
+\code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{iterations}{Numeric vector, iteration number that should be included in the plot
 (example: iterations = c(1,4,5))}
 
 \item{only_elite}{logical (default TRUE), only print elite configurations (argument ignored when
-id_configuration is provided)}
+id_configurations is provided)}
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed.}
 
@@ -66,7 +66,7 @@ parallel_coord(iraceResults)
 \dontrun{ 
 parallel_coord(iraceResults, by_n_param = 5)
 parallel_coord(iraceResults, only_elite = FALSE)
-parallel_coord(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
+parallel_coord(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 parallel_coord(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 parallel_coord(iraceResults, iterations = c(1, 4, 6))
 }

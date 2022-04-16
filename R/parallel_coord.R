@@ -22,14 +22,8 @@
 #' 
 #'
 #' @template arg_irace_results
-#'
-#' @param id_configuration
-#' Numeric vector, configurations ids whose performance should be included in the plot
-#' (example: id_configuration = c(20,50,100,300,500,600,700))
-#'
-#' @param param_names
-#' String vector, names of the parameters that should be included in the plot
-#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' @template arg_id_configurations
+#' @template arg_param_names
 #'
 #' @param iterations
 #' Numeric vector, iteration number that should be included in the plot
@@ -37,7 +31,7 @@
 #'
 #' @param only_elite
 #' logical (default TRUE), only print elite configurations (argument ignored when 
-#' id_configuration is provided)
+#' id_configurations is provided)
 #'
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed.
@@ -58,11 +52,11 @@
 #' \dontrun{ 
 #' parallel_coord(iraceResults, by_n_param = 5)
 #' parallel_coord(iraceResults, only_elite = FALSE)
-#' parallel_coord(iraceResults, id_configuration = c(20, 50, 100, 300, 500, 600, 700))
+#' parallel_coord(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 #' parallel_coord(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' parallel_coord(iraceResults, iterations = c(1, 4, 6))
 #' }
-parallel_coord <- function(irace_results, id_configuration = NULL, param_names = NULL,
+parallel_coord <- function(irace_results, id_configurations = NULL, param_names = NULL,
                            iterations = NULL, only_elite = TRUE, by_n_param = NULL, 
                            color_by_instances =TRUE, filename = NULL) {
   
@@ -141,7 +135,7 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   
   # Variable assignment
   configuration <- iteration <- dim <- tickV <- vectorP <- NULL
-  id_configuration <- unlist(id_configuration)
+  id_configurations <- unlist(id_configurations)
   
   # set parameter values 
   if (is.null(param_names)) {
@@ -182,30 +176,30 @@ parallel_coord <- function(irace_results, id_configuration = NULL, param_names =
   } 
   
   # Check configurations
-  if (!is.null(id_configuration)) {
+  if (!is.null(id_configurations)) {
     # Verify that the entered id are within the possible range
-    if (any(id_configuration[id_configuration < 1]) || any(id_configuration[id_configuration > nrow(irace_results$allConfigurations)])) {
+    if (any(id_configurations[id_configurations < 1]) || any(id_configurations[id_configurations > nrow(irace_results$allConfigurations)])) {
       stop("Error: IDs provided are outside the range of settings")
     }
     # Verify that the id entered are more than 1 or less than the possible total
-    if (length(id_configuration) <= 1 || length(id_configuration) > nrow(irace_results$allConfigurations)) {
+    if (length(id_configurations) <= 1 || length(id_configurations) > nrow(irace_results$allConfigurations)) {
       stop("Error: You must provide more than one configuration id")
     }
     iterations <- 1:length(irace_results$allElites)
   } else {
     if (only_elite)
-      id_configuration <- unlist(unique(irace_results$allElites[iterations]))
+      id_configurations <- unlist(unique(irace_results$allElites[iterations]))
     else
-      id_configuration <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
+      id_configurations <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
   } 
   
   # Select data 
-  data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ,drop=FALSE]
+  data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, ,drop=FALSE]
   config_iter <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  config_iter <- config_iter[config_iter[, "configuration"] %in% id_configuration, ,drop=FALSE]
+  config_iter <- config_iter[config_iter[, "configuration"] %in% id_configurations, ,drop=FALSE]
   config_iter <- config_iter[config_iter[, "iteration"] %in% iterations, ,drop=FALSE]
   
-  experiments <- irace_results$experiments[,as.character(id_configuration),drop=FALSE]
+  experiments <- irace_results$experiments[,as.character(id_configurations),drop=FALSE]
   fitness     <- colSums(!is.na(experiments))
   
   # Merge iteration and configuration data

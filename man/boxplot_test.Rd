@@ -9,7 +9,7 @@ boxplot_test(
   type = c("all", "ibest", "best"),
   rpd = TRUE,
   show_points = TRUE,
-  filename
+  filename = NULL
 )
 }
 \arguments{

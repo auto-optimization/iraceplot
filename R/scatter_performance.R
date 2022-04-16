@@ -1,33 +1,27 @@
 #' Scatter Performance Plot 
 #'
-#' @description
-#' The `scatter_performance` function creates a scatter plot that displays the performance of two
-#' configurations on a provided experiment matrix. Each point in the plot represents an 
-#' instance and the color of the points indicates if one configuration is better 
-#' than the other.
+#' Create a scatter plot that displays the performance of two configurations on
+#' a provided experiment matrix. Each point in the plot represents an instance
+#' and the color of the points indicates if one configuration is better than
+#' the other.
 #' 
-#' The performance matrix is assumed to be provided in the format of the irace 
-#' experiment matrix thus, NA values are allowed. Consequently the number of evaluations 
-#' can differ between configurations due to the elimination process applied by 
-#' irace. This plot only shows performance data only for instances in which both
-#' configurations are executed.
+#' The performance matrix is assumed to be provided in the format of the irace
+#' experiment matrix thus, NA values are allowed. Consequently the number of
+#' evaluations can differ between configurations due to the elimination process
+#' applied by irace. This plot only shows performance data only for instances
+#' in which both configurations are executed.
 #'
 #' @param experiments
 #' Experiment matrix obtained from irace training or testing data. Configurations 
 #' in columns and instances in rows. As in irace, column names (configurations ids) 
 #' should be characters. Row names will be used as instance names.
 #'
-#' @param id_configurations
-#' Numeric vector, configuration ids whose performance should be displayed 
-#' (example: id_configurations = c("92","119"))
-#'
+#' @template arg_id_configurations
 #' @template arg_rpd
-#'
 #' @template arg_filename
-#'
 #' @template arg_interactive
 #'
-#' @return `ggplot()` object
+#' @return [ggplot2::ggplot()] object
 #'
 #' @examples
 #' scatter_performance(iraceResults$experiments, id_configurations = c(806, 809))

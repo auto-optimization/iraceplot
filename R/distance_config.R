@@ -1,8 +1,6 @@
 #' Distance between configurations
 #'
-#' @description
-#' The `distance_config` function calculates the difference between a configuration 
-#' and the others in the irace data. 
+#' Calculate the difference between a configuration and the others in the irace data.
 #'
 #' @template arg_irace_results
 #'

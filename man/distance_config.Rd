@@ -19,8 +19,7 @@ to consider a parameter value equal to other.}
 numeric
 }
 \description{
-The \code{distance_config} function calculates the difference between a configuration
-and the others in the irace data.
+Calculate the difference between a configuration and the others in the irace data.
 }
 \examples{
 NULL

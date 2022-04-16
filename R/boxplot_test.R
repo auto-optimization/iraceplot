@@ -24,7 +24,7 @@
 #' boxplot_test(iraceResults)
 #' @export
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),
-                         rpd = TRUE, show_points=TRUE, filename)
+                         rpd = TRUE, show_points=TRUE, filename=NULL)
 {
   type <- match.arg(type)
   

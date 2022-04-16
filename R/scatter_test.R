@@ -14,17 +14,12 @@
 #' guide for more details).
 #'
 #' @template arg_irace_results
-#' @param id_configurations
-#' String vector, configuration ids whose performance should be displayed 
-#' (example: id_configurations = c("92","119"))
-#' 
+#' @template arg_id_configurations
 #' @template arg_rpd
-#' 
 #' @template arg_filename
-#' 
 #' @template arg_interactive
 #'
-#' @return `ggplot()` object
+#' @return [ggplot2::ggplot()] object
 #'
 #' @export
 #'
@@ -33,9 +28,9 @@
 #' \dontrun{ 
 #' scatter_test(iraceResults, id_configurations = c("92", "119"), rpd=FALSE)
 #' }
-  scatter_test <- function(irace_results, id_configurations, rpd = TRUE, 
-                           filename = NULL, interactive = base::interactive()) {
-
+scatter_test <- function(irace_results, id_configurations, rpd = TRUE, 
+                         filename = NULL, interactive = base::interactive())
+{
   conf1 <- conf2 <- best <- instance <- x_val <- y_val <- point_text <- NULL
     
   # verify that test this in irace_results

@@ -16,8 +16,8 @@ sampling_heatmap(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{param_names}{String vector of size 2, names of the parameters that should be included in the plot
-(example: param_names = c("beta","alpha"))}
+\item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
+\code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{sizes}{Numeric vector that indicated the number of intervals to be considered for numerical
 parameters. This argument is positional with respect to param_names. By default,
@@ -27,8 +27,7 @@ numerical parameters are displayed using 10 intervals.
 \item{iterations}{Numeric vector, iteration number that should be included in the plot
 (example: iterations = c(1,4,5))}
 
-\item{only_elite}{logical (default TRUE), only print elite configurations (argument ignored when
-id_configuration is provided)}
+\item{only_elite}{logical (default TRUE), only print elite configurations.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }

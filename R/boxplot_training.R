@@ -41,10 +41,10 @@
 #' boxplot_training(iraceResults, iteration = 5)
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 #' }
-#' 
+#' @export
 boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, 
-                             rpd = TRUE, show_points=TRUE, filename = NULL) {
-
+                             rpd = TRUE, show_points=TRUE, filename = NULL)
+{
   if (!is.null(iteration) & !is.null(id_configurations)) {
     stop("Error: cannot use id_configurations and iteration at the same time\n")
   }
@@ -67,16 +67,11 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   } else {
     id_configurations <- irace_results$allElites[[iteration]]
   }
-  
-  # A table is created with the values of all elite configurations of the id of the requested iteration
-  experiments <- irace_results$experiments
-  
-  boxplot_performance(experiments = experiments,
+  boxplot_performance(experiments = irace_results$experiments,
                       allElites = id_configurations,
                       type = "all",
                       first_is_best = TRUE,
                       rpd = rpd, 
                       show_points = show_points,
                       filename = filename)
-
 }

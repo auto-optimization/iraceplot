@@ -17,9 +17,7 @@
 #'
 #' @template arg_id_configurations
 #' 
-#' @param param_names
-#' String vector, parameters to be included in the plot
-#' (example: param_names = c("algorithm","alpha","rho","q0","rasrank"))
+#' @template arg_param_names
 #'
 #' @param iterations
 #' Numeric vector, iterations from which configuration should be obtained

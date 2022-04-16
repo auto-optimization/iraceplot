@@ -15,8 +15,8 @@ scatter_test(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{id_configurations}{String vector, configuration ids whose performance should be displayed
-(example: id_configurations = c("92","119"))}
+\item{id_configurations}{Configuration ids to be included in the
+plot. Example: \code{c(20,50,100,300,500,600,700)}}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -29,7 +29,7 @@ interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-\code{ggplot()} object
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 The \code{scatter_test} function creates a scatter plot comparing the performance of two

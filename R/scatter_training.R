@@ -1,10 +1,9 @@
 #' Scatter Plot Training
 #'
-#' @description
-#' The `scatter_training` function creates a scatter plot that displays the performance of two
-#' configurations on the training performance. Each point in the plot represents an 
-#' instance and the color of the points indicates if one configuration is better 
-#' than the other.
+#' Create a scatter plot that displays the performance of two configurations on
+#' the training performance. Each point in the plot represents an instance and
+#' the color of the points indicates if one configuration is better than the
+#' other.
 #' 
 #' The performance data is obtained from the evaluations performed by irace 
 #' during the execution process, consequently the number of evaluations 
@@ -13,18 +12,12 @@
 #' configurations are executed.
 #'
 #' @template arg_irace_results
-#'
-#' @param id_configurations
-#' Numeric vector, configuration ids whose performance should be displayed 
-#' (example: id_configurations = c("92","119"))
-#'
+#' @template arg_id_configurations
 #' @template arg_rpd
-#'
 #' @template arg_filename
-#'
 #' @template arg_interactive
 #'
-#' @return `ggplot()` object
+#' @return [ggplot2::ggplot()] object
 #'
 #' @examples
 #' scatter_training(iraceResults, id_configurations = c(806, 809))

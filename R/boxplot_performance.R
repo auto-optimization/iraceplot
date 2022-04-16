@@ -57,7 +57,7 @@
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", 
-                                filename)
+                                filename = NULL)
 {
   type <- match.arg(type)
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
@@ -222,13 +222,13 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   
   # If the value in filename is added the pdf file is created
-  if (missing(filename)) {
+  if (!is.null(filename)) {
     ggsave(filename, plot = p)
     # If you do not add the value of filename, the plot is displayed
   } else {
     p
-    return(p)
   }
+  invisible(p)
 }
 
 get_ranked_ids <- function(experiments){
