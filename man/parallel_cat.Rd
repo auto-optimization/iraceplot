@@ -44,10 +44,10 @@ colors. Specific configurations can be selected providing their ids in the
 \code{id_configurations} argument.
 }
 \details{
-The parameters to be included in the plot can be selected with the param_names
-argument. Additionally, the maximum number of parameters to be displayed in one
-plot. A list of plots is returned by this function in several plots are required
-to display the selected data.
+The parameters to be included in the plot can be selected with the
+param_names argument. Additionally, the maximum number of parameters to be
+displayed in one plot. A list of plots is returned by this function in
+several plots are required to display the selected data.
 }
 \examples{
 parallel_cat(iraceResults)

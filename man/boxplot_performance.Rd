@@ -13,7 +13,7 @@ boxplot_performance(
   show_points = TRUE,
   best_color = "#08bfaa",
   x_lab = "Configurations",
-  filename = NULL
+  filename
 )
 }
 \arguments{

@@ -7,10 +7,10 @@
 #' colors. Specific configurations can be selected providing their ids in the
 #' `id_configurations` argument.
 #' 
-#' The parameters to be included in the plot can be selected with the param_names
-#' argument. Additionally, the maximum number of parameters to be displayed in one
-#' plot. A list of plots is returned by this function in several plots are required
-#' to display the selected data.
+#' The parameters to be included in the plot can be selected with the
+#' param_names argument. Additionally, the maximum number of parameters to be
+#' displayed in one plot. A list of plots is returned by this function in
+#' several plots are required to display the selected data.
 #' 
 #'
 #' @template arg_irace_results
@@ -154,7 +154,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   }
 
   # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.", ".PARENT."))]
+  tabla <- tabla[, !(startsWith(colnames(tabla), "."))]
   tabla$iteration <- factor(tabla$iteration, ordered=TRUE)
   
   n_parts <- ceiling(length(param_names) / by_n_param)
