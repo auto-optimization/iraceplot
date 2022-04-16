@@ -224,11 +224,8 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
     ggsave(filename, plot = p)
-    # If you do not add the value of filename, the plot is displayed
-  } else {
-    p
   }
-  invisible(p)
+  return(p)
 }
 
 get_ranked_ids <- function(experiments){
@@ -244,5 +241,6 @@ get_ranked_ids <- function(experiments){
 
 calculate_rpd <- function(x)
 {
-  100 * (x - apply(x, 1, min, na.rm = TRUE)) / apply(x, 1, min, na.rm = TRUE)
+  min_cols <- apply(x, 1L, min, na.rm = TRUE)
+  100 * (x - min_cols) / min_cols
 }

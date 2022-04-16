@@ -1,6 +1,5 @@
 #' The configurations by iteration and instance
 #'
-#' @description
 #' A graph is created with all the settings and instance of the training data
 #'
 #' @template arg_irace_results
@@ -14,22 +13,20 @@
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
-#' \dontrun{ # Takes a long time.
+#' \dontrun{ # FIXME: This function takes a long time.
 #' configurations_display(iraceResults)
 #' }
 #' @export
-configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, interactive = base::interactive()) {
-
+configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, interactive = base::interactive())
+{
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
   nconfig <- 0
   experiments <- as.data.frame(irace_results$experiments)
 
   # the table values are modified
-  if (rpd) {
-    experiments <- (experiments - apply(experiments, 1, min, na.rm = TRUE)) / apply(experiments, 1, min, na.rm = TRUE)
-  }
-
+  if (rpd) experiments <- calculate_rpd(experiments)
+  
   # variable assignment
   exp_log <- select(as.data.frame(irace_results$experimentLog), -time, -bound)
   value <- sample(NA, size = dim(exp_log)[1], replace = TRUE)

@@ -80,16 +80,7 @@ knitr::kable(iraceResults$allConfigurations[best_elites, , drop=FALSE],
              row.names = FALSE)
 ```
 
-Performance of the best configurations on the training instances:
-
-```{r,fig.align="center", echo=FALSE}
-best_results <- as_tibble(iraceResults$experiments[, best_elites])
-best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
-best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-knitr::kable(best_results, row.names = FALSE)
-```
-
-# Parallel coordinates visualization
+## Parallel coordinates visualization (only elites)
 
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 parallel_coord(iraceResults)
@@ -105,7 +96,21 @@ sampling_frequency(iraceResults)
 
 
 # Performance
+
 ## Testing performance
+
+Performance of the final elite configurations on the test instances:
+
+```{r,fig.align="center", echo=FALSE}
+if (iraceResults$scenario$testInstances == "" || is.null(iraceResults$scenario$testInstances)) {
+  cat("No test instances given.\n")
+} else {
+best_results <- as_tibble(iraceResults$testing$experiments[, best_elites])
+best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
+best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
+knitr::kable(best_results, row.names = FALSE)
+}
+```
 
 The final elite configuration performance on the test set:
 
@@ -129,11 +134,24 @@ if (iraceResults$scenario$testIterationElites) {
 
 ## Training performance 
 
+Performance of the final elite configurations on the training instances:
+
+```{r,fig.align="center", echo=FALSE}
+best_results <- as_tibble(iraceResults$experiments[, best_elites])
+best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
+best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
+knitr::kable(best_results, row.names = FALSE)
+```
+
 Final elite configurations performance on the training set:
 
 ```{r,fig.align="center", fig.width= 7, echo=FALSE}
 boxplot_training(iraceResults)
 ```
 
+# Races overview
+```{r,fig.align="center", fig.width= 7, echo=FALSE}
+plot_experiments_matrix(iraceResults)
+```
 
 

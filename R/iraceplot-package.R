@@ -6,24 +6,24 @@
 #'
 #' Graphical Visualization Tools for Analysing the Data Produced by Irace.
 #'
+#' boxplot_performance;
 #' boxplot_test;
-#' scatter_test;
-#' parallel_coord;
-#' parallel_coord2;
+#' boxplot_training;
 #' parallel_cat;
+#' parallel_coord2;
+#' parallel_coord;
+#' plot_experiments_matrix;
+#' plot_model;
+#' report;
+#' sampling_distance;
 #' sampling_frequency;
 #' sampling_frequency_iteration;
-#' sampling_pie;
-#' plot_experiments_matrix;
-#' sampling_distance;
-#' sampling_heatmap;
 #' sampling_heatmap2;
-#' boxplot_training;
-#' scatter_training;
-#' boxplot_performance;
+#' sampling_heatmap;
+#' sampling_pie;
 #' scatter_performance;
-#' report;
-#' plot_model;
+#' scatter_test;
+#' scatter_training;
 #'
 #' If you need information about any function you can write:
 #' ?name_function
@@ -45,7 +45,7 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom forcats fct_relevel
 #' @importFrom tibble rownames_to_column
-#' @importFrom ggplot2 geom_tile scale_fill_viridis_c element_blank scale_color_viridis_c ggsave scale_shape_manual theme_bw scale_x_discrete scale_y_discrete scale_color_manual scale_size_manual scale_alpha_manual geom_point scale_fill_manual vars guide_legend facet_grid geom_bar geom_density geom_histogram ggtitle scale_y_continuous rel geom_line scale_x_continuous element_text scale_color_viridis_d ggplot geom_boxplot geom_jitter position_jitter aes theme labs scale_color_hue xlab ylab
+#' @importFrom ggplot2 geom_tile scale_fill_viridis_c element_blank scale_color_viridis_c ggsave scale_shape_manual theme_bw scale_x_discrete scale_y_discrete scale_color_manual scale_size_manual scale_alpha_manual geom_point scale_fill_manual vars guide_legend facet_grid geom_bar geom_density geom_histogram ggtitle scale_y_continuous rel geom_line scale_x_continuous element_text scale_color_viridis_d ggplot geom_boxplot geom_jitter position_jitter aes theme labs scale_color_hue xlab ylab geom_abline
 #' @importFrom graphics text
 #' @importFrom stats C na.omit reshape
 #' @importFrom dplyr mutate %>% tibble group_by summarise n select arrange count

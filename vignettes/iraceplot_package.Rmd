@@ -221,7 +221,7 @@ To investigate the difference in the performance of two configurations the `scat
 the performance of both configurations paired by instance (each point represents an instance):
 
 ```{r fig.align="center", fig.width=7, eval=FALSE}
-scatter_test(iraceResults, id_configurations = c(808,809), interactive=TRUE)
+scatter_test(iraceResults, x_id = 808, y_id = 809, interactive=TRUE)
 ```
 
 
@@ -244,7 +244,7 @@ To observe the difference in the performance of two configurations you can also 
 a scatter plot using the `scatter_training` function: 
 
 ```{r fig.align="center", fig.width=7, eval=FALSE}
-scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
+scatter_training(iraceResults, x_id = 808, y_id = 809, interactive=TRUE)
 ```
 
 ## Visualizing performance (general purpose)
@@ -260,7 +260,7 @@ In the same way, you can use the `scatter_perfomance` function to plot the diffe
 between configurations:
 
 ```{r fig.align="center", fig.width=7, eval=FALSE}
-scatter_performance(iraceResults$experiments, id_configurations = c(803,809), interactive=TRUE)
+scatter_performance(iraceResults$experiments, x_id = 83, y_id = 809, interactive=TRUE)
 ```
 
 Note that there these functions can be adjusted to display differently the configurations (i.e. include or not instancs).

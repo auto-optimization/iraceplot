@@ -320,7 +320,7 @@ you can use the `scatter_test` function. This function displays the performance 
 paired by instance (each point represents an instance):
 
 ```{r fig.align="center", fig.width=7}
-scatter_test(iraceResults, id_configurations = c(808,809), interactive=TRUE)
+scatter_test(iraceResults, x_id = 808, y_id = 809, interactive=TRUE, instance_names = basename)
 ```
 
 If the plot is created using the argument `interactive=TRUE` you can visualize the instance name when
@@ -370,7 +370,7 @@ To visualize the difference in the performance of two configurations you can als
 a scatter plot using the `scatter_training` function: 
 
 ```{r fig.align="center", fig.width=7}
-scatter_training(iraceResults, id_configurations = c(808,809), interactive=TRUE)
+scatter_training(iraceResults, x_id = 808, y_id = 809, interactive=TRUE)
 ```
 
 If the plot is created using the argument `interactive=TRUE` you can visualize the instance name when
@@ -430,12 +430,13 @@ If you want to further compare the performance of two configurtions, you can use
 `scatter_perfomance` function to plot the difference between configurations:
 
 ```{r fig.align="center", fig.width=7}
-scatter_performance(iraceResults$experiments, id_configurations = c(803,809), interactive=TRUE)
+scatter_performance(iraceResults$experiments, x_id = 803, y_id = 809, interactive=TRUE, instance_names = basename)
 ```
 
 If the plot is created using the argument `interactive=TRUE` and, the provided
 matrix has row names, you can visualize the instance name when placing the cursor 
-over each performance point otherwise an instance id is displayed. 
+over each performance point otherwise an instance ID is displayed. In this
+example, we further transform instance names using the function `basename()`. 
 
 # Visualizing the configuration process
 

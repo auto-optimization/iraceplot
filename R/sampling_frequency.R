@@ -163,8 +163,6 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     }
     # FIXME: we could save in multiple files with a counter in their name,
     ggsave(filename, wp)
-  } else {
-    print(wp)
   }
-  invisible(wp)
+  return(wp)
 }

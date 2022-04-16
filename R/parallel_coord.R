@@ -57,7 +57,7 @@
 #' }
 parallel_coord <- function(irace_results, id_configurations = NULL, param_names = NULL,
                            iterations = NULL, only_elite = TRUE, by_n_param = NULL, 
-                           color_by_instances =TRUE, filename = NULL)
+                           color_by_instances = TRUE, filename = NULL)
 {
   parameters <- irace_results$parameters
   

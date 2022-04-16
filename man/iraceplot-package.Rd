@@ -10,24 +10,24 @@ Graphical visualization tools for analysing the data produced by irace.
 
 Graphical Visualization Tools for Analysing the Data Produced by Irace.
 
+boxplot_performance;
 boxplot_test;
-scatter_test;
-parallel_coord;
-parallel_coord2;
+boxplot_training;
 parallel_cat;
+parallel_coord2;
+parallel_coord;
+plot_experiments_matrix;
+plot_model;
+report;
+sampling_distance;
 sampling_frequency;
 sampling_frequency_iteration;
-sampling_pie;
-plot_experiments_matrix;
-sampling_distance;
-sampling_heatmap;
 sampling_heatmap2;
-boxplot_training;
-scatter_training;
-boxplot_performance;
+sampling_heatmap;
+sampling_pie;
 scatter_performance;
-report;
-plot_model;
+scatter_test;
+scatter_training;
 
 If you need information about any function you can write:
 ?name_function

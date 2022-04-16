@@ -2,23 +2,30 @@
 % Please edit documentation in R/scatter_performance.R
 \name{scatter_performance}
 \alias{scatter_performance}
-\title{Scatter Performance Plot}
+\alias{scatter_training}
+\alias{scatter_test}
+\title{Performance Scatter Plot of Two Configurations}
 \usage{
 scatter_performance(
   experiments,
-  id_configurations,
+  x_id,
+  y_id,
   rpd = TRUE,
   filename = NULL,
-  interactive = base::interactive()
+  interactive = base::interactive(),
+  instance_names = NULL
 )
+
+scatter_training(irace_results, ...)
+
+scatter_test(irace_results, ...)
 }
 \arguments{
 \item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations
 in columns and instances in rows. As in irace, column names (configurations ids)
 should be characters. Row names will be used as instance names.}
 
-\item{id_configurations}{Configuration ids to be included in the
-plot. Example: \code{c(20,50,100,300,500,600,700)}}
+\item{x_id, y_id}{Configuration IDs for x-axis and y-axis, respectively.}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -29,8 +36,18 @@ performance.}
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
+
+\item{instance_names}{Either a character vector of instance names in the
+same order as \code{rownames(experiments)} or a function that takes
+\code{rownames(experiments)} as input.}
+
+\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+
+\item{...}{Other arguments passed to \code{\link[=scatter_performance]{scatter_performance()}}.}
 }
 \value{
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
+
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
@@ -45,8 +62,26 @@ experiment matrix thus, NA values are allowed. Consequently the number of
 evaluations can differ between configurations due to the elimination process
 applied by irace. This plot only shows performance data only for instances
 in which both configurations are executed.
+
+\code{\link[=scatter_training]{scatter_training()}} compares the performance of two configurations on the
+training instances. The performance data is obtained from the evaluations
+performed by irace during the execution process.
+
+\code{\link[=scatter_test]{scatter_test()}} compares the performance of two configurations on the test
+instances. The performance data is obtained from the test evaluations
+performed by irace.  Note that testing is not enabled by default in irace
+and should be enabled in the scenario setup. Moreover, configuration ids
+provided in \code{x_id} and \code{y_id} should belong to elite configuration set
+evaluated in the test (see the irace package user guide for more details).
 }
 \examples{
-scatter_performance(iraceResults$experiments, id_configurations = c(806, 809))
-scatter_performance(iraceResults$testing$experiments, id_configurations = c(803, 809), rpd = FALSE)
+scatter_performance(iraceResults$experiments, x_id = 806, y_id = 809)
+scatter_training(iraceResults, x_id = 806, y_id = 809)
+\dontrun{ 
+scatter_training(iraceResults, x_id = 806, y_id = 809, rpd = FALSE)
+}
+scatter_test(iraceResults, x_id = 92, y_id = 119)
+\dontrun{ 
+scatter_test(iraceResults, x_id = 92, y_id = 119, rpd=FALSE)
+}
 }
