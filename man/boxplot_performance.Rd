@@ -44,14 +44,14 @@ performance.}
 
 \item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
 
-\item{best_color}{String, (default ""#08bfaa"") color to display best configurations.}
+\item{best_color}{String, (default \code{"#08bfaa"}) color to display best configurations.}
 
-\item{x_lab}{String, (default "Configurations") label for the x axis.}
+\item{x_lab}{String, (default \code{"Configurations"}) label for the x axis.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
-box plot
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object
 }
 \description{
 Creates a box plot that displays the performance of a set of configurations
@@ -68,4 +68,7 @@ boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 \dontrun{ 
 boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
 }
+}
+\seealso{
+\code{\link[=boxplot_test]{boxplot_test()}} \code{\link[=boxplot_training]{boxplot_training()}}
 }

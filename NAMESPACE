@@ -2,7 +2,6 @@
 
 export(boxplot_performance)
 export(boxplot_test)
-export(boxplot_training)
 export(configurations_display)
 export(parallel_cat)
 export(parallel_coord)

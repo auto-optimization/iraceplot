@@ -29,7 +29,7 @@ two configurations, for a fair comparison use the test data plot.}
 \item{id_configurations}{Numeric vector, configurations ids whose performance should be included in the plot.
 If no ids are provided, the configurations ids are set as the elite configuration ids
 of the selected iteration (last iteration by default)
-(example: id_configurations = c(20,50,100,300,500,600,700)).}
+(example: \code{id_configurations = c(20,50,100,300,500,600,700)}).}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -40,13 +40,13 @@ performance.}
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
-box plot
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object
 }
 \description{
-The \code{boxplot_training} function creates a box plot that displays the performance
-of a set of configurations on the training instances. Performance data is obtained
-from the evaluations performed by irace during the execution process. This implies
-that the number of evaluations can differ between configurations.
+Creates a box plot that displays the performance of a set of configurations
+on the training instances. Performance data is obtained from the evaluations
+performed by irace during the execution process. This implies that the
+number of evaluations can differ between configurations.
 }
 \examples{
 boxplot_training(iraceResults)
@@ -55,4 +55,7 @@ boxplot_training(iraceResults, iteration = 5)
 boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 }
 
+}
+\seealso{
+\code{\link[=boxplot_test]{boxplot_test()}} \code{\link[=boxplot_performance]{boxplot_performance()}}
 }

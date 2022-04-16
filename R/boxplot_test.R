@@ -8,28 +8,23 @@
 #'
 #' @template arg_irace_results
 #'
-#' @param type
-#' String, (default `"all"`) possible values are `"all"`, "ibest" or "best". "all" 
-#' shows all the configurations included in the test, "best" shows the elite 
-#' configurations of the last iteration and "ibest" shows the elite configurations 
-#' of each iteration. Note that "ibest" requires that irace includes the iteration
-#' elites in the testing.
+#' @param type String, (default `"all"`) possible values are `"all"`, "ibest" or "best". "all" shows all the configurations included in the test, "best" shows the elite configurations of the last iteration and "ibest" shows the elite configurations of each iteration (requires that irace includes the iteration elites in the testing).
 #' 
 #' @template arg_rpd
-#' 
-#' @param show_points
-#' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
+#'
+#' @template arg_show_points
 #' 
 #' @template arg_filename
 #' 
-#' @return box plot
+#' @template ret_boxplot
 #'
-#' @examples
-#' 
+#' @seealso [boxplot_training()] [boxplot_performance()]
+#'
+#' @examples#' 
 #' boxplot_test(iraceResults)
 #' @export
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),
-                         rpd = TRUE, show_points=TRUE, filename = NULL)
+                         rpd = TRUE, show_points=TRUE, filename)
 {
   type <- match.arg(type)
   

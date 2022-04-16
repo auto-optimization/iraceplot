@@ -34,20 +34,20 @@
 #' in the same color.
 #' 
 #' @template arg_rpd
-#' 
-#' @param show_points
-#' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
+#'
+#' @template arg_show_points
 #' 
 #' @param best_color 
-#' String, (default ""#08bfaa"") color to display best configurations.
+#' String, (default `"#08bfaa"`) color to display best configurations.
 #' 
 #' @param x_lab 
-#' String, (default "Configurations") label for the x axis.
+#' String, (default `"Configurations"`) label for the x axis.
 #' 
 #' @template arg_filename
 #' 
-#' @return box plot
+#' @template ret_boxplot
 #'
+#' @seealso [boxplot_test()] [boxplot_training()]
 #' @examples
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 #' \dontrun{ 
@@ -57,7 +57,7 @@
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", 
-                                filename = NULL)
+                                filename)
 {
   type <- match.arg(type)
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
@@ -202,12 +202,11 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     }
     
     if (first_is_best) 
-      p <- p +  scale_color_manual(values=c("#08bfaa", "#999999"))
+      p <- p +  scale_color_manual(values=c(best_color, "#999999"))
           #scale_color_hue(h = c(220, 270))
   }
-  
-  y_lab <- "Performance"
-  if (rpd) y_lab <- "RPD performance"
+
+  y_lab <- if (rpd) "RPD performance" else "Performance"
   
   p <- p +
     geom_boxplot() +
@@ -223,7 +222,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   
   # If the value in filename is added the pdf file is created
-  if (!is.null(filename)) {
+  if (missing(filename)) {
     ggsave(filename, plot = p)
     # If you do not add the value of filename, the plot is displayed
   } else {

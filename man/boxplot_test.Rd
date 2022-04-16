@@ -9,17 +9,13 @@ boxplot_test(
   type = c("all", "ibest", "best"),
   rpd = TRUE,
   show_points = TRUE,
-  filename = NULL
+  filename
 )
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{type}{String, (default \code{"all"}) possible values are \code{"all"}, "ibest" or "best". "all"
-shows all the configurations included in the test, "best" shows the elite
-configurations of the last iteration and "ibest" shows the elite configurations
-of each iteration. Note that "ibest" requires that irace includes the iteration
-elites in the testing.}
+\item{type}{String, (default \code{"all"}) possible values are \code{"all"}, "ibest" or "best". "all" shows all the configurations included in the test, "best" shows the elite configurations of the last iteration and "ibest" shows the elite configurations of each iteration (requires that irace includes the iteration elites in the testing).}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -30,7 +26,7 @@ performance.}
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
 \value{
-box plot
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object
 }
 \description{
 Creates a box plot that displays the performance of a set of configurations on the test instances.
@@ -41,6 +37,9 @@ by irace. Note that the testing is not a default feature in irace and should
 be enabled in the setup (see the irace package user guide for more details).
 }
 \examples{
-
+#' 
 boxplot_test(iraceResults)
+}
+\seealso{
+\code{\link[=boxplot_training]{boxplot_training()}} \code{\link[=boxplot_performance]{boxplot_performance()}}
 }

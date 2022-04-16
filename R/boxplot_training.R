@@ -1,9 +1,9 @@
 #' Box Plot Training
 #'
-#' The `boxplot_training` function creates a box plot that displays the performance
-#' of a set of configurations on the training instances. Performance data is obtained 
-#' from the evaluations performed by irace during the execution process. This implies 
-#' that the number of evaluations can differ between configurations. 
+#' Creates a box plot that displays the performance of a set of configurations
+#' on the training instances. Performance data is obtained from the evaluations
+#' performed by irace during the execution process. This implies that the
+#' number of evaluations can differ between configurations.
 #' 
 #'
 #' @template arg_irace_results
@@ -23,18 +23,17 @@
 #' Numeric vector, configurations ids whose performance should be included in the plot.
 #' If no ids are provided, the configurations ids are set as the elite configuration ids 
 #' of the selected iteration (last iteration by default) 
-#' (example: id_configurations = c(20,50,100,300,500,600,700)).
+#' (example: `id_configurations = c(20,50,100,300,500,600,700)`).
 #'
 #' @template arg_rpd
 #' 
-#' @param show_points
-#' Logical, (default TRUE) TRUE to plot performance points together with the box plot.
-#'
+#' @template arg_show_points
+#' 
 #' @template arg_filename
 #' 
-#' @return box plot
+#' @template ret_boxplot
 #'
-#' @export
+#' @seealso [boxplot_test()] [boxplot_performance()]
 #'
 #' @examples
 #' boxplot_training(iraceResults)
