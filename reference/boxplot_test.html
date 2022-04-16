@@ -73,11 +73,7 @@
     <dl><dt>irace_results</dt>
 <dd><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></dd>
 <dt>type</dt>
-<dd><p>String, (default <code>"all"</code>) possible values are <code>"all"</code>, "ibest" or "best". "all"
-shows all the configurations included in the test, "best" shows the elite
-configurations of the last iteration and "ibest" shows the elite configurations
-of each iteration. Note that "ibest" requires that irace includes the iteration
-elites in the testing.</p></dd>
+<dd><p>String, (default <code>"all"</code>) possible values are <code>"all"</code>, "ibest" or "best". "all" shows all the configurations included in the test, "best" shows the elite configurations of the last iteration and "ibest" shows the elite configurations of each iteration (requires that irace includes the iteration elites in the testing).</p></dd>
 <dt>rpd</dt>
 <dd><p>(<code>logical(1)</code>) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -89,7 +85,7 @@ performance.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>box plot</p>
+    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> boxplot object</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -97,12 +93,15 @@ performance.</p></dd>
 by irace. Note that the testing is not a default feature in irace and should
 be enabled in the setup (see the irace package user guide for more details).</p>
     </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p><code><a href="boxplot_training.html">boxplot_training()</a></code> <code><a href="boxplot_performance.html">boxplot_performance()</a></code></p></div>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#' </span></span>
 <span class="r-in"><span class="fu">boxplot_test</span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="boxplot_test-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

@@ -76,8 +76,8 @@ frequency of sampling values of two parameters.</p>
     <dl><dt>irace_results</dt>
 <dd><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></dd>
 <dt>param_names</dt>
-<dd><p>String vector of size 2, names of the parameters that should be included in the plot
-(example: param_names = c("beta","alpha"))</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>) Parameters to be included in the plot. Example:
+<code>c("algorithm","alpha","rho","q0","rasrank")</code>.</p></dd>
 <dt>sizes</dt>
 <dd><p>Numeric vector that indicated the number of intervals to be considered for numerical
 parameters. This argument is positional with respect to param_names. By default,
@@ -87,8 +87,7 @@ numerical parameters are displayed using 10 intervals.
 <dd><p>Numeric vector, iteration number that should be included in the plot
 (example: iterations = c(1,4,5))</p></dd>
 <dt>only_elite</dt>
-<dd><p>logical (default TRUE), only print elite configurations (argument ignored when
-id_configuration is provided)</p></dd>
+<dd><p>logical (default TRUE), only print elite configurations.</p></dd>
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
 </dl></div>

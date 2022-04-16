@@ -89,8 +89,8 @@ guide for more details).</p>
     <dl><dt>irace_results</dt>
 <dd><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></dd>
 <dt>id_configurations</dt>
-<dd><p>String vector, configuration ids whose performance should be displayed
-(example: id_configurations = c("92","119"))</p></dd>
+<dd><p>Configuration ids to be included in the
+plot. Example: <code>c(20,50,100,300,500,600,700)</code></p></dd>
 <dt>rpd</dt>
 <dd><p>(<code>logical(1)</code>) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -104,7 +104,7 @@ statically. Defaults to the value returned by <code><a href="https://rdrr.io/r/b
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ggplot()</code> object</p>
+    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object</p>
     </div>
 
     <div id="ref-examples">
