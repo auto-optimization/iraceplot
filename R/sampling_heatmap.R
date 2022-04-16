@@ -22,31 +22,35 @@
 #  - param: ticks for the plot
 #  - names: domain labels for the plot
 #  - domain: starting points of the intervals
-get_domain <- function(param_name, parameters, size) {
-  is_real <- function(param_name, parameters) {
-    if (parameters$types[param_name] %in% c("r", "r,log"))
-      return(TRUE)
-    return(FALSE)
-  }
-  
-  is_integer <- function(param_name, parameters) {
-    if (parameters$types[param_name] %in% c("i", "i,log"))
-      return(TRUE)
-    return(FALSE)
-  }
-  
-  is_cat <- function(param_name, parameters) {
-    if (parameters$types[param_name] %in% c("c", "o"))
-      return(TRUE)
-    return(FALSE)
-  }
-  
+get_domain <- function(param_name, parameters, size)
+{
+  is_real <- function(param_name, parameters) parameters$types[param_name] %in% c("r", "r,log")
+  is_integer <- function(param_name, parameters) parameters$types[param_name] %in% c("i", "i,log")
+  is_cat <- function(param_name, parameters) parameters$types[param_name] %in% c("c", "o")
+    
   old_domain <- parameters$domain[[param_name]]
-  
-  if (is_real(param_name, parameters)) {
-    # Set default size
-    if (size <= 0)
-      size <- 10
+
+  if (is_cat(param_name, parameters)) {
+    size   <- length(old_domain)
+    type   <- "c"
+    param  <- 1:length(old_domain)
+    domain <- old_domain
+    names  <- old_domain
+  } else {
+    if (is_real(param_name, parameters)) {
+      # Set default size
+      if (size <= 0)
+        size <- 10
+    } else if (size <= 0) {
+      size <- old_domain[2] - old_domain[1] 
+      size <- min(10L, size)
+    } else if (size > (old_domain[2] - old_domain[1])) {
+      cat("Note: step size for integer parameters should not exceed 
+            the size of their domain. Parameter", param_name, ", domain size:", 
+          old_domain[2] - old_domain[1], ", provided step size:", size, "\n")
+      size <- min(old_domain[2] - old_domain[1], 10L)
+      cat("Setting step size to:", size, "\n")
+    }
     type <- "n"
     param <- seq(1,size)
     domain <- seq(old_domain[1], old_domain[2], length.out = size+1)
@@ -55,37 +59,6 @@ get_domain <- function(param_name, parameters, size) {
     for (i in 1:(size-1))
       names <- c(names, paste0("[", domain[i], ",", domain[i+1], ")"))
     names <- c(names, paste0("[",domain[size],",", domain[size+1], "]"))
-  } else if (is_integer(param_name, parameters)) {
-    # Set default size
-    if (size <= 0) {
-      size <- old_domain[2] - old_domain[1] 
-      if (size >10)
-        size <- 10
-    }
-    if (size > (old_domain[2] - old_domain[1])){
-      cat("Note: step size for integer parameters should not exceed 
-            the size of their domain. Parameter", param_name, ", domain size:", 
-          old_domain[2] - old_domain[1], ", provided step size:", size, "\n")
-      size <- old_domain[2] - old_domain[1]
-      if ((old_domain[2] - old_domain[1]) >10)
-        size <- 10
-      cat("Setting step size to:", size, "\n")
-      
-    }
-    type <- "n"
-    param <- seq(1,size)
-    domain <- seq(old_domain[1], old_domain[2], length.out = size+1)
-    # Generate domain names
-    names <- c()
-    for (i in 1:(size-1))
-      names <- c(names, paste0("[",domain[i],",", domain[i+1], ")"))
-    names <- c(names, paste0("[",domain[size],",", domain[size+1], "]"))
-  } else {
-    size   <- length(old_domain)
-    type   <- "c"
-    param  <- 1:length(old_domain)
-    domain <- old_domain
-    names  <- old_domain
   }
   return(list(param_name = param_name, 
               type = type, 
@@ -110,7 +83,8 @@ get_domain <- function(param_name, parameters, size) {
 # List, the domain definition obtained from the get_domain function
 # 
 # @return a vector a transformed parameter values
-which_domain <- function(param_values, domain) {
+which_domain <- function(param_values, domain)
+{
   data <- rep(NA, length(param_values))
   
   if (domain$type == "c") {
