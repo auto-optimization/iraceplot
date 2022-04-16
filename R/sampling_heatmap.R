@@ -92,15 +92,13 @@ which_domain <- function(param_values, domain)
       sel <- which(!is.na(param_values) & (param_values == domain$domain[i]))
       data[sel] <- i
     }
-  }
-  
-  if (domain$type == "n") {
+  } else if (domain$type == "n") {
     for (i in 1:(domain$size-1)) {
       sel <- which(!is.na(param_values) & (param_values >= domain$domain[i]) & 
-                     (param_values < (domain$domain[i+1])))
+                   (param_values < (domain$domain[i+1])))
       data[sel] <- i
-    } 
-    # last interval should be include last value
+    }
+    # last interval should include last value
     sel <- which(!is.na(param_values) & (param_values >= domain$domain[domain$size]) & 
                  (param_values <= (domain$domain[domain$size+1])))
     data[sel] <- domain$size
@@ -112,10 +110,7 @@ which_domain <- function(param_values, domain)
 
 #' Sampling heat map plot
 #'
-#' @description
-#' The `sampling_heatmap` function creates a heat map that display the 
-#' frequency of sampling values of two parameters.
-#' 
+#' Heatmap that displays the frequency of sampling values of two parameters.
 #'
 #' @template arg_irace_results
 #' @template arg_param_names
@@ -141,19 +136,19 @@ which_domain <- function(param_values, domain)
 #' @examples
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"))
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), iterations = c(3,4))
-#' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = TRUE)
+#' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = FALSE)
 sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0), 
                              iterations = NULL, only_elite = TRUE, 
-                             filename = NULL) {
-  
+                             filename = NULL)
+{
   param1 <- param2 <- NULL 
   
   # Check parameter values
   if (any(!(param_names %in% irace_results$parameters$names))) {
-    stop("Error: Unknown parameter names were encountered\n")
+    stop("Unknown parameter names were encountered")
     # verify that param_names contain more than one parameter
   } else if (length(param_names) != 2) {
-    stop("Error: param_names must specify two parameters\n")
+    stop("param_names must specify two parameters")
   }
   
   # Check iterations
@@ -223,10 +218,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 
 #' Sampling heat map plot
 #'
-#' @description
-#' The `sampling_heatmap2` function creates a heat map that display the 
-#' frequency of sampling values of two parameters.
-#' 
+#' Heatmap that displays the frequency of sampling values of two parameters.
 #'
 #' @param configurations
 #' Data frame, configurations in `irace` format 
@@ -249,22 +241,22 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 #' @template arg_filename
 #'
 #' @return sampling heat map plot
-#' @export
 #'
 #' @examples
 #' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                   param_names=c("beta", "alpha"))
+#' @export
 sampling_heatmap2 <- function(configurations, parameters, param_names, 
-                              sizes = c(0,0), filename = NULL) {
-  
+                              sizes = c(0,0), filename = NULL)
+{
   param1 <- param2 <- NULL 
   
   # Check parameter values
   if (any(!(param_names %in% parameters$names))) {
-    stop("Error: Unknown parameter names were encountered\n")
+    stop("Unknown parameter names were encountered")
     # verify that param_names contain more than one parameter
   } else if (length(param_names) != 2) {
-    stop("Error: param_names must specify two parameters\n")
+    stop("param_names must specify two parameters")
   }
   
   
