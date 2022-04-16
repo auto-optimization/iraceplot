@@ -1,25 +1,22 @@
-#' Parameter Frequency and density Plot
+#' Parameter Frequency and Density Plot
 #'
-#' @description
-#' The `sampling_frequency2` function creates a frequency or density plot that 
-#' depicts the sampling represented by the set of configurations provided.
-#' 
-#' For categorical parameters a frequency plot is created, while for numerical 
-#' parameters a histogram and density plots are created. The plots are shown in
-#' groups of maximum 9, the parameters included in the plot can be specified by
-#' setting the param_names argument.
+#' Frequency or density plot that depicts the sampling performed by irace
+#' across the iterations of the configuration process.  For categorical
+#' parameters a frequency plot is created, while for numerical parameters a
+#' histogram and density plots are created. The plots are shown in groups of
+#' maximum 9, the parameters included in the plot can be specified by setting
+#' the param_names argument.
 #'
 #' @param configurations
-#' Data frame, configurations in `irace` format 
-#' (example: `configurations = iraceResults$allConfigurations`)
+#' Data frame, configurations in `irace` format. Example: `iraceResults$allConfigurations`.
 #' 
-#' @param parameters
-#' List, parameter object in irace format
-#' (example: `configurations = iraceResults$parameters`)
+#' @param parameters List, parameters object in irace format. If this argument
+#'   is missing, the first parameter is taken as the `iraceResults` data
+#'   generated when loading the `.Rdata` file created by `irace` and
+#'   `configurations=iraceResults$allConfigurations` and `parameters =
+#'   iraceResults$parameters`.
 #'
-#' @param param_names
-#' String vector, A set of parameters to be included
-#' (example: `param_names = c("algorithm","alpha","rho","q0","rasrank")`)
+#' @template arg_param_names
 #'
 #' @param n
 #' Numeric, for scenarios with large parameter sets, it selects a subset 
@@ -36,18 +33,32 @@
 #' @return Frequency and/or density plot
 #'
 #' @examples
-#' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters)
+#' # Either use iraceResults
+#' sampling_frequency(iraceResults)
 #' \dontrun{ 
-#' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
-#' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
+#' sampling_frequency(iraceResults, n = 2)
+#' sampling_frequency(iraceResults, param_names = c("alpha"))
+#' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+#' }
+#' # Or explicitly specify the configurations and parameters.
+#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
+#' \dontrun{ 
+#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
+#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                     param_names = c("alpha"))
-#' sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, 
+#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' }
+
 #' @export
 #' @md
-sampling_frequency2 <- function(configurations, parameters, param_names = NULL, n = NULL, filename = NULL) {
-  
+sampling_frequency <- function(configurations, parameters, param_names = NULL, n = NULL, filename = NULL)
+{
+  if (missing(parameters)) {
+    parameters <- configurations$parameters 
+    configurations <- configurations$allConfigurations
+  }
+
   # Variable assignment
   tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
   max_p <- 9
@@ -153,56 +164,7 @@ sampling_frequency2 <- function(configurations, parameters, param_names = NULL, 
     # FIXME: we could save in multiple files with a counter in their name,
     ggsave(filename, wp)
   } else {
-    return(wp)
+    print(wp)
   }
-}
-
-#' Parameter Frequency and density Plot
-#'
-#' @description
-#' The `sampling_frequency` function creates a frequency or density plot that 
-#' depicts the sampling performed by irace across the iterations of the configuration 
-#' process.
-#' 
-#' For categorical parameters a frequency plot is created, while for numerical 
-#' parameters a histogram and density plots are created. The plots are shown in
-#' groups of maximum 9, the parameters included in the plot can be specified by
-#' setting the param_names argument.
-#'
-#' @template arg_irace_results
-#'
-#' @param param_names
-#' String vector, A set of parameters to be included
-#' (example: `param_names = c("algorithm","alpha","rho","q0","rasrank")`)
-#'
-#' @param n
-#' Numeric, for scenarios with large parameter sets, it selects a subset 
-#' of 9 parameters. For example, `n=1` selects the first 9 (1 to 9) parameters, n=2 selects
-#' the next 9 (10 to 18) parameters and so on.
-#'
-#' @template arg_filename
-#'
-#' @note If there are more than 9 parameters, a pdf file extension is
-#'   recommended as it allows to create a multi-page document. Otherwise, you
-#'   can use the `n` argument of the function to generate the plot of a subset
-#'   of the parameters.
-#'
-#' @return Frequency and/or density plot
-#'
-#' @examples
-#' sampling_frequency(iraceResults)
-#' \dontrun{ 
-#' sampling_frequency(iraceResults, n = 2)
-#' sampling_frequency(iraceResults, param_names = c("alpha"))
-#' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
-#' }
-#' @export
-#' @md
-sampling_frequency <- function(irace_results, param_names = NULL, n = NULL, filename = NULL) {
-
-  sampling_frequency2(configurations=irace_results$allConfigurations, 
-                      parameters=irace_results$parameters, 
-                      param_names=param_names, 
-                      n=n,
-                      filename=filename)
+  invisible(wp)
 }

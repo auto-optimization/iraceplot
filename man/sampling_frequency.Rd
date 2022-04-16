@@ -2,20 +2,26 @@
 % Please edit documentation in R/sampling_frequency.R
 \name{sampling_frequency}
 \alias{sampling_frequency}
-\title{Parameter Frequency and density Plot}
+\title{Parameter Frequency and Density Plot}
 \usage{
 sampling_frequency(
-  irace_results,
+  configurations,
+  parameters,
   param_names = NULL,
   n = NULL,
   filename = NULL
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{configurations}{Data frame, configurations in \code{irace} format. Example: \code{iraceResults$allConfigurations}.}
 
-\item{param_names}{String vector, A set of parameters to be included
-(example: \code{param_names = c("algorithm","alpha","rho","q0","rasrank")})}
+\item{parameters}{List, parameters object in irace format. If this argument
+is missing, the first parameter is taken as the \code{iraceResults} data
+generated when loading the \code{.Rdata} file created by \code{irace} and
+\code{configurations=iraceResults$allConfigurations} and \code{parameters = iraceResults$parameters}.}
+
+\item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
+\code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{n}{Numeric, for scenarios with large parameter sets, it selects a subset
 of 9 parameters. For example, \code{n=1} selects the first 9 (1 to 9) parameters, n=2 selects
@@ -27,14 +33,12 @@ the next 9 (10 to 18) parameters and so on.}
 Frequency and/or density plot
 }
 \description{
-The \code{sampling_frequency} function creates a frequency or density plot that
-depicts the sampling performed by irace across the iterations of the configuration
-process.
-
-For categorical parameters a frequency plot is created, while for numerical
-parameters a histogram and density plots are created. The plots are shown in
-groups of maximum 9, the parameters included in the plot can be specified by
-setting the param_names argument.
+Frequency or density plot that depicts the sampling performed by irace
+across the iterations of the configuration process.  For categorical
+parameters a frequency plot is created, while for numerical parameters a
+histogram and density plots are created. The plots are shown in groups of
+maximum 9, the parameters included in the plot can be specified by setting
+the param_names argument.
 }
 \note{
 If there are more than 9 parameters, a pdf file extension is
@@ -43,10 +47,20 @@ can use the \code{n} argument of the function to generate the plot of a subset
 of the parameters.
 }
 \examples{
+# Either use iraceResults
 sampling_frequency(iraceResults)
 \dontrun{ 
 sampling_frequency(iraceResults, n = 2)
 sampling_frequency(iraceResults, param_names = c("alpha"))
 sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
+}
+# Or explicitly specify the configurations and parameters.
+sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
+\dontrun{ 
+sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
+sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+                    param_names = c("alpha"))
+sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+                    param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 }
 }

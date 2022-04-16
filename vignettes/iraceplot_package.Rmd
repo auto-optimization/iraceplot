@@ -154,15 +154,17 @@ function which generates frequency and density plots for the sampled values:
  sampling_frequency(iraceResults, param_names = c("beta"))
 ```
 
-The same plot can be obtained using the `sampling_frequency2` function which receives
-directly a set of configurations and a parameters object:
+
+If you would like to visualize the distribution of a particular set of configurations,
+you can pass directly a set of configurations 
+and a parameters object in the irace format to the `sampling_frequency` function:
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE, eval=FALSE}
- sampling_frequency2(iraceResults$allConfigurations, iraceResults$parameters, param_names = c("alpha"))
+ sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, param_names = c("alpha"))
 ```
 
-A detailed plot showing the sampling by iteration can be obtained with the `sampling_frequency_iteration`
-function. This plot shows the convergence of the configuration process reflected in the sampled
-parameter values.
+A detailed plot showing the sampling by iteration can be obtained with the
+`sampling_frequency_iteration` function. This plot shows the convergence of the
+configuration process reflected in the sampled parameter values.
 
 ```{r fig.align="center", fig.width= 7, fig.height=6, eval=FALSE}
 sampling_frequency_iteration(iraceResults, param_name = "beta")
@@ -294,7 +296,7 @@ plot_model(iraceResults, param_name="alpha")
 
 The `report` function generates an HTML report with a summary of the configuration 
 process executed by irace. The function will create an HTML file in the path
-provided in the `filename` argument and appending the ".html" extension to it.
+provided in the `filename` argument and appending the `".html"` extension to it.
 
 
 ```{r fig.align="center", eval=FALSE}
