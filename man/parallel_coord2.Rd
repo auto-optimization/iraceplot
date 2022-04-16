@@ -19,8 +19,8 @@ parallel_coord2(
 \item{parameters}{List, parameter object in irace format
 (example: \code{configurations = iraceResults$parameters})}
 
-\item{param_names}{String vector, names of the parameters that should be included in the plot
-(example: \code{param_names = c("algorithm","alpha","rho","q0","rasrank")})}
+\item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
+\code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed}
 
@@ -30,14 +30,14 @@ parallel_coord2(
 parallel coordinates plot
 }
 \description{
-The \code{parallel_coord2} function creates a parallel coordinates plot of a set of
-provided configurations. Each line in the plot represents a configuration.
-
-The parameters to be included in the plot can be selected with the param_names
-argument. Additionally, the maximum number of parameters to be displayed in one
-plot. A list of plots is returned by this function in several plots are required
-to display the selected data.
-
+Parallel coordinates plot of a set of provided configurations. Each line in
+the plot represents a configuration.  The parameters to be included in the
+plot can be selected with the param_names argument. Additionally, the
+maximum number of parameters to be displayed in one plot. A list of plots is
+returned by this function in several plots are required to display the
+selected data.
+}
+\details{
 To export the plot to a file, it is possible to do it so manually using the
 functionality provided by plotly in the plot. If a filename is provided,
 orca server will be used to export the plots and thus, it requires the library

@@ -42,15 +42,16 @@ the iteration number where the configuration was sampled.}
 parallel coordinates plot
 }
 \description{
-The \code{parallel_coord} function creates a parallel coordinates plot of a set of
-selected configurations. Each line in the plot represents a configuration. By
-default, the final elite configurations are shown. To visualize configurations
-of other iterations these must be provided setting the argument
-iterations, configurations of different iterations are shown in different
-colors. Setting the only_elites argument to FALSE allows to display all
-configurations in the selected iterations, specific configurations can
-be selected providing their ids in the id_configuration argument.
-
+Parallel coordinates plot of a set of selected configurations. Each line in
+the plot represents a configuration. By default, the final elite
+configurations are shown. To visualize configurations of other iterations
+these must be provided setting the argument iterations, configurations of
+different iterations are shown in different colors. Setting the only_elites
+argument to FALSE allows to display all configurations in the selected
+iterations, specific configurations can be selected providing their ids in
+the id_configuration argument.
+}
+\details{
 The parameters to be included in the plot can be selected with the param_names
 argument. Additionally, the maximum number of parameters to be displayed in one
 plot. A list of plots is returned by this function in several plots are required
@@ -59,7 +60,7 @@ to display the selected data.
 To export the plot to a file, it is possible to do it so manually using the
 functionality provided by plotly in the plot. If a filename is provided,
 orca server will be used to export the plots and thus, it requires the library
-to be installed (https://github.com/plotly/orca).
+to be installed (\url{https://github.com/plotly/orca}).
 }
 \examples{
 parallel_coord(iraceResults)
