@@ -63,7 +63,7 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">report</span><span class="op">(</span><span class="va">irace_results</span>, <span class="va">filename</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">report</span><span class="op">(</span><span class="va">irace_results</span>, <span class="va">filename</span>, interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,6 +73,10 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>)
 Filename indicating where to save the report (example: <code>"~/path-to/filename"</code>)</p></dd>
+<dt>interactive</dt>
+<dd><p>(<code>logical(1)</code>) TRUE if the plot is generated
+interactively (using <code>plotly</code>) or FALSE it is generated
+statically. Defaults to the value returned by <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code>,</p></dd>
 </dl></div>
 
     <div id="ref-examples">
