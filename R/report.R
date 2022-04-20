@@ -8,21 +8,17 @@
 #'
 #' @param filename (`character(1)`)
 #' Filename indicating where to save the report (example: `"~/path-to/filename"`)
+#' @template arg_interactive
 #'
 #' @examples
 #' NULL
 #' @export
 #' @md
-report <- function(irace_results, filename)
+report <- function(irace_results, filename, interactive = base::interactive())
 {
-  # It is verified that only the location of the data file or its loaded form can be entered
-  if (missing(irace_results)) {
-    stop("Error: You must provide irace_results \n")
-  } 
-  
-  if (missing(filename)) {
-    stop("Error: You must provide a filename \n")
-  } 
+  if (missing(irace_results)) stop("You must provide irace_results")
+  if (missing(filename)) stop("You must provide a filename")
+ 
   if (!has_file_extension(filename, "html"))
     filename <- paste0(filename, ".html")
   final_file <- path_rel2abs(filename)
@@ -33,5 +29,6 @@ report <- function(irace_results, filename)
 
 has_file_extension <- function(filename, extension)
 {
+  if (startsWith(extension, ".")) extension <- substring(extension, 2L)
   grepl(paste0('[.]', extension, '$'), filename, ignore.case = TRUE)
 }

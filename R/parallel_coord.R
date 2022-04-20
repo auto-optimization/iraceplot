@@ -178,12 +178,11 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
       stop("Error: You must provide more than one configuration id")
     }
     iterations <- 1:length(irace_results$allElites)
+  } else if (only_elite) {
+    id_configurations <- unlist(unique(irace_results$allElites[iterations]))
   } else {
-    if (only_elite)
-      id_configurations <- unlist(unique(irace_results$allElites[iterations]))
-    else
-      id_configurations <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
-  } 
+    id_configurations <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
+  }
   
   # Select data 
   data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, ,drop=FALSE]

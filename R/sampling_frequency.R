@@ -59,7 +59,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     configurations <- configurations$allConfigurations
   }
 
-  # Variable assignment
+  # This is needed to silence CRAN warnings.
   tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
   max_p <- 9
   

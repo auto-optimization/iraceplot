@@ -24,10 +24,8 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   nconfig <- 0
   experiments <- as.data.frame(irace_results$experiments)
 
-  # the table values are modified
   if (rpd) experiments <- calculate_rpd(experiments)
   
-  # variable assignment
   exp_log <- select(as.data.frame(irace_results$experimentLog), -time, -bound)
   value <- sample(NA, size = dim(exp_log)[1], replace = TRUE)
   execution <- sample(NA, size = dim(exp_log)[1], replace = TRUE)

@@ -47,8 +47,6 @@ same order as \code{rownames(experiments)} or a function that takes
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
-
-\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Create a scatter plot that displays the performance of two configurations on

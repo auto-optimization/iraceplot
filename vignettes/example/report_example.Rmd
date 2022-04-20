@@ -7,6 +7,8 @@ output:
 
 ```{r, echo=FALSE, results='asis'}
 data("iraceResults", package="iraceplot")
+irace_results <- iraceResults
+interactive_plots <- TRUE
 res <- knitr::knit_child(system.file("template", "report_html.Rmd", package="iraceplot"), quiet = TRUE)
 cat(res, sep = '\n')
 ```

@@ -4,13 +4,17 @@
 \alias{report}
 \title{Create HTML Report from irace data}
 \usage{
-report(irace_results, filename)
+report(irace_results, filename, interactive = base::interactive())
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{filename}{(\code{character(1)})
 Filename indicating where to save the report (example: \code{"~/path-to/filename"})}
+
+\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
+interactively (using \code{plotly}) or FALSE it is generated
+statically. Defaults to the value returned by \code{interactive()},}
 }
 \description{
 This function creates an HTML report of the most relevant irace data.  This
