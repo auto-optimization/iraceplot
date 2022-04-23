@@ -89,7 +89,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   
   # The experiments values are modified
   if (rpd) {
-    experiments <- calculate_rpd(experiments)
+    experiments[] <- calculate_rpd(experiments)
   }
   
   # Generate iteration and final elite vector
