@@ -15,18 +15,18 @@
 #' @param metric Performance metric shown in the plot: `"raw"` shows the raw
 #'   values, `"rpd"` shows relative percentage deviation per instance and
 #'   `"rank"` shows rank per instance.
-#' @template arg_interactive
 #'
 #' @param show_conf_ids If `TRUE`, it shows the configuration IDs in the x-axis. Usually there are too many configurations, thus the default is `FALSE`.
 #'
+#' @template arg_interactive
+#' 
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
 #' plot_experiments_matrix(iraceResults)
 #' @export
-plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"),
-                                    interactive = base::interactive(),
-                                    show_conf_ids = FALSE)
+plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"), show_conf_ids = FALSE,
+                                    interactive = base::interactive())
 {
   metric <- match.arg(metric)
   experiments <- irace_results$experiments
@@ -49,14 +49,15 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
     transform <- "identity"
   
   }
-  
+
+  conf_id <- inst_id <- cost <- text <- NULL
   # The table is created and organized for ease of use
-  experiments <- as_tibble(experiments) %>%
+  experiments <- tibble::as_tibble(experiments) %>%
     rownames_to_column("inst_id") %>%
     pivot_longer(-c("inst_id"), names_to = "conf_id", values_to = "cost") %>%
     # We need to relevel so that they appear in the correct order
-    mutate(conf_id = fct_relevel(conf_id, conf_ids)) %>%
-    mutate(inst_id = fct_relevel(inst_id, inst_ids))
+    mutate(conf_id = forcats::fct_relevel(conf_id, conf_ids)) %>%
+    mutate(inst_id = forcats::fct_relevel(inst_id, inst_ids))
 
   # The text field is added to the table to show it in the interactive plot.
   if (interactive) {
@@ -70,7 +71,7 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   p <- ggplot(experiments, aes(x = conf_id, y = inst_id, fill = cost, text = text)) +
     geom_tile() +
     scale_fill_viridis_c(na.value = "white", direction=-1L, trans = transform,
-                         guide = guide_colourbar(barheight=unit(0.8,"npc"))) +
+                         guide = guide_colourbar(barheight=grid::unit(0.8,"npc"))) +
     scale_y_discrete(expand=c(0L, 0L)) +
     labs(x = "Configuration IDs", y = "Instance IDs", fill = metric_lab) +
     # theme(legend.position = "top") + # This doesn't work because numbers often overlap

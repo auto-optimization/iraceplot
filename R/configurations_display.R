@@ -96,6 +96,7 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   exe_factor <- factor(tabla$execution)
   levels(exe_factor) <- tabla$execution
   tabla <- cbind(tabla, exe_factor)
+  text <- NULL # Silence CRAN warning
 
   # point plot creation
   p <- ggplot(tabla, aes(x = exe_factor, y = value, color = instance, text = text)) +

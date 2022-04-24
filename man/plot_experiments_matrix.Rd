@@ -7,6 +7,8 @@
 plot_experiments_matrix(
   irace_results,
   filename = NULL,
+  metric = c("raw", "rpd", "rank"),
+  show_conf_ids = FALSE,
   interactive = base::interactive()
 )
 }
@@ -15,24 +17,26 @@ plot_experiments_matrix(
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
+\item{metric}{Performance metric shown in the plot: \code{"raw"} shows the raw
+values, \code{"rpd"} shows relative percentage deviation per instance and
+\code{"rank"} shows rank per instance.}
+
+\item{show_conf_ids}{If \code{TRUE}, it shows the configuration IDs in the x-axis. Usually there are too many configurations, thus the default is \code{FALSE}.}
+
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{plotly}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-heatmap plot
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Creates a heatmap plot that shows all performance data seen by irace.
-Configurations are shown in the x axis in the order in which are created in
-the configuration process. Instances are shown in the y axis in the order in
-which where executed in the configuration process. The colors show the
-overall rank (across all performance data) of the performance evaluation
-displayed.
-}
-\details{
-This plot gives a general idea of the configuration process progression, the
-number of evaluations of each configuration show how long they survived in the
+Configurations are shown in the x-axis in the order in which they are
+created in the configuration process. Instances are shown in the y-axis in
+the order in which they where seen during the configuration run. This plot
+gives a general idea of the configuration process progression, the number of
+evaluations of each configuration show how long they survived in the
 iterated racing procedure.
 }
 \examples{

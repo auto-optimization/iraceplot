@@ -28,12 +28,10 @@ Imports:
     gridExtra, 
     plotly, 
     stats, 
-    stringr, 
     tibble, 
     tidyr, 
     truncnorm,
-    utils,
-    viridis, 
+    viridisLite, 
     withr
 Suggests: 
     knitr,

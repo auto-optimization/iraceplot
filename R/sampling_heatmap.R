@@ -141,8 +141,6 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
                              iterations = NULL, only_elite = TRUE, 
                              filename = NULL)
 {
-  param1 <- param2 <- NULL 
-  
   # Check parameter values
   if (any(!(param_names %in% irace_results$parameters$names))) {
     stop("Unknown parameter names were encountered")
@@ -194,6 +192,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
     params$param2 <- factor(params$param2, levels=domain2$param)
   }
   
+  param1 <- param2 <- n <- NULL # Silence warnings 
   df <- params %>% count(param1, param2, .drop = FALSE)
 
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
@@ -249,8 +248,6 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 sampling_heatmap2 <- function(configurations, parameters, param_names, 
                               sizes = c(0,0), filename = NULL)
 {
-  param1 <- param2 <- NULL 
-  
   # Check parameter values
   if (any(!(param_names %in% parameters$names))) {
     stop("Unknown parameter names were encountered")
@@ -285,7 +282,7 @@ sampling_heatmap2 <- function(configurations, parameters, param_names,
   } else {
     params$param2 <- factor(params$param2, levels=domain2$param)
   }
-  
+  param1 <- param2 <- n <- NULL 
   df <- params %>% count(param1, param2, .drop = FALSE)
   
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
@@ -304,6 +301,6 @@ sampling_heatmap2 <- function(configurations, parameters, param_names,
     # If you do not add the value of filename, the plot is displayed
   } else {
     p
-    return(p)
   }
+  return(p)
 }

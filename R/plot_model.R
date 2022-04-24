@@ -200,7 +200,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
   # create  plot
   p   <- ggplot(as.data.frame(x, ncol=1), aes(x=x))
   el <- unique(as.character(model_data[,"elite"]))
-  col <- viridis(length(el))
+  col <- viridisLite::viridis(length(el))
   
   for (i in 1:length(el)) {
     mm <- model_data[model_data[,"elite"] == el[i], "mean"]

@@ -176,7 +176,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
     # Format data
     ctabla <- ctabla %>%
       group_by(ctabla[1:ncol(ctabla)]) %>%
-      summarise(freq = n())# %>% filter(freq > 1)
+      summarise(freq = dplyr::n())# %>% filter(freq > 1)
     ctabla <- gather_set_data(ctabla, params)
     ctabla <- ctabla[ctabla$x != "iteration", ]
     
