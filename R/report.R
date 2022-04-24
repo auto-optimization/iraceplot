@@ -27,8 +27,3 @@ report <- function(irace_results, filename, interactive = base::interactive())
   utils::browseURL(final_file)
 }
 
-has_file_extension <- function(filename, extension)
-{
-  if (startsWith(extension, ".")) extension <- substring(extension, 2L)
-  grepl(paste0('[.]', extension, '$'), filename, ignore.case = TRUE)
-}

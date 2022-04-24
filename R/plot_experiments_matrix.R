@@ -36,8 +36,7 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
   
   if (metric == "rank") {
-    # FIXME: use matrixStats
-    experiments[] <- t(apply(experiments, 1, rank, na.last = "keep"))
+    experiments[] <- matrixStats::rowRanks(experiments, ties.method = "average")
     metric_lab <- "Rank"
     transform <- "log10"
   } else if (metric == "rpd") {
@@ -47,14 +46,13 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   } else { # == raw
     metric_lab <- "Cost"
     transform <- "identity"
-  
   }
 
   conf_id <- inst_id <- cost <- text <- NULL
   # The table is created and organized for ease of use
   experiments <- tibble::as_tibble(experiments) %>%
     rownames_to_column("inst_id") %>%
-    pivot_longer(-c("inst_id"), names_to = "conf_id", values_to = "cost") %>%
+    tidyr::pivot_longer(-c("inst_id"), names_to = "conf_id", values_to = "cost") %>%
     # We need to relevel so that they appear in the correct order
     mutate(conf_id = forcats::fct_relevel(conf_id, conf_ids)) %>%
     mutate(inst_id = forcats::fct_relevel(inst_id, inst_ids))
@@ -87,12 +85,7 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
     # Returning pp is useless because it cannot be modified.
     pp <- plotly::ggplotly(p, tooltip = "text")
     # If the value in filename is added the pdf file is created
-    if (!is.null(filename)) {
-      # The filename value is worked to separate it and assign it to new values.
-      nameFile <- basename(filename)
-      directory <- paste0(dirname(filename), sep = "/")
-      withr::with_dir(directory, orca(pp, paste0(nameFile, ".pdf")))
-    }
+    if (!is.null(filename)) orca_pdf(filename, pp)
   } else if (!is.null(filename)) {
     ggsave(filename, plot = p)
   }

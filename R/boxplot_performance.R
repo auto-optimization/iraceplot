@@ -84,9 +84,6 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     allElites <- as.list(allElites)
   }
   
-  # The table is created with all the data from testing experiments
-  experiments <- as.data.frame(experiments)
-  
   # The experiments values are modified
   if (rpd) {
     experiments[] <- calculate_rpd(experiments)
@@ -237,10 +234,4 @@ get_ranked_ids <- function(experiments){
     allElites <- c(allElites, names(sort(confMean)))
   }
   return(allElites)
-}
-
-calculate_rpd <- function(x)
-{
-  min_cols <- apply(x, 1L, min, na.rm = TRUE)
-  100 * (x - min_cols) / min_cols
 }

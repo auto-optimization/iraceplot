@@ -100,7 +100,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
     if (numerical_type %in% c("both", "density")) {
         # Note: We can use also density ridges for a different (nicer) looking density plot
         # ggplot(tabla, aes(x, y = iteration, height = stat(density))) +
-        # geom_density_ridges(aes(fill = iteration), na.rm = TRUE, stat = "density") +
+        # ggridges::geom_density_ridges(aes(fill = iteration), na.rm = TRUE, stat = "density") +
         p <- p + geom_density(alpha = 0.7) 
     }
     p <- p + scale_fill_manual(values = viridisLite::viridis(n_distinct(tabla$iteration))) +

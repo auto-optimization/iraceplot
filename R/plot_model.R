@@ -206,7 +206,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
     mm <- model_data[model_data[,"elite"] == el[i], "mean"]
     ss <- model_data[model_data[,"elite"] == el[i], "sd"]
     if(is.na(mm)) next
-    p <- p + ggplot2::stat_function(fun = dtruncnorm, 
+    p <- p + ggplot2::stat_function(fun = truncnorm::dtruncnorm, 
                            geom = "area",
                            args=list(mean = mm, 
                                      sd = ss, 

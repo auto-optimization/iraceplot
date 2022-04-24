@@ -4,7 +4,12 @@
 \alias{sampling_distance}
 \title{Sampling distance Plot}
 \usage{
-sampling_distance(irace_results, type = "boxplot", t = 0.05, filename = NULL)
+sampling_distance(
+  irace_results,
+  type = c("boxplot", "line", "both"),
+  t = 0.05,
+  filename = NULL
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
@@ -32,8 +37,8 @@ for numerical parameters a equality interval is defined by a threshold
 specified by argument t and hamming distance is calculated using this interval.
 }
 \examples{
-# sampling_distance(iraceResults)
 \dontrun{ 
-# sampling_distance(iraceResults, type = "boxplot", t=0.07)
+sampling_distance(iraceResults)
+sampling_distance(iraceResults, type = "boxplot", t=0.07)
 }
 }

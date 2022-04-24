@@ -1,15 +1,11 @@
 #' Sampling pie plot
 #'
-#' @description
-#' The `sampling_pie` function creates a pie plot of the values sampled of a set 
-#' of selected parameters. Numerical parameters are discretized to maximum n_bins 
-#' intervals.
-#' 
-#' The size of the slices are proportional to the number of configurations that 
-#' have assigned a parameter value within the rank or the value assigned to that
-#' slice. Parameters can be selected by providing their names in the param_names
-#' argument.
-#' 
+#' This function creates a pie plot of the values sampled of a set of selected
+#' parameters. Numerical parameters are discretized to maximum `n_bins`
+#' intervals. The size of the slices are proportional to the number of
+#' configurations that have assigned a parameter value within the rank or the
+#' value assigned to that slice. Parameters can be selected by providing their
+#' names in the `param_names` argument.
 #'
 #' @template arg_irace_results
 #' 
@@ -134,13 +130,9 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename =
 
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
-    # The filename value is worked to separate it and assign it to new values.
-    nameFile <- basename(filename)
-    directory <- paste0(dirname(filename), sep = "/")
-    withr::with_dir(directory, orca(p, paste0(nameFile, ".pdf")))
-
-    # If you do not add the value of filename, the plot is displayed
+    orca_pdf(filename, p)
   } else {
+    # If you do not add the value of filename, the plot is displayed
     p
     return(p)
   }

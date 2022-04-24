@@ -24,17 +24,15 @@
 #'
 #' @return line or box plot
 #'
-#' @export
-#'
 #' @examples
-#' # sampling_distance(iraceResults)
 #' \dontrun{ 
-#' # sampling_distance(iraceResults, type = "boxplot", t=0.07)
+#' sampling_distance(iraceResults)
+#' sampling_distance(iraceResults, type = "boxplot", t=0.07)
 #' }
-sampling_distance <- function(irace_results, type = "boxplot", t = 0.05, filename = NULL) {
-  if (!(type == "line" | type == "boxplot" | type == "both")) {
-    stop("Error: The type parameter entered is incorrect\n")
-  }
+#' @export
+sampling_distance <- function(irace_results, type = c("boxplot", "line", "both"), t = 0.05, filename = NULL)
+{
+  type <- match.arg(type)
 
   # variable assignment
   ids <- media <- allconf <- valor <- iterations <- tabla_box <- iteration <- vectorP <- NULL
