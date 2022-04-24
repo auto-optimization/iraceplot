@@ -59,7 +59,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
 
   # The first column is renamed
   colnames(tabla)[colnames(tabla) %in% c(param_name)] <- "x"
-  niter <- length(unique(tabla$iteration))
+  niter <- n_distinct(tabla$iteration)
   tabla$iteration <- factor(tabla$iteration)
 
   # If the parameter is of type character a frequency graph is displayed

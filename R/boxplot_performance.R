@@ -147,7 +147,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       }
     }
     data <- fdata
-    data$iteration_f <- factor(data$iteration, levels = (unique(data$iteration)))
+    data$iteration_f <- factor(data$iteration, levels = unique(data$iteration))
   } else {
     data <- reshape(data,
                     varying = as.character(colnames(data)),
