@@ -1,6 +1,6 @@
 calculate_rpd <- function(x)
 {
-  min_cols <- matrixStats::colMins(as.matrix(x), na.rm = TRUE)
+  min_cols <- matrixStats::rowMins(as.matrix(x), na.rm = TRUE)
   100 * (x - min_cols) / min_cols
 }
 
