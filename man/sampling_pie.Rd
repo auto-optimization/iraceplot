@@ -27,6 +27,7 @@ value assigned to that slice. Parameters can be selected by providing their
 names in the \code{param_names} argument.
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 sampling_pie(iraceResults)
 \dontrun{
 sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))

@@ -18,15 +18,17 @@
 #' @template arg_filename
 #'
 #' @return Frequency and/or density plot
-#' @export
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
 #' \dontrun{ 
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
 #' }
+#' @export
 sampling_frequency_iteration <- function(irace_results, param_name, numerical_type="both", 
-                                         filename = NULL) {
+                                         filename = NULL)
+{
   # Variable assignment
   memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- ..density.. <- NULL
   

@@ -50,6 +50,7 @@ displayed in one plot. A list of plots is returned by this function in
 several plots are required to display the selected data.
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 parallel_cat(iraceResults)
 \dontrun{ 
 parallel_cat(iraceResults, by_n_param = 6)

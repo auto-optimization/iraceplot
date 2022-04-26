@@ -49,6 +49,7 @@
 #'
 #' @seealso [boxplot_test()] [boxplot_training()]
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 #' \dontrun{ 
 #' boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
@@ -77,7 +78,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     allElites <- list()
     allElites[[1]] <- get_ranked_ids(experiments)
     if (type == "ibest") {
-      stop(paste0("Error: The type argument provided (",type,") is not supported when no allElites value provided\n"))
+      stop(paste0("The type argument provided (",type,") is not supported when no allElites value provided"))
     }
   } else if (type=="ibest" && !is.list(allElites)) {
     cat ("Note: Since type=ibest, assumming vector best configuration by iteration in allElites.\n")

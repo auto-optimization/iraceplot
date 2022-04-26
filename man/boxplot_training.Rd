@@ -49,6 +49,7 @@ performed by irace during the execution process. This implies that the
 number of evaluations can differ between configurations.
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 boxplot_training(iraceResults)
 \dontrun{ 
 boxplot_training(iraceResults, iteration = 5)

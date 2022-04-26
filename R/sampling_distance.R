@@ -25,7 +25,8 @@
 #' @return line or box plot
 #'
 #' @examples
-#' \dontrun{ 
+#' \dontrun{
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_distance(iraceResults)
 #' sampling_distance(iraceResults, type = "boxplot", t=0.07)
 #' }

@@ -20,7 +20,8 @@
 #'
 #' @seealso [boxplot_training()] [boxplot_performance()]
 #'
-#' @examples#' 
+#' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_test(iraceResults)
 #' @export
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),

@@ -29,7 +29,9 @@
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
-#' scatter_performance(iraceResults$experiments, x_id = 806, y_id = 809)
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' best_id <- iraceResults$iterationElites[length(iraceResults$iterationElites)]
+#' scatter_performance(iraceResults$experiments, x_id = 1, y_id = best_id)
 #' @export
 scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE, 
                                filename = NULL, interactive = base::interactive(),
@@ -37,40 +39,43 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 {
   x_id <- as.character(x_id)
   y_id <- as.character(y_id)
-  
   # Verify that the entered id are within the possible range
   if (!(x_id %in% colnames(experiments))) stop("x_id out of range", x_id)
   if (!(y_id %in% colnames(experiments))) stop("y_id out of range", y_id)
+  orig_instance_names <- rownames(experiments)
+  if (is.null(orig_instance_names))
+    orig_instance_names <- as.character(1:nrow(experiments))
+
   if (rpd) {
     experiments <- calculate_rpd(experiments)
-    xlab <- paste("RPD of configuration", x_id)
-    ylab <- paste("RPD of configuration", y_id)
+    xlab <- paste0("RPD of configuration ", x_id)
+    ylab <- paste0("RPD of configuration ", y_id)
   } else {
-    xlab <- paste("Performance of configuration", x_id)
-    ylab <- paste("Performance of configuration", y_id)
+    xlab <- paste0("Performance of configuration ", x_id)
+    ylab <- paste0("Performance of configuration ", y_id)
   }
   x_data <- experiments[, x_id]
   y_data <- experiments[, y_id]
-  instances <- which((!is.na(x_data)) & (!is.na(y_data))) 
+  instances <- which(!is.na(x_data) & !is.na(y_data)) 
   # Select only rows that have data for both configurations.
   if (length(instances) == 0) stop("No instance has data for both configurations")
-
+  x_data <- x_data[instances]
+  y_data <- y_data[instances]
   best <- rep("equal", length(instances))
   best[x_data < y_data] <- "conf1"
   best[x_data > y_data] <- "conf2"
   
   if (is.null(instance_names)) {
-    instance_names <- rownames(experiments)[instances]
+    instance_names <- orig_instance_names[instances]
   } else if (is.function(instance_names)) {
-    instance_names <- sapply(rownames(experiments)[instances], instance_names)
+    instance_names <- sapply(orig_instance_names[instances], instance_names)
   } else {
     if (length(instance_names) != nrow(x_data))
       stop("`instance_names` must have the same length as `nrow(experiments)`")
     instance_names <- instance_names[instances]
   }
-  
   # A table is created with only the paired values
-  data <- data.frame(conf1 = x_data[instances], conf2 = y_data[instances],
+  data <- data.frame(conf1 = x_data, conf2 = y_data,
                      instance = instance_names, best = best)
   # Variable assignment
   conf1 <- conf2 <- instance <- best <- point_text <- NULL
@@ -111,6 +116,7 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 #'
 #'
 #' @examples
+#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_training(iraceResults, x_id = 806, y_id = 809)
 #' \dontrun{ 
 #' scatter_training(iraceResults, x_id = 806, y_id = 809, rpd = FALSE)
@@ -139,6 +145,7 @@ scatter_training <- function(irace_results, ...)
 #'
 #'
 #' @examples
+#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_test(iraceResults, x_id = 92, y_id = 119)
 #' \dontrun{ 
 #' scatter_test(iraceResults, x_id = 92, y_id = 119, rpd=FALSE)

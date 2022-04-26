@@ -9,8 +9,7 @@ output:
 
 library(iraceplot, quietly = TRUE)
 library(plotly, quietly = TRUE)
-load("../../data/iraceResults.rda")
-
+load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 ```
 
 ## Introduction

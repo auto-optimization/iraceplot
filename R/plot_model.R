@@ -265,6 +265,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @export
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' plot_model(iraceResults, param_name="algorithm")
 #' \dontrun{ 
 #' plot_model(iraceResults, param_name="alpha")

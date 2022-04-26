@@ -37,7 +37,7 @@ by irace. Note that the testing is not a default feature in irace and should
 be enabled in the setup (see the irace package user guide for more details).
 }
 \examples{
-#' 
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 boxplot_test(iraceResults)
 }
 \seealso{

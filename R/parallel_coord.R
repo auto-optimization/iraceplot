@@ -47,6 +47,7 @@
 #' @export
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_coord(iraceResults)
 #' \dontrun{ 
 #' parallel_coord(iraceResults, by_n_param = 5)
@@ -171,11 +172,11 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   if (!is.null(id_configurations)) {
     # Verify that the entered id are within the possible range
     if (any(id_configurations[id_configurations < 1]) || any(id_configurations[id_configurations > nrow(irace_results$allConfigurations)])) {
-      stop("Error: IDs provided are outside the range of settings")
+      stop("IDs provided are outside the range of settings")
     }
     # Verify that the id entered are more than 1 or less than the possible total
     if (length(id_configurations) <= 1 || length(id_configurations) > nrow(irace_results$allConfigurations)) {
-      stop("Error: You must provide more than one configuration id")
+      stop("You must provide more than one configuration id")
     }
     iterations <- 1:length(irace_results$allElites)
   } else if (only_elite) {
@@ -284,7 +285,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 #'
 #' @param parameters
 #' List, parameter object in irace format
-#' (example: `configurations = iraceResults$parameters`)
+#' (example: `parameters = iraceResults$parameters`)
 #'
 #' @template arg_param_names
 #'
@@ -298,6 +299,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 #' @return parallel coordinates plot
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters)
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 

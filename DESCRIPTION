@@ -24,6 +24,7 @@ Imports:
     ggforce, 
     ggplot2,
     gridExtra, 
+    irace (>= 3.4),
     matrixStats (>= 0.55),
     plotly,
     stats, 
@@ -33,7 +34,6 @@ Imports:
     viridisLite, 
     withr
 Suggests: 
-    irace (>= 3.4),
     knitr,
     rmarkdown,
     markdown,

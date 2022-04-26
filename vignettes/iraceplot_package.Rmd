@@ -11,8 +11,7 @@ vignette: >
 
 library(iraceplot, quietly = TRUE)
 library(plotly)
-data("iraceResults", package="iraceplot")
-
+load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 ```
 
 

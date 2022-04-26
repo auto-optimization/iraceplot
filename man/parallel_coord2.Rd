@@ -17,7 +17,7 @@ parallel_coord2(
 (example: \code{configurations = iraceResults$allConfigurations})}
 
 \item{parameters}{List, parameter object in irace format
-(example: \code{configurations = iraceResults$parameters})}
+(example: \code{parameters = iraceResults$parameters})}
 
 \item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
 \code{c("algorithm","alpha","rho","q0","rasrank")}.}
@@ -44,6 +44,7 @@ orca server will be used to export the plots and thus, it requires the library
 to be installed (\url{https://github.com/plotly/orca}).
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
                 iraceResults$parameters)
 parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 

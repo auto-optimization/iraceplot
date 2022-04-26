@@ -40,5 +40,6 @@ evaluations of each configuration show how long they survived in the
 iterated racing procedure.
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 plot_experiments_matrix(iraceResults)
 }

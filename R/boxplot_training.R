@@ -36,6 +36,7 @@
 #' @seealso [boxplot_test()] [boxplot_performance()]
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_training(iraceResults)
 #' \dontrun{ 
 #' boxplot_training(iraceResults, iteration = 5)
@@ -46,26 +47,20 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
                              rpd = TRUE, show_points=TRUE, filename = NULL)
 {
   if (!is.null(iteration) & !is.null(id_configurations)) {
-    stop("Error: cannot use id_configurations and iteration at the same time\n")
+    stop("cannot use id_configurations and iteration at the same time")
   }
-  
-  # It is checked if the filename argument was added
-  if (!is.null(iteration)) {
-    # We verify that iteration is within the range of values it can take
-    if (iteration < 0 || iteration > length(irace_results$allElites)) {
-      stop("Error: iteration number out of range\n")
-    }
-  } else{
+  if (is.null(iteration)) {
     iteration <- length(irace_results$allElites)
+  } else if (iteration < 0 || iteration > length(irace_results$allElites)) {
+    # We verify that iteration is within the range of values it can take
+    stop("iteration number out of range")
   }
   
   # Check configurations
-  if (!is.null(id_configurations)) {
-    if (any(!(as.character(id_configurations) %in% colnames(irace_results$experiments)))) {
-      stop(paste("Error: provided configurations id not found in experiments\n"))
-    } 
-  } else {
+  if (is.null(id_configurations)) {
     id_configurations <- irace_results$allElites[[iteration]]
+  } else if (any(!(as.character(id_configurations) %in% colnames(irace_results$experiments)))) {
+    stop("provided configurations id not found in experiments")
   }
   boxplot_performance(experiments = irace_results$experiments,
                       allElites = id_configurations,

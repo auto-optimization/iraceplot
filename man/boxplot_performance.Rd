@@ -64,6 +64,7 @@ argument and this argument can be also used to define the iteration of each
 elite configuration was evaluated.
 }
 \examples{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 \dontrun{ 
 boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)

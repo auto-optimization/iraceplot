@@ -23,6 +23,7 @@
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' plot_experiments_matrix(iraceResults)
 #' @export
 plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"),

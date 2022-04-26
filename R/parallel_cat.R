@@ -35,6 +35,7 @@
 #'
 #' @seealso [parallel_coord()] [parallel_coord2()]
 #' @examples
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_cat(iraceResults)
 #' \dontrun{ 
 #' parallel_cat(iraceResults, by_n_param = 6)
