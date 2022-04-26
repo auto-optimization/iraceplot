@@ -213,7 +213,7 @@ boxplot_test(iraceResults, type="best")
 ```
 
 Note that the irace execution log includes test data (test is not enabled by default), check the 
-irace package [user guide](https://cran.r-project.org/web/packages/irace/vignettes/irace-package.pdf)
+irace package [user guide](https://CRAN.R-project.org/package=irace/vignettes/irace-package.pdf)
 for details on how to use the test feature in irace.
 
 To investigate the difference in the performance of two configurations the `scatter_test` function displays
