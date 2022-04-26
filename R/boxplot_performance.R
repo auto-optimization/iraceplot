@@ -63,8 +63,8 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   type <- match.arg(type)
   ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
   
-  if (!(is.matrix(experiments) || is.data.frame(experiments))) {
-    stop("Error: experiments must be a matrix or a data frame")
+  if (!is.matrix(experiments) && !is.data.frame(experiments)) {
+    stop("'experiments' must be a matrix or a data frame")
   }
   
   if (type=="ibest" && !first_is_best) {
@@ -84,10 +84,9 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     cat ("Note: Since type=ibest, assumming vector best configuration by iteration in allElites.\n")
     allElites <- as.list(allElites)
   }
-  
-  # The experiments values are modified
+
   if (rpd) {
-    experiments[] <- calculate_rpd(experiments)
+    experiments <- calculate_rpd(experiments)
   }
   
   # Generate iteration and final elite vector
@@ -99,7 +98,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (type == "all") {
     v_allElites <- as.character(unique(unlist(allElites)))
     if (!all(v_allElites %in% colnames(experiments))) 
-      stop("Error: Missing elite performance in experiments matrix")
+      stop("Missing elite performance in experiments matrix")
   } else if (type == "ibest") {
     if (!all(iterationElites %in% colnames(experiments)))
       stop("Error: Missing iteration elites performance in experiments matrix")

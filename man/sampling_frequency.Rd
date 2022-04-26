@@ -48,7 +48,7 @@ of the parameters.
 }
 \examples{
 # Either use iraceResults
-load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 sampling_frequency(iraceResults)
 \dontrun{ 
 sampling_frequency(iraceResults, n = 2)

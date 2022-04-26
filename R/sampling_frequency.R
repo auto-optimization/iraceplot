@@ -34,7 +34,7 @@
 #'
 #' @examples
 #' # Either use iraceResults
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' sampling_frequency(iraceResults)
 #' \dontrun{ 
 #' sampling_frequency(iraceResults, n = 2)
@@ -50,7 +50,6 @@
 #' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' }
-
 #' @export
 sampling_frequency <- function(configurations, parameters, param_names = NULL, n = NULL, filename = NULL)
 {

@@ -21,7 +21,7 @@
 #' @seealso [boxplot_training()] [boxplot_performance()]
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' boxplot_test(iraceResults)
 #' @export
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),
@@ -31,7 +31,7 @@ boxplot_test <- function(irace_results, type = c("all", "ibest", "best"),
   
   # verify that test this in irace_results
   if (!("testing" %in% names(irace_results))) {
-    stop("Error: irace_results does not contain the testing data")
+    stop("irace_results does not contain the testing data")
   }
   
   if (type=="ibest" && !irace_results$scenario$testIterationElites) {
