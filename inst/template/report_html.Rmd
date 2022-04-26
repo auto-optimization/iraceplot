@@ -83,14 +83,14 @@ knitr::kable(irace_results$allConfigurations[best_elites, , drop=FALSE],
 
 ## Parallel coordinates visualization (only elites)
 
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 parallel_coord(irace_results)
 ```
 
 ## Parameter values sampling
 The frequency of the parameter values sampled by irace:
 
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 sampling_frequency(irace_results)
 ```
 
@@ -115,7 +115,7 @@ knitr::kable(best_results, row.names = FALSE)
 
 The final elite configuration performance on the test set:
 
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (irace_results$scenario$testInstances == "" || is.null(irace_results$scenario$testInstances)) {
   cat("No test instances given.\n")
 } else {
@@ -125,7 +125,7 @@ if (irace_results$scenario$testInstances == "" || is.null(irace_results$scenario
 
 Iteration elite configuration performance on the test set:
 
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (irace_results$scenario$testIterationElites) {
    boxplot_test(irace_results, type = "all", show_points=FALSE)
 } else{
@@ -146,12 +146,13 @@ knitr::kable(best_results, row.names = FALSE)
 
 Final elite configurations performance on the training set:
 
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results)
 ```
 
 # Races overview
-```{r,fig.align="center", fig.width= 7, echo=FALSE}
+
+```{r,fig.align="center", out.width="100%", echo=FALSE}
 plot_experiments_matrix(irace_results, interactive = interactive_plots)
 ```
 

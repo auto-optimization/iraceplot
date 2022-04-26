@@ -25,8 +25,8 @@
 #' @examples
 #' plot_experiments_matrix(iraceResults)
 #' @export
-plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"), show_conf_ids = FALSE,
-                                    interactive = base::interactive())
+plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"),
+                                    show_conf_ids = FALSE, interactive = base::interactive())
 {
   metric <- match.arg(metric)
   experiments <- irace_results$experiments
@@ -65,9 +65,8 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
     experiments <- experiments %>% mutate(text = "")
   }
 
-  # Heat map plot is created
   p <- ggplot(experiments, aes(x = conf_id, y = inst_id, fill = cost, text = text)) +
-    geom_tile() +
+    geom_tile() + # Heatmap style
     scale_fill_viridis_c(na.value = "white", direction=-1L, trans = transform,
                          guide = guide_colourbar(barheight=grid::unit(0.8,"npc"))) +
     scale_y_discrete(expand=c(0L, 0L)) +
@@ -80,14 +79,11 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
 
   if (!show_conf_ids) p <- p + theme(axis.text.x = element_blank())
 
-  # The plot becomes interactive
   if (interactive) {
-    # Returning pp is useless because it cannot be modified.
     pp <- plotly::ggplotly(p, tooltip = "text")
-    # If the value in filename is added the pdf file is created
     if (!is.null(filename)) orca_pdf(filename, pp)
   } else if (!is.null(filename)) {
     ggsave(filename, plot = p)
   }
-  return(p)
+  return(pp)
 }
