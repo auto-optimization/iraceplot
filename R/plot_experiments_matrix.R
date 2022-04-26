@@ -80,10 +80,10 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   if (!show_conf_ids) p <- p + theme(axis.text.x = element_blank())
 
   if (interactive) {
-    pp <- plotly::ggplotly(p, tooltip = "text")
-    if (!is.null(filename)) orca_pdf(filename, pp)
+    p <- plotly::ggplotly(p, tooltip = "text")
+    if (!is.null(filename)) orca_pdf(filename, p)
   } else if (!is.null(filename)) {
     ggsave(filename, plot = p)
   }
-  return(pp)
+  return(p)
 }

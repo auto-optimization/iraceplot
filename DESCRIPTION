@@ -19,7 +19,6 @@ RoxygenNote: 7.1.2
 Depends: 
     R (>= 3.4)
 Imports:
-    irace (>= 3.4),
     dplyr, 
     forcats, 
     ggforce, 
@@ -34,6 +33,7 @@ Imports:
     viridisLite, 
     withr
 Suggests: 
+    irace (>= 3.4),
     knitr,
     rmarkdown,
     markdown,
