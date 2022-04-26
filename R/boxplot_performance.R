@@ -98,7 +98,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (type == "all") {
     v_allElites <- as.character(unique(unlist(allElites)))
     if (!all(v_allElites %in% colnames(experiments))) 
-      stop("Missing elite performance in experiments matrix")
+      stop("Missing elite performance in experiments matrix:", paste0(setdiff(v_allElites, colnames(experiments)), collapse=", "))
   } else if (type == "ibest") {
     if (!all(iterationElites %in% colnames(experiments)))
       stop("Error: Missing iteration elites performance in experiments matrix")
