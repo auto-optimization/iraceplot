@@ -13,7 +13,30 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include= FALSE}
-if (!exists("interactive_plots")) interactive_plots <- base::interactive() 
+if (!exists("interactive_plots")) interactive_plots <- base::interactive()
+if (interactive_plots) {
+  show_table <- function(x, row.names = TRUE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', ...) {
+    if (search) dom <- sub("r", "fr", dom)
+    if (is.null(lengthMenu)) { pageLength <- NULL
+    } else {
+      pageLength <- lengthMenu[1]
+      if(nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
+    }
+    DT::datatable(x, rownames = row.names,
+                  class = 'compact row-border hover',
+                  autoHideNavigation = TRUE,
+                  options = list(
+                    searchHighlight = search,
+                    pageLength=pageLength,
+                    lengthMenu = lengthMenu,
+                    dom = dom,
+                    columnDefs = list(list(className = 'dt-right', targets = "_all")))) # %>% DT::formatStyle(fontSize='80%')
+  }
+} else {
+  show_table <- function(x, row.names, ...)
+    knitr::kable(x, row.names = row.names)
+}
+
 library(iraceplot)
 library(tidyr, quietly = TRUE)
 library(dplyr, quietly = TRUE)
@@ -58,17 +81,15 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 ## By iteration
 
 ```{r,fig.align="center", echo=FALSE}
-knitr::kable(byiterations)
+show_table(byiterations, lengthMenu = c(20, 50, 100))
 ```
 
 ## By instance
 
 ```{r,fig.align="center", echo=FALSE}
-knitr::kable(byinstance)
+show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE)
+#columnDefs = list(list(targets = -1, searchable = FALSE))
 ```
-
-
-
 
 
 # Parameter settings
@@ -77,8 +98,8 @@ knitr::kable(byinstance)
 The final best configurations found by irace are:
 
 ```{r,fig.align="center", echo=FALSE}
-knitr::kable(irace_results$allConfigurations[best_elites, , drop=FALSE],
-             row.names = FALSE)
+show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
+           row.names = FALSE, lengthMenu = c(10,20))
 ```
 
 ## Parallel coordinates visualization (only elites)
@@ -103,13 +124,13 @@ sampling_frequency(irace_results)
 Performance of the final elite configurations on the test instances:
 
 ```{r,fig.align="center", echo=FALSE}
-if (!has_testing_data(irace_results)) {
-  cat("No test instances given.\n")
-} else {
+if (has_testing_data(irace_results)) {
 best_results <- as_tibble(irace_results$testing$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-knitr::kable(best_results, row.names = FALSE)
+show_table(best_results, row.names = FALSE, lengthMenu = c(5, 10))
+} else {
+  cat("No test instances given.\n")
 }
 ```
 
@@ -141,7 +162,7 @@ Performance of the final elite configurations on the training instances:
 best_results <- as_tibble(irace_results$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-knitr::kable(best_results, row.names = FALSE)
+show_table(best_results, row.names = FALSE, lengthMenu = c(10, 20, 50, 100))
 ```
 
 Final elite configurations performance on the training set:
