@@ -8,9 +8,7 @@ boxplot_training(
   irace_results,
   iteration = NULL,
   id_configurations = NULL,
-  rpd = TRUE,
-  show_points = TRUE,
-  filename = NULL
+  ...
 )
 }
 \arguments{
@@ -31,13 +29,7 @@ If no ids are provided, the configurations ids are set as the elite configuratio
 of the selected iteration (last iteration by default)
 (example: \code{id_configurations = c(20,50,100,300,500,600,700)}).}
 
-\item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
-percentage deviation to best results per instance, FALSE to plot raw
-performance.}
-
-\item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
-
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
+\item{...}{Other arguments passed to \code{\link[=boxplot_performance]{boxplot_performance()}}.}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object

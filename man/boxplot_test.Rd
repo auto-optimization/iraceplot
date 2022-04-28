@@ -4,26 +4,14 @@
 \alias{boxplot_test}
 \title{Box Plot Testing Performance}
 \usage{
-boxplot_test(
-  irace_results,
-  type = c("all", "ibest", "best"),
-  rpd = TRUE,
-  show_points = TRUE,
-  filename = NULL
-)
+boxplot_test(irace_results, type = c("all", "ibest", "best"), ...)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{type}{String, (default \code{"all"}) possible values are \code{"all"}, "ibest" or "best". "all" shows all the configurations included in the test, "best" shows the elite configurations of the last iteration and "ibest" shows the elite configurations of each iteration (requires that irace includes the iteration elites in the testing).}
 
-\item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
-percentage deviation to best results per instance, FALSE to plot raw
-performance.}
-
-\item{show_points}{Logical, (default TRUE) TRUE to plot performance points together with the box plot.}
-
-\item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
+\item{...}{Other arguments passed to \code{\link[=boxplot_performance]{boxplot_performance()}}.}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object

@@ -25,12 +25,7 @@
 #' of the selected iteration (last iteration by default) 
 #' (example: `id_configurations = c(20,50,100,300,500,600,700)`).
 #'
-#' @template arg_rpd
-#' 
-#' @template arg_show_points
-#' 
-#' @template arg_filename
-#' 
+#' @param ... Other arguments passed to [boxplot_performance()].
 #' @template ret_boxplot
 #'
 #' @seealso [boxplot_test()] [boxplot_performance()]
@@ -43,8 +38,7 @@
 #' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
 #' }
 #' @export
-boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, 
-                             rpd = TRUE, show_points=TRUE, filename = NULL)
+boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, ...)
 {
   if (!is.null(iteration) & !is.null(id_configurations)) {
     stop("cannot use id_configurations and iteration at the same time")
@@ -64,9 +58,5 @@ boxplot_training <- function(irace_results, iteration = NULL, id_configurations 
   }
   boxplot_performance(experiments = irace_results$experiments,
                       allElites = id_configurations,
-                      type = "all",
-                      first_is_best = TRUE,
-                      rpd = rpd, 
-                      show_points = show_points,
-                      filename = filename)
+                      type = "all", ...)
 }

@@ -103,7 +103,7 @@ sampling_frequency(irace_results)
 Performance of the final elite configurations on the test instances:
 
 ```{r,fig.align="center", echo=FALSE}
-if (irace_results$scenario$testInstances == "" || is.null(irace_results$scenario$testInstances)) {
+if (!has_testing_data(irace_results)) {
   cat("No test instances given.\n")
 } else {
 best_results <- as_tibble(irace_results$testing$experiments[, best_elites])
@@ -116,7 +116,7 @@ knitr::kable(best_results, row.names = FALSE)
 The final elite configuration performance on the test set:
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
-if (irace_results$scenario$testInstances == "" || is.null(irace_results$scenario$testInstances)) {
+if (!has_testing_data(irace_results)) {
   cat("No test instances given.\n")
 } else {
   boxplot_test(irace_results, type = "best")
@@ -126,7 +126,7 @@ if (irace_results$scenario$testInstances == "" || is.null(irace_results$scenario
 Iteration elite configuration performance on the test set:
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
-if (irace_results$scenario$testIterationElites) {
+if (irace_results$scenario$testIterationElites && has_testing_data(irace_results)) {
    boxplot_test(irace_results, type = "all", show_points=FALSE)
 } else{
   cat("Iteration elites were not tested.\n")

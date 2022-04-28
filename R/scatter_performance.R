@@ -153,9 +153,8 @@ scatter_training <- function(irace_results, ...)
 #' @export
 scatter_test <- function(irace_results, ...)
 {
-  if (!("testing" %in% names(irace_results))) {
+  if (!has_testing_data(irace_results))
     stop("irace_results does not contain the testing data")
-  }
   experiments <- irace_results$testing$experiments
   rownames(experiments) <- irace_results$scenario$testInstances
   scatter_performance(experiments, ...)
