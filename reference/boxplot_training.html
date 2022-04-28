@@ -69,9 +69,7 @@ number of evaluations can differ between configurations.</p>
   <span class="va">irace_results</span>,
   iteration <span class="op">=</span> <span class="cn">NULL</span>,
   id_configurations <span class="op">=</span> <span class="cn">NULL</span>,
-  rpd <span class="op">=</span> <span class="cn">TRUE</span>,
-  show_points <span class="op">=</span> <span class="cn">TRUE</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>
+  <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -93,14 +91,8 @@ two configurations, for a fair comparison use the test data plot.</p></dd>
 If no ids are provided, the configurations ids are set as the elite configuration ids
 of the selected iteration (last iteration by default)
 (example: <code>id_configurations = c(20,50,100,300,500,600,700)</code>).</p></dd>
-<dt>rpd</dt>
-<dd><p>(<code>logical(1)</code>) TRUE to plot performance as the relative
-percentage deviation to best results per instance, FALSE to plot raw
-performance.</p></dd>
-<dt>show_points</dt>
-<dd><p>Logical, (default TRUE) TRUE to plot performance points together with the box plot.</p></dd>
-<dt>filename</dt>
-<dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
+<dt>...</dt>
+<dd><p>Other arguments passed to <code><a href="boxplot_performance.html">boxplot_performance()</a></code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
