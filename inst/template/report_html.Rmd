@@ -33,7 +33,7 @@ if (interactive_plots) {
                       pageLength=pageLength,
                       lengthMenu = lengthMenu,
                       dom = dom,
-                      columnDefs = columnDefs)) %>% DT::formatStyle(names(x), fontSize='80%')
+                      columnDefs = columnDefs)) %>% DT::formatStyle(colnames(x), fontSize='85%')
     for (col in colorbar) {
       if(!(col %in% colnames(x)))
         stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
@@ -58,31 +58,35 @@ library(tidyr, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 niterations <- length(irace_results$allElites)
 ninstances <- nrow(irace_results$experiments)
-irace_log <- irace_results$experimentLog
-byiterations <- NULL
-for (i in 1:niterations) {
-  nconfig <- length(unique(irace_log[irace_log[,"iteration"]==i,"configuration"]))
-  nbest <- length(irace_results$allElites[[i]])
-  ninstances <- length(unique(irace_log[irace_log[,"iteration"]==i,"instance"]))
-  nexperiments <- nrow(irace_log[irace_log[,"iteration"]==i,])
-  bestid <- irace_results$iterationElites[[i]]
-  byiterations <- rbind(byiterations, c(i, nconfig, ninstances, nexperiments, nbest, bestid))
-}
-colnames(byiterations) <- c("iteration", "configurations", "instances", "experiments", "elites", "best id")
+byiterations <- as_tibble(irace_results$experimentLog) %>%
+    group_by(iteration) %>%
+    summarise(configurations = n_distinct(configuration),
+              instances = n_distinct(instance), experiments=n()) %>%
+    mutate(elites = sapply(irace_results$allElites, length),
+           best_id = irace_results$iterationElites)
 
-byinstance <- NULL
-instances <- irace_results$scenario$instances[irace_results$state$.irace$instancesList[1:ninstances, "instance"]]
-for (i in 1:length(instances)) {
-  iname <- basename(instances[i])
-  nexperiments <-  nrow(irace_log[irace_log[,"instance"]==i,])
-  imean <- mean(irace_results$experiments[i,], na.rm=TRUE)
-  ibest <- min(irace_results$experiments[i,], na.rm=TRUE)
-  iworst <- max(irace_results$experiments[i,], na.rm=TRUE)
-  imedian <- median(irace_results$experiments[1,], na.rm = TRUE)
-  bestid <- which.min(irace_results$experiments[i,])
-  byinstance <- rbind(byinstance, c(iname, nexperiments, imean, imedian, ibest, iworst, bestid))
+instances <- irace_results$scenario$instances[irace_results$state$.irace$instancesList[1:nrow(irace_results$experiments), "instance"]]
+
+# Frequency count:
+exp_by_instance <- table(instances[irace_results$experimentLog[,"instance"]])
+exp_by_instance <- setNames(as.vector(exp_by_instance), names(exp_by_instance))
+
+byinstance <- as_tibble(irace_results$experiments) %>%
+  mutate(instance = instances, .before=1) %>%
+  pivot_longer(!c("instance"), names_to="ID") %>%
+  group_by(instance) %>% drop_na() %>%
+  summarise(mean = mean(value), sd = sd(value), median = median(value),
+            min = min(value), max = max(value),
+            best_id = ID[which.min(value)]) %>%
+  # Sort by the original order in instancesList
+  arrange(factor(instance, levels = unique(instances))) %>%
+  mutate(experiments = exp_by_instance[instance], .after="instance")
+
+basename_inst <- basename(byinstance$instance)
+if (length(basename_inst) == length(byinstance$instance)) {
+  byinstance <- byinstance %>% mutate(instance = basename_inst)
 }
-colnames(byinstance) <- c("instance", "experiments", "mean", "median", "best", "worst", "best id" )
+
 best_elites <- as.character(irace_results$allElites[[length(irace_results$allElites)]])
 ```
 
@@ -104,8 +108,9 @@ show_table(byiterations, lengthMenu = c(20, 50, 100),
 ## By instance
 
 ```{r,fig.align="center", echo=FALSE}
-show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE)
-#           colorbar = c("experiments", "mean", "median", "best", "worst"))
+show_table(byinstance, row.names = FALSE,
+           lengthMenu = c(20, 50, 100), search = TRUE,
+           colorbar = c("experiments", "mean", "sd", "median", "min", "max"))
 #columnDefs = list(list(targets = -1, searchable = FALSE))
 ```
 
@@ -146,7 +151,8 @@ if (has_testing_data(irace_results)) {
 best_results <- as_tibble(irace_results$testing$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-show_table(best_results, row.names = FALSE, lengthMenu = c(5, 10))
+show_table(best_results, row.names = FALSE, lengthMenu = c(5, 10),
+           colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
   cat("No test instances given.\n")
 }
@@ -180,7 +186,8 @@ Performance of the final elite configurations on the training instances:
 best_results <- as_tibble(irace_results$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-show_table(best_results, row.names = FALSE, lengthMenu = c(10, 20, 50, 100))
+show_table(best_results, row.names = FALSE, lengthMenu = c(10, 20, 50, 100),
+           colorbar = c("mean", "sd", "median", "min", "max"))
 ```
 
 Final elite configurations performance on the training set:
