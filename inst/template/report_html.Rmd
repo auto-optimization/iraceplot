@@ -15,22 +15,38 @@ knitr::opts_chunk$set(
 ```{r setup, include= FALSE}
 if (!exists("interactive_plots")) interactive_plots <- base::interactive()
 if (interactive_plots) {
-  show_table <- function(x, row.names = TRUE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', ...) {
+  show_table <- function(x, row.names = TRUE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
     if (search) dom <- sub("r", "fr", dom)
     if (is.null(lengthMenu)) { pageLength <- NULL
     } else {
       pageLength <- lengthMenu[1]
       if(nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
     }
-    DT::datatable(x, rownames = row.names,
-                  class = 'compact row-border hover',
-                  autoHideNavigation = TRUE,
-                  options = list(
-                    searchHighlight = search,
-                    pageLength=pageLength,
-                    lengthMenu = lengthMenu,
-                    dom = dom,
-                    columnDefs = list(list(className = 'dt-right', targets = "_all")))) # %>% DT::formatStyle(fontSize='80%')
+    columnDefs <- list(list(className = 'dt-right', targets = "_all"))
+    tab <-
+      DT::datatable(x, rownames = row.names,
+                    class = 'compact row-border hover',
+                    autoHideNavigation = TRUE,
+                    options = list(
+                      searchHighlight = search,
+                      scrollX = TRUE,
+                      pageLength=pageLength,
+                      lengthMenu = lengthMenu,
+                      dom = dom,
+                      columnDefs = columnDefs)) %>% DT::formatStyle(names(x), fontSize='80%')
+    for (col in colorbar) {
+      if(!(col %in% colnames(x)))
+        stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
+      tab <- DT::formatStyle(tab, columns = col,
+                             background = DT::styleColorBar(range(x[, col]), 'lightblue'),
+                             backgroundSize = '98% 88%',
+                             backgroundRepeat = 'no-repeat',
+                             backgroundPosition = 'center')
+    }
+    for (s in style) {
+      tab <- do.call(DT::formatStyle, c(table=tab, s))
+    }
+    tab
   }
 } else {
   show_table <- function(x, row.names, ...)
@@ -81,13 +97,15 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 ## By iteration
 
 ```{r,fig.align="center", echo=FALSE}
-show_table(byiterations, lengthMenu = c(20, 50, 100))
+show_table(byiterations, lengthMenu = c(20, 50, 100),
+           colorbar = c("configurations", "instances", "experiments", "elites"))
 ```
 
 ## By instance
 
 ```{r,fig.align="center", echo=FALSE}
 show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE)
+#           colorbar = c("experiments", "mean", "median", "best", "worst"))
 #columnDefs = list(list(targets = -1, searchable = FALSE))
 ```
 
