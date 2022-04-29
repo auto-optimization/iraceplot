@@ -11,19 +11,19 @@
 #' @template arg_interactive
 #'
 #' @examples
+#' # load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' # report(iraceResults, filename="report")
 #' NULL
 #' @export
-#' @md
 report <- function(irace_results, filename, interactive = base::interactive())
 {
   if (missing(irace_results)) stop("You must provide irace_results")
   if (missing(filename)) stop("You must provide a filename")
  
-  if (!has_file_extension(filename, "html"))
-    filename <- paste0(filename, ".html")
-  final_file <- path_rel2abs(filename)
-  cat("Creating file", final_file, "\n")
-  rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=final_file)
-  utils::browseURL(final_file)
+  filename <- path_rel2abs(maybe_add_file_extension(filename, "html"))
+  cat("Creating file", filename, "\n")
+  rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=filename)
+  if (interactive) utils::browseURL(filename)
+  filename
 }
 

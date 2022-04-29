@@ -101,7 +101,9 @@ sampling_distance <- function(irace_results, type = c("boxplot", "line", "both")
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
     if (type == "both") {
-      pdf(paste0(filename, ".pdf"), width = 12)
+      if (!has_file_extension(filename, "pdf"))
+        stop("Unknown filetype: ", filename)
+      pdf(filename, width = 12)
       do.call("grid.arrange", c(vectorP[1], ncol = 1))
       do.call("grid.arrange", c(vectorP[2], ncol = 1))
       dev.off()
