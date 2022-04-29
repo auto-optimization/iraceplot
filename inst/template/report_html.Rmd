@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```{r setup, include= FALSE}
 if (!exists("interactive_plots")) interactive_plots <- base::interactive()
 if (interactive_plots) {
-  show_table <- function(x, row.names = TRUE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
+  show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
     if (search) dom <- sub("r", "fr", dom)
     if (is.null(lengthMenu)) { pageLength <- NULL
     } else {
@@ -108,8 +108,7 @@ show_table(byiterations, lengthMenu = c(20, 50, 100),
 ## By instance
 
 ```{r,fig.align="center", echo=FALSE}
-show_table(byinstance, row.names = FALSE,
-           lengthMenu = c(20, 50, 100), search = TRUE,
+show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE,
            colorbar = c("experiments", "mean", "sd", "median", "min", "max"))
 #columnDefs = list(list(targets = -1, searchable = FALSE))
 ```
@@ -122,7 +121,7 @@ The final best configurations found by irace are:
 
 ```{r,fig.align="center", echo=FALSE}
 show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
-           row.names = FALSE, lengthMenu = c(10,20))
+           lengthMenu = c(10,20))
 ```
 
 ## Parallel coordinates visualization (only elites)
@@ -151,7 +150,7 @@ if (has_testing_data(irace_results)) {
 best_results <- as_tibble(irace_results$testing$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-show_table(best_results, row.names = FALSE, lengthMenu = c(5, 10),
+show_table(best_results, lengthMenu = c(5, 10),
            colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
   cat("No test instances given.\n")
@@ -186,7 +185,7 @@ Performance of the final elite configurations on the training instances:
 best_results <- as_tibble(irace_results$experiments[, best_elites])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
-show_table(best_results, row.names = FALSE, lengthMenu = c(10, 20, 50, 100),
+show_table(best_results, lengthMenu = c(10, 20, 50, 100),
            colorbar = c("mean", "sd", "median", "min", "max"))
 ```
 
