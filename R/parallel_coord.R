@@ -65,26 +65,27 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
   get_dimensions <- function(data) {
+    # FIXME: This function can be reduced a lot
     # Create plot dimensions
     for (i in 1:ncol(data)) {
       pname <- colnames(data)[i]
       if (pname == "iteration") {
         dim[[i]] <- list(
-          range = c(1, length(irace_results$allElites)),
-          values = data[,pname],
           label = pname,
+          range = c(1L, length(irace_results$allElites)),
+          values = data[,pname],
           visible = FALSE
         )
         # if the column is of type character
       } else if (parameters$types[pname] %in% c("c", "o")) {
-        if (any(is.na(data[,pname]))) {
-          tickT <- c(as.character(parameters$domain[[pname]]), "NA")
-          tickV <- 1:(1 + length(parameters$domain[[pname]]))
-        } else {
-          tickT <- as.character(parameters$domain[[pname]])
-          tickV <- 1:length(parameters$domain[[pname]])
+        tickT <- as.character(parameters$domain[[pname]])
+        len <- length(parameters$domain[[pname]])
+        if (anyNA(data[,pname])) {
+          tickT <- c(tickT, "NA")
+          len <- len + 1
         }
-        
+        tickV <- 1:len
+        # FIXME: What is all this doing?
         data[,pname] <- as.character(data[,pname])
         rdata <- rep(NA, nrow(data)) 
         for (v in 1:length(tickT)){
@@ -101,13 +102,13 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
         )
         # if the column is of type numeric
       } else if (parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
+        # FIXME: What is this doing?
         if ((as.numeric(parameters$domain[[pname]][2]) + 1) %in% data[,pname]) {
           minimo <- parameters$domain[[pname]][1]
           maximo <- parameters$domain[[pname]][2] + 1
           medio <- round(((maximo - 1) / 4), 1)
           medio2 <- round(((maximo - 1) / 2), 1)
           medio3 <- round(((maximo - 1) * (3 / 4)), 1)
-          
           dim[[i]] <- list(
             range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2] + 1),
             tickvals = c(minimo, medio, medio2, medio3, maximo),
@@ -149,9 +150,9 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     }
   }
   # Verify that param_names contain more than one parameter
-  if (length(param_names) < 2) {
+  if (length(param_names) < 2)
     stop("Data must have at least two parameters")
-  }
+  
   
   by_n_param <- check_by_n_param(by_n_param, length(param_names))
   
@@ -217,41 +218,24 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
       params <- c(params, plot_params)
       plot_params <- c()
     }
-    
+
+    # FIXME: If we pass the data to the plot we do not need to pass it to the
+    # diensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
     cdata <- data[,c(params, "fitness", "iteration"),drop=FALSE]
     dim <- get_dimensions(cdata)
 
     # plot creation
-    p <- cdata %>% plot_ly()
-    if (color_by_instances) {
-      p <- p %>% add_trace(
-        type = "parcoords",
-        line = list(
-          color = ~fitness,
-          colorscale = "Viridis",
-          showscale = TRUE,
-          reversescale = TRUE,
-          cmin = min(data[,"fitness"]),
-          cmax = max(data[,"fitness"])
-        ),
-        dimensions = dim,
-        labelangle = -25
-      )
-    } else {
-      p <- p %>% add_trace(
-        type = "parcoords",
-        line = list(
-          color = ~iteration,
-          colorscale = "Viridis",
-          showscale = TRUE,
-          reversescale = TRUE,
-          cmin = 1,
-          cmax = length(irace_results$allElites)
-        ),
-        dimensions = dim,
-        labelangle = -25
-      )
-    }
+    p <- plot_ly(cdata) %>%
+      add_trace(type = "parcoords",
+                line = list(
+                  color = if (color_by_instances) ~fitness else ~iteration,
+                  colorscale = "Viridis",
+                  showscale = TRUE,
+                  reversescale = TRUE,
+                  cmin = if (color_by_instances) min(data[,"fitness"]) else 1L,
+                  cmax = if (color_by_instances) max(data[,"fitness"]) else length(irace_results$allElites)),
+                dimensions = dim,
+                labelangle = -25)
     plot_list[[i]] <- p
     i <- i + 1
   }
