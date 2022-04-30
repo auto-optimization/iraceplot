@@ -17,8 +17,8 @@
 #' List or vector of configuration ids, (default NULL). These configurations
 #' should be included in the plot. If the argument is not provided all configurations
 #' in experiments are included. If allElites is a vector all configurations are
-#' assumed without iteration unless argument type="ibest" is provided, in which case
-#' each configuration is assumed to be from a different iteration. If allElites 
+#' assumed without iteration unless argument `type="ibest"` is provided, in which case
+#' each configuration is assumed to be from a different iteration. If `allElites` 
 #' is a list, each element of the  list is assumed as an iteration.
 #'
 #' @param type
@@ -42,7 +42,10 @@
 #' 
 #' @param x_lab 
 #' String, (default `"Configurations"`) label for the x axis.
-#' 
+#'
+#' @param boxplot By default, display a violin plot ([ggplot2::geom_violin()]).
+#' If `TRUE`, show a classical boxplot.
+#'
 #' @template arg_filename
 #' 
 #' @template ret_boxplot
@@ -57,7 +60,7 @@
 #' @export
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
-                                best_color = "#08bfaa", x_lab ="Configurations", 
+                                best_color = "#08bfaa", x_lab ="Configurations", boxplot = FALSE, 
                                 filename = NULL)
 {
   type <- match.arg(type)
@@ -202,11 +205,10 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       p <- p +  scale_color_manual(values=c(best_color, "#999999"))
           #scale_color_hue(h = c(220, 270))
   }
-
   y_lab <- if (rpd) "RPD performance" else "Performance"
   
   p <- p +
-    geom_boxplot() +
+    (if (boxplot) geom_boxplot() else geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))) +
     theme(legend.position = "none") +
     labs(x = x_lab , y = y_lab)
   

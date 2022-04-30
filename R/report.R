@@ -17,6 +17,8 @@
 #' @export
 report <- function(irace_results, filename, interactive = base::interactive())
 {
+  # TODO: use irace::read_logfile() so that irace_results can be also the path
+  # to .Rdata.
   if (missing(irace_results)) stop("You must provide irace_results")
   if (missing(filename)) stop("You must provide a filename")
  

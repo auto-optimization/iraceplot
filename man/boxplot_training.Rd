@@ -14,7 +14,7 @@ boxplot_training(
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{iteration}{Numeric, iteration number that should be included in the plot (example: iteration = 5)
+\item{iteration}{Numeric, iteration number that should be included in the plot (example: \code{iteration = 5})
 When no iteration and no id_condigurations are provided, the iterations is assumed to be
 the last one performed by irace.
 

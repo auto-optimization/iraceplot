@@ -9,7 +9,7 @@
 #' @template arg_irace_results
 #'
 #' @param iteration
-#' Numeric, iteration number that should be included in the plot (example: iteration = 5)
+#' Numeric, iteration number that should be included in the plot (example: `iteration = 5`)
 #' When no iteration and no id_condigurations are provided, the iterations is assumed to be
 #' the last one performed by irace. 
 #' 
@@ -40,18 +40,18 @@
 #' @export
 boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, ...)
 {
-  if (!is.null(iteration) & !is.null(id_configurations)) {
+  if (length(iteration) > 0 & length(id_configurations) > 0)
     stop("cannot use id_configurations and iteration at the same time")
-  }
-  if (is.null(iteration)) {
+  
+  if (length(iteration) == 0) {
     iteration <- length(irace_results$allElites)
-  } else if (iteration < 0 || iteration > length(irace_results$allElites)) {
+  } else if (iteration < 0 || length(irace_results$allElites) < iteration) {
     # We verify that iteration is within the range of values it can take
     stop("iteration number out of range")
   }
   
   # Check configurations
-  if (is.null(id_configurations)) {
+  if (length(id_configurations) == 0) {
     id_configurations <- irace_results$allElites[[iteration]]
   } else if (any(!(as.character(id_configurations) %in% colnames(irace_results$experiments)))) {
     stop("provided configurations id not found in experiments")
