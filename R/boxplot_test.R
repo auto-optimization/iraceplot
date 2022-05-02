@@ -31,15 +31,13 @@ boxplot_test <- function(irace_results, type = c("all", "ibest", "best"), ...)
     type <- "best"
   }
   
-  experiments <- irace_results$testing$experiments
-  
-  if (type=="all" || type=="ibest") {
-    id_configurations <- irace_results$allElites
-  } else {
+  if (type == "best") {
     id_configurations <- irace_results$allElites[[length(irace_results$allElites)]]
     type <- "all"
+  } else {
+    id_configurations <- irace_results$allElites
   }
-  boxplot_performance(experiments = experiments,
+  boxplot_performance(experiments = irace_results$testing$experiments,
                       allElites = id_configurations,
                       type = type, ...)
 }
