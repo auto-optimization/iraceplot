@@ -118,7 +118,7 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 #' @examples
 #' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_training(iraceResults, x_id = 806, y_id = 809)
-#' \dontrun{ 
+#' \donttest{ 
 #' scatter_training(iraceResults, x_id = 806, y_id = 809, rpd = FALSE)
 #' }
 #' @export
@@ -147,7 +147,7 @@ scatter_training <- function(irace_results, ...)
 #' @examples
 #' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_test(iraceResults, x_id = 92, y_id = 119)
-#' \dontrun{ 
+#' \donttest{ 
 #' scatter_test(iraceResults, x_id = 92, y_id = 119, rpd=FALSE)
 #' }
 #' @export

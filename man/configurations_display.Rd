@@ -31,7 +31,7 @@ statically. Defaults to the value returned by \code{interactive()},}
 A graph is created with all the settings and instance of the training data
 }
 \examples{
-\dontrun{ # FIXME: This function takes a long time.
+\donttest{
 configurations_display(iraceResults)
 }
 }

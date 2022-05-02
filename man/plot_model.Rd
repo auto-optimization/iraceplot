@@ -33,7 +33,7 @@ associated to each parameter for each elite configuration on each iteration.
 \examples{
 load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 plot_model(iraceResults, param_name="algorithm")
-\dontrun{ 
+\donttest{ 
 plot_model(iraceResults, param_name="alpha")
 }
 }

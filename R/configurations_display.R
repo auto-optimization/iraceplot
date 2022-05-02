@@ -13,12 +13,13 @@
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
-#' \dontrun{ # FIXME: This function takes a long time.
+#' \donttest{
 #' configurations_display(iraceResults)
 #' }
 #' @export
 configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, interactive = base::interactive())
 {
+  # FIXME: This function takes a long time.
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
   nconfig <- 0

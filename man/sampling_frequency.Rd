@@ -57,7 +57,7 @@ sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q
 }
 # Or explicitly specify the configurations and parameters.
 sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
-\dontrun{ 
+\donttest{ 
 sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
 sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
                     param_names = c("alpha"))

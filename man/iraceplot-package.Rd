@@ -53,7 +53,7 @@ Useful links:
 Authors:
 \itemize{
   \item Pablo Oñate Marín \email{pablo.onate.m@gmail.com}
-  \item Manuel López-Ibáñez \email{manuel.lopez-ibanez@uma.es} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
+  \item Manuel López-Ibáñez \email{manuel.lopez-ibanez@manchester.ac.uk} (\href{https://orcid.org/0000-0001-9974-1295}{ORCID})
 }
 
 
