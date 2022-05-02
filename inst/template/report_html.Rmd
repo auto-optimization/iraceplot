@@ -23,17 +23,17 @@ if (interactive_plots) {
       if(nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
     }
     columnDefs <- list(list(className = 'dt-right', targets = "_all"))
-    tab <-
-      DT::datatable(x, rownames = row.names,
-                    class = 'compact row-border hover',
-                    autoHideNavigation = TRUE,
-                    options = list(
-                      searchHighlight = search,
-                      scrollX = TRUE,
-                      pageLength=pageLength,
-                      lengthMenu = lengthMenu,
-                      dom = dom,
-                      columnDefs = columnDefs)) %>% DT::formatStyle(colnames(x), fontSize='85%')
+    tab <- DT::datatable(x, rownames = row.names,
+                         class = 'compact row-border hover',
+                         autoHideNavigation = TRUE,
+                         options = list(
+                           searchHighlight = search,
+                           scrollX = TRUE,
+                           pageLength=pageLength,
+                           lengthMenu = lengthMenu,
+                           dom = dom,
+                           columnDefs = columnDefs)) %>%
+      DT::formatStyle(colnames(x), fontSize='85%')
     for (col in colorbar) {
       if(!(col %in% colnames(x)))
         stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
