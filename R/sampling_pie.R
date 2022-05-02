@@ -23,7 +23,7 @@
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_pie(iraceResults)
-#' \dontrun{
+#' \donttest{
 #' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
 #' }
 sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL) {
@@ -32,7 +32,6 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename =
   parents <- labels <- values <- ids <- depend <- NULL
   
   if (!is.numeric(n_bins) || n_bins < 1) {
-    cat()
     stop("Error: n_bins must be numeric > 0")
   }
 

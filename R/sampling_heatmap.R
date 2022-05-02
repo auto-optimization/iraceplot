@@ -45,11 +45,11 @@ get_domain <- function(param_name, parameters, size)
       size <- old_domain[2] - old_domain[1] 
       size <- min(10L, size)
     } else if (size > (old_domain[2] - old_domain[1])) {
-      cat("Note: step size for integer parameters should not exceed 
+      message("Note: step size for integer parameters should not exceed 
             the size of their domain. Parameter", param_name, ", domain size:", 
-          old_domain[2] - old_domain[1], ", provided step size:", size, "\n")
+          old_domain[2] - old_domain[1], ", provided step size:", size, ".",
+          "Setting step size to:", size, "\n")
       size <- min(old_domain[2] - old_domain[1], 10L)
-      cat("Setting step size to:", size, "\n")
     }
     type <- "n"
     param <- seq(1,size)

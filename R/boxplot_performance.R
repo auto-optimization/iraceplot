@@ -54,7 +54,7 @@
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
-#' \dontrun{ 
+#' \donttest{ 
 #' boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
 #' }
 #' @export
@@ -71,20 +71,20 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   
   if (type=="ibest" && !first_is_best) {
-    cat("Note: The setting type=ibest only supports first_is_best=TRUE, ignoring this setting.\n")
+    message("Note: The setting type=ibest only supports first_is_best=TRUE, ignoring this setting.\n")
     first_is_best <- TRUE
   }
   
   # Get the order of configurations
   if (is.null(allElites)) {
-    cat("Note: all Elites not provided, assumming all configurations in experiments as elites.\n")
+    message("Note: all Elites not provided, assumming all configurations in experiments as elites.\n")
     allElites <- list()
     allElites[[1]] <- get_ranked_ids(experiments)
     if (type == "ibest") {
       stop(paste0("The type argument provided (",type,") is not supported when no allElites value provided"))
     }
   } else if (type=="ibest" && !is.list(allElites)) {
-    cat ("Note: Since type=ibest, assumming vector best configuration by iteration in allElites.\n")
+    message ("Note: Since type=ibest, assumming vector best configuration by iteration in allElites.\n")
     allElites <- as.list(allElites)
   }
 

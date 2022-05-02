@@ -23,7 +23,7 @@ report <- function(irace_results, filename, interactive = base::interactive())
   if (missing(filename)) stop("You must provide a filename")
  
   filename <- path_rel2abs(maybe_add_file_extension(filename, "html"))
-  cat("Creating file", filename, "\n")
+  message("Creating file", filename, "\n")
   rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=filename)
   if (interactive) utils::browseURL(filename)
   filename

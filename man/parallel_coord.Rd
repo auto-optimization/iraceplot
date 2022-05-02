@@ -65,10 +65,10 @@ to be installed (\url{https://github.com/plotly/orca}).
 \examples{
 load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 parallel_coord(iraceResults)
-\dontrun{ 
+\donttest{ 
 parallel_coord(iraceResults, by_n_param = 5)
 parallel_coord(iraceResults, only_elite = FALSE)
-parallel_coord(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
+parallel_coord(iraceResults, id_configurations = c(20, 30, 40, 50, 100))
 parallel_coord(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 parallel_coord(iraceResults, iterations = c(1, 4, 6))
 }

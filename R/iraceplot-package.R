@@ -50,4 +50,5 @@
 #' @importFrom grDevices rainbow nclass.Sturges dev.off pdf
 #' @importFrom gridExtra grid.arrange marrangeGrob
 #' @importFrom plotly ggplotly orca plot_ly add_trace
+#' @importFrom DT datatable
 NULL

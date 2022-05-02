@@ -22,7 +22,7 @@
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
-#' \dontrun{ 
+#' \donttest{ 
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")
 #' }
 #' @export

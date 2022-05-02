@@ -37,9 +37,9 @@
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_cat(iraceResults)
-#' \dontrun{ 
+#' \donttest{ 
 #' parallel_cat(iraceResults, by_n_param = 6)
-#' parallel_cat(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
+#' parallel_cat(iraceResults, id_configurations = c(20, 50, 100))
 #' parallel_cat(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' parallel_cat(iraceResults, iterations = c(1, 4, 6), n_bins=4)
 #' }

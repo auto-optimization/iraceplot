@@ -36,7 +36,7 @@
 #' # Either use iraceResults
 #' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' sampling_frequency(iraceResults)
-#' \dontrun{ 
+#' \donttest{ 
 #' sampling_frequency(iraceResults, n = 2)
 #' sampling_frequency(iraceResults, param_names = c("alpha"))
 #' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
@@ -156,7 +156,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   # If the value in filename is added
   if (!is.null(filename)) {
     if (npar > 9) {
-      cat("Warning: multiple plots generated. If a filename with a pdf extension was provided a multi page plot 
+      warning("Multiple plots generated. If a filename with a pdf extension was provided a multi page plot 
           will be generated. Otherwise, only the last plot set will be saved. Use the n argument of this function 
           to plot by parameter set.")
     }

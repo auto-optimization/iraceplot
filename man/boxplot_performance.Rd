@@ -70,7 +70,7 @@ elite configuration was evaluated.
 \examples{
 load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 boxplot_performance(iraceResults$experiments, iraceResults$allElites)
-\dontrun{ 
+\donttest{ 
 boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
 }
 }

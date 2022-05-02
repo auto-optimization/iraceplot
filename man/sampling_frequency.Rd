@@ -50,7 +50,7 @@ of the parameters.
 # Either use iraceResults
 load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 sampling_frequency(iraceResults)
-\dontrun{ 
+\donttest{ 
 sampling_frequency(iraceResults, n = 2)
 sampling_frequency(iraceResults, param_names = c("alpha"))
 sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))

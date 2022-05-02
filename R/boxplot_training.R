@@ -33,9 +33,9 @@
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_training(iraceResults)
-#' \dontrun{ 
+#' \donttest{ 
 #' boxplot_training(iraceResults, iteration = 5)
-#' boxplot_training(iraceResults, id_configurations = c(20, 50, 100, 300, 500, 600, 700))
+#' boxplot_training(iraceResults, id_configurations = c(23,28,29))
 #' }
 #' @export
 boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, ...)
