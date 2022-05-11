@@ -19,11 +19,13 @@ Depends:
     R (>= 3.4)
 Imports:
     dplyr, 
+    DT,
     forcats, 
     ggforce, 
     ggplot2,
     gridExtra, 
     irace (>= 3.4),
+    knitr,
     matrixStats (>= 0.55),
     plotly,
     rmarkdown,
@@ -35,8 +37,6 @@ Imports:
     viridisLite, 
     withr
 Suggests: 
-    DT,
-    knitr,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://auto-optimization.github.io/iraceplot/, https://github.com/auto-optimization/iraceplot/
