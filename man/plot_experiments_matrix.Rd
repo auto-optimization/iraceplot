@@ -17,7 +17,7 @@ plot_experiments_matrix(
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
-\item{metric}{Performance metric shown in the plot: \code{"raw"} shows the raw
+\item{metric}{Cost metric shown in the plot: \code{"raw"} shows the raw
 values, \code{"rpd"} shows relative percentage deviation per instance and
 \code{"rank"} shows rank per instance.}
 

@@ -15,12 +15,14 @@ knitr::opts_chunk$set(
 ```{r setup, include= FALSE}
 if (!exists("interactive_plots")) interactive_plots <- base::interactive()
 if (interactive_plots) {
+  # FIXME: Move show_table to the package so people can use it to create their
+  # own reports.
   show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
     if (search) dom <- sub("r", "fr", dom)
     if (is.null(lengthMenu)) { pageLength <- NULL
     } else {
       pageLength <- lengthMenu[1]
-      if(nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
+      if (nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
     }
     columnDefs <- list(list(className = 'dt-right', targets = "_all"))
     tab <- DT::datatable(x, rownames = row.names,
@@ -56,6 +58,7 @@ if (interactive_plots) {
 library(iraceplot)
 library(tidyr, quietly = TRUE)
 library(dplyr, quietly = TRUE)
+# TODO: create a function summary_by_iteration that creates this table.
 niterations <- length(irace_results$allElites)
 ninstances <- nrow(irace_results$experiments)
 byiterations <- as_tibble(irace_results$experimentLog) %>%
@@ -67,10 +70,14 @@ byiterations <- as_tibble(irace_results$experimentLog) %>%
 
 instances <- irace_results$scenario$instances[irace_results$state$.irace$instancesList[1:nrow(irace_results$experiments), "instance"]]
 
-# Frequency count:
-exp_by_instance <- table(instances[irace_results$experimentLog[,"instance"]])
-exp_by_instance <- setNames(as.vector(exp_by_instance), names(exp_by_instance))
-
+# FIXME: There must be a faster/easier way to do this.
+freq_count <- function(x) {
+  x <- table(x)
+  setNames(as.vector(x), names(x))
+}
+exp_by_instance <- freq_count(instances[irace_results$experimentLog[,"instance"]])
+seeds_by_instance <- freq_count(instances)
+# TODO: create a function summary_by_instance that creates this table.
 byinstance <- as_tibble(irace_results$experiments) %>%
   mutate(instance = instances, .before=1) %>%
   pivot_longer(!c("instance"), names_to="ID") %>%
@@ -80,6 +87,7 @@ byinstance <- as_tibble(irace_results$experiments) %>%
             best_id = ID[which.min(value)]) %>%
   # Sort by the original order in instancesList
   arrange(factor(instance, levels = unique(instances))) %>%
+  mutate(seeds = seeds_by_instance[instance], .after="instance") %>%
   mutate(experiments = exp_by_instance[instance], .after="instance")
 
 basename_inst <- basename(byinstance$instance)
@@ -88,6 +96,7 @@ if (length(basename_inst) == length(byinstance$instance)) {
 }
 
 best_elites <- as.character(irace_results$allElites[[length(irace_results$allElites)]])
+# TODO: Create a function summary() that reports this general information as a tibble.
 ```
 
 # General information
@@ -97,6 +106,7 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 - Instances: `r {ninstances}`
 - Experiments: `r {nrow(irace_results$experimentLog)}`
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
+- Test type: `r {irace_results$scenario$testType}`
 
 ## By iteration
 
@@ -160,11 +170,15 @@ show_table(best_results, lengthMenu = c(5, 10),
 The final elite configuration performance on the test set:
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
-if (!has_testing_data(irace_results)) {
-  cat("No test instances given.\n")
-} else {
+if (has_testing_data(irace_results)) {
   boxplot_test(irace_results, type = "best")
+} else {
+  cat("No test instances given.\n")
 }
+```
+```{r,fig.align="center", out.width="100%", echo=FALSE}
+if (has_testing_data(irace_results))
+  boxplot_test(irace_results, type = "best", rpd = FALSE)
 ```
 
 Iteration elite configuration performance on the test set:
@@ -193,6 +207,7 @@ Final elite configurations performance on the training set:
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results)
+boxplot_training(irace_results, rpd = FALSE)
 ```
 
 # Races overview

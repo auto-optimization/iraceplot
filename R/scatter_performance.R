@@ -48,11 +48,11 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 
   if (rpd) {
     experiments <- calculate_rpd(experiments)
-    xlab <- paste0("RPD of configuration ", x_id)
-    ylab <- paste0("RPD of configuration ", y_id)
+    xlab <- paste0("RPD (%) of configuration ", x_id)
+    ylab <- paste0("RPD (%) of configuration ", y_id)
   } else {
-    xlab <- paste0("Performance of configuration ", x_id)
-    ylab <- paste0("Performance of configuration ", y_id)
+    xlab <- paste0("Cost of configuration ", x_id)
+    ylab <- paste0("Cost of configuration ", y_id)
   }
   x_data <- experiments[, x_id]
   y_data <- experiments[, y_id]

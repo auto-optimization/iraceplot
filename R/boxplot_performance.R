@@ -101,13 +101,13 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (type == "all") {
     v_allElites <- as.character(unique(unlist(allElites)))
     if (!all(v_allElites %in% colnames(experiments))) 
-      stop("Missing elite performance in experiments matrix:", paste0(setdiff(v_allElites, colnames(experiments)), collapse=", "))
+      stop("Missing elite data in experiments matrix:", paste0(setdiff(v_allElites, colnames(experiments)), collapse=", "))
   } else if (type == "ibest") {
     if (!all(iterationElites %in% colnames(experiments)))
-      stop("Error: Missing iteration elites performance in experiments matrix")
+      stop("Missing iteration elites data in experiments matrix")
     v_allElites <- as.character(iterationElites)
   } else {
-    stop("Error: non existent type argument")
+    stop("Unknown type argument")
   }
   data <- as.data.frame(experiments[,v_allElites, drop=FALSE])
   names_col <- colnames(data)
@@ -205,7 +205,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       p <- p +  scale_color_manual(values=c(best_color, "#999999"))
           #scale_color_hue(h = c(220, 270))
   }
-  y_lab <- if (rpd) "RPD performance" else "Performance"
+  y_lab <- if (rpd) "RPD (%)" else "Cost (raw)"
   
   p <- p +
     (if (boxplot) geom_boxplot() else geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))) +

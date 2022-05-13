@@ -12,7 +12,7 @@
 #'
 #' @template arg_filename
 #'
-#' @param metric Performance metric shown in the plot: `"raw"` shows the raw
+#' @param metric Cost metric shown in the plot: `"raw"` shows the raw
 #'   values, `"rpd"` shows relative percentage deviation per instance and
 #'   `"rank"` shows rank per instance.
 #'
