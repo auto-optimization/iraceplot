@@ -193,6 +193,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   config_iter <- config_iter[config_iter[, "iteration"] %in% iterations, ,drop=FALSE]
   
   experiments <- irace_results$experiments[,as.character(id_configurations),drop=FALSE]
+  # FIXME: It says fitness but this is not really fitness. There should be an option to color according to mean fitness value
   fitness     <- colSums(!is.na(experiments))
   
   # Merge iteration and configuration data
@@ -224,12 +225,15 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     cdata <- data[,c(params, "fitness", "iteration"),drop=FALSE]
     dim <- get_dimensions(cdata)
 
+    color_col <- if (color_by_instances) "Instances" else "Iteration"
+    
     # plot creation
     p <- plot_ly(cdata) %>%
       add_trace(type = "parcoords",
                 line = list(
                   color = if (color_by_instances) ~fitness else ~iteration,
                   colorscale = "Viridis",
+                  colorbar = list(title = list(text=color_col)),
                   showscale = TRUE,
                   reversescale = TRUE,
                   cmin = if (color_by_instances) min(data[,"fitness"]) else 1L,
