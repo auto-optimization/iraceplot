@@ -136,24 +136,11 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     return(dim)
   }
   
-  # Variable assignment
-  configuration <- iteration <- dim <- tickV <- vectorP <- NULL
   id_configurations <- unlist(id_configurations)
-  
-  # set parameter values 
-  if (is.null(param_names)) {
-    param_names <- parameters$names
-  } else {
-    param_names <- unlist(param_names)
-    if (any(!(param_names %in% parameters$names))) {
-      stop("Unknown parameter names were encountered")
-    }
-  }
-  # Verify that param_names contain more than one parameter
-  if (length(param_names) < 2)
-    stop("Data must have at least two parameters")
-  
-  
+  param_names <- check_param_names(param_names, parameters$names)
+  # Verify that param_names contains more than one parameter
+  if (length(param_names) < 2) stop("Data must have at least two parameters")
+
   by_n_param <- check_by_n_param(by_n_param, length(param_names))
   
   # Check iterations
@@ -168,7 +155,10 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
        message("Note: The final iteration only has one elite configuration\n")
     }
   } 
-  
+
+  # Variable assignment
+  configuration <- iteration <- dim <- tickV <- vectorP <- NULL
+
   # Check configurations
   if (!is.null(id_configurations)) {
     # Verify that the entered id are within the possible range
@@ -366,27 +356,16 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     } 
     return(dim)
   }
-  
-  # Variable assignment
-  configuration <- dim <- tickV <- vectorP <- NULL
 
-  # set parameter values 
-  if (is.null(param_names)) {
-    param_names <- parameters$names
-  } else {
-    param_names <- unlist(param_names)
-    if (any(!(param_names %in% parameters$names))) {
-      stop("Unknown parameter names were encountered")
-    }
-  }
-  # Verify that param_names contain more than one parameter
-  if (length(param_names) < 2) {
-    stop("Data must have at least two parameters")
-  }
+  param_names <- check_param_names(param_names, parameters$names)
+  # Verify that param_names contains more than one parameter
+  if (length(param_names) < 2) stop("Data must have at least two parameters")
   by_n_param <- check_by_n_param(by_n_param, length(param_names))
-
   configurations <- na_data_processing(configurations, parameters)
     
+  # Variable assignment
+  configuration <- dim <- tickV <- vectorP <- NULL
+  
   plot_list <- list()
   plot_params <- param_names
   # Create plots

@@ -26,28 +26,21 @@
 #' \donttest{
 #' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
 #' }
-sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL) {
+sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL)
+{
+  param_names <- check_param_names(param_names, irace_results$parameters$names)
 
   # variable assignment
   parents <- labels <- values <- ids <- depend <- NULL
   
   if (!is.numeric(n_bins) || n_bins < 1) {
-    stop("Error: n_bins must be numeric > 0")
+    stop("'n_bins' must be numeric > 0")
   }
 
-  dependency <- FALSE
   # Logical (default FALSE) that allows to verify if the parameters
   # are dependent on others, modifying the visualization of the plot
-
-  if (!is.null(param_names)) {
-    if (any(!(param_names %in% irace_results$parameters$names))) {
-      stop(paste("Error: The following parameters are not found:", 
-                 param_names[!(param_names %in% irace_results$parameters$names)], "\n"))
-    } 
-  } else {
-    param_names <- irace_results$parameters$names
-  }
-
+  dependency <- FALSE
+  
   # the table is generated only with categorical parameters
   data <- irace_results$allConfigurations[,param_names, drop=FALSE]
   

@@ -59,3 +59,17 @@ has_testing_data <- function(irace_results)
     (length(ins) == 1 && (is.na(ins) || nchar(ins) == 0)) ||
     length(exp) == 0 || !(is.matrix(exp) || is.data.frame(exp)))
 }
+
+check_unknown_param_names <- function(x, parameters_names)
+{
+  x <- unlist(x)
+  if (any(!(x %in% parameters_names)))
+    stop("Unknown parameter names were encountered: ", paste0(setdiff(x, parameters_names), collapse=", "))
+  x
+}
+
+check_param_names <- function(x, parameters_names)
+{
+  if (is.null(x)) return(parameters_names)
+  check_unknown_param_names(x, parameters_names)
+}

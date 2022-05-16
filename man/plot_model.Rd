@@ -9,7 +9,7 @@ plot_model(irace_results, param_name, filename = NULL)
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
-\item{param_name}{String, parameter to be included in the plot (example: param_name = "algorithm"))}
+\item{param_name}{String, parameter to be included in the plot, e.g., \code{param_name = "algorithm"}}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }

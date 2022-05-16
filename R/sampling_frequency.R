@@ -57,24 +57,15 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     parameters <- configurations$parameters 
     configurations <- configurations$allConfigurations
   }
+  param_names <- check_param_names(param_names, parameters$names)
+  if (any(!(param_names %in% colnames(configurations)))) {
+    stop("Unknown parameter name provided")
+  }
 
   # This is needed to silence CRAN warnings.
   tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
   max_p <- 9
-  
-  if (is.null(param_names))
-    param_names <- parameters$names
-  else
-    param_names <- unlist(param_names)
-  
-  if (any(!(param_names %in% parameters$names))) {
-    stop("Error: Unknown parameter name provided\n")
-  }
-  
-  if (any(!(param_names %in% colnames(configurations)))) {
-    stop("Error: Unknown parameter name provided\n")
-  }
-  
+ 
   # Filter data by parameter names
   config <- configurations[,param_names,drop=FALSE]
   if (!is.null(n)) {

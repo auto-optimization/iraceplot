@@ -143,13 +143,9 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
                              filename = NULL)
 {
   # Check parameter values
-  if (any(!(param_names %in% irace_results$parameters$names))) {
-    stop("Unknown parameter names were encountered")
-    # verify that param_names contain more than one parameter
-  } else if (length(param_names) != 2) {
-    stop("param_names must specify two parameters")
-  }
-  
+  param_names <- check_unknown_param_names(param_names, irace_results$parameters$names)
+  if (length(param_names) != 2L) stop("'param_names' must specify two parameters")
+    
   # Check iterations
   if (!is.null(iterations)) {
     it <- 1:length(irace_results$allElites)
@@ -250,14 +246,8 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 sampling_heatmap2 <- function(configurations, parameters, param_names, 
                               sizes = c(0,0), filename = NULL)
 {
-  # Check parameter values
-  if (any(!(param_names %in% parameters$names))) {
-    stop("Unknown parameter names were encountered")
-    # verify that param_names contain more than one parameter
-  } else if (length(param_names) != 2) {
-    stop("param_names must specify two parameters")
-  }
-  
+  param_names <- check_unknown_param_names(param_names, parameters$names)
+  if (length(param_names) != 2L) stop("'param_names' must specify two parameters")
   
   # Select data 
   config <- configurations[, colnames(configurations) %in% param_names]

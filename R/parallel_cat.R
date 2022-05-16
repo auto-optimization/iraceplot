@@ -50,21 +50,10 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   # Variable assignment
   iteration <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
   id_configurations <- unlist(id_configurations)
-  
-  # Parameters to be included
-  if (is.null(param_names))
-    param_names <- irace_results$parameters$names
-  else
-    param_names <- unlist(param_names)
-  
-  # Check parameter values
-  if (any(!(param_names %in% irace_results$parameters$names))) {
-    stop("Error: Unknown parameter names were encountered\n")
-    # verify that param_names contain more than one parameter
-  } else if (length(param_names) < 2) {
-    stop("Error: Data must have at least two parameters\n")
-  }
-  
+  param_names <- check_param_names(param_names, irace_results$parameters$names)
+  # Verify that param_names contains more than one parameter
+  if (length(param_names) < 2) stop("Data must have at least two parameters")
+
   # Check by_n_param
   if (is.null(by_n_param)) 
     by_n_param <- length(param_names)

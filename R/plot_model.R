@@ -257,12 +257,11 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @template arg_irace_results
 #' 
 #' @param param_name
-#' String, parameter to be included in the plot (example: param_name = "algorithm"))
+#' String, parameter to be included in the plot, e.g., `param_name = "algorithm"`
 #' 
 #' @template arg_filename
 #' 
 #' @return sampling model plot
-#' @export
 #'
 #' @examples
 #' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
@@ -270,12 +269,11 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' \donttest{ 
 #' plot_model(iraceResults, param_name="alpha")
 #' }
-plot_model <- function(irace_results, param_name, filename=NULL) {
-  if (!(param_name %in% irace_results$parameters$names)) {
-    stop("Error: Unknown parameter name provided\n")
-  }
+#' @export
+plot_model <- function(irace_results, param_name, filename=NULL)
+{
+  check_param_names(param_name, irace_results$parameters$names)
   iterations <- length(irace_results$allElites)
-
   
   if (irace_results$parameters$types[param_name] %in% c("c", "o")) {
     X <- getCategoricalModel(irace_results, param_name)
