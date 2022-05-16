@@ -5,7 +5,7 @@
 [![CRAN
 Status](https://www.r-pkg.org/badges/version-last-release/iraceplot)](https://cran.r-project.org/package=iraceplot)
 [![R-CMD-check](https://github.com/auto-optimization/iraceplot/workflows/R-CMD-check/badge.svg)](https://github.com/auto-optimization/iraceplot/actions)
-[![Codecov test coverage](https://app.codecov.io/gh/auto-optimization/iraceplot/branch/master/graph/badge.svg)](https://app.codecov.io/gh/auto-optimization/iraceplot?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/auto-optimization/iraceplot/branch/master/graph/badge.svg)](https://codecov.io/gh/auto-optimization/iraceplot?branch=master)
 <!-- badges: end -->
 
 **Maintainers:** Leslie Pérez Cáceres, [Manuel López-Ibáñez](https://lopez-ibanez.eu)
