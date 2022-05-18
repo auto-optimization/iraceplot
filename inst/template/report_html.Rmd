@@ -108,6 +108,14 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
 - Test type: `r {irace_results$scenario$testType}`
 
+# Scenario
+<details>
+<summary>Click to show</summary>
+```{r, echo=FALSE, eval=TRUE}
+irace::printScenario(irace_results$scenario)
+```
+</details> 
+
 ## By iteration
 
 ```{r,fig.align="center", echo=FALSE}
