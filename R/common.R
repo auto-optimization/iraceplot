@@ -73,3 +73,22 @@ check_param_names <- function(x, parameters_names)
   if (is.null(x)) return(parameters_names)
   check_unknown_param_names(x, parameters_names)
 }
+
+# FIXME: Once irace 3.5 is published, this can go away
+valid_iracelog <- function(x)
+{
+  is.list(x) && ("scenario" %in% names(x))
+}
+
+read_logfile <- function(filename, name = "iraceResults")
+{
+  # If filename is already the iraceResults object, just return it.
+  if (valid_iracelog(filename)) return(filename)
+
+  load(filename)
+  iraceResults <- get0(name, inherits=FALSE)
+  if (!valid_iracelog(iraceResults)) {
+    stop("The file '", filename, "' does not contain the '", name, "' object.")
+  }
+  iraceResults
+}

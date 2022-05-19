@@ -19,12 +19,12 @@
 #' # report(iraceResults, filename="report")
 #' NULL
 #' @export
-report <- function(irace_results, filename, interactive = base::interactive())
+report <- function(irace_results, filename = "report",
+                   interactive = base::interactive())
 {
-  # TODO: use irace::read_logfile() so that irace_results can be also the path
-  # to .Rdata.
-  if (missing(irace_results)) stop("You must provide irace_results")
-  if (missing(filename)) stop("You must provide a filename")
+  if (missing(irace_results)) stop("irace_results is required")
+  # FIXME: replace with irace::read_logfile
+  irace_results <- read_logfile(irace_results)
  
   filename <- path_rel2abs(maybe_add_file_extension(filename, "html"))
   message("Creating file", filename, "\n")
@@ -32,4 +32,3 @@ report <- function(irace_results, filename, interactive = base::interactive())
   if (interactive) utils::browseURL(filename)
   filename
 }
-

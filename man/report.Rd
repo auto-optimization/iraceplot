@@ -4,7 +4,7 @@
 \alias{report}
 \title{Create HTML Report from irace data}
 \usage{
-report(irace_results, filename, interactive = base::interactive())
+report(irace_results, filename = "report", interactive = base::interactive())
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}

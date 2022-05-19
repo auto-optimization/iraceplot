@@ -99,22 +99,28 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 # TODO: Create a function summary() that reports this general information as a tibble.
 ```
 
+# Scenario
+<details>
+<summary>Click to show</summary>
+<pre>
+```{r, echo=FALSE, eval=TRUE, results='asis'}
+irace::printScenario(irace_results$scenario)
+```
+</pre>
+</details> 
+
+
 # General information
 
+- irace version: `r {irace_results$irace.version}`
 - Iterations: `r {niterations}`
 - Configurations: `r {nrow(irace_results$allConfigurations)}`
 - Instances: `r {ninstances}`
 - Experiments: `r {nrow(irace_results$experimentLog)}`
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
 - Test type: `r {irace_results$scenario$testType}`
-
-# Scenario
-<details>
-<summary>Click to show</summary>
-```{r, echo=FALSE, eval=TRUE}
-irace::printScenario(irace_results$scenario)
-```
-</details> 
+- Soft restarts: `r {any(irace_results$softRestart)}`
+- Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
 
 ## By iteration
 
@@ -132,8 +138,8 @@ show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE,
 ```
 
 
-# Parameter settings
-## Elite configurations
+
+# Elite configurations
 
 The final best configurations found by irace are:
 
@@ -148,7 +154,8 @@ show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
 parallel_coord(irace_results)
 ```
 
-## Parameter values sampling
+# Sampling model
+
 The frequency of the parameter values sampled by irace:
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
@@ -156,18 +163,22 @@ sampling_frequency(irace_results)
 ```
 
 
-
 # Performance
 
 ## Testing performance
 
-Performance of the final elite configurations on the test instances:
+- Number of elites tested: `r {irace_results$scenario$testNbElites}`
+- Iteration elites tested: `r {irace_results$scenario$testIterationElites}`
+
+Performance of the elite configurations on the test instances:
 
 ```{r,fig.align="center", echo=FALSE}
 if (has_testing_data(irace_results)) {
-best_results <- as_tibble(irace_results$testing$experiments[, best_elites])
-best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
-best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
+# FIXME: Move this table generation to a function inside the package.
+tested_elites <- colnames(irace_results$testing$experiments)
+best_results <- as_tibble(irace_results$testing$experiments[, tested_elites])
+best_results <- best_results %>% pivot_longer(all_of(tested_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
+best_results <- best_results[match(tested_elites, best_results$ID), , drop = FALSE]
 show_table(best_results, lengthMenu = c(5, 10),
            colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
@@ -216,6 +227,19 @@ Final elite configurations performance on the training set:
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results)
 boxplot_training(irace_results, rpd = FALSE)
+```
+
+```{asis, echo=irace_results$scenario$testIterationElites}
+Iteration elites performance on the training set:
+```
+```{r,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
+# FIXME: This should boxplot_training(irace_results, type="ibest")
+boxplot_performance(experiments = irace_results$experiments,
+                    allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
+                    type = "ibest")
+boxplot_performance(experiments = irace_results$experiments,
+                    allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
+                    type = "ibest", rpd = FALSE)
 ```
 
 # Races overview

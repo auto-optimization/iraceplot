@@ -30,12 +30,11 @@ boxplot_test <- function(irace_results, type = c("all", "ibest", "best"), ...)
     warning("irace data does not contain iteration elites testing, changing plot type to \"best\"")
     type <- "best"
   }
-  
+
+  id_configurations <- lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites)
   if (type == "best") {
-    id_configurations <- irace_results$allElites[[length(irace_results$allElites)]]
+    id_configurations <- id_configurations[[length(id_configurations)]]
     type <- "all"
-  } else {
-    id_configurations <- irace_results$allElites
   }
   boxplot_performance(experiments = irace_results$testing$experiments,
                       allElites = id_configurations,
