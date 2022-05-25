@@ -163,14 +163,12 @@ sampling_frequency(irace_results)
 ```
 
 
-# Performance
-
-## Testing performance
+# Testing performance
 
 - Number of elites tested: `r {irace_results$scenario$testNbElites}`
 - Iteration elites tested: `r {irace_results$scenario$testIterationElites}`
 
-Performance of the elite configurations on the test instances:
+## Performance of the elite configurations on the test instances
 
 ```{r,fig.align="center", echo=FALSE}
 if (has_testing_data(irace_results)) {
@@ -186,7 +184,7 @@ show_table(best_results, lengthMenu = c(5, 10),
 }
 ```
 
-The final elite configuration performance on the test set:
+## Final elite configurations on the test instances
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (has_testing_data(irace_results)) {
@@ -200,7 +198,7 @@ if (has_testing_data(irace_results))
   boxplot_test(irace_results, type = "best", rpd = FALSE)
 ```
 
-Iteration elite configuration performance on the test set:
+## Iteration elite configurations  on the test instances
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (irace_results$scenario$testIterationElites && has_testing_data(irace_results)) {
@@ -210,9 +208,9 @@ if (irace_results$scenario$testIterationElites && has_testing_data(irace_results
 }
 ```
 
-## Training performance 
+# Training performance 
 
-Performance of the final elite configurations on the training instances:
+## Performance of the final elite configurations on the training instances
 
 ```{r,fig.align="center", echo=FALSE}
 best_results <- as_tibble(irace_results$experiments[, best_elites, drop=FALSE])
@@ -222,7 +220,8 @@ show_table(best_results, lengthMenu = c(10, 20, 50, 100),
            colorbar = c("mean", "sd", "median", "min", "max"))
 ```
 
-Final elite configurations performance on the training set:
+## Final elite configurations on the training instances
+
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results)
@@ -230,7 +229,7 @@ boxplot_training(irace_results, rpd = FALSE)
 ```
 
 ```{asis, echo=irace_results$scenario$testIterationElites}
-Iteration elites performance on the training set:
+## Iteration elite configurations  on the training instances
 ```
 ```{r,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
 # FIXME: This should boxplot_training(irace_results, type="ibest")
