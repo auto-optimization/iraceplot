@@ -8,7 +8,7 @@ boxplot_performance(
   experiments,
   allElites = NULL,
   type = c("all", "ibest"),
-  first_is_best = FALSE,
+  first_is_best = (type != "ibest"),
   rpd = TRUE,
   show_points = TRUE,
   best_color = "#08bfaa",

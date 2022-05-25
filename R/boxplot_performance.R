@@ -59,7 +59,7 @@
 #' }
 #' @export
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
-                                first_is_best = FALSE, rpd = TRUE, show_points=TRUE, 
+                                first_is_best = (type != "ibest"), rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", boxplot = FALSE, 
                                 filename = NULL)
 {
@@ -109,9 +109,13 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   } else {
     stop("Unknown type argument")
   }
+  # FIXME: It doesn't make sense to rename experiments to data. Just use either
+  # of the names.
   data <- as.data.frame(experiments[,v_allElites, drop=FALSE])
   names_col <- colnames(data)
-  
+  # If we only have one row, then don't try to plot boxplots.
+  plot_points <- (nrow(data) == 1)
+    
   # Get the experiment data together with the iterations
   if (is.list(allElites)) {
     fdata <- NULL
@@ -176,8 +180,8 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   } 
   
   data$ids_f <- factor(data$ids, levels = unique(data$ids))
-  
-  # the box plot is created
+
+  # FIXME: Simplify these conditions to avoid repetitions.
   if (type == "ibest") {
     # type="ibest"
     p <- ggplot(data, aes(x = ids_f, y = performance, color = iteration_f)) 
@@ -205,16 +209,20 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       p <- p +  scale_color_manual(values=c(best_color, "#999999"))
           #scale_color_hue(h = c(220, 270))
   }
+
+  if (plot_points) {
+    p <- p + geom_point(shape = 16, na.rm = TRUE)
+  } else {
+    if (boxplot)
+      p <- p + geom_boxplot()
+    else
+      p <- p + geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))
+    if (show_points)
+      p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE)
+  }
   y_lab <- if (rpd) "RPD (%)" else "Cost (raw)"
-  
-  p <- p +
-    (if (boxplot) geom_boxplot() else geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))) +
-    theme(legend.position = "none") +
-    labs(x = x_lab , y = y_lab)
-  
-  if (show_points) 
-    p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE) 
-  
+  p <- p + theme(legend.position = "none") + labs(x = x_lab , y = y_lab)
+      
   # each box plot is divided by iteration
   if (is.list(allElites)) {
     p <- p + facet_grid(cols = vars(data$iteration_f), scales = "free")
@@ -224,7 +232,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (!is.null(filename)) {
     ggsave(filename, plot = p)
   }
-  return(p)
+  p
 }
 
 get_ranked_ids <- function(experiments){
