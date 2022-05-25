@@ -119,8 +119,7 @@ irace::printScenario(irace_results$scenario)
 - Instances: `r {ninstances}`
 - Experiments: `r {nrow(irace_results$experimentLog)}`
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
-- Test type: `r {irace_results$scenario$testType}`
-- Soft restarts: `r {any(irace_results$softRestart)}`
+- Soft restarts: `r {if(any(irace_results$softRestart)) irace_results$softRestart else "None"}`
 - Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
 
 ## By iteration
