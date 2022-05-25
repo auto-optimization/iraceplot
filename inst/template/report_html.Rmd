@@ -39,8 +39,9 @@ if (interactive_plots) {
     for (col in colorbar) {
       if(!(col %in% colnames(x)))
         stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
+      if (all(is.na(x[, col]))) next # Don't add colorbar if all are NA.
       tab <- DT::formatStyle(tab, columns = col,
-                             background = DT::styleColorBar(range(x[, col]), 'lightblue'),
+                             background = DT::styleColorBar(range(x[, col], na.rm=TRUE), 'lightblue'),
                              backgroundSize = '98% 88%',
                              backgroundRepeat = 'no-repeat',
                              backgroundPosition = 'center')
@@ -176,9 +177,9 @@ Performance of the elite configurations on the test instances:
 if (has_testing_data(irace_results)) {
 # FIXME: Move this table generation to a function inside the package.
 tested_elites <- colnames(irace_results$testing$experiments)
-best_results <- as_tibble(irace_results$testing$experiments[, tested_elites])
+best_results <- as_tibble(irace_results$testing$experiments[, tested_elites, drop=FALSE])
 best_results <- best_results %>% pivot_longer(all_of(tested_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
-best_results <- best_results[match(tested_elites, best_results$ID), , drop = FALSE]
+best_results <- best_results[match(tested_elites, best_results$ID), , drop=FALSE]
 show_table(best_results, lengthMenu = c(5, 10),
            colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
@@ -215,9 +216,9 @@ if (irace_results$scenario$testIterationElites && has_testing_data(irace_results
 Performance of the final elite configurations on the training instances:
 
 ```{r,fig.align="center", echo=FALSE}
-best_results <- as_tibble(irace_results$experiments[, best_elites])
+best_results <- as_tibble(irace_results$experiments[, best_elites, drop=FALSE])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
-best_results <- best_results[match(best_elites, best_results$ID), , drop = FALSE]
+best_results <- best_results[match(best_elites, best_results$ID), , drop=FALSE]
 show_table(best_results, lengthMenu = c(10, 20, 50, 100),
            colorbar = c("mean", "sd", "median", "min", "max"))
 ```
