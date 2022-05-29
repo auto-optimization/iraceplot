@@ -97,7 +97,6 @@ if (length(basename_inst) == length(byinstance$instance)) {
 }
 
 best_elites <- as.character(irace_results$allElites[[length(irace_results$allElites)]])
-# TODO: Create a function summary() that reports this general information as a tibble.
 ```
 
 # Scenario
@@ -122,7 +121,7 @@ printParameters(irace_results$parameters)
 
 
 # General information
-
+<!-- # TODO: Create a function summary() that reports this general information as a tibble. -->
 - irace version: `r {irace_results$irace.version}`
 - Iterations: `r {niterations}`
 - Configurations: `r {nrow(irace_results$allConfigurations)}`
@@ -131,6 +130,7 @@ printParameters(irace_results$parameters)
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
 - Soft restarts: `r {if(any(irace_results$softRestart)) irace_results$softRestart else "None"}`
 - Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
+- Termination reason: `r {if(is.null(irace_results$state$completed)) "Missing" else irace_results$state$completed}`
 
 ## By iteration
 
