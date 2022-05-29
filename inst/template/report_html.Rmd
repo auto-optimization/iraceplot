@@ -110,6 +110,16 @@ irace::printScenario(irace_results$scenario)
 </pre>
 </details> 
 
+# Parameters
+<details>
+<summary>Click to show</summary>
+<pre>
+```{r, echo=FALSE, eval=TRUE, results='asis'}
+printParameters(irace_results$parameters)
+```
+</pre>
+</details> 
+
 
 # General information
 
