@@ -71,7 +71,8 @@ which can be displayed by iteration.</p>
   best_color <span class="op">=</span> <span class="st">"#08bfaa"</span>,
   x_lab <span class="op">=</span> <span class="st">"Configurations"</span>,
   boxplot <span class="op">=</span> <span class="cn">FALSE</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>
+  filename <span class="op">=</span> <span class="cn">NULL</span>,
+  interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -113,6 +114,10 @@ performance.</p></dd>
 If <code>TRUE</code>, show a classical boxplot.</p></dd>
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
+<dt>interactive</dt>
+<dd><p>(<code>logical(1)</code>) TRUE if the plot is generated
+interactively (using <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> or <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plotly::plot_ly()</a></code>) or FALSE it is generated
+statically. Defaults to the value returned by <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code>,</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
