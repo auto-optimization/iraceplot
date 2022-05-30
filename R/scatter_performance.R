@@ -90,7 +90,7 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
     labs(color = " ", x = xlab, y = ylab)
   
   if (interactive) {
-    q <- ggplotly(p=q, tooltip = "point_text")
+    q <- plotly::ggplotly(p=q, tooltip = "point_text")
     return(q)
   }
   

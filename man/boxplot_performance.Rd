@@ -14,7 +14,8 @@ boxplot_performance(
   best_color = "#08bfaa",
   x_lab = "Configurations",
   boxplot = FALSE,
-  filename = NULL
+  filename = NULL,
+  interactive = base::interactive()
 )
 }
 \arguments{
@@ -53,6 +54,10 @@ performance.}
 If \code{TRUE}, show a classical boxplot.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
+
+\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
+interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
+statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} boxplot object

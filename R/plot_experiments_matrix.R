@@ -86,5 +86,5 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   } else if (!is.null(filename)) {
     ggsave(filename, plot = p)
   }
-  return(p)
+  p
 }

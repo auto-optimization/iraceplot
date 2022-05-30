@@ -4,6 +4,13 @@ output:
   html_document:
     toc: true
 ---
+```{css, echo=FALSE}
+pre {
+  white-space:pre !important;
+  overflow-x: auto;
+  max-width: 100%;
+}
+```
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -198,21 +205,21 @@ show_table(best_results, lengthMenu = c(5, 10),
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (has_testing_data(irace_results)) {
-  boxplot_test(irace_results, type = "best")
+  boxplot_test(irace_results, type = "best", interactive = interactive_plots)
 } else {
   cat("No test instances given.\n")
 }
 ```
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (has_testing_data(irace_results))
-  boxplot_test(irace_results, type = "best", rpd = FALSE)
+  boxplot_test(irace_results, type = "best", rpd = FALSE, interactive = interactive_plots)
 ```
 
 ## Iteration elite configurations  on the test instances
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
 if (irace_results$scenario$testIterationElites && has_testing_data(irace_results)) {
-   boxplot_test(irace_results, type = "all", show_points=FALSE)
+   boxplot_test(irace_results, type = "all", show_points=FALSE, interactive = interactive_plots)
 } else{
   cat("Iteration elites were not tested.\n")
 }
@@ -234,8 +241,8 @@ show_table(best_results, lengthMenu = c(10, 20, 50, 100),
 
 
 ```{r,fig.align="center", out.width="100%", echo=FALSE}
-boxplot_training(irace_results)
-boxplot_training(irace_results, rpd = FALSE)
+boxplot_training(irace_results, interactive = interactive_plots)
+boxplot_training(irace_results, rpd = FALSE, interactive = interactive_plots)
 ```
 
 ```{asis, echo=irace_results$scenario$testIterationElites}
@@ -245,10 +252,10 @@ boxplot_training(irace_results, rpd = FALSE)
 # FIXME: This should boxplot_training(irace_results, type="ibest")
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
-                    type = "ibest")
+                    type = "ibest", interactive = interactive_plots)
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
-                    type = "ibest", rpd = FALSE)
+                    type = "ibest", rpd = FALSE, interactive = interactive_plots)
 ```
 
 # Races overview

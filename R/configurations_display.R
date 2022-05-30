@@ -125,13 +125,9 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
     geom_point(mapping = aes(y = media_elite, color = elite_color), size = 0.1, ) +
     geom_point(mapping = aes(y = media_regular, color = regular_color), size = 0.1)
 
-
-  # The graph is transformed to plotly
-  if (interactive) {
+  if (interactive)
     p <- plotly::ggplotly(p, tooltip = "text")
-  }
-
-
+ 
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
     ggsave(filename, plot = p)

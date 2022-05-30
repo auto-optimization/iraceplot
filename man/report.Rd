@@ -13,7 +13,7 @@ report(irace_results, filename = "report", interactive = base::interactive())
 Filename indicating where to save the report (example: \code{"~/path-to/filename"})}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{plotly}) or FALSE it is generated
+interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \description{

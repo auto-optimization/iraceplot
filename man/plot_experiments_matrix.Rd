@@ -24,7 +24,7 @@ values, \code{"rpd"} shows relative percentage deviation per instance and
 \item{show_conf_ids}{If \code{TRUE}, it shows the configuration IDs in the x-axis. Usually there are too many configurations, thus the default is \code{FALSE}.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{plotly}) or FALSE it is generated
+interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
 \value{

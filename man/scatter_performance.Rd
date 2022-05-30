@@ -34,7 +34,7 @@ performance.}
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{plotly}) or FALSE it is generated
+interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 
 \item{instance_names}{Either a character vector of instance names in the

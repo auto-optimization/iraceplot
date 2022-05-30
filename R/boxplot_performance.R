@@ -47,6 +47,7 @@
 #' If `TRUE`, show a classical boxplot.
 #'
 #' @template arg_filename
+#' @template arg_interactive
 #' 
 #' @template ret_boxplot
 #'
@@ -61,14 +62,14 @@
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = (type != "ibest"), rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", boxplot = FALSE, 
-                                filename = NULL)
+                                filename = NULL, interactive = base::interactive())
 {
   type <- match.arg(type)
-  ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- NULL
-  
   if (!is.matrix(experiments) && !is.data.frame(experiments)) {
     stop("'experiments' must be a matrix or a data frame")
   }
+  inst_ids <- rownames(experiments)
+  if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
   
   if (type=="ibest" && !first_is_best) {
     message("Note: The setting type=ibest only supports first_is_best=TRUE, ignoring this setting.\n")
@@ -81,17 +82,15 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     allElites <- list()
     allElites[[1]] <- get_ranked_ids(experiments)
     if (type == "ibest") {
-      stop(paste0("The type argument provided (",type,") is not supported when no allElites value provided"))
+      stop("The type argument provided (",type,") is not supported when no allElites value provided")
     }
   } else if (type=="ibest" && !is.list(allElites)) {
-    message ("Note: Since type=ibest, assumming vector best configuration by iteration in allElites.\n")
+    message ("Note: Since type=ibest, assuming vector best configuration by iteration in allElites.\n")
     allElites <- as.list(allElites)
   }
 
-  if (rpd) {
-    experiments <- calculate_rpd(experiments)
-  }
-  
+  if (rpd) experiments <- calculate_rpd(experiments)
+   
   # Generate iteration and final elite vector
   iterationElites <- finalElites <- allElites
   if (is.list(allElites)) 
@@ -102,12 +101,11 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     v_allElites <- as.character(unique(unlist(allElites)))
     if (!all(v_allElites %in% colnames(experiments))) 
       stop("Missing elite data in experiments matrix:", paste0(setdiff(v_allElites, colnames(experiments)), collapse=", "))
-  } else if (type == "ibest") {
+  } else {
+    stopifnot(type == "ibest")
     if (!all(iterationElites %in% colnames(experiments)))
       stop("Missing iteration elites data in experiments matrix")
     v_allElites <- as.character(iterationElites)
-  } else {
-    stop("Unknown type argument")
   }
   # FIXME: It doesn't make sense to rename experiments to data. Just use either
   # of the names.
@@ -115,42 +113,28 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   names_col <- colnames(data)
   # If we only have one row, then don't try to plot boxplots.
   plot_points <- (nrow(data) == 1)
-    
+
+  # FIXME: This is too complicated and unclear.
+  reshape_data <- function(x, elites) {
+    out <- NULL
+    for (i in 1:length(elites)) {
+      d <- x[, as.character(elites[[i]]), drop=FALSE]
+      d <- reshape(d,
+                   varying = as.vector(colnames(d)),
+                   v.names = "performance",
+                   timevar = "ids",
+                   times = as.vector(colnames(d)),
+                   new.row.names = 1:(nrow(d) * ncol(d)),
+                   direction = "long")
+      d <- d[!is.na(d[,"performance"]),]
+      d[,"iteration"] <- i
+      out <- rbind(out, d)
+    }
+    out
+  }
   # Get the experiment data together with the iterations
   if (is.list(allElites)) {
-    fdata <- NULL
-    if (type == "all") {
-      for (i in 1:length(allElites)) {
-        d <- data[, as.character(allElites[[i]]), drop=FALSE]
-        d <- reshape(d,
-                     varying = as.vector(colnames(d)),
-                     v.names = "performance",
-                     timevar = "ids",
-                     times = as.vector(colnames(d)),
-                     new.row.names = 1:(nrow(d) * ncol(d)),
-                     direction = "long"
-        )
-        d <- d[!is.na(d[,"performance"]),]
-        d[,"iteration"] <- i
-        fdata <- rbind(fdata, d)
-      }
-    } else if (type == "ibest") {
-      for (i in 1:length(iterationElites)) {
-        d <- data[, as.character(iterationElites[i]), drop=FALSE]
-        d <- reshape(d,
-                     varying = as.vector(colnames(d)),
-                     v.names = "performance",
-                     timevar = "ids",
-                     times = as.vector(colnames(d)),
-                     new.row.names = 1:(nrow(d) * ncol(d)),
-                     direction = "long"
-        )
-        d <- d[!is.na(d[,"performance"]),]
-        d[,"iteration"] <- i
-        fdata <- rbind(fdata, d)
-      }
-    }
-    data <- fdata
+    data <- reshape_data(data, if (type == "all") allElites else iterationElites)
     data$iteration_f <- factor(data$iteration, levels = unique(data$iteration))
   } else {
     data <- reshape(data,
@@ -159,8 +143,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
                     timevar = "ids",
                     times = as.character(colnames(data)),
                     new.row.names = 1:(nrow(data) * ncol(data)),
-                    direction = "long"
-    )
+                    direction = "long")
     data <- data[!is.na(data[,"performance"]),]
     data$iteration <- 0
   }
@@ -178,19 +161,21 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       }
     } 
   } 
-  
   data$ids_f <- factor(data$ids, levels = unique(data$ids))
-
+  # FIXME: This should include the instance and seed.
+  # data$label <- paste0("Iteration: ", data$iteration_f, "\nValue: ", data$performance, "\n")
+  # Silence CRAN warning.
+  ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- label <- NULL
   # FIXME: Simplify these conditions to avoid repetitions.
   if (type == "ibest") {
-    # type="ibest"
-    p <- ggplot(data, aes(x = ids_f, y = performance, color = iteration_f)) 
-    p <- p + labs(subtitle = "Iterations") +
-             theme(plot.subtitle = element_text(hjust = 0.5))
+    p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) +
+      labs(subtitle = "Iterations") +
+      theme(plot.subtitle = element_text(hjust = 0.5))
   } else {
     # type="all"
     if (first_is_best) {
-      p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) 
+      p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) +
+        scale_color_manual(values=c(best_color, "#999999"))
     } else if (is.list(allElites)){
       p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) 
     } else {
@@ -204,10 +189,6 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     } else {
       p <- p + theme(plot.subtitle = element_text(hjust = 0.5)) 
     }
-    
-    if (first_is_best) 
-      p <- p +  scale_color_manual(values=c(best_color, "#999999"))
-          #scale_color_hue(h = c(220, 270))
   }
 
   if (plot_points) {
@@ -221,7 +202,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE)
   }
   y_lab <- if (rpd) "RPD (%)" else "Cost (raw)"
-  p <- p + theme(legend.position = "none") + labs(x = x_lab , y = y_lab)
+  p <- p + theme(legend.position = "none") + labs(x = x_lab, y = y_lab)
       
   # each box plot is divided by iteration
   if (is.list(allElites)) {
@@ -229,13 +210,18 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   
   # If the value in filename is added the pdf file is created
-  if (!is.null(filename)) {
-    ggsave(filename, plot = p)
+  if (!is.null(filename)) ggsave(filename, plot = p)
+ 
+  if (interactive) {
+    # FIXME: ggplotly does not work well with geom_violin()
+    # We need to create the violin plot directly in plotly: https://plotly.com/r/violin/
+    # p <- plotly::ggplotly(p)
   }
   p
 }
 
-get_ranked_ids <- function(experiments){
+get_ranked_ids <- function(experiments)
+{
   allElites <- c()
   naExp <- sort(colSums(!is.na(experiments)), decreasing = TRUE)
   for (r in unique(naExp)) {
@@ -243,5 +229,5 @@ get_ranked_ids <- function(experiments){
     confMean <- colMeans(experiments[, confId, drop=FALSE], na.rm = TRUE)
     allElites <- c(allElites, names(sort(confMean)))
   }
-  return(allElites)
+  allElites
 }

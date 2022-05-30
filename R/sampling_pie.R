@@ -112,7 +112,7 @@ sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename =
   }
 
   # Create plot
-  p <- plot_ly(
+  p <- plotly::plot_ly(
     type = "sunburst",
     ids = data_f$ids,
     labels = data_f$labels,

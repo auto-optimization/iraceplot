@@ -218,8 +218,8 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     color_col <- if (color_by_instances) "Instances" else "Iteration"
     
     # plot creation
-    p <- plot_ly(cdata) %>%
-      add_trace(type = "parcoords",
+    p <- plotly::plot_ly(cdata) %>%
+      plotly::add_trace(type = "parcoords",
                 line = list(
                   color = if (color_by_instances) ~fitness else ~iteration,
                   colorscale = "Viridis",
@@ -384,8 +384,8 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     dim <- get_dimensions(ctabla)
 
     # plot creation
-    p <- ctabla %>% plot_ly()
-    p <- p %>% add_trace(
+    p <- ctabla %>% plotly::plot_ly()
+    p <- p %>% plotly::add_trace(
       type = "parcoords",
       line = list(
         color = "#60D0E1"
