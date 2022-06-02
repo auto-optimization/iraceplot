@@ -61,7 +61,8 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
                            color_by_instances = TRUE, filename = NULL)
 {
   parameters <- irace_results$parameters
-  
+  ptypes <- parameters$types
+  pdomain <- parameters$domain
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
   get_dimensions <- function(data) {
@@ -69,6 +70,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     # Create plot dimensions
     for (i in 1:ncol(data)) {
       pname <- colnames(data)[i]
+      # FIXME: Handle .ID.
       if (pname == "iteration") {
         dim[[i]] <- list(
           label = pname,
@@ -76,24 +78,35 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
           values = data[,pname],
           visible = FALSE
         )
+      } else if (pname == ".ID.") {
+        data[,pname] <- as.character(data[,pname])
+        tickT <- sort(data[,pname])
+        tickV <- seq_along(tickT)
+        rdata <- rep(NA, nrow(data)) 
+        for (v in tickV)
+          rdata[data[,pname] == tickT[v]] <- v
+        
+        dim[[i]] <- list(
+          range = c(1L, max(tickV)),
+          label = "ID",
+          tickvals = tickV,
+          ticktext = tickT,
+          values = rdata
+        )
         # if the column is of type character
-      } else if (parameters$types[pname] %in% c("c", "o")) {
-        tickT <- as.character(parameters$domain[[pname]])
-        len <- length(parameters$domain[[pname]])
-        if (anyNA(data[,pname])) {
-          tickT <- c(tickT, "NA")
-          len <- len + 1
-        }
-        tickV <- 1:len
+      } else if (ptypes[pname] %in% c("c", "o")) {
+        tickT <- as.character(pdomain[[pname]])
+        if (anyNA(data[,pname])) tickT <- c(tickT, "NA")
+        tickV <- seq_along(tickT)
         # FIXME: What is all this doing?
         data[,pname] <- as.character(data[,pname])
         rdata <- rep(NA, nrow(data)) 
-        for (v in 1:length(tickT)){
+        for (v in tickV) {
           rdata[data[,pname] == tickT[v]] <- v
         }
-        
+
         dim[[i]] <- list(
-          range = c(1, max(tickV)),
+          range = c(1L, max(tickV)),
           label = pname,
           tickvals = tickV,
           # ticktext = unique(data[[i]]),
@@ -101,30 +114,31 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
           values = rdata
         )
         # if the column is of type numeric
-      } else if (parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
+        # FIXME: I don't think this will work with log transform
+      } else if (ptypes[pname] %in% c("i", "i,log", "r", "r,log")) {
         # FIXME: What is this doing?
-        if ((as.numeric(parameters$domain[[pname]][2]) + 1) %in% data[,pname]) {
-          minimo <- parameters$domain[[pname]][1]
-          maximo <- parameters$domain[[pname]][2] + 1
+        if ((as.numeric(pdomain[[pname]][2]) + 1) %in% data[,pname]) {
+          minimo <- pdomain[[pname]][1]
+          maximo <- pdomain[[pname]][2] + 1
           medio <- round(((maximo - 1) / 4), 1)
           medio2 <- round(((maximo - 1) / 2), 1)
           medio3 <- round(((maximo - 1) * (3 / 4)), 1)
           dim[[i]] <- list(
-            range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2] + 1),
+            range = c(pdomain[[pname]][1], pdomain[[pname]][2] + 1),
             tickvals = c(minimo, medio, medio2, medio3, maximo),
             ticktext = c(minimo, medio, medio2, medio3, "NA"),
             values = data[,pname],
             label = pname
           )
         } else {
-          minimo <- parameters$domain[[pname]][1]
-          maximo <- parameters$domain[[pname]][2]
+          minimo <- pdomain[[pname]][1]
+          maximo <- pdomain[[pname]][2]
           medio <- round((maximo / 4), 1)
           medio2 <- round((maximo / 2), 1)
           medio3 <- round(maximo * (3 / 4), 1)
           # max(data[[i]] cambio maximo
           dim[[i]] <- list(
-            range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2]),
+            range = c(pdomain[[pname]][1], pdomain[[pname]][2]),
             tickvals = c(minimo, medio, medio2, medio3, maximo),
             ticktext = c(minimo, medio, medio2, medio3, maximo),
             values = data[,pname],
@@ -212,7 +226,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 
     # FIXME: If we pass the data to the plot we do not need to pass it to the
     # diensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
-    cdata <- data[,c(params, "fitness", "iteration"),drop=FALSE]
+    cdata <- data[,c(".ID.", params, "fitness", "iteration"), drop=FALSE]
     dim <- get_dimensions(cdata)
 
     color_col <- if (color_by_instances) "Instances" else "Iteration"
@@ -296,6 +310,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     # Create plot dimensions
     for (i in 1:ncol(data)) {
       pname <- colnames(data)[i]
+      if (pname == ".ID.") next # FIXME: Handle this!
       if (parameters$types[pname] %in% c("c", "o")) {
         if (any(is.na(data[,pname]))) {
           tickT <- c(as.character(parameters$domain[[pname]]), "NA")
@@ -419,12 +434,10 @@ check_by_n_param <- function(by_n_param, length_param_names)
 
 na_data_processing <- function(data, parameters)
 {
-  # Column .ID. and .PARENT. are removed
-  data <- data[, !startsWith(colnames(data), "."), drop=FALSE]
+  pnames <- colnames(data)[!startsWith(colnames(data), ".")]
   # NA data processing
-  for (k in 1:ncol(data)) {
+  for (pname in pnames) {
     # FIXME: This can be done by selecting all columns of each type.
-    pname <- colnames(data)[k]
     if (parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
       ina <- is.na(data[,pname])
       if (any(ina)) data[ina,pname] <- parameters$domain[[pname]][2] + 1
@@ -434,5 +447,6 @@ na_data_processing <- function(data, parameters)
       if (any(ina)) data[ina,pname] <- "NA"
     }
   }
-  return(data)
+  # Column .PARENT. is removed
+  data[, c(".ID.", pnames), drop=FALSE]
 }
