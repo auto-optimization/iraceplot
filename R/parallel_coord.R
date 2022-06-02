@@ -80,7 +80,8 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
         )
       } else if (pname == ".ID.") {
         data[,pname] <- as.character(data[,pname])
-        tickT <- sort(data[,pname])
+        tickT <- data[,pname]
+        tickT <- tickT[order(suppressWarnings(as.numeric(tickT)), tickT)]
         tickV <- seq_along(tickT)
         rdata <- rep(NA, nrow(data)) 
         for (v in tickV)
