@@ -17,9 +17,8 @@ plot_model(irace_results, param_name, filename = NULL)
 sampling model plot
 }
 \description{
-The \code{plot_model} function creates a plot that displays the sampling
-models from which irace generated parameter values for new configurations
-during the configurations process.
+Display the sampling models from which irace generated parameter values for
+new configurations during the configurations process.
 
 For categorical parameters a stacked bar plot is created. This plot shows
 the sampling probabilities of the parameter values for the elite

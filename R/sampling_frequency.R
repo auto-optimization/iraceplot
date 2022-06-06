@@ -63,70 +63,76 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   }
 
   # This is needed to silence CRAN warnings.
-  tabla <- Var1 <- Freq <- ..density.. <- inicio <- fin <- max_p <- NULL
-  max_p <- 9
- 
+  tabla <- Var1 <- Freq <- ..density.. <- NULL
   # Filter data by parameter names
   config <- configurations[,param_names,drop=FALSE]
   if (!is.null(n)) {
+    max_p <- 9L # FIXME: Why 9 ????
     if (n < 1 | n > ceiling(length(param_names) / max_p)) {
-      stop(paste("Error: n cannot be less than 1 or greater than", ceiling(length(param_names) / max_p), 
-                 "(", length(param_names),"parameters selected )\n"))
+      stop(paste0("n cannot be less than 1 or greater than ", ceiling(length(param_names) / max_p), 
+                 " (", length(param_names)," parameters selected)"))
     }
-    inicio <- (max_p * n - 8)
-    fin <- min(max_p * n, length(param_names))
-    param_names <- param_names[inicio:fin]
+    start <- (max_p * n - 8)
+    end <- min(max_p * n, length(param_names))
+    param_names <- param_names[start:end]
     config <- configurations[,param_names]
   }
   
   plot.list <- list()
-  npar <- ncol(config)
-  
-  for (i in 1:ncol(config)) {
-    # plot bars
-    pnames <- colnames(config)[i]
-    if (parameters$types[pnames] %in% c("c", "o")) {
-      tabla <- as.data.frame(table(config[[i]]))
+    
+  for (pname in colnames(config)) {
+    if (parameters$isFixed[pname]) next
+    ptype <- parameters$types[pname]
+    if (ptype %in% c("c", "o")) {
+      tabla <- as.data.frame(table(config[[pname]]))
+      len_longest <- max(nchar(levels(tabla$Var1)))
+      angle_x <- 0 # FiXME: Rotation compresses the plot. This may be because
+                   # of marrangeGrob. We should find another way.
       p <- ggplot(data = tabla, aes(x = Var1, y = Freq)) +
         geom_bar(stat = "identity", fill = "grey", color = "black") +
         labs(x = "Values") +
-        ggtitle(colnames(config)[i]) +
+        ggtitle(pname) +
         theme(
           axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 8),
+          axis.title.x = element_text(size = 6),
           plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
           axis.ticks.x = element_blank()
         ) +
-        scale_y_continuous(n.breaks = 3)
-      # the plot is saved in a list
-      plot.list[[i]] <- p
-    } else if (parameters$types[pnames] %in% c("i", "r", "i,log", "r,log")) {
+        # FIXME: This doesn't wrap if there are no spaces: https://github.com/r-lib/scales/issues/353
+        # TODO: Use paste0(strsplit(string.to.split, "(?<=[[:lower:]])(?=[[:upper:]])", perl = TRUE), collapse="\n") to split camel case and replace with spaces.
+        # TODO: Replace "-" and "_" with spaces if needed.
+        # scale_x_discrete(labels = scales::label_wrap(8)) +
+        scale_y_continuous(n.breaks = 3) +
+        guides(x = guide_axis(angle = angle_x))
+    } else if (ptype %in% c("i", "r", "i,log", "r,log")) {
       # histogram and density plot
-      tabla <- na.omit(config[[i]])
+      tabla <- na.omit(config[[pname]])
       nbreaks <- pretty(range(tabla),
                         n = nclass.Sturges(tabla),
-                        min.n = 1
-      )
-      q <- ggplot(as.data.frame(tabla), aes(x = tabla)) +
+                        min.n = 1)
+      # FIXME: There is some repetition between this plot and the above
+      # one. Avoid redundancy.
+      p <- ggplot(as.data.frame(tabla), aes(x = tabla)) +
         geom_histogram(aes(y = ..density..),
                        breaks = nbreaks,
-                       color = "black", fill = "gray"
-        ) +
+                       color = "black", fill = "gray") +
         geom_density(color = "blue", fill = "blue", alpha = 0.2) +
         labs(x = "Values") +
-        ggtitle(colnames(config)[i]) +
+        ggtitle(pname) +
         theme(
           axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 8),
+          axis.title.x = element_text(size = 6),
           plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
-          axis.ticks.x = element_blank()
-        ) +
+          axis.ticks.x = element_blank()) +
         scale_y_continuous(n.breaks = 3)
-      # the plot is saved in a list
-      plot.list[[i]] <- q
+    } else {
+      stop("Unknown parameter type (", ptype, ") of parameter '", pname, "'")
     }
+    # the plot is saved in a list
+    plot.list <- c(plot.list, list(p))
   }
-  
+
+  npar <- length(plot.list)
   # Get appropriate number of columns
   col <- row <- 3
   if (npar <= 3) {
@@ -139,7 +145,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   # Generate plots
   if (npar > 9)
     wp <- do.call("marrangeGrob", list(grobs=plot.list, ncol = col, nrow = row, as.table=FALSE))
-  else if (length(plot.list) ==1)
+  else if (length(plot.list)==1)
     wp <- plot.list[[1]]
   else
     wp <- do.call("grid.arrange", c(plot.list))
@@ -154,5 +160,5 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     # FIXME: we could save in multiple files with a counter in their name,
     ggsave(filename, wp)
   }
-  return(wp)
+  wp
 }

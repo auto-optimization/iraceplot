@@ -2,9 +2,8 @@
 #
 # @description
 # 
-# The `getCategoricalModel` function rebuilds the probabilities of
-# the sampling models used in irace to generate configurations in each
-# iteration.
+# Rebuild the probabilities of the sampling models used in irace to generate
+# configurations in each iteration.
 # 
 # @template arg_irace_results
 #
@@ -15,6 +14,7 @@
 # 
 # @examples
 # NULL
+# FIXME: Add examples
 getCategoricalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("c"))) {
@@ -75,9 +75,7 @@ getCategoricalModel <- function(irace_results, param_name)
 #
 # @description
 # 
-# The `getNumericalModel` function rebuilds the sampling distribution parameters
-# of the models used by irace to sampling configurations during the configuration 
-# process.
+# Rebuild the sampling distribution parameters of the models used by irace to sampling configurations during the configuration process.
 # 
 # @template arg_irace_results
 #
@@ -88,10 +86,11 @@ getCategoricalModel <- function(irace_results, param_name)
 # 
 # @examples
 # NULL
+# FIXME: Add examples.
 getNumericalModel <- function(irace_results, param_name) 
 {
   if (!(irace_results$parameters$types[[param_name]] %in% c("i", "r", "i,log", "r,log"))) {
-    stop("Error: Parameter is not numerical\n")
+    stop("Parameter is not numerical")
   }
   
   iterations <- length(irace_results$allElites)
@@ -146,6 +145,7 @@ getNumericalModel <- function(irace_results, param_name)
 # String Vector, domain of the parameter whose model will be plotted
 # 
 # @return bar plot
+# FIXME: examples!
 plotCategoricalModel <- function(model_data, domain) 
 {
   value <- prob <- elite <- NULL 
@@ -190,6 +190,7 @@ plotCategoricalModel <- function(model_data, domain)
 # Numeric, iteration in which the x axis labels should be included
 # 
 # @return sampling distribution plot
+# FIXME: examples!
 plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 {
   model_data <- model_data[model_data[,"iteration"] == iteration, ]
@@ -241,9 +242,8 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #'
 #' @description
 #' 
-#' The `plot_model` function creates a plot that displays the sampling
-#' models from which irace generated parameter values for new configurations 
-#' during the configurations process.
+#' Display the sampling models from which irace generated parameter values for
+#' new configurations during the configurations process.
 #' 
 #' For categorical parameters a stacked bar plot is created. This plot shows
 #' the sampling probabilities of the parameter values for the elite
@@ -284,11 +284,9 @@ plot_model <- function(irace_results, param_name, filename=NULL)
                 domain=irace_results$parameters$domain[[param_name]], 
                 xlabel_iteration=1)
     q <- do.call("grid.arrange", c(p, ncol = 1, left="Iterations"))
-
   }
   
   if(!is.null(filename))
     ggsave(filename, plot = q)
-  return(q)
-  
+  q
 }
