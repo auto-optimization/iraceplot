@@ -66,7 +66,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
   get_dimensions <- function(data) {
-    # FIXME: This function can be reduced a lot
+    # FIXME: This function can be reduced a lot!
     # Create plot dimensions
     for (i in 1:ncol(data)) {
       pname <- colnames(data)[i]
@@ -152,10 +152,9 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   }
   
   id_configurations <- unlist(id_configurations)
-  param_names <- check_param_names(param_names, parameters$names)
+  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
   # Verify that param_names contains more than one parameter
   if (length(param_names) < 2) stop("Data must have at least two parameters")
-
   by_n_param <- check_by_n_param(by_n_param, length(param_names))
   
   # Check iterations
@@ -229,7 +228,6 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     # diensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
     cdata <- data[,c(".ID.", params, "fitness", "iteration"), drop=FALSE]
     dim <- get_dimensions(cdata)
-
     color_col <- if (color_by_instances) "Instances" else "Iteration"
     
     # plot creation
@@ -373,7 +371,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
     return(dim)
   }
 
-  param_names <- check_param_names(param_names, parameters$names)
+  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
   # Verify that param_names contains more than one parameter
   if (length(param_names) < 2) stop("Data must have at least two parameters")
   by_n_param <- check_by_n_param(by_n_param, length(param_names))

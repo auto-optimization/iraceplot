@@ -68,9 +68,9 @@ check_unknown_param_names <- function(x, parameters_names)
   x
 }
 
-check_param_names <- function(x, parameters_names)
+subset_param_names <- function(x, parameters_names, is_fixed)
 {
-  if (is.null(x)) return(parameters_names)
+  if (is.null(x)) return(parameters_names[!is_fixed])
   check_unknown_param_names(x, parameters_names)
 }
 

@@ -272,7 +272,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @export
 plot_model <- function(irace_results, param_name, filename=NULL)
 {
-  check_param_names(param_name, irace_results$parameters$names)
+  check_unknown_param_names(param_name, irace_results$parameters$names)
   iterations <- length(irace_results$allElites)
   
   if (irace_results$parameters$types[param_name] %in% c("c", "o")) {

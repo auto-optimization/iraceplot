@@ -50,7 +50,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   # Variable assignment
   iteration <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
   id_configurations <- unlist(id_configurations)
-  param_names <- check_param_names(param_names, irace_results$parameters$names)
+  param_names <- subset_param_names(param_names, irace_results$parameters$names, irace_results$parameters$isFixed)
   # Verify that param_names contains more than one parameter
   if (length(param_names) < 2) stop("Data must have at least two parameters")
 
@@ -105,6 +105,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   # adding discretization for numerical variables and replace NA values 
   # FIXME: Add proper ordering for each axis
   # FIXME: add number of bins as an argument (maybe a list?)
+  # FIXME: This is surely wrong! It is not using param_names calculated above!
   for (pname in irace_results$parameters$names) {
     n_bins_param <- n_bins
     if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {

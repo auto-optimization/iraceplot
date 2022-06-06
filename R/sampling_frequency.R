@@ -57,7 +57,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     parameters <- configurations$parameters 
     configurations <- configurations$allConfigurations
   }
-  param_names <- check_param_names(param_names, parameters$names)
+  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
   if (any(!(param_names %in% colnames(configurations)))) {
     stop("Unknown parameter name provided")
   }

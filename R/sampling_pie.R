@@ -28,15 +28,13 @@
 #' }
 sampling_pie <- function(irace_results, param_names = NULL, n_bins=3, filename = NULL)
 {
-  param_names <- check_param_names(param_names, irace_results$parameters$names)
+  param_names <- subset_param_names(param_names, irace_results$parameters$names, irace_results$parameters$isFixed)
 
   # variable assignment
   parents <- labels <- values <- ids <- depend <- NULL
   
-  if (!is.numeric(n_bins) || n_bins < 1) {
-    stop("'n_bins' must be numeric > 0")
-  }
-
+  if (!is.numeric(n_bins) || n_bins < 1) stop("'n_bins' must be numeric > 0")
+ 
   # Logical (default FALSE) that allows to verify if the parameters
   # are dependent on others, modifying the visualization of the plot
   dependency <- FALSE
