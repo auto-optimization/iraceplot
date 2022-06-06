@@ -63,7 +63,12 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">report</span><span class="op">(</span><span class="va">irace_results</span>, filename <span class="op">=</span> <span class="st">"report"</span>, interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">report</span><span class="op">(</span>
+  <span class="va">irace_results</span>,
+  filename <span class="op">=</span> <span class="st">"report"</span>,
+  sections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>experiments_matrix <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
+  interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,6 +78,8 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>)
 Filename indicating where to save the report (example: <code>"~/path-to/filename"</code>)</p></dd>
+<dt>sections</dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>) List of sections to enable/disable. This is useful for disabling sections that may cause problems, such as out-of-memory errors. <code>NA</code> means automatically enable/disable a section depending on the memory required.</p></dd>
 <dt>interactive</dt>
 <dd><p>(<code>logical(1)</code>) TRUE if the plot is generated
 interactively (using <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> or <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plotly::plot_ly()</a></code>) or FALSE it is generated
