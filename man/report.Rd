@@ -4,13 +4,20 @@
 \alias{report}
 \title{Create HTML Report from irace data}
 \usage{
-report(irace_results, filename = "report", interactive = base::interactive())
+report(
+  irace_results,
+  filename = "report",
+  sections = list(experiments_matrix = NULL),
+  interactive = base::interactive()
+)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
 
 \item{filename}{(\code{character(1)})
 Filename indicating where to save the report (example: \code{"~/path-to/filename"})}
+
+\item{sections}{(\code{list()}) List of sections to enable/disable. This is useful for disabling sections that may cause problems, such as out-of-memory errors. \code{NA} means automatically enable/disable a section depending on the memory required.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
 interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated

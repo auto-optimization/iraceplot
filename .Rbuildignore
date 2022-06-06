@@ -10,3 +10,5 @@
 ^man-roxygen$
 ^pkgdown$
 ^DEVEL-README.md$
+^devel-tests
+
