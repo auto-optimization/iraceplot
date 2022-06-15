@@ -82,6 +82,8 @@ which can be displayed by iteration.</p>
 <dd><p>Experiment matrix obtained from irace training or testing data. Configurations
 in columns and instances in rows. As in irace, column names (configurations ids)
 should be characters.</p></dd>
+
+
 <dt>allElites</dt>
 <dd><p>List or vector of configuration ids, (default NULL). These configurations
 should be included in the plot. If the argument is not provided all configurations
@@ -89,39 +91,60 @@ in experiments are included. If allElites is a vector all configurations are
 assumed without iteration unless argument <code>type="ibest"</code> is provided, in which case
 each configuration is assumed to be from a different iteration. If <code>allElites</code>
 is a list, each element of the  list is assumed as an iteration.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>String, (default "all") possible values are "all" or "ibest". "all"
 shows all the selected configurations showing iterations if the information
 is provided. "ibest" shows the elite configurations of each iteration, note
 that the best configuration is always assumed to be first in the vector of
 each iteration.</p></dd>
+
+
 <dt>first_is_best</dt>
 <dd><p>Boolean (default TRUE) Enables the display in a different color the best configuration
 identified as the first one in a vector. If FALSE, all configurations are shown
 in the same color.</p></dd>
+
+
 <dt>rpd</dt>
 <dd><p>(<code>logical(1)</code>) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
 performance.</p></dd>
+
+
 <dt>show_points</dt>
 <dd><p>Logical, (default TRUE) TRUE to plot performance points together with the box plot.</p></dd>
+
+
 <dt>best_color</dt>
 <dd><p>String, (default <code>"#08bfaa"</code>) color to display best configurations.</p></dd>
+
+
 <dt>x_lab</dt>
 <dd><p>String, (default <code>"Configurations"</code>) label for the x axis.</p></dd>
+
+
 <dt>boxplot</dt>
 <dd><p>By default, display a violin plot (<code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">ggplot2::geom_violin()</a></code>).
 If <code>TRUE</code>, show a classical boxplot.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
+
+
 <dt>interactive</dt>
 <dd><p>(<code>logical(1)</code>) TRUE if the plot is generated
 interactively (using <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> or <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plotly::plot_ly()</a></code>) or FALSE it is generated
 statically. Defaults to the value returned by <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code>,</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> boxplot object</p>
+    
+
+<p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> boxplot object</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -159,7 +182,7 @@ elite configuration was evaluated.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

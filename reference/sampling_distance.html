@@ -79,21 +79,30 @@ specified by argument t and hamming distance is calculated using this interval.<
     <h2>Arguments</h2>
     <dl><dt>irace_results</dt>
 <dd><p>The data generated when loading the <code>Rdata</code> file created by <code>irace</code></p></dd>
+
+
 <dt>type</dt>
 <dd><p>String, (default "boxplot") Type of plot to be produces, either "line", "boxplot"
 or "both". The "boxplot" setting shows a boxplot of the mean distance of all
 configurations, "line" shows the mean distance of the solution population in each
 iteration, "both" shows both plots.</p></dd>
+
+
 <dt>t</dt>
 <dd><p>Numeric, (default 0.05) percentage factor that will determine a distance to
 define equal numerical parameter values. If the numerical parameter values to be
 compared are v1 and v2 they are considered equal if <code>|v1-v2| &lt;= |ub-lb|*t</code>.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>line or box plot</p>
+    
+
+<p>line or box plot</p>
     </div>
 
     <div id="ref-examples">
@@ -119,7 +128,7 @@ compared are v1 and v2 they are considered equal if <code>|v1-v2| &lt;= |ub-lb|*
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
