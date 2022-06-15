@@ -22,7 +22,7 @@ Imports:
     DT,
     forcats, 
     ggforce, 
-    ggplot2,
+    ggplot2 (>= 3.3.6),
     gridExtra, 
     irace (>= 3.4),
     knitr,
