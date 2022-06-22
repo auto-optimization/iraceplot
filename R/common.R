@@ -64,7 +64,7 @@ check_unknown_param_names <- function(x, parameters_names)
 {
   x <- unlist(x)
   if (any(!(x %in% parameters_names)))
-    stop("Unknown parameter names were encountered: ", paste0(setdiff(x, parameters_names), collapse=", "))
+    stop("Unknown parameter names: ", paste0(setdiff(x, parameters_names), collapse=", "))
   x
 }
 

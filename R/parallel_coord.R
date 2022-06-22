@@ -66,68 +66,72 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallel coordinates plot
   get_dimensions <- function(data) {
-    # FIXME: This function can be reduced a lot!
+    dimensions <- list()
+    # FIXME: This function can be simplified a lot!
     # Create plot dimensions
     for (i in 1:ncol(data)) {
       pname <- colnames(data)[i]
-      # FIXME: Handle .ID.
       if (pname == "iteration") {
-        dim[[i]] <- list(
+        dimensions[[i]] <- list(
           label = pname,
           range = c(1L, length(irace_results$allElites)),
           values = data[,pname],
           visible = FALSE
         )
       } else if (pname == ".ID.") {
+        # FIXME: We should do this preprocessing before here.
         data[,pname] <- as.character(data[,pname])
+        # FIXME: Encoding as integers can be done by using factor() and levels()
         tickT <- data[,pname]
         tickT <- tickT[order(suppressWarnings(as.numeric(tickT)), tickT)]
         tickV <- seq_along(tickT)
         rdata <- rep(NA, nrow(data)) 
         for (v in tickV)
           rdata[data[,pname] == tickT[v]] <- v
-        
-        dim[[i]] <- list(
-          range = c(1L, max(tickV)),
+
+        # FIXME: We may have too many IDs. We probably cannot see more than 10-15.
+        dimensions[[i]] <- list(
+          range = range(tickV),
           label = "ID",
           tickvals = tickV,
           ticktext = tickT,
           values = rdata
         )
-        # if the column is of type character
+        
       } else if (ptypes[pname] %in% c("c", "o")) {
+        # FIXME: Encoding as integers can be done by using factor() and levels() and being careful with NAs (replacing them with an "NA" string)
         tickT <- as.character(pdomain[[pname]])
+        # FIXME: Can you have NA here? Haven't we remove them already in na_data_processing?
         if (anyNA(data[,pname])) tickT <- c(tickT, "NA")
         tickV <- seq_along(tickT)
-        # FIXME: What is all this doing?
+        # FIXME: We should do this preprocessing before here.
         data[,pname] <- as.character(data[,pname])
         rdata <- rep(NA, nrow(data)) 
         for (v in tickV) {
           rdata[data[,pname] == tickT[v]] <- v
         }
-
-        dim[[i]] <- list(
+        # FIXME: We may have too many tickmarks to see. We probably cannot see more than 10-15. 
+        dimensions[[i]] <- list(
           range = c(1L, max(tickV)),
           label = pname,
           tickvals = tickV,
-          # ticktext = unique(data[[i]]),
           ticktext = tickT,
           values = rdata
         )
-        # if the column is of type numeric
         # FIXME: I don't think this will work with log transform
       } else if (ptypes[pname] %in% c("i", "i,log", "r", "r,log")) {
-        # FIXME: What is this doing?
+        # This is detecting that na_data_preprocessing has encoded NA values.
+        ## FIXME: There must be a better way to do this.
         if ((as.numeric(pdomain[[pname]][2]) + 1) %in% data[,pname]) {
           minimo <- pdomain[[pname]][1]
           maximo <- pdomain[[pname]][2] + 1
           medio <- round(((maximo - 1) / 4), 1)
           medio2 <- round(((maximo - 1) / 2), 1)
           medio3 <- round(((maximo - 1) * (3 / 4)), 1)
-          dim[[i]] <- list(
+          dimensions[[i]] <- list(
             range = c(pdomain[[pname]][1], pdomain[[pname]][2] + 1),
             tickvals = c(minimo, medio, medio2, medio3, maximo),
-            ticktext = c(minimo, medio, medio2, medio3, "NA"),
+            ticktext = c(minimo, medio, medio2, medio3, "<NA>"),
             values = data[,pname],
             label = pname
           )
@@ -137,8 +141,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
           medio <- round((maximo / 4), 1)
           medio2 <- round((maximo / 2), 1)
           medio3 <- round(maximo * (3 / 4), 1)
-          # max(data[[i]] cambio maximo
-          dim[[i]] <- list(
+          dimensions[[i]] <- list(
             range = c(pdomain[[pname]][1], pdomain[[pname]][2]),
             tickvals = c(minimo, medio, medio2, medio3, maximo),
             ticktext = c(minimo, medio, medio2, medio3, maximo),
@@ -148,10 +151,9 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
         }
       }
     }
-    return(dim)
+    return(dimensions)
   }
   
-  id_configurations <- unlist(id_configurations)
   param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
   # Verify that param_names contains more than one parameter
   if (length(param_names) < 2) stop("Data must have at least two parameters")
@@ -170,27 +172,27 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     }
   } 
 
-  # Variable assignment
-  configuration <- iteration <- dim <- tickV <- vectorP <- NULL
-
   # Check configurations
-  if (!is.null(id_configurations)) {
-    # Verify that the entered id are within the possible range
-    if (any(id_configurations[id_configurations < 1]) || any(id_configurations[id_configurations > nrow(irace_results$allConfigurations)])) {
-      stop("IDs provided are outside the range of settings")
+  if (is.null(id_configurations)) {
+    if (only_elite) {
+      id_configurations <- irace_results$allElites[iterations]
+    } else {
+      id_configurations <- irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"]
     }
-    # Verify that the id entered are more than 1 or less than the possible total
-    if (length(id_configurations) <= 1 || length(id_configurations) > nrow(irace_results$allConfigurations)) {
-      stop("You must provide more than one configuration id")
-    }
-    iterations <- 1:length(irace_results$allElites)
-  } else if (only_elite) {
-    id_configurations <- unlist(unique(irace_results$allElites[iterations]))
   } else {
-    id_configurations <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
+    # FIXME: This overrides the above setting of iterations!
+    iterations <- 1:length(irace_results$allElites)
   }
-  
-  # Select data 
+
+  id_configurations <- unique(as.character(unlist(id_configurations)))
+  if (length(id_configurations) <= 1) {
+    stop("You must provide more than one configuration ID")
+  }
+  if (any(!(id_configurations %in% irace_results$allConfigurations[, ".ID."]))) {
+    stop("Unknown configuration IDs: ", paste0(setdiff(id_configurations, irace_results$allConfigurations[, ".ID."]), collapse=", "))
+  }
+    
+  # Select data
   data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, ,drop=FALSE]
   config_iter <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
   config_iter <- config_iter[config_iter[, "configuration"] %in% id_configurations, ,drop=FALSE]
@@ -206,10 +208,12 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   
   # Merge fitness measure
   data[,"fitness"] <- fitness[as.character(data[,".ID."])]
-
+  # FIXME: This is not correct because we are passing data after expanding it with fitness and iterations. We should do any preprocessing before adding columns
   data <- na_data_processing(data, parameters)
-    
 
+  # Silence CRAN warnings
+  iteration <- NULL
+  
   plot_list <- list()
   plot_params <- param_names
   # Create plots
@@ -225,9 +229,9 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     }
 
     # FIXME: If we pass the data to the plot we do not need to pass it to the
-    # diensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
+    # dimensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
     cdata <- data[,c(".ID.", params, "fitness", "iteration"), drop=FALSE]
-    dim <- get_dimensions(cdata)
+    dimensions <- get_dimensions(cdata)
     color_col <- if (color_by_instances) "Instances" else "Iteration"
     
     # plot creation
@@ -241,7 +245,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
                   reversescale = TRUE,
                   cmin = if (color_by_instances) min(data[,"fitness"]) else 1L,
                   cmax = if (color_by_instances) max(data[,"fitness"]) else length(irace_results$allElites)),
-                dimensions = dim,
+                dimensions = dimensions,
                 labelangle = -25)
     plot_list[[i]] <- p
     i <- i + 1
@@ -312,7 +316,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
       if (pname == ".ID.") next # FIXME: Handle this!
       if (parameters$types[pname] %in% c("c", "o")) {
         if (any(is.na(data[,pname]))) {
-          tickT <- c(as.character(parameters$domain[[pname]]), "NA")
+          tickT <- c(as.character(parameters$domain[[pname]]), "<NA>")
           tickV <- 1:(length(parameters$domain[[pname]]) + 1)
         } else {
           tickT <- as.character(parameters$domain[[pname]])
@@ -349,7 +353,7 @@ parallel_coord2 <- function(configurations, parameters, param_names = parameters
         dim[[i]] <- list(
           range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2] + 1),
           tickvals = c(minimo, medio, medio2, medio3, maximo),
-          ticktext = c(minimo, medio, medio2, medio3, "NA"),
+          ticktext = c(minimo, medio, medio2, medio3, "<NA>"),
           values = data[,pname],
           label = pname
         )
@@ -427,7 +431,7 @@ check_by_n_param <- function(by_n_param, length_param_names)
   } else if (by_n_param < 2) {
     stop("Number of parameters and argument by_n_param must > 1")
   }
-  return(min(length_param_names, by_n_param))
+  min(length_param_names, by_n_param)
 }
 
 
@@ -443,7 +447,7 @@ na_data_processing <- function(data, parameters)
       
     } else if (parameters$types[pname] %in% c("c", "o")) {
       ina <- is.na(data[,pname])
-      if (any(ina)) data[ina,pname] <- "NA"
+      if (any(ina)) data[ina,pname] <- "<NA>"
     }
   }
   # Column .PARENT. is removed
