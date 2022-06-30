@@ -82,7 +82,7 @@ git help</code></pre>
 <h2 id="importing-from-packages">Importing from packages<a class="anchor" aria-label="anchor" href="#importing-from-packages"></a></h2>
 <p>We do not use this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#' @importFrom DT datatable</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#' @importFrom DT datatable</span></span></code></pre></div>
 <p>because we always use <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>. By using <code>importFrom</code>, the name <code>'datatable'</code> is imported and we cannot use it for something else. The criterion should be:</p>
 <ul><li>If we use a lot of functions from a package, import the whole package with <code>@import</code>.</li>
 <li>If we use a lot a few functions from a package, <code>@importFrom</code> those functions.</li>

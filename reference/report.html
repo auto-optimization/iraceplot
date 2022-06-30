@@ -63,12 +63,12 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">report</span><span class="op">(</span>
-  <span class="va">irace_results</span>,
-  filename <span class="op">=</span> <span class="st">"report"</span>,
-  sections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>experiments_matrix <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,
-  interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">report</span><span class="op">(</span></span>
+<span>  <span class="va">irace_results</span>,</span>
+<span>  filename <span class="op">=</span> <span class="st">"report"</span>,</span>
+<span>  sections <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>experiments_matrix <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  interactive <span class="op">=</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,9 +95,9 @@ statically. Defaults to the value returned by <code><a href="https://rdrr.io/r/b
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))</span></span>
-<span class="r-in"><span class="co"># report(iraceResults, filename="report")</span></span>
-<span class="r-in"><span class="cn">NULL</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))</span></span></span>
+<span class="r-in"><span><span class="co"># report(iraceResults, filename="report")</span></span></span>
+<span class="r-in"><span><span class="cn">NULL</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 </code></pre></div>
     </div>
