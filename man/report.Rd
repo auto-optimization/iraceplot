@@ -23,13 +23,15 @@ Filename indicating where to save the report (example: \code{"~/path-to/filename
 interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
 statically. Defaults to the value returned by \code{interactive()},}
 }
+\value{
+filename where the report was created or it opens the report in the default browser (interactive)
+}
 \description{
 This function creates an HTML report of the most relevant irace data.  This
 report provides general statistics and plots that show the best
 configurations and their performance. Example: \url{https://auto-optimization.github.io/iraceplot/articles/example/report_example.html}
 }
 \examples{
-# load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
-# report(iraceResults, filename="report")
-NULL
+\dontrun{load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))}
+\dontrun{report(iraceResults, filename="report")}
 }

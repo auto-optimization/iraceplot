@@ -12,9 +12,17 @@ printParameters(params, digits = 15L)
 \item{digits}{(\code{integer()}) The desired number of digits after the decimal point for real-valued parameters. Default is 15, but it should be the value in \code{scenario$digits}.}
 }
 \description{
-Print parameter space in the textual format accepted by irace.
+FIXME: Dependent parameter bounds are not supported yet. This function will move to the irace package in the next release.
 }
 \examples{
-load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
-printParameters(iraceResults$parameters)
+ parameters.table <- '
+ # name       switch           type  values               [conditions (using R syntax)]
+ algorithm    "--"             c     (as,mmas,eas,ras,acs)
+ localsearch  "--localsearch " c     (0, 1, 2, 3)
+ ants         "--ants "        i,log (5, 100)
+ q0           "--q0 "          r     (0.0, 1.0)           | algorithm == "acs"
+ nnls         "--nnls "        i     (5, 50)              | localsearch \%in\% c(1,2,3)
+ '
+parameters <- readParameters(text=parameters.table)
+printParameters(parameters)
 }
