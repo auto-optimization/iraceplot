@@ -16,10 +16,13 @@
 #' @importFrom DT renderDataTable
 #' @importFrom knitr knit
 #' 
-#' @examples
-#' \dontrun{load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))}
-#' \dontrun{report(iraceResults, filename="report")}
 #' @return filename where the report was created or it opens the report in the default browser (interactive)
+#'
+#' @examples
+#' \dontrun{
+#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' report(iraceResults, filename="report")
+#' }
 #' @export
 report <- function(irace_results, filename = "report",
                    sections = list(experiments_matrix = NULL),

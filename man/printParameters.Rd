@@ -15,6 +15,7 @@ printParameters(params, digits = 15L)
 FIXME: Dependent parameter bounds are not supported yet. This function will move to the irace package in the next release.
 }
 \examples{
+ library(irace)
  parameters.table <- '
  # name       switch           type  values               [conditions (using R syntax)]
  algorithm    "--"             c     (as,mmas,eas,ras,acs)

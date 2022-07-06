@@ -7,7 +7,7 @@
 #' @param digits (`integer()`) The desired number of digits after the decimal point for real-valued parameters. Default is 15, but it should be the value in `scenario$digits`.
 #' 
 #' @examples
-#' @examples
+#'  library(irace)
 #'  parameters.table <- '
 #'  # name       switch           type  values               [conditions (using R syntax)]
 #'  algorithm    "--"             c     (as,mmas,eas,ras,acs)

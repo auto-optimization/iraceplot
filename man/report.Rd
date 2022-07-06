@@ -32,6 +32,8 @@ report provides general statistics and plots that show the best
 configurations and their performance. Example: \url{https://auto-optimization.github.io/iraceplot/articles/example/report_example.html}
 }
 \examples{
-\dontrun{load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))}
-\dontrun{report(iraceResults, filename="report")}
+\dontrun{
+load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+report(iraceResults, filename="report")
+}
 }
