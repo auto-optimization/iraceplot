@@ -212,7 +212,10 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   data <- na_data_processing(data, parameters)
 
   # Silence CRAN warnings
-  iteration <- NULL
+  iteration <- .ID. <- NULL
+  
+  # iteration-based plot focused on sampling (first iteration is selected)
+  data <- as.data.frame(data %>% group_by(.ID.) %>% slice(which.min(iteration)))
   
   plot_list <- list()
   plot_params <- param_names
