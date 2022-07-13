@@ -171,8 +171,8 @@ plotCategoricalModel <- function(model_data, domain)
 #
 # @description
 # 
-# The `plotNumericalModel` function creates a sampling distributions plot of the
-# numerical parameters for the elite configurations of an iteration.
+# Creates a sampling distributions plot of the numerical parameters for the
+# elite configurations of an iteration.
 # 
 # This plot shows de density function of the truncated normal distributions
 # associated to each parameter for each elite configuration.
