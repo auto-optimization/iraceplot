@@ -147,7 +147,7 @@ printParameters(irace_results$parameters)
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
 - Soft restarts: `r {if(any(irace_results$softRestart)) irace_results$softRestart else "None"}`
 - Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
-- Running time (seconds): `r {if(is.null(irace_results$state$elapsed)) "Unknown" else paste0(round(iraceResults$state$elapsed["user"],0), " (CPU-user); ", round(iraceResults$state$elapsed["system"],0), " (CPU-sys); ", round(iraceResults$state$elapsed["wallclock"],0), " (Wall-clock)")}`
+- Running time (seconds): `r {if(is.null(irace_results$state$elapsed)) "Unknown" else paste0(round(irace_results$state$elapsed["user"],0), " (CPU-user); ", round(irace_results$state$elapsed["system"],0), " (CPU-sys); ", round(irace_results$state$elapsed["wallclock"],0), " (Wall-clock)")}`
 - Termination reason: `r {if(is.null(irace_results$state$completed)) "Missing" else irace_results$state$completed}`
 
 ## By iteration
