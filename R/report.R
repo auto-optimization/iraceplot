@@ -7,7 +7,7 @@
 #' @template arg_irace_results
 #'
 #' @param filename (`character(1)`)
-#' Filename indicating where to save the report (example: `"~/path-to/filename"`)
+#' Filename indicating where to save the report (example: `"~/path-to/filename"`).
 #' @param sections (`list()`) List of sections to enable/disable. This is useful for disabling sections that may cause problems, such as out-of-memory errors. `NA` means automatically enable/disable a section depending on the memory required.
 #'
 #' @template arg_interactive
@@ -16,7 +16,7 @@
 #' @importFrom DT renderDataTable
 #' @importFrom knitr knit
 #' 
-#' @return filename where the report was created or it opens the report in the default browser (interactive)
+#' @return filename where the report was created or it opens the report in the default browser (interactive).
 #'
 #' @examples
 #' \dontrun{
@@ -33,11 +33,13 @@ report <- function(irace_results, filename = "report",
   irace_results <- read_logfile(irace_results)
 
   # Large experiments matrix crashes pandoc.
-  if (is.null(sections$experiments_matrix))
+  if (is.null(sections$experiments_matrix)) {
+    message("Warning: Race overview disable because the experiments matrix is very large (set `sections$experiments_matrix=TRUE` to enable).\n")
     sections$experiments_matrix <- (prod(dim(irace_results$experiments)) < 128L*1024L)
+  }
   
   filename <- path_rel2abs(maybe_add_file_extension(filename, "html"))
-  message("Creating file", filename, "\n")
+  message("Creating file '", filename, "'.\n")
   rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=filename, clean = FALSE)
   if (interactive) utils::browseURL(filename)
   filename

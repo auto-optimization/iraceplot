@@ -7,7 +7,7 @@
 has_testing_data(irace_results)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 }
 \value{
 \code{logical(1)}

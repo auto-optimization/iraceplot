@@ -12,7 +12,7 @@ sampling_frequency_iteration(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{param_name}{String, name of the parameter to be included (example: param_name = "algorithm")}
 

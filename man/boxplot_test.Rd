@@ -7,7 +7,7 @@
 boxplot_test(irace_results, type = c("all", "ibest", "best"), ...)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{type}{String, (default \code{"all"}) possible values are \code{"all"}, "ibest" or "best". "all" shows all the configurations included in the test, "best" shows the elite configurations of the last iteration and "ibest" shows the elite configurations of each iteration (requires that irace includes the iteration elites in the testing).}
 

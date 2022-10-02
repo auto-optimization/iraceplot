@@ -15,7 +15,7 @@ parallel_cat(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{id_configurations}{Configuration ids to be included in the
 plot. Example: \code{c(20,50,100,300,500,600,700)}}

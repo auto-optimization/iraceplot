@@ -12,19 +12,17 @@ report(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{filename}{(\code{character(1)})
-Filename indicating where to save the report (example: \code{"~/path-to/filename"})}
+Filename indicating where to save the report (example: \code{"~/path-to/filename"}).}
 
 \item{sections}{(\code{list()}) List of sections to enable/disable. This is useful for disabling sections that may cause problems, such as out-of-memory errors. \code{NA} means automatically enable/disable a section depending on the memory required.}
 
-\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
-statically. Defaults to the value returned by \code{interactive()},}
+\item{interactive}{(\code{logical(1)}) TRUE if the report may use interactive features (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}}, \code{\link[plotly:plot_ly]{plotly::plot_ly()}} and \code{\link[DT:dataTableOutput]{DT::renderDataTable()}}) or FALSE if such features must be disabled. Defaults to the value returned by \code{interactive()},}
 }
 \value{
-filename where the report was created or it opens the report in the default browser (interactive)
+filename where the report was created or it opens the report in the default browser (interactive).
 }
 \description{
 This function creates an HTML report of the most relevant irace data.  This

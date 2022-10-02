@@ -7,7 +7,7 @@
 plot_model(irace_results, param_name, filename = NULL)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{param_name}{String, parameter to be included in the plot, e.g., \code{param_name = "algorithm"}}
 

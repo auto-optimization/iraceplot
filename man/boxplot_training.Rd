@@ -12,7 +12,7 @@ boxplot_training(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{iteration}{Numeric, iteration number that should be included in the plot (example: \code{iteration = 5})
 When no iteration and no id_condigurations are provided, the iterations is assumed to be

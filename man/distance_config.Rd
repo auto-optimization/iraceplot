@@ -7,7 +7,7 @@
 distance_config(irace_results, id_configuration, t = 0.05)
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{id_configuration}{Numeric, configuration id which should be compared to others
 (example: id_configuration = c(806,809))}

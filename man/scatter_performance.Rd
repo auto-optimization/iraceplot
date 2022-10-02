@@ -33,15 +33,13 @@ performance.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
-\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
-statically. Defaults to the value returned by \code{interactive()},}
+\item{interactive}{(\code{logical(1)}) TRUE if the report may use interactive features (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}}, \code{\link[plotly:plot_ly]{plotly::plot_ly()}} and \code{\link[DT:dataTableOutput]{DT::renderDataTable()}}) or FALSE if such features must be disabled. Defaults to the value returned by \code{interactive()},}
 
 \item{instance_names}{Either a character vector of instance names in the
 same order as \code{rownames(experiments)} or a function that takes
 \code{rownames(experiments)} as input.}
 
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{...}{Other arguments passed to \code{\link[=scatter_performance]{scatter_performance()}}.}
 }

@@ -12,7 +12,7 @@ configurations_display(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{Rdata} file created by \code{irace}}
+\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
 
 \item{rpd}{(\code{logical(1)}) TRUE to plot performance as the relative
 percentage deviation to best results per instance, FALSE to plot raw
@@ -20,9 +20,7 @@ performance.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
-\item{interactive}{(\code{logical(1)}) TRUE if the plot is generated
-interactively (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}} or \code{\link[plotly:plot_ly]{plotly::plot_ly()}}) or FALSE it is generated
-statically. Defaults to the value returned by \code{interactive()},}
+\item{interactive}{(\code{logical(1)}) TRUE if the report may use interactive features (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}}, \code{\link[plotly:plot_ly]{plotly::plot_ly()}} and \code{\link[DT:dataTableOutput]{DT::renderDataTable()}}) or FALSE if such features must be disabled. Defaults to the value returned by \code{interactive()},}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
