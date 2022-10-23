@@ -29,8 +29,7 @@ report <- function(irace_results, filename = "report",
                    interactive = base::interactive())
 {
   if (missing(irace_results)) stop("irace_results is required")
-  # FIXME: replace with irace::read_logfile
-  irace_results <- read_logfile(irace_results)
+  irace_results <- irace::read_logfile(irace_results)
 
   # Large experiments matrix crashes pandoc.
   if (is.null(sections$experiments_matrix)) {
@@ -38,7 +37,7 @@ report <- function(irace_results, filename = "report",
     sections$experiments_matrix <- (prod(dim(irace_results$experiments)) < 128L*1024L)
   }
   
-  filename <- path_rel2abs(maybe_add_file_extension(filename, "html"))
+  filename <- irace::path_rel2abs(maybe_add_file_extension(filename, "html"))
   message("Creating file '", filename, "'.\n")
   rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=filename, clean = FALSE)
   if (interactive) utils::browseURL(filename)

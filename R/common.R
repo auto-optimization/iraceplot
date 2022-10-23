@@ -19,13 +19,13 @@ orca_save_plot <- function(plot_list, filename)
   if (!is.null(filename)) {
     directory <- paste0(dirname(filename), sep = "/")
     if (length(plot_list) == 1) {
-      plotly::orca(plot_list[[1]], path_rel2abs(filename))
+      plotly::orca(plot_list[[1]], irace::path_rel2abs(filename))
     } else {
       base_name <- strsplit(basename(filename),split = '[.]')[[1]][1]
       ext <- strsplit(basename(filename),split = '[.]')[[1]][2]
       for (i in seq_along(plot_list)) {
         part <- paste0("-", i)
-        cfile <- path_rel2abs(paste0(directory, "/", base_name, part,"." , ext))
+        cfile <- irace::path_rel2abs(paste0(directory, "/", base_name, part,"." , ext))
         plotly::orca(plot_list[[i]], cfile)
       }
     }
@@ -74,21 +74,4 @@ subset_param_names <- function(x, parameters_names, is_fixed)
   check_unknown_param_names(x, parameters_names)
 }
 
-# FIXME: Once irace 3.5 is published, this can go away
-valid_iracelog <- function(x)
-{
-  is.list(x) && ("scenario" %in% names(x))
-}
 
-read_logfile <- function(filename, name = "iraceResults")
-{
-  # If filename is already the iraceResults object, just return it.
-  if (valid_iracelog(filename)) return(filename)
-
-  load(filename)
-  iraceResults <- get0(name, inherits=FALSE)
-  if (!valid_iracelog(iraceResults)) {
-    stop("The file '", filename, "' does not contain the '", name, "' object.")
-  }
-  iraceResults
-}

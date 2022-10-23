@@ -24,7 +24,7 @@ Imports:
     ggforce, 
     ggplot2 (>= 3.3.6),
     gridExtra, 
-    irace (>= 3.4),
+    irace (>= 3.5),
     knitr,
     matrixStats (>= 0.55),
     plotly,
