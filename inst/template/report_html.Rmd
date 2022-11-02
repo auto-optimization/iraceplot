@@ -145,7 +145,7 @@ irace::printParameters(irace_results$parameters)
 - Instances: `r {ninstances}`
 - Experiments: `r {nrow(irace_results$experimentLog)}`
 - Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
-- Soft restarts: `r {if(any(irace_results$softRestart)) irace_results$softRestart else "None"}`
+- Soft restarts: `r {if(any(irace_results$softRestart)) paste0(sum(irace_results$softRestart), " / ", length(irace_results$softRestart)) else 0L}`
 - Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
 - Running time (seconds): `r {if(is.null(irace_results$state$elapsed)) "Unknown" else paste0(round(irace_results$state$elapsed["user"],0), " (CPU-user); ", round(irace_results$state$elapsed["system"],0), " (CPU-sys); ", round(irace_results$state$elapsed["wallclock"],0), " (Wall-clock)")}`
 - Termination reason: `r {if(is.null(irace_results$state$completed)) "Missing" else irace_results$state$completed}`
