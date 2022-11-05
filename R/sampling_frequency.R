@@ -153,9 +153,10 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   # If the value in filename is added
   if (!is.null(filename)) {
     if (npar > 9) {
-      warning("Multiple plots generated. If a filename with a pdf extension was provided a multi page plot 
-          will be generated. Otherwise, only the last plot set will be saved. Use the n argument of this function 
-          to plot by parameter set.")
+      iraceplot_warn("Multiple plots generated: If a filename with a pdf extension",
+                     " was provided a multi page plot will be generated;",
+                     " otherwise, only the last plot set will be saved.",
+                     " Use the {.field n} argument of this function to plot by parameter set.")
     }
     # FIXME: we could save in multiple files with a counter in their name,
     ggsave(filename, wp)

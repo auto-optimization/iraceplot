@@ -18,6 +18,7 @@ RoxygenNote: 7.1.2
 Depends: 
     R (>= 3.4)
 Imports:
+    cli,
     dplyr, 
     DT,
     forcats, 

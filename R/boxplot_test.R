@@ -24,10 +24,11 @@ boxplot_test <- function(irace_results, type = c("all", "ibest", "best"), ...)
 {
   type <- match.arg(type)
   if (!has_testing_data(irace_results))
-    stop("irace_results does not contain the testing data")
+    cli_abort("{.field irace_results} does not contain the testing data")
     
   if (type=="ibest" && !irace_results$scenario$testIterationElites) {
-    warning("irace data does not contain iteration elites testing, changing plot type to \"best\"")
+    iraceplot_warn("irace data does not contain iteration elites testing,",
+                   " changing plot type to {.code 'best'}")
     type <- "best"
   }
 

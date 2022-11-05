@@ -66,26 +66,26 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
 {
   type <- match.arg(type)
   if (!is.matrix(experiments) && !is.data.frame(experiments)) {
-    stop("'experiments' must be a matrix or a data frame")
+    cli_abort("'{.field experiments}' must be a matrix or a data frame")
   }
   inst_ids <- rownames(experiments)
   if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
   
   if (type=="ibest" && !first_is_best) {
-    message("Note: The setting type=ibest only supports first_is_best=TRUE, ignoring this setting.\n")
+    cli_alert_info("Note: The setting {.code 'type=ibest'} only supports {.code 'first_is_best=TRUE'}, ignoring this setting.\n")
     first_is_best <- TRUE
   }
   
   # Get the order of configurations
   if (is.null(allElites)) {
-    message("Note: all Elites not provided, assumming all configurations in experiments as elites.\n")
+    cli_alert_info("Note: {.field allElites} not provided, assumming all configurations in experiments as elites.\n")
     allElites <- list()
     allElites[[1]] <- get_ranked_ids(experiments)
     if (type == "ibest") {
-      stop("The type argument provided (",type,") is not supported when no allElites value provided")
+      cli_abort("The {.field type} argument provided ({type}) is not supported when no {.field allElites} value provided")
     }
   } else if (type=="ibest" && !is.list(allElites)) {
-    message ("Note: Since type=ibest, assuming vector best configuration by iteration in allElites.\n")
+    cli_alert_info("Note: Since {.code type=ibest}, assuming vector best configuration by iteration in {.field allElites}.\n")
     allElites <- as.list(allElites)
   }
 

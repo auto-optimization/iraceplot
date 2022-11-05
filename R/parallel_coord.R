@@ -163,12 +163,12 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   if (!is.null(iterations)) {
     it <- 1:length(irace_results$allElites)
     if (any(!(iterations %in% it))) {
-      stop("The iterations entered are outside the possible range")
+      cli_abort("The iterations entered are outside the possible range")
     }
   } else {
     iterations <- length(irace_results$allElites)
     if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1) {
-       message("Note: The final iteration only has one elite configuration\n")
+       cli_alert_info("Note: The final iteration only has one elite configuration\n")
     }
   } 
 

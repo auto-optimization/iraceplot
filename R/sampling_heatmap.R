@@ -45,10 +45,8 @@ get_domain <- function(param_name, parameters, size)
       size <- old_domain[2] - old_domain[1] 
       size <- min(10L, size)
     } else if (size > (old_domain[2] - old_domain[1])) {
-      message("Note: step size for integer parameters should not exceed 
-            the size of their domain. Parameter", param_name, ", domain size:", 
-          old_domain[2] - old_domain[1], ", provided step size:", size, ".",
-          "Setting step size to:", size, "\n")
+      cli_alert_info(paste0("{.strong Note}: step size for integer parameters should not exceed",
+                            " the size of their domain. Parameter {.field {param_name}} domain size: {old_domain[2] - old_domain[1]}, provided step size: {size}. Setting step size to: {min(old_domain[2] - old_domain[1], 10L)}\n"))
       size <- min(old_domain[2] - old_domain[1], 10L)
     }
     type <- "n"
@@ -60,12 +58,12 @@ get_domain <- function(param_name, parameters, size)
       names <- c(names, paste0("[", domain[i], ",", domain[i+1], ")"))
     names <- c(names, paste0("[",domain[size],",", domain[size+1], "]"))
   }
-  return(list(param_name = param_name, 
-              type = type, 
-              size = size,
-              param = param, 
-              names = names, 
-              domain = domain))
+  list(param_name = param_name, 
+       type = type, 
+       size = size,
+       param = param, 
+       names = names, 
+       domain = domain)
 }
 
 # Assigns a vector of parameter values to a domain obtained with the

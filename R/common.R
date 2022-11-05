@@ -14,6 +14,10 @@ orca_pdf <- function(filename, plot)
 }
 
 
+iraceplot_warn <- function(...)
+  cli_alert_warning(text = paste0("{.strong Warning:} ", ...))
+
+
 orca_save_plot <- function(plot_list, filename)
 {
   if (!is.null(filename)) {
