@@ -152,14 +152,14 @@ irace::printParameters(irace_results$parameters)
 
 ## By iteration
 
-```{r,fig.align="center", echo=FALSE}
+```{r table-by-iterations,fig.align="center", echo=FALSE}
 show_table(byiterations, lengthMenu = c(20, 50, 100),
            colorbar = c("configurations", "instances", "experiments", "elites"))
 ```
 
 ## By instance
 
-```{r,fig.align="center", echo=FALSE}
+```{r table-by-instance,fig.align="center", echo=FALSE}
 show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE,
            colorbar = c("experiments", "mean", "sd", "median", "min", "max"))
 #columnDefs = list(list(targets = -1, searchable = FALSE))
@@ -171,14 +171,14 @@ show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE,
 
 The final best configurations found by irace are:
 
-```{r,fig.align="center", echo=FALSE}
+```{r table-elite,fig.align="center", echo=FALSE}
 show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
            lengthMenu = c(10,20))
 ```
 
 ## Parallel coordinates visualization (only elites)
 
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r parcoords-elites,fig.align="center", out.width="100%", echo=FALSE}
 parallel_coord(irace_results)
 ```
 
@@ -186,7 +186,7 @@ parallel_coord(irace_results)
 
 The frequency of the parameter values sampled by irace:
 
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r fig-sampling-model,fig.align="center", out.width="100%", echo=FALSE}
 sampling_frequency(irace_results)
 ```
 
@@ -214,21 +214,21 @@ show_table(best_results, lengthMenu = c(5, 10),
 
 ## Final elite configurations on the test instances
 
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r boxplot-test-elites-rpd,fig.align="center", out.width="100%", echo=FALSE}
 if (has_testing_data(irace_results)) {
   boxplot_test(irace_results, type = "best", interactive = interactive_plots)
 } else {
   cat("No test instances given.\n")
 }
 ```
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r boxplot-test-elites-raw,fig.align="center", out.width="100%", echo=FALSE}
 if (has_testing_data(irace_results))
   boxplot_test(irace_results, type = "best", rpd = FALSE, interactive = interactive_plots)
 ```
 
 ## Iteration elite configurations  on the test instances
 
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r boxplot-test-iteration-elites-rpd,fig.align="center", out.width="100%", echo=FALSE}
 if (irace_results$scenario$testIterationElites && has_testing_data(irace_results)) {
    boxplot_test(irace_results, type = "all", show_points=FALSE, interactive = interactive_plots)
 } else{
@@ -240,7 +240,7 @@ if (irace_results$scenario$testIterationElites && has_testing_data(irace_results
 
 ## Performance of the final elite configurations on the training instances
 
-```{r,fig.align="center", echo=FALSE}
+```{r table-train-elites,fig.align="center", echo=FALSE}
 best_results <- as_tibble(irace_results$experiments[, best_elites, drop=FALSE])
 best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
 best_results <- best_results[match(best_elites, best_results$ID), , drop=FALSE]
@@ -251,19 +251,23 @@ show_table(best_results, lengthMenu = c(10, 20, 50, 100),
 ## Final elite configurations on the training instances
 
 
-```{r,fig.align="center", out.width="100%", echo=FALSE}
+```{r boxplot-train-elite-rpd,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results, interactive = interactive_plots)
+```
+```{r boxplot-train-elite-raw,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_training(irace_results, rpd = FALSE, interactive = interactive_plots)
 ```
 
 ```{asis, echo=irace_results$scenario$testIterationElites}
 ## Iteration elite configurations  on the training instances
 ```
-```{r,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
+```{r boxplot-train-iteration-elites-rpd,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
 # FIXME: This should boxplot_training(irace_results, type="ibest")
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
                     type = "ibest", interactive = interactive_plots)
+```
+```{r boxplot-train-iteration-elites-raw,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
                     type = "ibest", rpd = FALSE, interactive = interactive_plots)
@@ -271,7 +275,7 @@ boxplot_performance(experiments = irace_results$experiments,
 
 # Races overview
 
-```{r,fig.align="center", out.width="100%", echo=FALSE, eval=isTRUE(sections$experiments_matrix)}
+```{r experiments-matrix,fig.align="center", out.width="100%", echo=FALSE, eval=isTRUE(sections$experiments_matrix)}
 plot_experiments_matrix(irace_results, interactive = interactive_plots)
 ```
 
