@@ -6,8 +6,7 @@ output:
 ---
 
 ```{r, echo=FALSE, results='asis'}
-# FIXME: Replace this with irace::read_logfile()
-irace_results <- local({ load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE)); iraceResults })
+irace_results <- irace::read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 interactive_plots <- TRUE
 res <- knitr::knit_child(system.file("template", "report_html.Rmd", package="iraceplot"), quiet = TRUE)
 cat(res, sep = '\n')
