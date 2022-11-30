@@ -33,9 +33,10 @@ report <- function(irace_results, filename = "report",
 
   # Large experiments matrix crashes pandoc.
   if (is.null(sections$experiments_matrix)) {
-    iraceplot_warn("Race overview disable because the experiments matrix",
-                   " is very large (set {.code sections$experiments_matrix=TRUE} to enable).")
     sections$experiments_matrix <- (prod(dim(irace_results$experiments)) < 128L*1024L)
+    if (!sections$experiments_matrix)
+      iraceplot_warn("Race overview disable because the experiments matrix",
+                     " is very large (set {.code sections$experiments_matrix=TRUE} to enable).")
   }
   
   filename <- irace::path_rel2abs(maybe_add_file_extension(filename, "html"))
