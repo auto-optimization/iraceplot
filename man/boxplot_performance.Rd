@@ -2,13 +2,13 @@
 % Please edit documentation in R/boxplot_performance.R
 \name{boxplot_performance}
 \alias{boxplot_performance}
-\title{Box Plot Performance of a set of configurations}
+\title{Box Plot of the performance of a set of configurations}
 \usage{
 boxplot_performance(
   experiments,
   allElites = NULL,
   type = c("all", "ibest"),
-  first_is_best = (type != "ibest"),
+  first_is_best = TRUE,
   rpd = TRUE,
   show_points = TRUE,
   best_color = "#08bfaa",

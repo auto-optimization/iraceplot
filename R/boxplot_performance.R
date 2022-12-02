@@ -1,4 +1,4 @@
-#' Box Plot Performance of a set of configurations
+#' Box Plot of the performance of a set of configurations
 #'
 #' Creates a box plot that displays the performance of a set of configurations
 #' which can be displayed by iteration.
@@ -60,7 +60,7 @@
 #' }
 #' @export
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
-                                first_is_best = (type != "ibest"), rpd = TRUE, show_points=TRUE, 
+                                first_is_best = TRUE, rpd = TRUE, show_points=TRUE, 
                                 best_color = "#08bfaa", x_lab ="Configurations", boxplot = FALSE, 
                                 filename = NULL, interactive = base::interactive())
 {
@@ -71,7 +71,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   inst_ids <- rownames(experiments)
   if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
   
-  if (type=="ibest" && !first_is_best) {
+  if (type == "ibest" && !first_is_best) {
     cli_alert_info("Note: The setting {.code 'type=ibest'} only supports {.code 'first_is_best=TRUE'}, ignoring this setting.\n")
     first_is_best <- TRUE
   }
@@ -84,7 +84,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     if (type == "ibest") {
       cli_abort("The {.field type} argument provided ({type}) is not supported when no {.field allElites} value provided")
     }
-  } else if (type=="ibest" && !is.list(allElites)) {
+  } else if (type == "ibest" && !is.list(allElites)) {
     cli_alert_info("Note: Since {.code type=ibest}, assuming vector best configuration by iteration in {.field allElites}.\n")
     allElites <- as.list(allElites)
   }

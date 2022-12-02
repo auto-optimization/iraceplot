@@ -259,15 +259,15 @@ boxplot_training(irace_results, rpd = FALSE, interactive = interactive_plots)
 ```
 
 ```{asis, echo=irace_results$scenario$testIterationElites}
-## Iteration elite configurations  on the training instances
+## Iteration elite configurations on the training instances
 ```
-```{r boxplot-train-iteration-elites-rpd,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
+```{r boxplot-train-iteration-elites-rpd,fig.align="center", out.width="100%", echo=FALSE}
 # FIXME: This should boxplot_training(irace_results, type="ibest")
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
                     type = "ibest", interactive = interactive_plots)
 ```
-```{r boxplot-train-iteration-elites-raw,fig.align="center", out.width="100%", echo=FALSE, eval=irace_results$scenario$testIterationElites}
+```{r boxplot-train-iteration-elites-raw,fig.align="center", out.width="100%", echo=FALSE}
 boxplot_performance(experiments = irace_results$experiments,
                     allElites = lapply(irace_results$allElites, utils::head, irace_results$scenario$testNbElites),
                     type = "ibest", rpd = FALSE, interactive = interactive_plots)
