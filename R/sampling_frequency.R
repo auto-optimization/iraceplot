@@ -63,7 +63,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   }
 
   # This is needed to silence CRAN warnings.
-  tabla <- Var1 <- Freq <- ..density.. <- NULL
+  tabla <- Var1 <- Freq <- density <- NULL
   # Filter data by parameter names
   config <- configurations[,param_names,drop=FALSE]
   if (!is.null(n)) {
@@ -113,7 +113,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
       # FIXME: There is some repetition between this plot and the above
       # one. Avoid redundancy.
       p <- ggplot(as.data.frame(tabla), aes(x = tabla)) +
-        geom_histogram(aes(y = ..density..),
+        geom_histogram(aes(y = after_stat(density)),
                        breaks = nbreaks,
                        color = "black", fill = "gray") +
         geom_density(color = "blue", fill = "blue", alpha = 0.2) +

@@ -47,7 +47,7 @@
 #' @importFrom cli cli_warn cli_inform cli_abort cli_alert_info cli_alert_warning
 #' @importFrom dplyr mutate %>% group_by summarise select arrange count n_distinct slice
 #' @importFrom ggforce geom_parallel_sets geom_parallel_sets_axes geom_parallel_sets_labels gather_set_data
-#' @importFrom ggplot2 aes element_blank element_rect element_text facet_grid geom_abline geom_bar geom_blank geom_boxplot geom_density geom_histogram geom_jitter geom_line geom_point geom_tile geom_violin ggplot ggsave ggtitle guides guide_axis guide_colourbar guide_legend labs position_jitter rel scale_alpha_manual scale_color_hue scale_color_manual scale_color_viridis_c scale_color_viridis_d scale_fill_manual scale_fill_viridis_c scale_shape_manual scale_size_manual scale_x_continuous scale_x_discrete scale_y_continuous scale_y_discrete theme theme_bw vars xlab ylab
+#' @importFrom ggplot2 aes after_stat element_blank element_rect element_text facet_grid geom_abline geom_bar geom_blank geom_boxplot geom_density geom_histogram geom_jitter geom_line geom_point geom_tile geom_violin ggplot ggsave ggtitle guides guide_axis guide_colourbar guide_legend labs position_jitter rel scale_alpha_manual scale_color_hue scale_color_manual scale_color_viridis_c scale_color_viridis_d scale_fill_manual scale_fill_viridis_c scale_shape_manual scale_size_manual scale_x_continuous scale_x_discrete scale_y_continuous scale_y_discrete theme theme_bw vars xlab ylab
 #' @importFrom grDevices rainbow nclass.Sturges dev.off pdf
 #' @importFrom gridExtra grid.arrange marrangeGrob
 NULL

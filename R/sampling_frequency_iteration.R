@@ -30,7 +30,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
                                          filename = NULL)
 {
   # Variable assignment
-  memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- ..density.. <- NULL
+  memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- density <- NULL
   
   if (!(numerical_type %in% c("both", "density", "frequency"))){
     stop("Unknown numerical_type, values must be either both, density ot frequency.")
@@ -89,7 +89,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
     # density and histogram plot
     p <- ggplot(as.data.frame(tabla), aes(x = x, fill = iteration)) 
     if (numerical_type %in% c("both", "frequency"))
-        p <- p + geom_histogram(aes(y = ..density..),
+        p <- p + geom_histogram(aes(y = after_stat(density)),
                        breaks = nbreaks,
                        color = "black", fill = "gray"
          ) 
