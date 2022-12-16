@@ -16,6 +16,7 @@ tibble
 Summarise by instance
 }
 \examples{
-irace_result <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+irace_result <- read_logfile(system.file(package="irace", "exdata",
+                                         "irace-acotsp.Rdata", mustWork = TRUE))
 summarise_by_instance(irace_result)
 }

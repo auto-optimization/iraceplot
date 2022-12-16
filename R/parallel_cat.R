@@ -168,14 +168,14 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
     ctabla <- ctabla %>%
       group_by(ctabla[1:ncol(ctabla)]) %>%
       summarise(freq = dplyr::n())# %>% filter(freq > 1)
-    ctabla <- gather_set_data(ctabla, params)
+    ctabla <- ggforce::gather_set_data(ctabla, params)
     ctabla <- ctabla[ctabla$x != "iteration", ]
     
     # Create plot
     p <- ggplot(ctabla, aes(x, id = id, split = y, value = freq)) +
-      geom_parallel_sets(aes(fill = iteration), alpha = 0.8, axis.width = 0.2) +
-      geom_parallel_sets_axes(axis.width = 0.3, alpha = 0.4, color = "lightgrey", fill = "lightgrey") +
-      geom_parallel_sets_labels(colour = "black", angle = 90, size = 3) +
+      ggforce::geom_parallel_sets(aes(fill = iteration), alpha = 0.8, axis.width = 0.2) +
+      ggforce::geom_parallel_sets_axes(axis.width = 0.3, alpha = 0.4, color = "lightgrey", fill = "lightgrey") +
+      ggforce::geom_parallel_sets_labels(colour = "black", angle = 90, size = 3) +
       theme_bw() +
       theme(
         axis.text.x = element_text(angle = 90, size = 9),
