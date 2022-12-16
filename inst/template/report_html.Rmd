@@ -76,6 +76,8 @@ if (interactive_plots) {
 }
 
 library(iraceplot)
+library(tidyr, quietly = TRUE)
+library(dplyr, quietly = TRUE)
 niterations <- length(irace_results$allElites)
 ninstances <- nrow(irace_results$experiments)
 byiterations <- summarise_by_iteration(irace_results)
