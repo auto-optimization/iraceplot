@@ -1,3 +1,5 @@
+# iraceplot 1.01
+
 # iraceplot 1.0
 
  * Implement all plots that were available in the `irace` package and a few
