@@ -17,6 +17,7 @@ RoxygenNote: 7.1.2
 Depends:
     R (>= 3.4)
 Imports:
+    irace (>= 3.5),
     cli,
     dplyr,
     DT,
@@ -24,7 +25,6 @@ Imports:
     ggforce,
     ggplot2 (>= 3.3.6),
     gridExtra,
-    irace (>= 3.5),
     knitr,
     matrixStats (>= 0.55),
     plotly,
