@@ -31,7 +31,8 @@
 #' @seealso [boxplot_test()] [boxplot_performance()]
 #'
 #' @examples
-#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata",
+#'                                          "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_training(iraceResults)
 #' \donttest{ 
 #' boxplot_training(iraceResults, iteration = 5)

@@ -37,9 +37,10 @@ for numerical parameters a equality interval is defined by a threshold
 specified by argument t and hamming distance is calculated using this interval.
 }
 \examples{
-\donttest{
-iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata",
+                                         "irace-acotsp.Rdata", mustWork = TRUE))
 sampling_distance(iraceResults)
+\donttest{
 sampling_distance(iraceResults, type = "boxplot", t=0.07)
 }
 }

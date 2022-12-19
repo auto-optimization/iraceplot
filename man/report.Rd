@@ -32,7 +32,8 @@ configurations and their performance. Example: \url{https://auto-optimization.gi
 \examples{
 \donttest{ 
  withr::with_tempdir({
-   iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+   iraceResults <- read_logfile(system.file(package="irace", "exdata",
+                                            "irace-acotsp.Rdata", mustWork = TRUE))
    report(iraceResults, filename = file.path(getwd(), "report"))
  }, clean = !base::interactive())
 }

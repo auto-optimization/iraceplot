@@ -25,7 +25,8 @@ by irace. Note that the testing is not a default feature in irace and should
 be enabled in the setup (see the irace package user guide for more details).
 }
 \examples{
-iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="iraceplot", "exdata",
+                                         "guide-example.Rdata", mustWork = TRUE))
 boxplot_test(iraceResults)
 }
 \seealso{

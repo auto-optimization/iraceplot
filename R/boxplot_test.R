@@ -17,7 +17,8 @@
 #' @seealso [boxplot_training()] [boxplot_performance()]
 #'
 #' @examples
-#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata",
+#'                                          "guide-example.Rdata", mustWork = TRUE))
 #' boxplot_test(iraceResults)
 #' @export
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"), ...)

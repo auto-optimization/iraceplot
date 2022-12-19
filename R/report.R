@@ -21,7 +21,8 @@
 #' @examples
 #' \donttest{ 
 #'  withr::with_tempdir({
-#'    iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#'    iraceResults <- read_logfile(system.file(package="irace", "exdata",
+#'                                             "irace-acotsp.Rdata", mustWork = TRUE))
 #'    report(iraceResults, filename = file.path(getwd(), "report"))
 #'  }, clean = !base::interactive())
 #' }
@@ -43,7 +44,8 @@ report <- function(irace_results, filename = "report",
   
   filename <- irace::path_rel2abs(maybe_add_file_extension(filename, "html"))
   cli_alert_info("Creating file '{.file {filename}}'.\n")
-  rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"), output_file=filename, clean = FALSE)
+  rmarkdown::render(input=system.file("template", "report_html.Rmd", package = "iraceplot"),
+                    output_file=filename, clean = FALSE)
   if (interactive) utils::browseURL(filename)
   filename
 }

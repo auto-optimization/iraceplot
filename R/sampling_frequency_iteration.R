@@ -20,7 +20,8 @@
 #' @return Frequency and/or density plot
 #'
 #' @examples
-#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata",
+#'                                          "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha")
 #' \donttest{ 
 #' sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")

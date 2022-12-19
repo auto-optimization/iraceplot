@@ -14,7 +14,8 @@
 #'
 #' @examples
 #' \donttest{
-#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata",
+#'                                          "guide-example.Rdata", mustWork = TRUE))
 #' configurations_display(iraceResults)
 #' }
 #' @export

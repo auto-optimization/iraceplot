@@ -35,7 +35,8 @@
 #'
 #' @seealso [parallel_coord()] [parallel_coord2()]
 #' @examples
-#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata",
+#'                                          "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_cat(iraceResults)
 #' \donttest{ 
 #' parallel_cat(iraceResults, by_n_param = 6)

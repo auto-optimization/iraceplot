@@ -25,9 +25,10 @@
 #' @return line or box plot
 #'
 #' @examples
-#' \donttest{
-#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata",
+#'                                          "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_distance(iraceResults)
+#' \donttest{
 #' sampling_distance(iraceResults, type = "boxplot", t=0.07)
 #' }
 #' @export

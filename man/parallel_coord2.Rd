@@ -44,7 +44,8 @@ orca server will be used to export the plots and thus, it requires the library
 to be installed (\url{https://github.com/plotly/orca}).
 }
 \examples{
-iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata",
+                                         "irace-acotsp.Rdata", mustWork = TRUE))
 parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
                 iraceResults$parameters)
 parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
