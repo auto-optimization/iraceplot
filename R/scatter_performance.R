@@ -29,7 +29,7 @@
 #' @return [ggplot2::ggplot()] object
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' best_id <- iraceResults$iterationElites[length(iraceResults$iterationElites)]
 #' scatter_performance(iraceResults$experiments, x_id = 1, y_id = best_id)
 #' @export
@@ -116,7 +116,7 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 #'
 #'
 #' @examples
-#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_training(iraceResults, x_id = 806, y_id = 809)
 #' \donttest{ 
 #' scatter_training(iraceResults, x_id = 806, y_id = 809, rpd = FALSE)
@@ -145,7 +145,7 @@ scatter_training <- function(irace_results, ...)
 #'
 #'
 #' @examples
-#' load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 #' scatter_test(iraceResults, x_id = 92, y_id = 119)
 #' \donttest{ 
 #' scatter_test(iraceResults, x_id = 92, y_id = 119, rpd=FALSE)

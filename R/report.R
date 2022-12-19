@@ -19,9 +19,11 @@
 #' @return filename where the report was created or it opens the report in the default browser (interactive).
 #'
 #' @examples
-#' \dontrun{
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
-#' report(iraceResults, filename="report")
+#' \donttest{ 
+#'  withr::with_tempdir({
+#'    iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#'    report(iraceResults, filename = file.path(getwd(), "report"))
+#'  }, clean = !base::interactive())
 #' }
 #' @export
 report <- function(irace_results, filename = "report",

@@ -4,7 +4,7 @@
 #' The iraceplot package: \packageTitle{iraceplot}
 #' @description
 #'
-#' Graphical Visualization Tools for Analysing the Data Produced by Irace.
+#' Graphical Visualization Tools for Analysing the Data Produced by irace.
 #'
 #' boxplot_performance;
 #' boxplot_test;

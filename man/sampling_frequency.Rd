@@ -48,7 +48,7 @@ of the parameters.
 }
 \examples{
 # Either use iraceResults
-load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 sampling_frequency(iraceResults)
 \donttest{ 
 sampling_frequency(iraceResults, n = 2)

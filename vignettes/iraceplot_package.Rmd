@@ -11,7 +11,7 @@ vignette: >
 
 library(iraceplot, quietly = TRUE)
 library(plotly)
-load(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="iraceplot", "exdata", "guide-example.Rdata", mustWork = TRUE))
 ```
 
 
@@ -59,7 +59,7 @@ was executed with the name `irace.Rdata`. To load the irace log data, replace th
 path of the file with yours:
 
 ```{r eval=FALSE}
-load("~/path/to/irace.Rdta")
+iraceResults <- irace::read_logfile("~/path/to/irace.Rdata")
 ```
 
 This file contains the `iraceResults` variable which contains the irace log. For 

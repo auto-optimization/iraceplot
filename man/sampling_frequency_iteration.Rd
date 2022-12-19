@@ -31,7 +31,7 @@ for categorical data (its values are string, show a bar plot) or
 numeric data (show a histogram and density plot) by each iteration
 }
 \examples{
-load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 sampling_frequency_iteration(iraceResults, param_name = "alpha")
 \donttest{ 
 sampling_frequency_iteration(iraceResults, param_name = "alpha", numerical_type="density")

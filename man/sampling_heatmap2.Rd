@@ -36,7 +36,7 @@ sampling heat map plot
 Heatmap that displays the frequency of sampling values of two parameters.
 }
 \examples{
-load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
                   param_names=c("beta", "alpha"))
 }

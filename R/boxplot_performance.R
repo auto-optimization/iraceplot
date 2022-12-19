@@ -53,7 +53,7 @@
 #'
 #' @seealso [boxplot_test()] [boxplot_training()]
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' boxplot_performance(iraceResults$experiments, iraceResults$allElites)
 #' \donttest{ 
 #' boxplot_performance(iraceResults$testing$experiments, iraceResults$iterationElites)
@@ -215,7 +215,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (interactive) {
     # FIXME: ggplotly does not work well with geom_violin()
     # We need to create the violin plot directly in plotly: https://plotly.com/r/violin/
-    # p <- plotly::ggplotly(p)
+    p <- plotly::ggplotly(p)
   }
   p
 }

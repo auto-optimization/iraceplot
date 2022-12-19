@@ -38,7 +38,7 @@ specified by argument t and hamming distance is calculated using this interval.
 }
 \examples{
 \donttest{
-load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 sampling_distance(iraceResults)
 sampling_distance(iraceResults, type = "boxplot", t=0.07)
 }

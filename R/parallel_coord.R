@@ -47,7 +47,7 @@
 #' @export
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_coord(iraceResults)
 #' \donttest{ 
 #' parallel_coord(iraceResults, by_n_param = 5)
@@ -297,7 +297,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 #' @return parallel coordinates plot
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters)
 #' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 

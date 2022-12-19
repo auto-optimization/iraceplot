@@ -132,7 +132,7 @@ which_domain <- function(param_values, domain)
 #' @export
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"))
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), iterations = c(3,4))
 #' sampling_heatmap(iraceResults, param_names=c("beta", "alpha"), only_elite = FALSE)
@@ -237,7 +237,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 #' @return sampling heat map plot
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
 #'                   param_names=c("beta", "alpha"))
 #' @export

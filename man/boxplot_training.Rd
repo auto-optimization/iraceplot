@@ -41,7 +41,7 @@ performed by irace during the execution process. This implies that the
 number of evaluations can differ between configurations.
 }
 \examples{
-load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 boxplot_training(iraceResults)
 \donttest{ 
 boxplot_training(iraceResults, iteration = 5)

@@ -21,7 +21,7 @@
 #' @export
 #'
 #' @examples
-#' load(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
+#' iraceResults <- read_logfile(system.file(package="irace", "exdata", "irace-acotsp.Rdata", mustWork = TRUE))
 #' sampling_pie(iraceResults)
 #' \donttest{
 #' sampling_pie(iraceResults, param_names = c("algorithm", "dlb", "ants"))
