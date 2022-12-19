@@ -31,53 +31,52 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include= FALSE}
-sections <- get0("sections", ifnotfound=list(experiments_matrix=TRUE))
-if (!exists("interactive_plots")) interactive_plots <- base::interactive()
-if (interactive_plots) {
-  # FIXME: Move show_table to the package so people can use it to create their
-  # own reports.
-  show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL, searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
-    if (search) dom <- sub("r", "fr", dom)
-    if (is.null(lengthMenu)) { pageLength <- NULL
-    } else {
-      pageLength <- lengthMenu[1]
-      if (nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
-    }
-    columnDefs <- list(list(className = 'dt-right', targets = "_all"))
-    tab <- DT::datatable(x, rownames = row.names,
-                         class = 'compact row-border hover',
-                         autoHideNavigation = TRUE,
-                         options = list(
-                           searchHighlight = search,
-                           scrollX = TRUE,
-                           pageLength=pageLength,
-                           lengthMenu = lengthMenu,
-                           dom = dom,
-                           columnDefs = columnDefs)) %>%
-      DT::formatStyle(colnames(x), fontSize='85%')
-    for (col in colorbar) {
-      if(!(col %in% colnames(x)))
-        stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
-      if (all(is.na(x[, col]))) next # Don't add colorbar if all are NA.
-      tab <- DT::formatStyle(tab, columns = col,
-                             background = DT::styleColorBar(range(x[, col], na.rm=TRUE), 'lightblue'),
-                             backgroundSize = '98% 88%',
-                             backgroundRepeat = 'no-repeat',
-                             backgroundPosition = 'center')
-    }
-    for (s in style) {
-      tab <- do.call(DT::formatStyle, c(table=tab, s))
-    }
-    tab
-  }
-} else {
-  show_table <- function(x, row.names, ...)
-    knitr::kable(x, row.names = row.names)
-}
-
 library(iraceplot)
 library(tidyr, quietly = TRUE)
 library(dplyr, quietly = TRUE)
+sections <- get0("sections", ifnotfound=list(experiments_matrix=TRUE))
+if (!exists("interactive_plots")) interactive_plots <- base::interactive()
+# FIXME: Move show_table to the package so people can use it to create their
+# own reports.
+show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL,
+                       searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
+
+  if (!interactive_plots) return(knitr::kable(x, row.names = row.names))
+
+  if (search) dom <- sub("r", "fr", dom)
+  if (is.null(lengthMenu)) {
+    pageLength <- NULL
+  } else {
+    pageLength <- lengthMenu[1]
+    if (nrow(x) <= pageLength) dom <- gsub("[lip]", "", dom) # autoHideNavigation
+  }
+  columnDefs <- list(list(className = 'dt-right', targets = "_all"))
+  tab <- DT::datatable(x, rownames = row.names,
+                       class = 'compact row-border hover',
+                       autoHideNavigation = TRUE,
+                       options = list(
+                         searchHighlight = search,
+                         scrollX = TRUE,
+                         pageLength=pageLength,
+                         lengthMenu = lengthMenu,
+                         dom = dom,
+                         columnDefs = columnDefs)) %>% DT::formatStyle(colnames(x), fontSize='85%')
+  for (col in colorbar) {
+    if(!(col %in% colnames(x)))
+      stop("Column ", col, " not found in table: ", paste0(colnames(x), collapse=", "))
+    if (all(is.na(x[, col]))) next # Don't add colorbar if all are NA.
+    tab <- DT::formatStyle(tab, columns = col,
+                           background = DT::styleColorBar(range(x[, col], na.rm=TRUE), 'lightblue'),
+                           backgroundSize = '98% 88%',
+                           backgroundRepeat = 'no-repeat',
+                           backgroundPosition = 'center')
+  }
+  for (s in style) {
+    tab <- do.call(DT::formatStyle, c(table=tab, s))
+  }
+  tab
+}
+
 niterations <- length(irace_results$allElites)
 ninstances <- nrow(irace_results$experiments)
 byiterations <- summarise_by_iteration(irace_results)
