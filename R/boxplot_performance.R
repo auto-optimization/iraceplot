@@ -195,6 +195,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (plot_points) {
     p <- p + geom_point(shape = 16, na.rm = TRUE)
   } else {
+    # FIXME: Plot mean as a dashed line
     if (boxplot)
       p <- p + geom_boxplot()
     else
@@ -214,8 +215,10 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (!is.null(filename)) ggsave(filename, plot = p)
  
   if (interactive) {
-    # FIXME: ggplotly does not work well with geom_violin()
+    # FIXME: ggplotly does not work well with geom_violin(): https://github.com/plotly/plotly.R/issues/1400
     # We need to create the violin plot directly in plotly: https://plotly.com/r/violin/
+    if (!boxplot)
+      p <- p + geom_boxplot(color="gray20", fill=NA, outlier.shape = NA)
     p <- plotly::ggplotly(p)
   }
   p
