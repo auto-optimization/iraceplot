@@ -99,10 +99,12 @@ Filename indicating where to save the report (example: <code>"~/path-to/filename
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"irace"</span>, <span class="st">"exdata"</span>, <span class="st">"irace-acotsp.Rdata"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">report</span><span class="op">(</span><span class="va">iraceResults</span>, filename<span class="op">=</span><span class="st">"report"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating file '<span style="color: #0000BB;">/tmp/RtmpiNK0FW/file39e6fc38d15/reference/report.html</span>'.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{ </span></span></span>
+<span class="r-in"><span> <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">with_tempdir</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">iraceResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mlopez-ibanez.github.io/irace/reference/read_logfile.html" class="external-link">read_logfile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"irace"</span>, <span class="st">"exdata"</span>, <span class="st">"irace-acotsp.Rdata"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu">report</span><span class="op">(</span><span class="va">iraceResults</span>, filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"report"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">}</span>, clean <span class="op">=</span> <span class="op">!</span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating file '<span style="color: #0000BB;">/tmp/RtmpmbBDUk/file383615db2eda/report.html</span>'.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> processing file: report_html.Rmd</span>
@@ -159,9 +161,158 @@ Filename indicating where to save the report (example: <code>"~/path-to/filename
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Quitting from lines 123-125 (report_html.Rmd) </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in knitr::kable(x, row.names = row.names):</span> argument "row.names" is missing, with no default</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |......................                                                |  32%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |........................                                              |  34%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: table-by-instance (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |..........................                                            |  37%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...........................                                           |  39%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: table-elite (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.............................                                         |  41%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...............................                                       |  44%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: parcoords-elites (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |................................                                      |  46%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |..................................                                    |  49%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: fig-sampling-model (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |....................................                                  |  51%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    inline R code fragments</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |......................................                                |  54%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: unnamed-chunk-4 (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.......................................                               |  56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.........................................                             |  59%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-test-elites-rpd (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...........................................                           |  61%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-test-elites-raw (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |............................................                          |  63%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |..............................................                        |  66%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-test-iteration-elites-rpd (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |................................................                      |  68%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |..................................................                    |  71%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: table-train-elites (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...................................................                   |  73%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.....................................................                 |  76%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-train-elite-rpd (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.......................................................               |  78%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-train-elite-raw (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |........................................................              |  80%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |..........................................................            |  83%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: unnamed-chunk-5 (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo  : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ engine: chr "asis"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |............................................................          |  85%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-train-iteration-elites-rpd (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.............................................................         |  88%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: boxplot-train-iteration-elites-raw (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...............................................................       |  90%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |.................................................................     |  93%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: experiments-matrix (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fig.align: chr "center"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ out.width: chr "100%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo     : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ eval     : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |...................................................................   |  95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |....................................................................  |  98%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> label: unnamed-chunk-6 (with options) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ echo  : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ engine: chr "asis"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |......................................................................| 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ordinary text without R code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> output file: report_html.knit.md</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /usr/bin/pandoc +RTS -K512m -RTS report_html.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/RtmpmbBDUk/file383615db2eda/report.html --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 3 --variable toc_float=1 --variable toc_selectors=h1,h2,h3 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --highlight-style pygments --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpmbBDUk/rmarkdown-str38364f1edc07.html </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output created: report.html</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpmbBDUk/file383615db2eda/report.html"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
