@@ -34,6 +34,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/ablation_plot.html</loc>
+  </url>
+  <url>
     <loc>/reference/boxplot_performance.html</loc>
   </url>
   <url>
@@ -71,6 +74,9 @@
   </url>
   <url>
     <loc>/reference/plot_model.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_ablogfile.html</loc>
   </url>
   <url>
     <loc>/reference/reexports.html</loc>
