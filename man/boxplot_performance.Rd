@@ -12,7 +12,7 @@ boxplot_performance(
   rpd = TRUE,
   show_points = TRUE,
   best_color = "#08bfaa",
-  x_lab = "Configurations",
+  xlab = "Configurations",
   boxplot = FALSE,
   filename = NULL,
   interactive = base::interactive()
@@ -48,7 +48,7 @@ performance.}
 
 \item{best_color}{String, (default \code{"#08bfaa"}) color to display best configurations.}
 
-\item{x_lab}{String, (default \code{"Configurations"}) label for the x axis.}
+\item{xlab}{String, (default \code{"Configurations"}) label for the x axis.}
 
 \item{boxplot}{By default, display a violin plot (\code{\link[ggplot2:geom_violin]{ggplot2::geom_violin()}}).
 If \code{TRUE}, show a classical boxplot.}

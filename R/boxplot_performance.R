@@ -40,7 +40,7 @@
 #' @param best_color 
 #' String, (default `"#08bfaa"`) color to display best configurations.
 #' 
-#' @param x_lab 
+#' @param xlab 
 #' String, (default `"Configurations"`) label for the x axis.
 #'
 #' @param boxplot By default, display a violin plot ([ggplot2::geom_violin()]).
@@ -62,7 +62,7 @@
 #' @export
 boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "ibest"),
                                 first_is_best = TRUE, rpd = TRUE, show_points=TRUE, 
-                                best_color = "#08bfaa", x_lab ="Configurations", boxplot = FALSE, 
+                                best_color = "#08bfaa", xlab ="Configurations", boxplot = FALSE, 
                                 filename = NULL, interactive = base::interactive())
 {
   type <- match.arg(type)
@@ -203,8 +203,8 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
     if (show_points)
       p <- p + geom_jitter(shape = 16, position = position_jitter(0.2), alpha=0.2, na.rm = TRUE)
   }
-  y_lab <- if (rpd) "RPD (%)" else "Cost (raw)"
-  p <- p + theme(legend.position = "none") + labs(x = x_lab, y = y_lab)
+  ylab <- if (rpd) "RPD (%)" else "Cost (raw)"
+  p <- p + theme(legend.position = "none") + labs(x = xlab, y = ylab)
       
   # each box plot is divided by iteration
   if (is.list(allElites)) {
