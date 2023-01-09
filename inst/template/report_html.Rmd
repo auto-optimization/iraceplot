@@ -166,13 +166,9 @@ sampling_frequency(irace_results)
 
 ```{r,fig.align="center", echo=FALSE}
 if (has_testing_data(irace_results)) {
-# FIXME: Move this table generation to a function inside the package.
-tested_elites <- colnames(irace_results$testing$experiments)
-best_results <- as_tibble(irace_results$testing$experiments[, tested_elites, drop=FALSE])
-best_results <- best_results %>% pivot_longer(all_of(tested_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
-best_results <- best_results[match(tested_elites, best_results$ID), , drop=FALSE]
-show_table(best_results, lengthMenu = c(5, 10),
-           colorbar = c("mean", "sd", "median", "min", "max"))
+  best_results <- summarise_by_configuration(irace_results, instances = "test")
+  show_table(best_results, lengthMenu = c(5, 10),
+             colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
   cat("No test instances given.\n")
 }

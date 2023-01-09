@@ -55,6 +55,7 @@ has_file_extension <- function(filename, ext)
 #'
 #' @return `logical(1)`
 #' @export
+# FIXME: Make it a reexport with irace >= 3.5.1
 has_testing_data <- function(irace_results)
 {
   ins <- irace_results$scenario$testInstances
