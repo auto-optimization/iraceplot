@@ -39,11 +39,11 @@ if (!exists("interactive_plots")) interactive_plots <- base::interactive()
 # FIXME: Move show_table to the package so people can use it to create their
 # own reports.
 show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL,
-                       searchHighlight = TRUE, dom='lrtip', colorbar = NULL, style = list(), ...) {
+                       searchHighlight = TRUE, dom='Blrtip', colorbar = NULL, style = list(), ...) {
 
   if (!interactive_plots) return(knitr::kable(x, row.names = row.names))
 
-  if (search) dom <- sub("r", "fr", dom)
+  if (search) dom <- sub("r", "fr", dom, fixed = TRUE)
   if (is.null(lengthMenu)) {
     pageLength <- NULL
   } else {
@@ -54,12 +54,15 @@ show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL,
   tab <- DT::datatable(x, rownames = row.names,
                        class = 'compact row-border hover',
                        autoHideNavigation = TRUE,
+                       extensions = c('Buttons', 'KeyTable'),
                        options = list(
+                         keys = TRUE,
                          searchHighlight = search,
                          scrollX = TRUE,
                          pageLength=pageLength,
                          lengthMenu = lengthMenu,
                          dom = dom,
+                         buttons = c('copy', 'csv'), #, 'colvis'),
                          columnDefs = columnDefs)) %>% DT::formatStyle(colnames(x), fontSize='85%')
   for (col in colorbar) {
     if(!(col %in% colnames(x)))
@@ -139,7 +142,8 @@ The final best configurations found by irace are:
 
 ```{r table-elite,fig.align="center", echo=FALSE}
 show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
-           lengthMenu = c(10,20))
+           lengthMenu = c(10,20),
+           colorbar = names(which(irace_results$parameters$types %in% c("i", "r") & !irace_results$parameters$isFixed)))
 ```
 
 ## Parallel coordinates visualization (only elites)
@@ -167,7 +171,7 @@ sampling_frequency(irace_results)
 ```{r,fig.align="center", echo=FALSE}
 if (has_testing_data(irace_results)) {
   best_results <- summarise_by_configuration(irace_results, instances = "test")
-  show_table(best_results, lengthMenu = c(5, 10),
+  show_table(best_results, lengthMenu = c(5, 10, 50),
              colorbar = c("mean", "sd", "median", "min", "max"))
 } else {
   cat("No test instances given.\n")
