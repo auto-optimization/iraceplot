@@ -156,7 +156,7 @@ plotCategoricalModel <- function(model_data, domain)
     facet_grid(~ iteration, scales = "free", space = "free")
     
   
-  p <- p  + ggplot2::xlab("Elite configurations") + ggplot2::ylab("Probability") +
+  p <- p  + labs(x = "Elite configurations", y = "Probability") +
       theme(axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
             axis.title.x = element_text(vjust = 4),

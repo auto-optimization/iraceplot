@@ -165,22 +165,20 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   data$ids_f <- factor(data$ids, levels = unique(data$ids))
   # FIXME: This should include the instance and seed.
   # data$label <- paste0("Iteration: ", data$iteration_f, "\nValue: ", data$performance, "\n")
-  # Silence CRAN warning.
-  ids <- performance <- v_allElites <- names_col <- best_conf <- ids_f <- iteration_f <- label <- NULL
   # FIXME: Simplify these conditions to avoid repetitions.
   if (type == "ibest") {
-    p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) +
+    p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) +
       labs(subtitle = "Iterations") +
       theme(plot.subtitle = element_text(hjust = 0.5))
   } else {
     # type="all"
     if (first_is_best) {
-      p <- ggplot(data, aes(x = ids_f, y = performance, colour = best_conf)) +
+      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$best_conf)) +
         scale_color_manual(values=c(best_color, "#999999"))
     } else if (is.list(allElites)){
-      p <- ggplot(data, aes(x = ids_f, y = performance, colour = iteration_f)) 
+      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) 
     } else {
-      p <- ggplot(data, aes(x = ids_f, y = performance, colour = ids_f)) 
+      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$ids_f)) 
     }
     
     if (is.list(allElites)) {
@@ -208,7 +206,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       
   # each box plot is divided by iteration
   if (is.list(allElites)) {
-    p <- p + facet_grid(cols = vars(data$iteration_f), scales = "free")
+    p <- p + facet_grid(cols = ggplot2::vars(data$iteration_f), scales = "free")
   }
   
   # If the value in filename is added the pdf file is created

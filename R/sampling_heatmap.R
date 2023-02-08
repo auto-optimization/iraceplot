@@ -193,7 +193,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
        geom_tile(color = "white", lwd = 0.5, linetype = 1) +
-       xlab(param_names[1]) +ylab(param_names[2]) +
+       labs(x = param_names[1], y = param_names[2]) +
        scale_x_discrete(labels=domain_names1) +
        scale_y_discrete(labels=domain_names2) +
        theme_bw() + 
@@ -279,7 +279,7 @@ sampling_heatmap2 <- function(configurations, parameters, param_names,
   
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
     geom_tile(color = "white", lwd = 0.5, linetype = 1) +
-    xlab(param_names[1]) + ylab(param_names[2]) +
+    labs(x = param_names[1], y = param_names[2]) +
     scale_x_discrete(labels=domain_names1) +
     scale_y_discrete(labels=domain_names2) +
     theme_bw() + 

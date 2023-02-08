@@ -54,8 +54,7 @@ ablation_plot <- function(ablog,
     as.data.frame() %>%
     tidyr::gather("Configuration", "Value")
 
-  Configuration <- Value <- NULL # Silence warning
-  p <- ggplot(data, aes(factor(Configuration, levels = trajectory), Value))
+  p <- ggplot(data, aes(factor(.data$Configuration, levels = trajectory), .data$Value))
   if ("mean" %in% type) {
     p <- p +
       # FIXME: Doesn't look that nice

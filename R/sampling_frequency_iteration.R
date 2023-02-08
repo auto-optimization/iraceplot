@@ -66,7 +66,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
 
     p <- ggplot(tabla, aes(x = x, y = Freq, fill = x)) +
       geom_bar(stat = "identity") +
-      facet_grid(vars(iteration_f), scales = "free") +
+      facet_grid(ggplot2::vars(iteration_f), scales = "free") +
       scale_fill_manual(
         values = viridisLite::viridis(length(unique(tabla$x))),
         guide = guide_legend(title = param_name)
@@ -101,7 +101,7 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
         p <- p + geom_density(alpha = 0.7) 
     }
     p <- p + scale_fill_manual(values = viridisLite::viridis(n_distinct(tabla$iteration))) +
-      facet_grid(vars(iteration_f), scales = "free") +
+      facet_grid(ggplot2::vars(iteration_f), scales = "free") +
       labs(x = param_name, y = "Frequency") +
       theme(
         axis.title.y = element_text(),

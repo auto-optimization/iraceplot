@@ -28,6 +28,7 @@ Imports:
     knitr,
     matrixStats (>= 0.55),
     plotly,
+    rlang,
     rmarkdown,
     stats,
     tibble,
