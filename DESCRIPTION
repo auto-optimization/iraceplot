@@ -29,7 +29,7 @@ Imports:
     matrixStats (>= 0.55),
     plotly,
     rlang,
-    rmarkdown,
+    rmarkdown (>= 2.7),
     stats,
     tibble,
     tidyr,
