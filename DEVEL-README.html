@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">iraceplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
 
 
 <div class="section level2">
-<h2 id="subversion-commands">Subversion commands<a class="anchor" aria-label="anchor" href="#subversion-commands"></a></h2>
+<h2 id="git-commands">Git commands<a class="anchor" aria-label="anchor" href="#git-commands"></a></h2>
 <pre><code># See differences in your local copy
 git diff
 # Commit your changes to the local repository
@@ -78,6 +78,30 @@ git help</code></pre>
 <li><p><code>make check</code> : More thoroughly test the build</p></li>
 <li><p><code>make quick-install</code> : Do a minimal build and install that has as few requirements as possible. Designed for installing on machines that are not used for development, like IRIDIA’s cluster.</p></li>
 </ul></div>
+<div class="section level2">
+<h2 id="release-process">RELEASE Process:<a class="anchor" aria-label="anchor" href="#release-process"></a></h2>
+<p>TODO: See useful release steps here: <a href="https://github.com/tidyverse/ggplot2/issues/4965" class="external-link uri">https://github.com/tidyverse/ggplot2/issues/4965</a></p>
+<ol style="list-style-type: decimal"><li><p>git status # make sure you are up to date and clean</p></li>
+<li><p>make check # passes</p></li>
+<li><p>make releasecheck</p></li>
+<li><p>make examples # Takes a few hours. Inspect the examples in the vignette.</p></li>
+<li><p>make revdepcheck # Takes a few hours</p></li>
+<li><p>make releasebuild # Inspect the output for strange files!</p></li>
+<li><p>make closeversion</p></li>
+<li><p>Update <code>cran-comments.md</code></p></li>
+<li><p>make submit</p></li>
+</ol><p>11.a IF the package requires further changes:</p>
+<ul><li><p>Make the changes.</p></li>
+<li><p>Repeat the whole RELEASE process above without bumping the version number.</p></li>
+</ul><p>11.b IF the package is released in CRAN:</p>
+<ul><li><p>Bump the version number in DESCRIPTION and NEWS.md.</p></li>
+<li><p>make build # To update other files with the new version.”</p></li>
+<li><p>git ci -a -m ” * Bump development version to $NEW_VERSION”</p></li>
+</ul><ol start="12" style="list-style-type: decimal"><li>
+<p>Announce the release in the Google group:</p>
+<p><a href="https://groups.google.com/d/forum/irace-package" class="external-link uri">https://groups.google.com/d/forum/irace-package</a></p>
+</li>
+</ol></div>
 <div class="section level2">
 <h2 id="importing-from-packages">Importing from packages<a class="anchor" aria-label="anchor" href="#importing-from-packages"></a></h2>
 <p>We do not use this:</p>
