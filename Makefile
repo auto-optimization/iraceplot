@@ -85,6 +85,11 @@ releasebuild: gendoc
 cran: releasebuild
 	cd $(BINDIR) && _R_CHECK_FORCE_SUGGESTS_=false _R_CHECK_CRAN_INCOMING_=0 R CMD check --as-cran $(PACKAGE)_$(PACKAGEVERSION).tar.gz
 
+releasecheck: cran
+	$(Reval) 'urlchecker::url_check()'
+	$(MAKE) winbuild
+	$(MAKE) macbuild
+
 check: build
 ifdef TEST
 	_R_CHECK_FORCE_SUGGESTS_=false NOT_CRAN=true $(Reval) 'devtools::test(filter="$(TEST)", stop_on_failure = TRUE)'
