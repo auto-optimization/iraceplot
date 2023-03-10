@@ -1,6 +1,6 @@
 Package: iraceplot
 Title: Plots for Visualizing the Data Produced by the 'irace' Package
-Version: 1.01
+Version: 1.1
 Authors@R: c(person("Manuel", "López-Ibáñez", role = c("aut", "cre"),
                     email = "manuel.lopez-ibanez@manchester.ac.uk",
                     comment = c(ORCID = "0000-0001-9974-1295")),
@@ -13,7 +13,7 @@ Description: Graphical visualization tools for analyzing the data produced by 'i
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Depends:
     R (>= 3.4)
 Imports:

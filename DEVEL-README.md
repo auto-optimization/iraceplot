@@ -1,5 +1,4 @@
-
-Subversion commands
+Git commands
 ---------------------
 ```
 # See differences in your local copy
@@ -32,6 +31,50 @@ Building, installing and testing
 * `make quick-install` : Do a minimal build and install that has as few
   requirements as possible. Designed for installing on machines that are not
   used for development, like IRIDIA's cluster.
+
+
+
+RELEASE Process:
+----------------
+
+TODO: See useful release steps here: https://github.com/tidyverse/ggplot2/issues/4965
+
+1. git status # make sure you are up to date and clean
+
+2. make check # passes
+
+3. make releasecheck 
+
+4. make examples # Takes a few hours. Inspect the examples in the vignette.
+
+5. make revdepcheck # Takes a few hours
+
+6. make releasebuild # Inspect the output for strange files!
+
+7. make closeversion
+
+8. Update `cran-comments.md`
+
+9. make submit
+
+11.a IF the package requires further changes:
+
+  * Make the changes.
+
+  * Repeat the whole RELEASE process above without bumping the version number.
+
+
+11.b IF the package is released in CRAN:
+
+  * Bump the version number in DESCRIPTION and NEWS.md.
+
+  * make build # To update other files with the new version."
+
+  * git ci -a -m " * Bump development version to $NEW_VERSION"
+
+12. Announce the release in the Google group:
+
+    https://groups.google.com/d/forum/irace-package
 
 
 Importing from packages

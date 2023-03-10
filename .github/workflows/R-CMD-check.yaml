@@ -8,6 +8,10 @@ on:
 
 name: R-CMD-check
 
+concurrency:
+  group: ${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 env:
   R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
   _R_CHECK_FORCE_SUGGESTS_: false
@@ -18,9 +22,7 @@ jobs:
   R-CMD-check:
 
     if: "! contains(github.event.head_commit.message, '[skip ci]')"
-
     runs-on: ${{ matrix.config.os }}
-
     name: Check ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
@@ -28,37 +30,31 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: '3.6'}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
+          - {os: ubuntu-20.04,   r: '3.6'}
+          # Use latest ubuntu to make it easier to install dependencies
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          
     env:
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
         
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
           cache-version: 1
-
-      - name: Check (CRAN)
-        if: success()
-        env:
-          NOT_CRAN: false
-        run: |
-          options(crayon.enabled = TRUE)
-          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
 
       - name: Check (NOT CRAN)
         if: success()
@@ -69,6 +65,20 @@ jobs:
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--run-donttest","--timings"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
+      - name: Check (CRAN)
+        if: success()
+        env:
+          NOT_CRAN: false
+        run: |
+          options(crayon.enabled = TRUE)
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: failure()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+        
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@main
@@ -79,14 +89,8 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
         with:
-          extra-packages: any::pkgdown any::remotes
+          extra-packages: any::pkgdown any::remotes local::.
           needs: website
-
-      - name: Install package
-        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
-        run: |
-          remotes::install_local(".", build = TRUE, upgrade = "never", force = TRUE, build_opts = c("--no-resave-data"), build_manual = TRUE, build_vignettes = TRUE)
-        shell: Rscript {0}
 
       - name: Deploy package
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release'

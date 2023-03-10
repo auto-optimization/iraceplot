@@ -1,14 +1,16 @@
 ^.*\.Rproj$
+^DEVEL-README.md$
 ^LICENSE\.md$
 ^Makefile$
 ^Meta$
 ^\.Rproj\.user$
 ^\.github$
 ^_pkgdown\.yml$
+^codecov\.yml$
+^cran-comments.md$
+^devel-tests
 ^docs$
 ^git_version$
 ^man-roxygen$
 ^pkgdown$
-^DEVEL-README.md$
-^devel-tests
 
