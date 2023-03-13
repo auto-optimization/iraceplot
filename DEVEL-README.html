@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">iraceplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.1.9999</span>
       </span>
     </div>
 
@@ -81,31 +81,27 @@ git help</code></pre>
 <div class="section level2">
 <h2 id="release-process">RELEASE Process:<a class="anchor" aria-label="anchor" href="#release-process"></a></h2>
 <p>TODO: See useful release steps here: <a href="https://github.com/tidyverse/ggplot2/issues/4965" class="external-link uri">https://github.com/tidyverse/ggplot2/issues/4965</a></p>
-<ol style="list-style-type: decimal"><li><p>git status # make sure you are up to date and clean</p></li>
-<li><p>make check # passes</p></li>
-<li><p>make releasecheck</p></li>
-<li><p>make examples # Takes a few hours. Inspect the examples in the vignette.</p></li>
-<li><p>make revdepcheck # Takes a few hours</p></li>
-<li><p>make releasebuild # Inspect the output for strange files!</p></li>
-<li><p>make closeversion</p></li>
-<li><p>Update <code>cran-comments.md</code></p></li>
-<li><p>make submit</p></li>
-</ol><p>11.a IF the package requires further changes:</p>
+<p>git status # make sure you are up to date and clean</p>
+<p>make check # passes</p>
+<p>make releasecheck</p>
+<p>make releasebuild # Inspect the output for strange files!</p>
+<p>make closeversion</p>
+<p>Update <code>cran-comments.md</code></p>
+<p>make submit</p>
+<p>a IF the package requires further changes:</p>
 <ul><li><p>Make the changes.</p></li>
 <li><p>Repeat the whole RELEASE process above without bumping the version number.</p></li>
-</ul><p>11.b IF the package is released in CRAN:</p>
+</ul><p>b IF the package is released in CRAN:</p>
 <ul><li><p>Bump the version number in DESCRIPTION and NEWS.md.</p></li>
 <li><p>make build # To update other files with the new version.”</p></li>
 <li><p>git ci -a -m ” * Bump development version to $NEW_VERSION”</p></li>
-</ul><ol start="12" style="list-style-type: decimal"><li>
-<p>Announce the release in the Google group:</p>
-<p><a href="https://groups.google.com/d/forum/irace-package" class="external-link uri">https://groups.google.com/d/forum/irace-package</a></p>
-</li>
-</ol></div>
+</ul><p>Announce the release in the Google group:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>groups.google.com<span class="sc">/</span>d<span class="sc">/</span>forum<span class="sc">/</span>irace<span class="sc">-</span>package</span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="importing-from-packages">Importing from packages<a class="anchor" aria-label="anchor" href="#importing-from-packages"></a></h2>
 <p>We do not use this:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @importFrom DT datatable</span></span></code></pre></div>
 <p>because we always use <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>. By using <code>importFrom</code>, the name <code>'datatable'</code> is imported and we cannot use it for something else. The criterion should be:</p>
 <ul><li>If we use a lot of functions from a package, import the whole package with <code>@import</code>.</li>
