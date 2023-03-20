@@ -1,6 +1,6 @@
 #' The configurations by iteration and instance
 #'
-#' A graph is created with all the settings and instance of the training data
+#' This is a simplified version of the visualization you can obtain with [`acviz`](https://github.com/souzamarcelo/acviz). This function is currently VERY SLOW.
 #'
 #' @template arg_irace_results
 #'
@@ -135,6 +135,6 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
     # If you do not add the value of filename, the plot is displayed
   } else {
     p
-    return(p)
   }
+  return(p)
 }

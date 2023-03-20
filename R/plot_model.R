@@ -287,7 +287,7 @@ plot_model <- function(irace_results, param_name, filename=NULL)
     q <- do.call("grid.arrange", c(p, ncol = 1, left="Iterations"))
   }
   
-  if(!is.null(filename))
+  if (!is.null(filename))
     ggsave(filename, plot = q)
   q
 }

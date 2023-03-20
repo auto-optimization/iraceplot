@@ -7,7 +7,7 @@
 report(
   irace_results,
   filename = "report",
-  sections = list(experiments_matrix = NULL),
+  sections = list(experiments_matrix = NULL, convergence = TRUE),
   interactive = base::interactive()
 )
 }

@@ -28,14 +28,14 @@
 #' }
 #' @export
 report <- function(irace_results, filename = "report",
-                   sections = list(experiments_matrix = NULL),
+                   sections = list(experiments_matrix = NULL, convergence = TRUE),
                    interactive = base::interactive())
 {
   if (missing(irace_results)) stop("irace_results is required")
   irace_results <- irace::read_logfile(irace_results)
 
   # Large experiments matrix crashes pandoc.
-  if (is.null(sections$experiments_matrix)) {
+  if (is.null(sections$experiments_matrix) || is.na(sections$experiments_matrix)) {
     sections$experiments_matrix <- (prod(dim(irace_results$experiments)) < 128L*1024L)
     if (!sections$experiments_matrix)
       iraceplot_warn("Race overview disable because the experiments matrix",
