@@ -80,11 +80,8 @@ show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL,
   tab
 }
 
-niterations <- length(irace_results$allElites)
-ninstances <- nrow(irace_results$experiments)
-byiterations <- summarise_by_iteration(irace_results)
-byinstance <- summarise_by_instance(irace_results)
 best_elites <- as.character(irace_results$allElites[[length(irace_results$allElites)]])
+irs <- irace_summarise(irace_results)
 ```
 
 # Scenario
@@ -96,6 +93,18 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 
 
 # Parameters
+
+```{r parameters_summarise, echo=FALSE, results='asis'}
+knitr::kable(parameters_summarise(irace_results$parameters))
+```
+## Parameters tree
+<pre>
+```{r parameters_tree, echo=FALSE, results='asis'}
+parameters_tree(irace_results$parameters)
+```
+</pre>
+
+## Parameters file
 <details>
 <summary>Click to show</summary>
 <pre>
@@ -103,39 +112,32 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 irace::printParameters(irace_results$parameters)
 ```
 </pre>
-## Parameters tree
-<pre>
-```{r parameters_tree, echo=FALSE, results='asis'}
-parameters_tree(irace_results$parameters)
-```
-</pre>
 </details> 
 
 
 # General information
-<!-- # TODO: Create a function summary() that reports this general information as a tibble. -->
-- irace version: `r {irace_results$irace.version}`
-- Iterations: `r {niterations}`
-- Configurations: `r {nrow(irace_results$allConfigurations)}`
-- Instances: `r {ninstances}`
-- Experiments: `r {nrow(irace_results$experimentLog)}`
-- Elite configurations: `r {length(irace_results$allElites[[niterations]])}`
-- Soft restarts: `r {if(any(irace_results$softRestart)) paste0(sum(irace_results$softRestart), " / ", length(irace_results$softRestart)) else 0L}`
-- Rejected configurations: `r {length(irace_results$state$rejectedIDs)}`
-- Running time (seconds): `r {if(is.null(irace_results$state$elapsed)) "Unknown" else paste0(round(irace_results$state$elapsed["user"],0), " (CPU-user); ", round(irace_results$state$elapsed["system"],0), " (CPU-sys); ", round(irace_results$state$elapsed["wallclock"],0), " (Wall-clock)")}`
-- Termination reason: `r {if(is.null(irace_results$state$completed)) "Missing" else irace_results$state$completed}`
+- irace version: `r {irs$version}`
+- Iterations: `r {irs$n_iterations}`
+- Configurations: `r {irs$n_configurations}`
+- Instances: `r {irs$n_instances}`
+- Experiments: `r {irs$n_experiments}`
+- Elite configurations: `r {irs$n_elites}`
+- Soft restarts: `r {irs$n_soft_restarts}`
+- Rejected configurations: `r {irs$n_rejected}`
+- Running time (seconds): `r {if (is.na(irs$time_wallclock)) "Unknown" else paste0(round(irs$time_cpu_user,0), " (CPU-user); ", round(irs$time_cpu_sys,0), " (CPU-sys); ", round(irs$time_wallclock,0), " (Wall-clock)")}`
+- Termination reason: `r {irs$termination_reason}`
 
 ## By iteration
 
 ```{r table-by-iterations,fig.align="center", echo=FALSE}
-show_table(byiterations, lengthMenu = c(20, 50, 100),
+show_table(summarise_by_iteration(irace_results), lengthMenu = c(20, 50, 100),
            colorbar = c("configurations", "instances", "experiments", "elites"))
 ```
 
 ## By instance
 
 ```{r table-by-instance,fig.align="center", echo=FALSE}
-show_table(byinstance, lengthMenu = c(20, 50, 100), search = TRUE,
+show_table(summarise_by_instance(irace_results), lengthMenu = c(20, 50, 100), search = TRUE,
            colorbar = c("experiments", "mean", "sd", "median", "min", "max"))
 #columnDefs = list(list(targets = -1, searchable = FALSE))
 ```

@@ -1,6 +1,6 @@
 # iraceplot 1.1.9999
  
- * New function `parameters_tree()`.
+ * New functions `parameters_tree()`, `parameters_summarise()`, `irace_summarise()`.
  
 
 # iraceplot 1.1
