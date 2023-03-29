@@ -16,8 +16,7 @@ parallel_coord2(
 \item{configurations}{Data frame, configurations in \code{irace} format
 (example: \code{configurations = iraceResults$allConfigurations})}
 
-\item{parameters}{List, parameter object in irace format
-(example: \code{parameters = iraceResults$parameters})}
+\item{parameters}{(\code{list()}) Parameter space in irace format. See the function \code{\link[irace:readParameters]{irace::readParameters()}}.}
 
 \item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
 \code{c("algorithm","alpha","rho","q0","rasrank")}.}

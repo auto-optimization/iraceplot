@@ -103,6 +103,12 @@ best_elites <- as.character(irace_results$allElites[[length(irace_results$allEli
 irace::printParameters(irace_results$parameters)
 ```
 </pre>
+## Parameters tree
+<pre>
+```{r parameters_tree, echo=FALSE, results='asis'}
+parameters_tree(irace_results$parameters)
+```
+</pre>
 </details> 
 
 

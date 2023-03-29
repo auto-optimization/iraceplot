@@ -16,8 +16,7 @@ sampling_heatmap2(
 \item{configurations}{Data frame, configurations in \code{irace} format
 (example: \code{configurations = iraceResults$allConfigurations})}
 
-\item{parameters}{List, parameter object in irace format
-(example: \code{configurations = iraceResults$parameters})}
+\item{parameters}{(\code{list()}) Parameter space in irace format. See the function \code{\link[irace:readParameters]{irace::readParameters()}}.}
 
 \item{param_names}{String vector of size 2, names of the parameters that should be included in the plot
 (example: param_names = c("beta","alpha"))}

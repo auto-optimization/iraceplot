@@ -9,8 +9,7 @@
 # @param param_name
 # String, name of a parameter in the parameters object
 #
-# @param parameters
-# List, Parameter definition object obtained from an irace log file
+# @template arg_parameters
 #
 # @param size
 # Integer, number of intervals to create in the domain
@@ -219,9 +218,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 #' Data frame, configurations in `irace` format 
 #' (example: `configurations = iraceResults$allConfigurations`)
 #' 
-#' @param parameters
-#' List, parameter object in irace format
-#' (example: `configurations = iraceResults$parameters`)
+#' @template arg_parameters
 #'
 #' @param param_names
 #' String vector of size 2, names of the parameters that should be included in the plot

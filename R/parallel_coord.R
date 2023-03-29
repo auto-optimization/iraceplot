@@ -282,9 +282,7 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 #' Data frame, configurations in `irace` format 
 #' (example: `configurations = iraceResults$allConfigurations`)
 #'
-#' @param parameters
-#' List, parameter object in irace format
-#' (example: `parameters = iraceResults$parameters`)
+#' @template arg_parameters
 #'
 #' @template arg_param_names
 #'

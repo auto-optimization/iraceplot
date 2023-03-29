@@ -1,4 +1,9 @@
-# iraceplot 1.01
+# iraceplot 1.1.9999
+ 
+ * New function `parameters_tree()`.
+ 
+
+# iraceplot 1.1
 
  * New function `ablation_plot()` to plot the result of `irace::ablation()`.
 
