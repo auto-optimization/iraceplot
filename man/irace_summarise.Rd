@@ -4,7 +4,7 @@
 \alias{irace_summarise}
 \title{Summarise the results of a run of irace}
 \usage{
-irace_summarise(iraceResults)
+irace_summarise(irace_results)
 }
 \arguments{
 \item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
@@ -16,9 +16,9 @@ irace_summarise(iraceResults)
 Summarise the results of a run of irace
 }
 \examples{
-iraceResults <- read_logfile(system.file(package="iraceplot", "exdata",
+irace_results <- read_logfile(system.file(package="iraceplot", "exdata",
                                          "guide-example.Rdata", mustWork = TRUE))
-irace_summarise(iraceResults)
+irace_summarise(irace_results)
 
 }
 \author{
