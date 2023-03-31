@@ -2,40 +2,43 @@
 #' 
 #' @template arg_irace_results
 #'
-#' @return [list()]
+#' @return `list()`
 #' 
 #' @examples
 #' iraceResults <- read_logfile(system.file(package="iraceplot", "exdata",
 #'                                          "guide-example.Rdata", mustWork = TRUE))
-#  irace_summarise(iraceResults)
+#' irace_summarise(iraceResults)
 #' 
 #' @author Manuel López-Ibáñez
 #' @export
-irace_summarise <- function(irace_results)
+irace_summarise <- function(iraceResults)
 {
-  niterations <- length(irace_results$allElites)
+  if (missing(iraceResults)) stop("argument 'iraceResults' is missing")
+  iraceResults <- read_logfile(iraceResults)
+
+  niterations <- length(iraceResults$allElites)
 
   time_cpu_user <- time_cpu_sys <- time_cpu_total <- time_wallclock <- NA
-  if (!is.null(irace_results$state$elapsed)) {
-    time_cpu_user <- irace_results$state$elapsed["user"]
-    time_cpu_sys <- irace_results$state$elapsed["system"]
+  if (!is.null(iraceResults$state$elapsed)) {
+    time_cpu_user <- iraceResults$state$elapsed[["user"]]
+    time_cpu_sys <- iraceResults$state$elapsed[["system"]]
     time_cpu_total <- time_cpu_user + time_cpu_sys
-    time_wallclock <- irace_results$state$elapsed["wallclock"]
+    time_wallclock <- iraceResults$state$elapsed[["wallclock"]]
   }
   
   list(
-    version = irace_results$irace.version,
+    version = iraceResults$irace.version,
     n_iterations = niterations,
-    n_configurations = nrow(irace_results$allConfigurations),
-    n_instances = nrow(irace_results$experiments),
-    n_experiments = nrow(irace_results$experimentLog),
-    n_elites = length(irace_results$allElites[[niterations]]),
-    n_soft_restarts = sum(irace_results$softRestart),
-    n_rejected = length(irace_results$state$rejectedIDs),
+    n_configurations = nrow(iraceResults$allConfigurations),
+    n_instances = nrow(iraceResults$experiments),
+    n_experiments = nrow(iraceResults$experimentLog),
+    n_elites = length(iraceResults$allElites[[niterations]]),
+    n_soft_restarts = sum(iraceResults$softRestart),
+    n_rejected = length(iraceResults$state$rejectedIDs),
     time_cpu_user = time_cpu_user,
     time_cpu_sys = time_cpu_sys,
     time_cpu_total = time_cpu_total,
     time_wallclock = time_wallclock,
-    termination_reason = if(is.null(irace_results$state$completed)) "Missing" else irace_results$state$completed
+    termination_reason = if (is.null(iraceResults$state$completed)) "Missing" else iraceResults$state$completed
   )
 }
