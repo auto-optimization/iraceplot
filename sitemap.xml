@@ -58,6 +58,9 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/irace_summarise.html</loc>
+  </url>
+  <url>
     <loc>/reference/iraceplot-package.html</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>/reference/parallel_coord2.html</loc>
+  </url>
+  <url>
+    <loc>/reference/parameters_summarise.html</loc>
   </url>
   <url>
     <loc>/reference/parameters_tree.html</loc>
