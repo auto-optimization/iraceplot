@@ -41,6 +41,8 @@
 #' @export
 boxplot_training <- function(irace_results, iteration = NULL, id_configurations = NULL, ...)
 {
+  irace_results <- read_logfile(irace_results)
+  
   if (length(iteration) > 0 & length(id_configurations) > 0)
     stop("cannot use id_configurations and iteration at the same time")
   

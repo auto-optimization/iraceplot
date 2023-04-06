@@ -30,21 +30,21 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   if (rpd) experiments <- calculate_rpd(experiments)
   
   exp_log <- select(as.data.frame(irace_results$experimentLog), -time, -bound)
-  value <- sample(NA, size = dim(exp_log)[1], replace = TRUE)
-  execution <- sample(NA, size = dim(exp_log)[1], replace = TRUE)
+  value <- sample(NA, size = nrow(exp_log), replace = TRUE)
+  execution <- sample(NA, size = nrow(exp_log), replace = TRUE)
   tabla <- cbind(exp_log, value, execution)
 
   # the values of each configuration are added to the table
   cont_exe <- 0
-  for (i in 1:dim(exp_log)[1]) {
-    for (j in 1:dim(irace_results$experiments)[1]) {
+  # FIXME: This loop is too slow. What is it doing?
+  for (i in 1:nrow(exp_log)) {
+    for (j in 1:nrow(irace_results$experiments)) {
       if (!is.na(experiments[[tabla$configuration[i]]][j])) {
+        cont_exe <- cont_exe + 1
         if (is.na(tabla$value[i])) {
-          cont_exe <- cont_exe + 1
           tabla$value[i] <- experiments[[tabla$configuration[i]]][j]
           tabla$execution[i] <- cont_exe
         } else {
-          cont_exe <- cont_exe + 1
           add <- tabla[i, ]
           add$value <- experiments[[tabla$configuration[i]]][j]
           add$execution <- cont_exe
@@ -55,34 +55,29 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   }
 
   # new columns are created and added to the table
-  type <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  conf_it <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  instance_it <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  media_regular <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  media_elite <- sample(NA, size = dim(tabla)[1], replace = TRUE)
-  regular_color <- sample("median iteration", size = dim(tabla)[1], replace = TRUE)
-  elite_color <- sample("median elites", size = dim(tabla)[1], replace = TRUE)
-  tabla <- cbind(tabla, type, conf_it, instance_it, media_regular, media_elite, regular_color, elite_color)
   tabla <- tabla[order(tabla$execution), ]
+  tabla <- cbind(tabla, type = NA, conf_it = NA, instance_it = NA, media_regular = NA, media_elite = NA,
+                 regular_color = "median iteration", elite_color = "median elites")
 
+  # FIXME: This code needs to be revised.
   # the data is added to the conf_it, instance_it and type columns
   for (j in 1:length(irace_results$allElites)) {
     nconfig <- max(tabla$execution[tabla$iteration == j])
     tabla$conf_it[tabla$iteration == j] <- nconfig
     tabla$instance_it[tabla$iteration == j] <- max(unique(tabla$instance[tabla$iteration == j]))
-
+    is_elite <- tabla$configuration %in% irace_results$allElites[[j]]
+    tabla$type[tabla$iteration == j & !is_elite] <- "regular config."
     if (j == length(irace_results$allElites)) {
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% irace_results$allElites[[j]])] <- "regular config."
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% irace_results$allElites[[j]])] <- "final elite config."
+      tabla$type[tabla$iteration == j & is_elite] <- "final elite config."
       tabla$type[tabla$iteration == j & (tabla$configuration %in% irace_results$allElites[[j]][1])] <- "best found config."
     } else {
-      tabla$type[tabla$iteration == j & !(tabla$configuration %in% irace_results$allElites[[j]])] <- "regular config."
-      tabla$type[tabla$iteration == j & tabla$configuration %in% irace_results$allElites[[j]]] <- "elite config."
+      tabla$type[tabla$iteration == j & is_elite] <- "elite config."
     }
   }
 
-  # The mean values <U+200B><U+200B>are calculated in the configurations by iteration
+  # The mean values are calculated in the configurations by iteration
   for (k in 1:length(irace_results$allElites)) {
+    # FIXME: This is not the median but the mean???
     tabla$media_regular[tabla$iteration == k] <- mean(tabla$value[tabla$iteration == k])
     tabla$media_elite[tabla$iteration == k] <- mean(tabla$value[tabla$iteration == k & (tabla$type == "elite config." | tabla$type == "final elite config." | tabla$type == "best found config.")])
   }
@@ -99,7 +94,7 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   exe_factor <- factor(tabla$execution)
   levels(exe_factor) <- tabla$execution
   tabla <- cbind(tabla, exe_factor)
-  text <- NULL # Silence CRAN warning
+  text <- type <- media_elite <- elite_color <- media_regular <- regular_color <- NULL # Silence CRAN warning
 
   # point plot creation
   p <- ggplot(tabla, aes(x = exe_factor, y = value, color = instance, text = text)) +

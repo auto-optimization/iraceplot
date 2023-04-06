@@ -24,6 +24,7 @@
 boxplot_test <- function(irace_results, type = c("all", "ibest", "best"), ...)
 {
   type <- match.arg(type)
+  irace_results <- read_logfile(irace_results)
   if (!has_testing_data(irace_results))
     cli_abort("{.field irace_results} does not contain the testing data")
     

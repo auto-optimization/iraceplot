@@ -28,16 +28,16 @@
 #' }
 #' @export
 report <- function(irace_results, filename = "report",
-                   sections = list(experiments_matrix = NULL, convergence = TRUE),
+                   sections = list(experiments_matrix = NULL, convergence = FALSE),
                    interactive = base::interactive())
 {
   if (missing(irace_results)) stop("irace_results is required")
   # render() already checks this but the error is not clear enough.
   if (! rmarkdown::pandoc_available("1.12.3", error = FALSE))
     stop("pandoc version 1.12.3 or higher is required and was not found. ",
-         "The RStudio IDE has bundled a version of Pandoc, so you do not need to install Pandoc by yourself if you are using the RStudio IDE. ",
-         "Otherwise, follow the instructions at https://pandoc.org/installing.html ")
-    
+         "You can install the RStudio IDE, which has bundled a version of Pandoc. ",
+         "Otherwise, follow the instructions at https://pandoc.org/installing.html .")
+  
   irace_results <- irace::read_logfile(irace_results)
 
   # Large experiments matrix crashes pandoc.
