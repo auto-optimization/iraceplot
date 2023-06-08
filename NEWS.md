@@ -1,8 +1,11 @@
 # iraceplot 1.1.9999
  
  * New functions `parameters_tree()`, `parameters_summarise()`, `irace_summarise()`.
- 
 
+ * `plot_experiments_matrix()` now shows rejected configurations with a red `X`.
+
+ * Give a better error if `pandoc` is missing.
+ 
 # iraceplot 1.1
 
  * New function `ablation_plot()` to plot the result of `irace::ablation()`.

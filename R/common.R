@@ -1,6 +1,8 @@
 calculate_rpd <- function(x)
 {
-  min_cols <- matrixStats::rowMins(as.matrix(x), na.rm = TRUE)
+  x <- as.matrix(x)
+  x[is.infinite(x)] <- NA # Remove infinities
+  min_cols <- matrixStats::rowMins(x, na.rm = TRUE)
   100 * (x - min_cols) / min_cols
 }
 

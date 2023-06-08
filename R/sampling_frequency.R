@@ -7,10 +7,9 @@
 #' maximum 9, the parameters included in the plot can be specified by setting
 #' the param_names argument.
 #'
-#' @param configurations
-#' Data frame, configurations in `irace` format. Example: `iraceResults$allConfigurations`.
+#' @param configurations (`data.frame()`)\cr Configurations in `irace` format. Example: `iraceResults$allConfigurations`.
 #' 
-#' @param parameters List, parameters object in irace format. If this argument
+#' @param parameters (`list()`)\cr Parameters object in `irace` format. If this argument
 #'   is missing, the first parameter is taken as the `iraceResults` data
 #'   generated when loading the `.Rdata` file created by `irace` and
 #'   `configurations=iraceResults$allConfigurations` and `parameters =
@@ -138,16 +137,16 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
   col <- row <- 3
   if (npar <= 3) {
     col <- npar 
-    row <- 1 
+    row <- 1L 
   } else if (npar <=6){
-    col <- 3
-    row <- 2
+    col <- 3L
+    row <- 2L
   } 
   # Generate plots
   if (npar > 9)
-    wp <- do.call("marrangeGrob", list(grobs=plot.list, ncol = col, nrow = row, as.table=FALSE))
-  else if (length(plot.list)==1)
-    wp <- plot.list[[1]]
+    wp <- marrangeGrob(grobs=plot.list, ncol = col, nrow = row)
+  else if (length(plot.list) == 1L)
+    wp <- plot.list[[1L]]
   else
     wp <- do.call("grid.arrange", c(plot.list))
   

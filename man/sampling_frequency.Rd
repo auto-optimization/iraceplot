@@ -13,9 +13,9 @@ sampling_frequency(
 )
 }
 \arguments{
-\item{configurations}{Data frame, configurations in \code{irace} format. Example: \code{iraceResults$allConfigurations}.}
+\item{configurations}{(\code{data.frame()})\cr Configurations in \code{irace} format. Example: \code{iraceResults$allConfigurations}.}
 
-\item{parameters}{List, parameters object in irace format. If this argument
+\item{parameters}{(\code{list()})\cr Parameters object in \code{irace} format. If this argument
 is missing, the first parameter is taken as the \code{iraceResults} data
 generated when loading the \code{.Rdata} file created by \code{irace} and
 \code{configurations=iraceResults$allConfigurations} and \code{parameters = iraceResults$parameters}.}

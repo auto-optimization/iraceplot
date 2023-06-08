@@ -6,7 +6,7 @@
 #' the order in which they where seen during the configuration run. This plot
 #' gives a general idea of the configuration process progression, the number of
 #' evaluations of each configuration show how long they survived in the
-#' iterated racing procedure.
+#' iterated racing procedure.  Rejected configurations are shown with a red `X`.
 #'
 #' @template arg_irace_results
 #'
@@ -16,7 +16,8 @@
 #'   values, `"rpd"` shows relative percentage deviation per instance and
 #'   `"rank"` shows rank per instance.
 #'
-#' @param show_conf_ids If `TRUE`, it shows the configuration IDs in the x-axis. Usually there are too many configurations, thus the default is `FALSE`.
+#' @param show_conf_ids (`logical(1)`)\cr  If `TRUE`, it shows the configuration IDs in the x-axis. The default `NA`,
+#' only shows them if there are no more than 25.
 #'
 #' @template arg_interactive
 #' 
@@ -26,6 +27,9 @@
 #' iraceResults <- read_logfile(system.file(package="irace", "exdata",
 #'                                          "irace-acotsp.Rdata", mustWork = TRUE))
 #' plot_experiments_matrix(iraceResults)
+#'
+#' plot_experiments_matrix(read_logfile(system.file(package="iraceplot", "exdata",
+#'                                          "dummy-reject.Rdata", mustWork = TRUE)))
 #' @export
 plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"),
                                     show_conf_ids = FALSE, interactive = base::interactive())
@@ -36,7 +40,13 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   if (is.null(conf_ids)) conf_ids <- as.character(1:ncol(experiments))
   inst_ids <- rownames(experiments)
   if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
+
+  if (is.na(show_conf_ids))
+    show_conf_ids <- length(conf_ids) <= 25
   
+  has_inf <- any(is.infinite(experiments))
+  # FIXME: These transformations remove Inf, so we cannot highlight them
+  # later. we should save the location of Inf, then restore them.
   if (metric == "rank") {
     experiments[] <- matrixStats::rowRanks(experiments, ties.method = "average")
     metric_lab <- "Rank"
@@ -50,15 +60,17 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
     transform <- "identity"
   }
 
-  conf_id <- inst_id <- cost <- text <- NULL
+  conf_id <- inst_id <- cost <- text <- rejected <- NULL
   # The table is created and organized for ease of use
   experiments <- tibble::as_tibble(experiments) %>%
     rownames_to_column("inst_id") %>%
     tidyr::pivot_longer(-c("inst_id"), names_to = "conf_id", values_to = "cost") %>%
     # We need to relevel so that they appear in the correct order
     mutate(conf_id = forcats::fct_relevel(conf_id, conf_ids)) %>%
-    mutate(inst_id = forcats::fct_relevel(inst_id, inst_ids))
-
+    mutate(inst_id = forcats::fct_relevel(inst_id, inst_ids)) %>%
+    # Replace negative infinity to help with plotting
+    mutate(rejected = is.infinite(cost))
+  
   # The text field is added to the table to show it in the interactive plot.
   if (interactive) {
     experiments <- experiments %>%
@@ -66,6 +78,8 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   } else {
     experiments <- experiments %>% mutate(text = "")
   }
+  # Remove Inf before plotting.
+  experiments <- experiments %>% mutate(cost = ifelse(is.infinite(cost), NA, cost))
 
   p <- ggplot(experiments, aes(x = conf_id, y = inst_id, fill = cost, text = text)) +
     geom_tile() + # Heatmap style
@@ -79,7 +93,15 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
           plot.background = element_blank(),
           panel.background = element_blank())
 
-  if (!show_conf_ids) p <- p + theme(axis.text.x = element_blank())
+  # Show an X for rejected configurations.
+  if (has_inf) {
+    p <- p + geom_point(data = experiments %>% dplyr::filter(rejected), show.legend = FALSE,
+                        aes(x = conf_id, y = inst_id), size=2, shape=4, fill=NA, color="red") +
+      guides(size= "none") # This is needed because plotly ignores guide="none".
+  }
+      
+  if (!show_conf_ids)
+    p <- p + theme(axis.text.x = element_blank())
 
   if (interactive) {
     p <- plotly::ggplotly(p, tooltip = "text")

@@ -21,7 +21,8 @@ plot_experiments_matrix(
 values, \code{"rpd"} shows relative percentage deviation per instance and
 \code{"rank"} shows rank per instance.}
 
-\item{show_conf_ids}{If \code{TRUE}, it shows the configuration IDs in the x-axis. Usually there are too many configurations, thus the default is \code{FALSE}.}
+\item{show_conf_ids}{(\code{logical(1)})\cr  If \code{TRUE}, it shows the configuration IDs in the x-axis. The default \code{NA},
+only shows them if there are no more than 25.}
 
 \item{interactive}{(\code{logical(1)}) TRUE if the report may use interactive features (using \code{\link[plotly:ggplotly]{plotly::ggplotly()}}, \code{\link[plotly:plot_ly]{plotly::plot_ly()}} and \code{\link[DT:dataTableOutput]{DT::renderDataTable()}}) or FALSE if such features must be disabled. Defaults to the value returned by \code{interactive()},}
 }
@@ -35,10 +36,13 @@ created in the configuration process. Instances are shown in the y-axis in
 the order in which they where seen during the configuration run. This plot
 gives a general idea of the configuration process progression, the number of
 evaluations of each configuration show how long they survived in the
-iterated racing procedure.
+iterated racing procedure.  Rejected configurations are shown with a red \code{X}.
 }
 \examples{
 iraceResults <- read_logfile(system.file(package="irace", "exdata",
                                          "irace-acotsp.Rdata", mustWork = TRUE))
 plot_experiments_matrix(iraceResults)
+
+plot_experiments_matrix(read_logfile(system.file(package="iraceplot", "exdata",
+                                         "dummy-reject.Rdata", mustWork = TRUE)))
 }
