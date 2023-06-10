@@ -78,9 +78,9 @@ closeversion:
 	git push origin :refs/tags/v$(PACKAGEVERSION) # Remove any existing tag
 	git tag -f -a v$(PACKAGEVERSION) -m "Version $(PACKAGEVERSION)"
 	git push --tags
-	cp cran-comments-template.md cran-comments.md
-	@sed 's/VERSION/$(PACKAGEVERSION)/' cran-comments.md
-	cat cran-comments.md
+	@cp cran-comments-template.md cran-comments.md
+	@sed -i 's/VERSION/$(PACKAGEVERSION)/' cran-comments.md
+	@cat cran-comments.md
 	@echo "-----> If the above is correct, then do make submit <----"
 
 
