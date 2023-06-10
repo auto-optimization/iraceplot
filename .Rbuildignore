@@ -8,6 +8,7 @@
 ^\.github$
 ^_pkgdown\.yml$
 ^codecov\.yml$
+^cran-comments-template.md$
 ^cran-comments.md$
 ^devel-tests
 ^docs$
