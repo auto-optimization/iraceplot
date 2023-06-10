@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-I would like to submit version $VERSION of the iraceplot package to CRAN.
+I would like to submit version VERSION of the iraceplot package to CRAN.
 
 The NEWS section corresponding to this version is available from:
 

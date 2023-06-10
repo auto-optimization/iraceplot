@@ -51,8 +51,6 @@ make releasebuild # Inspect the output for strange files!
 
 make closeversion
 
-Update `cran-comments.md`
-
 make submit
 
 a IF the package requires further changes:
