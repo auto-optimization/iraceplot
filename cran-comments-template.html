@@ -53,61 +53,14 @@
     </div>
 
 
-<div class="section level2">
-<h2 id="git-commands">Git commands<a class="anchor" aria-label="anchor" href="#git-commands"></a></h2>
-<pre><code># See differences in your local copy
-git diff
-# Commit your changes to the local repository
-git commit -m "Explain your changes"
-# Update your local copy with changes from remote repository (github)
-git pull --rebase
-# Send your changes to the remote repository
-git push
-# See differences between branches
-git diff master
-# Merge changes from master into your branch
-git rebase -i master
-# Get help
-git help</code></pre>
-</div>
-<div class="section level2">
-<h2 id="building-installing-and-testing">Building, installing and testing<a class="anchor" aria-label="anchor" href="#building-installing-and-testing"></a></h2>
-<ul><li><p><code>make build</code> : Build package</p></li>
-<li><p><code>make install</code> : Build and install the package</p></li>
-<li><p><code>make cran</code> : Check that the build is acceptable by CRAN</p></li>
-<li><p><code>make check</code> : More thoroughly test the build</p></li>
-<li><p><code>make quick-install</code> : Do a minimal build and install that has as few requirements as possible. Designed for installing on machines that are not used for development, like IRIDIA’s cluster.</p></li>
-</ul></div>
-<div class="section level2">
-<h2 id="release-process">RELEASE Process:<a class="anchor" aria-label="anchor" href="#release-process"></a></h2>
-<p>TODO: See useful release steps here: <a href="https://github.com/tidyverse/ggplot2/issues/4965" class="external-link uri">https://github.com/tidyverse/ggplot2/issues/4965</a></p>
-<p>Update version number in Makefile and NEWS.md</p>
-<p>git status # make sure you are up to date and clean</p>
-<p>make check # passes</p>
-<p>make releasecheck</p>
-<p>make releasebuild # Inspect the output for strange files!</p>
-<p>make closeversion</p>
-<p>make submit</p>
-<p>a IF the package requires further changes:</p>
-<ul><li><p>Make the changes.</p></li>
-<li><p>Repeat the whole RELEASE process above without bumping the version number.</p></li>
-</ul><p>b IF the package is released in CRAN:</p>
-<ul><li><p>Bump the version number in DESCRIPTION and NEWS.md.</p></li>
-<li><p>make build # To update other files with the new version.”</p></li>
-<li><p>git ci -a -m ” * Bump development version to $NEW_VERSION”</p></li>
-</ul><p>Announce the release in the Google group:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>groups.google.com<span class="sc">/</span>d<span class="sc">/</span>forum<span class="sc">/</span>irace<span class="sc">-</span>package</span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="importing-from-packages">Importing from packages<a class="anchor" aria-label="anchor" href="#importing-from-packages"></a></h2>
-<p>We do not use this:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' @importFrom DT datatable</span></span></code></pre></div>
-<p>because we always use <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>. By using <code>importFrom</code>, the name <code>'datatable'</code> is imported and we cannot use it for something else. The criterion should be:</p>
-<ul><li>If we use a lot of functions from a package, import the whole package with <code>@import</code>.</li>
-<li>If we use a lot a few functions from a package, <code>@importFrom</code> those functions.</li>
-<li>Otherwise, use <code>package::function</code> so we don’t have to import anything.</li>
-</ul></div>
+<p>Dear CRAN maintainers,</p>
+<p>I would like to submit version VERSION of the iraceplot package to CRAN.</p>
+<p>The NEWS section corresponding to this version is available from:</p>
+<p><a href="https://auto-optimization.github.io/iraceplot/news/index.html" class="external-link uri">https://auto-optimization.github.io/iraceplot/news/index.html</a></p>
+<p>More information about irace may be found at:</p>
+<p><a href="https://auto-optimization.github.io/iraceplot/" class="external-link uri">https://auto-optimization.github.io/iraceplot/</a></p>
+<p>Thanks in advance,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Manuel López<span class="sc">-</span>Ibáñez.</span></code></pre></div>
 
 
   </div>
