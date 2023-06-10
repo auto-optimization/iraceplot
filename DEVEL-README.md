@@ -39,6 +39,8 @@ RELEASE Process:
 
 TODO: See useful release steps here: https://github.com/tidyverse/ggplot2/issues/4965
 
+Update version number in Makefile and NEWS.md
+
 git status # make sure you are up to date and clean
 
 make check # passes
