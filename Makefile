@@ -73,7 +73,8 @@ build: gendoc
 	@$(MAKE) clean
 
 closeversion:
-	git ci -a -m "Prepare for version $(PACKAGEVERSION)"	
+	git ci -a -m "Prepare for version $(PACKAGEVERSION)"
+	git push origin
 	git push origin :refs/tags/v$(PACKAGEVERSION) # Remove any existing tag
 	git tag -f -a v$(PACKAGEVERSION) -m "Version $(PACKAGEVERSION)"
 	git push --tags
