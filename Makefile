@@ -154,7 +154,7 @@ remotecran: releasebuild
 	$(Reval) "rhub::check_for_cran($(RHUB_COMMON_ARGS), show_status = TRUE)"
 
 macbuild: releasebuild
-	$(Reval) "rhub::check(platform='macos-highsierra-release-cran', $(RHUB_COMMON_ARGS))"
+	$(Reval) "devtools::check_mac_release()"
 
 winbuild: releasebuild
 	$(Reval) "devtools::check_win_release()"
