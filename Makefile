@@ -1,5 +1,5 @@
-PACKAGEVERSION=$(shell sh -c 'grep -F "Version: " DESCRIPTION | cut -f2 -d" "')
-PACKAGE=$(shell sh -c 'grep -F "Package: " DESCRIPTION | cut -f2 -d" "')
+PACKAGEVERSION:=$(shell sh -c 'grep -F "Version: " DESCRIPTION | cut -f2 -d" "')
+PACKAGE:=$(shell sh -c 'grep -F "Package: " DESCRIPTION | cut -f2 -d" "')
 # FIXME: This Makefile only works with this BINDIR!
 BINDIR=$(CURDIR)/..
 RNODE=iridiacluster
@@ -149,6 +149,12 @@ endif
 
 submit:
 	$(Reval) 'devtools::submit_cran()'
+
+postrelease:
+	$(Reval) 'writeLines(con = "DESCRIPTION", sub(pattern = "Version:[[:space:]]+([0-9.-]+)[[:space:]]*$$", replace = "Version: \\1.9000", x = readLines("DESCRIPTION"), perl=TRUE))'
+	$(MAKE) build
+	@rm -f cran-comments.md CRAN-SUBMISSION
+	git ci -a -m "Version $(PACKAGEVERSION) released.  Bump to development version."
 
 remotecran: releasebuild
 	$(Reval) "rhub::check_for_cran($(RHUB_COMMON_ARGS), show_status = TRUE)"
