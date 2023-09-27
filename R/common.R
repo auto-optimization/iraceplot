@@ -3,7 +3,7 @@ calculate_rpd <- function(x)
   x <- as.matrix(x)
   x[is.infinite(x)] <- NA # Remove infinities
   min_cols <- matrixStats::rowMins(x, na.rm = TRUE)
-  100 * (x - min_cols) / min_cols
+  100 * abs((x - min_cols) / min_cols)
 }
 
 orca_pdf <- function(filename, plot)
