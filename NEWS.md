@@ -1,3 +1,8 @@
+# iraceplot (development version)
+
+ * Fix negative RPD values (Fixed by @j-mezger).
+
+
 # iraceplot 1.2
  
  * New functions `parameters_tree()`, `parameters_summarise()`, `irace_summarise()`.
