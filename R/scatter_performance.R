@@ -127,8 +127,7 @@ scatter_performance <- function(experiments, x_id, y_id, rpd = TRUE,
 scatter_training <- function(irace_results, ...)
 {
   experiments <- irace_results$experiments
-  instances.ids <- irace_results$state$.irace$instancesList[1:nrow(experiments), "instance"]
-  rownames(experiments) <- irace_results$scenario$instances[instances.ids]
+  rownames(experiments) <- get_instanceID_seed_pairs(irace_results, index = 1:nrow(experiments), instances=TRUE)[, "instance"]
   scatter_performance(experiments, ...)
 }
 

@@ -10,3 +10,22 @@ irace::read_logfile
 #' @export
 read_ablogfile <- function(filename) irace::read_logfile(filename, name = "ablog")
 
+# Available in irace >= 3.6
+get_instanceID_seed_pairs <- function(iraceResults, index = 0L, instances = FALSE)
+{
+  if (missing(iraceResults)) stop("argument 'iraceResults' is missing")
+  iraceResults <- read_logfile(iraceResults)
+  instancesList <- iraceResults$state$.irace$instancesList
+  if (index != 0L)
+    instancesList <- instancesList[index, ]
+  if (!instances)
+    return(instancesList)
+
+  if (!is.atomic(iraceResults$scenario$instances)) {
+    warning("instances=TRUE requested, but instances are not of atomic type")
+    return(instancesList)
+  }
+  col <- if ("instance" %in% colnames(instancesList)) "instance" else "instanceID"
+  instanceID <- instancesList[, col]
+  cbind(instancesList, instance = iraceResults$scenario$instances[instanceID])
+}

@@ -11,7 +11,8 @@
 #' @export
 summarise_by_instance <- function(irace_results)
 {
-  instances <- irace_results$scenario$instances[irace_results$state$.irace$instancesList[1:nrow(irace_results$experiments), "instance"]]
+  # FIXME: Handle non-atomic instances (just use instanceID)
+  instances <- get_instanceID_seed_pairs(irace_results, index = 1:nrow(irace_results$experiments), instances=TRUE)[, "instance"]
 
   # FIXME: There must be a faster/easier way to do this.
   freq_count <- function(x) {
