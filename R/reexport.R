@@ -11,12 +11,12 @@ irace::read_logfile
 read_ablogfile <- function(filename) irace::read_logfile(filename, name = "ablog")
 
 # Available in irace >= 3.6
-get_instanceID_seed_pairs <- function(iraceResults, index = 0L, instances = FALSE)
+get_instanceID_seed_pairs <- function(iraceResults, index, instances = FALSE)
 {
   if (missing(iraceResults)) stop("argument 'iraceResults' is missing")
   iraceResults <- read_logfile(iraceResults)
   instancesList <- iraceResults$state$.irace$instancesList
-  if (index != 0L)
+  if (!missing(index))
     instancesList <- instancesList[index, ]
   if (!instances)
     return(instancesList)
