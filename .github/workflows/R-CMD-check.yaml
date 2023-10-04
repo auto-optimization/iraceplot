@@ -103,7 +103,7 @@ jobs:
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
         run: |
           remotes::install_cran('covr')
-          covr::codecov(type="all", quiet=FALSE)
+          covr::codecov(type="all", quiet=FALSE, commentDonttest = FALSE)
         shell: Rscript {0}
 
 
