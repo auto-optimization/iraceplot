@@ -1,10 +1,6 @@
-#' @keywords internal
-"_PACKAGE"
-
 #' The iraceplot package: \packageTitle{iraceplot}
-#' @description
 #'
-#' Graphical Visualization Tools for Analysing the Data Produced by irace.
+#' \packageDescription{iraceplot}
 #'
 #' boxplot_performance;
 #' boxplot_test;
@@ -25,19 +21,12 @@
 #' scatter_test;
 #' scatter_training;
 #'
-#' If you need information about any function you can write:
-#' ?name_function
+#' If you need information about any function you can write: `?name_function`
 #'
 #' If you need more information, go to the following page:
 #' https://auto-optimization.github.io/iraceplot/
 #'
 #' @name iraceplot-package
-#' @docType package
-#'
-#' @details  License: MIT + file LICENSE
-#'
-#' @author Maintainers: Pablo Oñate Marín and Leslie Pérez Cáceres and Manuel López-Ibañez
-#'         \email{leslie.perez@pucv.cl}
 #'
 #' @keywords package plot automatic configuration
 #'
@@ -51,4 +40,5 @@
 #' @importFrom gridExtra grid.arrange marrangeGrob
 # Use .data$col within aes() to silence CRAN warnings: https://ggplot2.tidyverse.org/articles/ggplot2-in-packages.html#using-aes-and-vars-in-a-package-function
 #' @importFrom rlang .data
-NULL
+"_PACKAGE"
+
