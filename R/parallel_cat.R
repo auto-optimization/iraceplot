@@ -33,7 +33,7 @@
 #'
 #' @return parallel categories plot
 #'
-#' @seealso [parallel_coord()] [parallel_coord2()]
+#' @seealso [parallel_coord()] [plot_configurations()]
 #' @examples
 #' iraceResults <- read_logfile(system.file(package="irace", "exdata",
 #'                                          "irace-acotsp.Rdata", mustWork = TRUE))
@@ -67,11 +67,11 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   
   # Check iterations
   if (!is.null(iterations)) {
-    if (any(!(iterations %in% 1:length(irace_results$allElites)))) {
+    if (any(iterations %not_in% seq_along(irace_results$allElites))) {
       stop("Error: The interactions entered are outside the possible range\n")
     }
   } else {
-    iterations <- 1:length(irace_results$allElites)
+    iterations <- seq_along(irace_results$allElites)
   }
   
   # Check configurations

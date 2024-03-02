@@ -25,10 +25,10 @@ plot. Example: \code{c(20,50,100,300,500,600,700)}}
 \code{c("algorithm","alpha","rho","q0","rasrank")}.}
 
 \item{iterations}{Numeric vector, iteration number that should be included in the plot
-(example: iterations = c(1,4,5))}
+(example: \code{iterations = c(1,4,5)})}
 
-\item{only_elite}{logical (default TRUE), only print elite configurations (argument ignored when
-id_configurations is provided)}
+\item{only_elite}{logical (default \code{TRUE}), only print elite configurations (argument ignored when
+\code{id_configurations} is provided)}
 
 \item{by_n_param}{Numeric (optional), maximum number of parameters to be displayed.}
 
@@ -45,21 +45,21 @@ parallel coordinates plot
 Parallel coordinates plot of a set of selected configurations. Each line in
 the plot represents a configuration. By default, the final elite
 configurations are shown. To visualize configurations of other iterations
-these must be provided setting the argument iterations, configurations of
-different iterations are shown in different colors. Setting the only_elites
-argument to FALSE allows to display all configurations in the selected
+these must be provided setting the argument \code{iterations}, configurations of
+different iterations are shown in different colors. Setting the \code{only_elites}
+argument to \code{FALSE} displays all configurations in the selected
 iterations, specific configurations can be selected providing their ids in
-the id_configuration argument.
+the \code{id_configuration} argument.
 }
 \details{
-The parameters to be included in the plot can be selected with the param_names
+The parameters to be included in the plot can be selected with the \code{param_names}
 argument. Additionally, the maximum number of parameters to be displayed in one
-plot. A list of plots is returned by this function in several plots are required
+plot. A list of plots is returned by this function if several plots are required
 to display the selected data.
 
 To export the plot to a file, it is possible to do it so manually using the
-functionality provided by plotly in the plot. If a filename is provided,
-orca server will be used to export the plots and thus, it requires the library
+functionality provided by \link{plotly} in the plot. If a filename is provided,
+an orca server will be used to export the plots and thus, it requires the library
 to be installed (\url{https://github.com/plotly/orca}).
 }
 \examples{

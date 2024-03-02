@@ -3,20 +3,20 @@
 #' Parallel coordinates plot of a set of selected configurations. Each line in
 #' the plot represents a configuration. By default, the final elite
 #' configurations are shown. To visualize configurations of other iterations
-#' these must be provided setting the argument iterations, configurations of
-#' different iterations are shown in different colors. Setting the only_elites
-#' argument to FALSE allows to display all configurations in the selected
+#' these must be provided setting the argument `iterations`, configurations of
+#' different iterations are shown in different colors. Setting the `only_elites`
+#' argument to `FALSE` displays all configurations in the selected
 #' iterations, specific configurations can be selected providing their ids in
-#' the id_configuration argument.
+#' the `id_configuration` argument.
 #' 
-#' The parameters to be included in the plot can be selected with the param_names
+#' The parameters to be included in the plot can be selected with the `param_names`
 #' argument. Additionally, the maximum number of parameters to be displayed in one
-#' plot. A list of plots is returned by this function in several plots are required
+#' plot. A list of plots is returned by this function if several plots are required
 #' to display the selected data.
 #' 
 #' To export the plot to a file, it is possible to do it so manually using the
-#' functionality provided by plotly in the plot. If a filename is provided,  
-#' orca server will be used to export the plots and thus, it requires the library
+#' functionality provided by [plotly] in the plot. If a filename is provided,  
+#' an orca server will be used to export the plots and thus, it requires the library
 #' to be installed (<https://github.com/plotly/orca>).
 #' 
 #'
@@ -26,11 +26,11 @@
 #'
 #' @param iterations
 #' Numeric vector, iteration number that should be included in the plot
-#' (example: iterations = c(1,4,5))
+#' (example: `iterations = c(1,4,5)`)
 #'
 #' @param only_elite
-#' logical (default TRUE), only print elite configurations (argument ignored when 
-#' id_configurations is provided)
+#' logical (default `TRUE`), only print elite configurations (argument ignored when 
+#' `id_configurations` is provided)
 #'
 #' @param by_n_param
 #' Numeric (optional), maximum number of parameters to be displayed.
@@ -61,115 +61,18 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
                            iterations = NULL, only_elite = TRUE, by_n_param = NULL, 
                            color_by_instances = TRUE, filename = NULL)
 {
-  parameters <- irace_results$parameters
-  ptypes <- parameters$types
-  pdomain <- parameters$domain
-  # The function get_dimensions creates a list of settings for each vertical axis
-  # in the parallel coordinates plot
-  get_dimensions <- function(data) {
-    dimensions <- list()
-    # FIXME: This function can be simplified a lot!
-    # Create plot dimensions
-    for (i in 1:ncol(data)) {
-      pname <- colnames(data)[i]
-      if (pname == "iteration") {
-        dimensions[[i]] <- list(
-          label = pname,
-          range = c(1L, length(irace_results$allElites)),
-          values = data[,pname],
-          visible = FALSE
-        )
-      } else if (pname == ".ID.") {
-        # FIXME: We should do this preprocessing before here.
-        data[,pname] <- as.character(data[,pname])
-        # FIXME: Encoding as integers can be done by using factor() and levels()
-        tickT <- data[,pname]
-        tickT <- tickT[order(suppressWarnings(as.numeric(tickT)), tickT)]
-        tickV <- seq_along(tickT)
-        rdata <- rep(NA, nrow(data)) 
-        for (v in tickV)
-          rdata[data[,pname] == tickT[v]] <- v
-
-        # FIXME: We may have too many IDs. We probably cannot see more than 10-15.
-        dimensions[[i]] <- list(
-          range = range(tickV),
-          label = "ID",
-          tickvals = tickV,
-          ticktext = tickT,
-          values = rdata
-        )
-        
-      } else if (ptypes[pname] %in% c("c", "o")) {
-        # FIXME: Encoding as integers can be done by using factor() and levels() and being careful with NAs (replacing them with an "NA" string)
-        tickT <- as.character(pdomain[[pname]])
-        # FIXME: Can you have NA here? Haven't we remove them already in na_data_processing?
-        if (anyNA(data[,pname])) tickT <- c(tickT, "NA")
-        tickV <- seq_along(tickT)
-        # FIXME: We should do this preprocessing before here.
-        data[,pname] <- as.character(data[,pname])
-        rdata <- rep(NA, nrow(data)) 
-        for (v in tickV) {
-          rdata[data[,pname] == tickT[v]] <- v
-        }
-        # FIXME: We may have too many tickmarks to see. We probably cannot see more than 10-15. 
-        dimensions[[i]] <- list(
-          range = c(1L, max(tickV)),
-          label = pname,
-          tickvals = tickV,
-          ticktext = tickT,
-          values = rdata
-        )
-        # FIXME: I don't think this will work with log transform
-      } else if (ptypes[pname] %in% c("i", "i,log", "r", "r,log")) {
-        # This is detecting that na_data_preprocessing has encoded NA values.
-        ## FIXME: There must be a better way to do this.
-        if ((as.numeric(pdomain[[pname]][2]) + 1) %in% data[,pname]) {
-          minimo <- pdomain[[pname]][1]
-          maximo <- pdomain[[pname]][2] + 1
-          medio <- round(((maximo - 1) / 4), 1)
-          medio2 <- round(((maximo - 1) / 2), 1)
-          medio3 <- round(((maximo - 1) * (3 / 4)), 1)
-          dimensions[[i]] <- list(
-            range = c(pdomain[[pname]][1], pdomain[[pname]][2] + 1),
-            tickvals = c(minimo, medio, medio2, medio3, maximo),
-            ticktext = c(minimo, medio, medio2, medio3, "<NA>"),
-            values = data[,pname],
-            label = pname
-          )
-        } else {
-          minimo <- pdomain[[pname]][1]
-          maximo <- pdomain[[pname]][2]
-          medio <- round((maximo / 4), 1)
-          medio2 <- round((maximo / 2), 1)
-          medio3 <- round(maximo * (3 / 4), 1)
-          dimensions[[i]] <- list(
-            range = c(pdomain[[pname]][1], pdomain[[pname]][2]),
-            tickvals = c(minimo, medio, medio2, medio3, maximo),
-            ticktext = c(minimo, medio, medio2, medio3, maximo),
-            values = data[,pname],
-            label = pname
-          )
-        }
-      }
-    }
-    return(dimensions)
-  }
-  
-  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
-  # Verify that param_names contains more than one parameter
-  if (length(param_names) < 2) stop("Data must have at least two parameters")
-  by_n_param <- check_by_n_param(by_n_param, length(param_names))
-  
+  # Silence CRAN warnings
+  configuration <- ieration <- .ID. <- .ITERATION. <- NULL
   # Check iterations
   if (!is.null(iterations)) {
-    it <- 1:length(irace_results$allElites)
-    if (any(!(iterations %in% it))) {
+    it <- seq_along(irace_results$allElites)
+    if (any(iterations %not_in% it)) {
       cli_abort("The iterations entered are outside the possible range")
     }
   } else {
     iterations <- length(irace_results$allElites)
-    if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1) {
-       cli_alert_info("Note: The final iteration only has one elite configuration\n")
+    if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1L) {
+      cli_alert_info("Note: The final iteration only has one elite configuration\n")
     }
   } 
 
@@ -182,88 +85,153 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
     }
   } else {
     # FIXME: This overrides the above setting of iterations!
-    iterations <- 1:length(irace_results$allElites)
+    iterations <- seq_along(irace_results$allElites)
   }
 
   id_configurations <- unique(as.character(unlist(id_configurations)))
-  if (length(id_configurations) <= 1) {
+  if (length(id_configurations) <= 1L) {
     stop("You must provide more than one configuration ID")
   }
-  if (any(!(id_configurations %in% irace_results$allConfigurations[, ".ID."]))) {
+  if (any(id_configurations %not_in% irace_results$allConfigurations[, ".ID."])) {
     stop("Unknown configuration IDs: ", paste0(setdiff(id_configurations, irace_results$allConfigurations[, ".ID."]), collapse=", "))
   }
-    
+
   # Select data
-  data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, ,drop=FALSE]
+  # FIXME: Use dplyr for all these operations.
+  data <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, , drop=FALSE]
   config_iter <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  config_iter <- config_iter[config_iter[, "configuration"] %in% id_configurations, ,drop=FALSE]
-  config_iter <- config_iter[config_iter[, "iteration"] %in% iterations, ,drop=FALSE]
+  colnames(config_iter) <- c(".ITERATION.", ".ID.")
+  config_iter <- config_iter[(config_iter[, ".ID."] %in% id_configurations)
+    & (config_iter[, ".ITERATION."] %in% iterations), ,drop=FALSE]
   
   experiments <- irace_results$experiments[,as.character(id_configurations),drop=FALSE]
   # FIXME: It says fitness but this is not really fitness. There should be an option to color according to mean fitness value
-  fitness     <- colSums(!is.na(experiments))
-  
+  fitness <- colSums(!is.na(experiments))
   # Merge iteration and configuration data
-  colnames(config_iter)[colnames(config_iter) == "configuration"] <- ".ID."
   data <- merge(config_iter, data, by=".ID.")
-  
   # Merge fitness measure
-  data[,"fitness"] <- fitness[as.character(data[,".ID."])]
-  # FIXME: This is not correct because we are passing data after expanding it with fitness and iterations. We should do any preprocessing before adding columns
-  data <- na_data_processing(data, parameters)
+  data[,".FITNESS."] <- fitness[as.character(data[,".ID."])]
 
-  # Silence CRAN warnings
-  iteration <- .ID. <- NULL
-  
   # iteration-based plot focused on sampling (first iteration is selected)
-  data <- as.data.frame(data %>% group_by(.ID.) %>% slice(which.min(iteration)))
+  data <- as.data.frame(data %>% group_by(.ID.) %>% slice(which.min(.ITERATION.)))
+
+  # The function get_dimensions creates a list of settings for each vertical axis
+  # in the parallel coordinates plot
+  get_dimensions <- function(pname) {
+    values <- cdata[,pname]
+    if (pname == ".ITERATION.") {
+      return(list(
+        label = "Iteration",
+        range = range(values),
+        values = values,
+        visible = FALSE))
+    } else if (pname == ".ID.") {
+      # FIXME: We should do this preprocessing before here.
+      # FIXME: We may have too many IDs. We probably cannot see more than 10-15.
+      values <- as.character(values)
+      ticktext <- values
+      tickvals <- seq_along(ticktext)
+      return(list(
+        label = "ID",
+        range = c(1L, length(ticktext)),
+        tickvals = tickvals,
+        ticktext = ticktext,
+        values = match(values, ticktext)))
+    } else if (pname == ".FITNESS.") {
+      return(NULL)
+    }
+    domain <- parameters$domain[[pname]]
+    ptype <- parameters$types[pname]
+    if (ptype %in% c("c", "o")) {
+          values <- as.character(values)
+      ticktext <- as.character(domain)
+      if (anyNA(values)) {
+        ticktext <- c(ticktext, "<NA>")
+        # FIXME: Use collapse or data.table or dplyr
+        values[is.na(values)] <- "<NA>"
+      }
+      range <- c(1L, length(ticktext))
+      tickvals <- seq_along(ticktext)
+      values <- match(values, ticktext)
+    } else { # if the column is of type numeric
+      # FIXME: This needs to handle log-transformed parameters.
+      lower <- domain[[1L]]
+      if (!is.numeric(lower))
+        lower <- min(values, na.rm = TRUE)
+      upper <- domain[[2L]]
+      if (!is.numeric(upper))
+        upper <- max(values, na.rm = TRUE)
+      nticks <- if (ptype == "i") min(5L, 1L + upper - lower) else 5L
+      tickvals <- labeling::extended(lower, upper, nticks)
+      lower <- min(tickvals)
+      upper <- max(tickvals)
+      ticktext <- tickvals
+      if (anyNA(values)) {
+        upper <- upper + (tickvals[2L] - tickvals[1L])
+        # FIXME: Use collapse or data.table or dplyr
+        values[is.na(values)] <- upper
+        ticktext <- c(tickvals, "<NA>")
+        tickvals <- c(tickvals, upper)
+      }
+      range <- c(lower, upper)
+    }
+    list(label = pname,
+      range = range,
+      tickvals = tickvals,
+      ticktext = ticktext,
+      values = values)
+  }
+
+  parameters <- irace_results$parameters
+  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
+  # Verify that param_names contains more than one parameter
+  if (length(param_names) < 2L)
+    stop("Data must have at least two parameters")
+  by_n_param <- check_by_n_param(by_n_param, length(param_names))
   
-  plot_list <- list()
-  plot_params <- param_names
   # Create plots
-  i <- 1
-  while (length(plot_params) > 0) {
-    start_i <- 1
-    end_i <- min(by_n_param, length(plot_params))
-    params <- plot_params[start_i:end_i]
-    plot_params <- plot_params[-(start_i:end_i)]
-    if (length(plot_params) == 1) {
-      params <- c(params, plot_params)
-      plot_params <- c()
+  plot_list <- list()
+  i <- 1L
+  while (length(param_names) > 0L) {
+    start_i <- 1L
+    end_i <- min(by_n_param, length(param_names))
+    params <- param_names[start_i:end_i]
+    param_names <- param_names[-(start_i:end_i)]
+    if (length(param_names) == 1L) {
+      params <- c(params, param_names)
+      param_names <- c()
     }
 
     # FIXME: If we pass the data to the plot we do not need to pass it to the
     # dimensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
-    cdata <- data[,c(".ID.", params, "fitness", "iteration"), drop=FALSE]
-    dimensions <- get_dimensions(cdata)
-    color_col <- if (color_by_instances) "Instances" else "Iteration"
+    cdata <- data[,c(".ID.", params, ".FITNESS.", ".ITERATION."), drop=FALSE]
+    dimensions <- lapply(colnames(cdata), get_dimensions)
     
     # plot creation
     p <- plotly::plot_ly(cdata) %>%
       plotly::add_trace(type = "parcoords",
-                line = list(
-                  color = if (color_by_instances) ~fitness else ~iteration,
-                  colorscale = "Viridis",
-                  colorbar = list(title = list(text=color_col)),
-                  showscale = TRUE,
-                  reversescale = TRUE,
-                  cmin = if (color_by_instances) min(data[,"fitness"]) else 1L,
-                  cmax = if (color_by_instances) max(data[,"fitness"]) else length(irace_results$allElites)),
-                dimensions = dimensions,
-                labelangle = -25)
+        line = list(
+          color = if (color_by_instances) ~.FITNESS. else ~.ITERATION.,
+          colorscale = "Viridis",
+          colorbar = list(title = list(text= if (color_by_instances) "Instances" else "Iteration")),
+          showscale = TRUE,
+          reversescale = TRUE,
+          cmin = if (color_by_instances) min(data[,".FITNESS."]) else 1L,
+          cmax = if (color_by_instances) max(data[,".FITNESS."]) else length(irace_results$allElites)),
+        dimensions = dimensions,
+        labelangle = -25)
     plot_list[[i]] <- p
-    i <- i + 1
+    i <- i + 1L
   }
-  
   # Save plot file
   orca_save_plot(plot_list, filename)
-  if (length(plot_list) == 1)
-    return(plot_list[[1]])
-  return(plot_list)
+  if (length(plot_list) == 1L)
+    return(plot_list[[1L]])
+  plot_list
 }
 
 
-#' Parallel Coordinates Plot (configurations)
+#' Plot parameter configurations using parallel coordinates
 #'
 #' Parallel coordinates plot of a set of provided configurations. Each line in
 #' the plot represents a configuration.  The parameters to be included in the
@@ -298,132 +266,106 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
 #' @examples
 #' iraceResults <- read_logfile(system.file(package="irace", "exdata",
 #'                                          "irace-acotsp.Rdata", mustWork = TRUE))
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#' plot_configurations(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters)
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#' plot_configurations(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters, 
 #'                 param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
-#' parallel_coord2(iraceResults$allConfigurations[iraceResults$iterationElites,], 
+#' plot_configurations(iraceResults$allConfigurations[iraceResults$iterationElites,], 
 #'                 iraceResults$parameters, by_n_param = 5)
 #' @export
 #' @md
-parallel_coord2 <- function(configurations, parameters, param_names = parameters$names,
-                            by_n_param = NULL, filename = NULL) {
-  
+plot_configurations <- function(configurations, parameters, param_names = parameters$names,
+                                by_n_param = NULL, filename = NULL)
+{
   # The function get_dimensions creates a list of settings for each vertical axis
   # in the parallelcoordinates plot
-  get_dimensions <- function(data) {
-    # Create plot dimensions
-    for (i in 1:ncol(data)) {
-      pname <- colnames(data)[i]
-      if (pname == ".ID.") next # FIXME: Handle this!
-      if (parameters$types[pname] %in% c("c", "o")) {
-        if (any(is.na(data[,pname]))) {
-          tickT <- c(as.character(parameters$domain[[pname]]), "<NA>")
-          tickV <- 1:(length(parameters$domain[[pname]]) + 1)
-        } else {
-          tickT <- as.character(parameters$domain[[pname]])
-          if (length(tickT) == 1) {
-            # handle fixed parameters
-            tickT <- c("", tickT)
-            tickV <- 1:2
-          } else {
-            tickV <- 1:length(parameters$domain[[pname]])
-          }
-        }
-        
-        data[,pname] <- as.character(data[,pname])
-        rdata <- rep(NA, nrow(data)) 
-        for (v in 1:length(tickT)){
-          rdata[data[,pname] == tickT[v]] <- v
-        }
-        
-        dim[[i]] <- list(
-          range = c(1, max(tickV)) ,
-          label = pname,
-          tickvals = tickV,
-          ticktext = tickT,
-          values = rdata
-        )
-        # if the column is of type numeric
-      } else if ((as.numeric(parameters$domain[[pname]][2]) + 1) %in% data[,pname]) {
-        minimo <- parameters$domain[[pname]][1]
-        maximo <- parameters$domain[[pname]][2] + 1
-        medio <- round(((maximo - 1) / 4), 1)
-        medio2 <- round(((maximo - 1) / 2), 1)
-        medio3 <- round(((maximo - 1) * (3 / 4)), 1)
-          
-        dim[[i]] <- list(
-          range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2] + 1),
-          tickvals = c(minimo, medio, medio2, medio3, maximo),
-          ticktext = c(minimo, medio, medio2, medio3, "<NA>"),
-          values = data[,pname],
-          label = pname
-        )
-      } else {
-        minimo <- parameters$domain[[pname]][1]
-        maximo <- parameters$domain[[pname]][2]
-        medio <- round((maximo / 4), 1)
-        medio2 <- round((maximo / 2), 1)
-        medio3 <- round(maximo * (3 / 4), 1)
-        dim[[i]] <- list(
-          range = c(parameters$domain[[pname]][1], parameters$domain[[pname]][2]),
-          tickvals = c(minimo, medio, medio2, medio3, maximo),
-          ticktext = c(minimo, medio, medio2, medio3, maximo),
-          values = data[,pname],
-          label = pname
-        )
+  get_dimensions <- function(pname) {
+    values <- cdata[,pname]
+    if (pname == ".ID.") return(NULL) # FIXME: Handle this!
+    domain <- parameters$domain[[pname]]
+    ptype <- parameters$types[pname]
+    if (ptype %in% c("c", "o")) {
+      values <- as.character(values)
+      ticktext <- as.character(domain)
+      if (anyNA(values)) {
+        ticktext <- c(ticktext, "<NA>")
+        # FIXME: Use collapse or data.table or dplyr
+        values[is.na(values)] <- "<NA>"
       }
-    } 
-    return(dim)
+      range <- c(1L, length(ticktext))
+      tickvals <- seq_along(ticktext)
+      values <- match(values, ticktext)
+    } else { # if the column is of type numeric
+      # FIXME: This needs to handle log-transformed parameters.
+      lower <- domain[[1L]]
+      if (!is.numeric(lower))
+        lower <- min(values, na.rm = TRUE)
+      upper <- domain[[2L]]
+      if (!is.numeric(upper))
+        upper <- max(values, na.rm = TRUE)
+      nticks <- if (ptype == "i") min(5L, 1L + upper - lower) else 5L
+      tickvals <- labeling::extended(lower, upper, nticks)
+      lower <- min(tickvals)
+      upper <- max(tickvals)
+      ticktext <- tickvals
+      if (anyNA(values)) {
+        upper <- upper + (tickvals[2L] - tickvals[1L])
+        # FIXME: Use collapse or data.table or dplyr
+        values[is.na(values)] <- upper
+        ticktext <- c(tickvals, "<NA>")
+        tickvals <- c(tickvals, upper)
+      }
+      range <- c(lower, upper)
+    }
+    list(label = pname,
+      range = range,
+      tickvals = tickvals,
+      ticktext = ticktext,
+      values = values)
   }
 
   param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
-  # Verify that param_names contains more than one parameter
-  if (length(param_names) < 2) stop("Data must have at least two parameters")
+  # Verify that param_names contains more than one parameter.
+  # FIXME: Why? We want to plot even with 1 parameter.
+  if (length(param_names) < 2L)
+    stop("Data must have at least two parameters")
+  # FIXME: Handle .ID.
+  configurations <- configurations[, param_names, drop=FALSE]
   by_n_param <- check_by_n_param(by_n_param, length(param_names))
-  configurations <- na_data_processing(configurations, parameters)
-    
-  # Variable assignment
-  configuration <- dim <- tickV <- vectorP <- NULL
   
-  plot_list <- list()
-  plot_params <- param_names
   # Create plots
-  i <- 1
-  while(length(plot_params) > 0) {
-    start_i <- 1
-    end_i <- min(by_n_param, length(plot_params))
-    params <- plot_params[start_i:end_i]
-    plot_params <- plot_params[-(start_i:end_i)]
-    if (length(plot_params) == 1) {
-      params <- c(params, plot_params)
-      plot_params <- c()
+  plot_list <- list()
+  i <- 1L
+  while (length(param_names) > 0L) {
+    start_i <- 1L
+    end_i <- min(by_n_param, length(param_names))
+    params <- param_names[start_i:end_i]
+    param_names <- param_names[-(start_i:end_i)]
+    if (length(param_names) == 1L) {
+      params <- c(params, param_names)
+      param_names <- c()
     }
     
-    ctabla <- configurations[,params, drop=FALSE]
-    dim <- get_dimensions(ctabla)
-
+    cdata <- configurations[,params, drop=FALSE]
+    dimensions <- lapply(colnames(cdata), get_dimensions)
     # plot creation
-    p <- ctabla %>% plotly::plot_ly()
-    p <- p %>% plotly::add_trace(
-      type = "parcoords",
-      line = list(
-        color = "#60D0E1"
-      ),
-      dimensions = dim,
-      labelangle = -25
-    )
-    p <- p %>% plotly::layout(margin = list(r=40))
+    p <- plotly::plot_ly(cdata) %>%
+      plotly::add_trace(type = "parcoords",
+        line = list(
+          color = "#60D0E1"
+        ),
+        dimensions = dimensions,
+        labelangle = -25
+      ) %>% plotly::layout(margin = list(r=40))
     plot_list[[i]] <- p
-    i <- i + 1
+    i <- i + 1L
   }
-  
   # Save plot file
   orca_save_plot(plot_list, filename)
-  if (length(plot_list) == 1)
-    return(plot_list[[1]])
-  return(plot_list)
+  if (length(plot_list) == 1L)
+    return(plot_list[[1L]])
+  plot_list
 }
 
 check_by_n_param <- function(by_n_param, length_param_names)
@@ -435,24 +377,4 @@ check_by_n_param <- function(by_n_param, length_param_names)
     stop("Number of parameters and argument by_n_param must > 1")
   }
   min(length_param_names, by_n_param)
-}
-
-
-na_data_processing <- function(data, parameters)
-{
-  pnames <- colnames(data)[!startsWith(colnames(data), ".")]
-  # NA data processing
-  for (pname in pnames) {
-    # FIXME: This can be done by selecting all columns of each type.
-    if (parameters$types[pname] %in% c("i", "i,log", "r", "r,log")) {
-      ina <- is.na(data[,pname])
-      if (any(ina)) data[ina,pname] <- parameters$domain[[pname]][2] + 1
-      
-    } else if (parameters$types[pname] %in% c("c", "o")) {
-      ina <- is.na(data[,pname])
-      if (any(ina)) data[ina,pname] <- "<NA>"
-    }
-  }
-  # Column .PARENT. is removed
-  data[, c(".ID.", pnames), drop=FALSE]
 }

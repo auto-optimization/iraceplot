@@ -131,9 +131,9 @@ parallel_coord(iraceResults, iterations=1:9, only_elite=FALSE)
 ```
 
 If you are looking for something more flexible and you would like to provide
-your own set of configurations, you can use the `parallel_coord2` function. 
+your own set of configurations, you can use the `plot_configurations()` function. 
 This function generates a parallel coordinates plot (similar to the ones generated
-by `parallel_coord`) when provided with an arbitrary set of configurations and a 
+by `parallel_coord()`) when provided with an arbitrary set of configurations and a 
 parameter space object. The configurations must be provided in the format
 in which irace handles configurations: a dataframe with parameter in each column.
 For information about these formats, please chech the irace package [user guide](https://cran.r-project.org/web/packages/irace/vignettes/irace-package.pdf).
@@ -142,7 +142,7 @@ As an example, this lines display all elite configurations:
 ```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE}
 all_elite <- iraceResults$allConfigurations[unlist(iraceResults$allElites),]
 parameters <- iraceResults$parameters
-parallel_coord2(all_elite, parameters)
+plot_configurations(all_elite, parameters)
 ```
 
 The `parallel_cat` function displays all configurations sampled in a set

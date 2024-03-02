@@ -13,7 +13,7 @@ boxplot_performance;
 boxplot_test;
 boxplot_training;
 parallel_cat;
-parallel_coord2;
+plot_configurations;
 parallel_coord;
 plot_experiments_matrix;
 plot_model;

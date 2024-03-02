@@ -2,6 +2,8 @@
 
  * Fix negative RPD values (Fixed by @j-mezger).
 
+ * Renamed `parallel_coord2()` to `plot_configurations()`. Completely rewrite `parallel_coord()` and `plot_configurations()` to produce nicer tickmarks and fix many bugs.
+ 
 
 # iraceplot 1.2
  

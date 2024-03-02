@@ -89,7 +89,7 @@ getCategoricalModel <- function(irace_results, param_name)
 # FIXME: Add examples.
 getNumericalModel <- function(irace_results, param_name) 
 {
-  if (!(irace_results$parameters$types[[param_name]] %in% c("i", "r", "i,log", "r,log"))) {
+  if (irace_results$parameters$types[[param_name]] %not_in% c("i", "r", "i,log", "r,log")) {
     stop("Parameter is not numerical")
   }
   
@@ -100,7 +100,7 @@ getNumericalModel <- function(irace_results, param_name)
 
   # Get elite data by iteration
   all_elites <- list()
-  for (i in 1:iterations){
+  for (i in seq_len(iterations)){
     all_elites[[i]] <- irace_results$allConfigurations[irace_results$allElites[[i]], param_name]
   }
   
@@ -162,8 +162,7 @@ plotCategoricalModel <- function(model_data, domain)
             axis.title.x = element_text(vjust = 4),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank()) 
-
-  return(p)
+  p
 }
 
 

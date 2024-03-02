@@ -61,5 +61,5 @@ parallel_cat(iraceResults, iterations = c(1, 4, 6), n_bins=4)
 }
 }
 \seealso{
-\code{\link[=parallel_coord]{parallel_coord()}} \code{\link[=parallel_coord2]{parallel_coord2()}}
+\code{\link[=parallel_coord]{parallel_coord()}} \code{\link[=plot_configurations]{plot_configurations()}}
 }

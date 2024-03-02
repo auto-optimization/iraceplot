@@ -70,7 +70,7 @@ has_testing_data <- function(irace_results)
 check_unknown_param_names <- function(x, parameters_names)
 {
   x <- unlist(x)
-  if (any(!(x %in% parameters_names)))
+  if (any(x %not_in% parameters_names))
     stop("Unknown parameter names: ", paste0(setdiff(x, parameters_names), collapse=", "))
   x
 }
@@ -82,3 +82,7 @@ subset_param_names <- function(x, parameters_names, is_fixed)
 }
 
 
+seq_ncol <- function(x) seq_len(ncol(x))
+seq_nrow <- function(x) seq_len(nrow(x))
+# Same as !(x %in% table). Package data.table has %notin%.
+"%not_in%" <- function(x, table) is.na(match(x, table))

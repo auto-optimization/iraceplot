@@ -20,7 +20,7 @@ distance_config <- function(irace_results, id_configuration, t = 0.05) {
   
   if (length(id_configuration) != 1) {
     stop("Error: You must enter one configuration id\n")
-  } else if (FALSE %in% (id_configuration %in% irace_results$allConfigurations[[".ID."]])) {
+  } else if (id_configuration %not_in% irace_results$allConfigurations[[".ID."]]) {
     stop(paste("Error: Configuration", id_configuration[1], "does not exist\n", sep = " "))
   } 
   
@@ -32,7 +32,7 @@ distance_config <- function(irace_results, id_configuration, t = 0.05) {
   
   #Get configurations
   config <- select(irace_results$allConfigurations[id_configuration, ], -.ID., -.PARENT.)
-  others <- select(irace_results$allConfigurations[!(irace_results$allConfigurations$.ID. %in% id_configuration), ], -.ID., -.PARENT.)
+  others <- select(irace_results$allConfigurations[irace_results$allConfigurations$.ID. %not_in% id_configuration, ], -.ID., -.PARENT.)
   tipos <- irace_results$parameters$types
   
   distance <- rep(0, nrow(others))
