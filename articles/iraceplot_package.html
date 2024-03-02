@@ -132,13 +132,13 @@ configurations the <code>parallel_coord</code> shows each configuration
 as a line.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/parallel_coord.html">parallel_coord</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>parallel_coord2</code> function generates a similar
+<p>The <code><a href="../reference/plot_configurations.html">plot_configurations()</a></code> function generates a similar
 parallel coordinates plot when provided with an arbitrary set of
 configurations without the irace execution context. For example, to
 display all elite configurations:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_elite</span> <span class="op">&lt;-</span> <span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allElites</span><span class="op">)</span>,<span class="op">]</span></span>
-<span><span class="fu"><a href="../reference/parallel_coord2.html">parallel_coord2</a></span><span class="op">(</span><span class="va">all_elite</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot_configurations.html">plot_configurations</a></span><span class="op">(</span><span class="va">all_elite</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span></span></code></pre></div>
 <p>A similar display can be obtained using the <code>parallel_cat</code>
 function. For example to visualize the configurations of a selected set
 of parameters:</p>

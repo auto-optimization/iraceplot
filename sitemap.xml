@@ -73,13 +73,13 @@
     <loc>/reference/parallel_coord.html</loc>
   </url>
   <url>
-    <loc>/reference/parallel_coord2.html</loc>
-  </url>
-  <url>
     <loc>/reference/parameters_summarise.html</loc>
   </url>
   <url>
     <loc>/reference/parameters_tree.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_configurations.html</loc>
   </url>
   <url>
     <loc>/reference/plot_experiments_matrix.html</loc>
