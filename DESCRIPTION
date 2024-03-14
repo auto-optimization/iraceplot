@@ -18,6 +18,7 @@ Depends:
     R (>= 3.4)
 Imports:
     irace (>= 3.5),
+    irace (<= 3.9),
     cli,
     dplyr,
     DT,
