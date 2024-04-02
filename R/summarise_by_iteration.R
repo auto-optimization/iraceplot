@@ -11,7 +11,7 @@
 #' @export
 summarise_by_iteration <- function(irace_results)
 {
-  iteration <- configuration <- instance <- NULL # Silence warnings
+  iteration <- configuration <- instance <- NULL # Silence CRAN warnings.
   as_tibble(irace_results$experimentLog) %>%
     group_by(iteration) %>%
     summarise(configurations = n_distinct(configuration),
