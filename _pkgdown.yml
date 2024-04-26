@@ -10,8 +10,9 @@ development:
 
 navbar:
   structure:
-    left: [home, guide, example, reference, news]
-    right: [github]
+    left:  [home, guide, example, reference, news]
+    right: [search, cran, github]
+    
   components:
     home: ~
     reference:
@@ -23,6 +24,9 @@ navbar:
     example:
       text: Report example
       href: articles/example/report_example.html
+    cran:
+      icon: fab fa-r-project
+      href: https://cloud.r-project.org/package=iraceplot
     
 
 
