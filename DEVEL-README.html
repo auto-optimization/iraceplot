@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">iraceplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">1.3</span>
       </span>
     </div>
 
@@ -87,13 +87,20 @@ git help</code></pre>
 <div class="section level2">
 <h2 id="release-process">RELEASE Process:<a class="anchor" aria-label="anchor" href="#release-process"></a></h2>
 <p>TODO: See useful release steps here: <a href="https://github.com/tidyverse/ggplot2/issues/4965" class="external-link uri">https://github.com/tidyverse/ggplot2/issues/4965</a></p>
-<p>Update version number in Makefile and NEWS.md</p>
-<p>git status # make sure you are up to date and clean</p>
-<p>make check # passes</p>
-<p>make releasecheck</p>
-<p>make releasebuild # Inspect the output for strange files!</p>
-<p>make closeversion</p>
-<p>make submit</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Update version number <span class="cf">in</span> DESCRIPTION and NEWS.md</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>git status <span class="co"># make sure you are up to date and clean</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>make check <span class="co"># passes</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>make releasecheck </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>make releasebuild <span class="co"># Inspect the output for strange files!</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Update cran-comments.md</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>make closeversion</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>make submit</span></code></pre></div>
 <p>a IF the package requires further changes:</p>
 <ul><li><p>Make the changes.</p></li>
 <li><p>Repeat the whole RELEASE process above without bumping the version number.</p></li>
@@ -102,12 +109,12 @@ git help</code></pre>
 <li><p>make build # To update other files with the new version.”</p></li>
 <li><p>git ci -a -m ” * Bump development version to $NEW_VERSION”</p></li>
 </ul><p>Announce the release in the Google group:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>groups.google.com<span class="sc">/</span>d<span class="sc">/</span>forum<span class="sc">/</span>irace<span class="sc">-</span>package</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>groups.google.com<span class="sc">/</span>d<span class="sc">/</span>forum<span class="sc">/</span>irace<span class="sc">-</span>package</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="importing-from-packages">Importing from packages<a class="anchor" aria-label="anchor" href="#importing-from-packages"></a></h2>
 <p>We do not use this:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @importFrom DT datatable</span></span></code></pre></div>
 <p>because we always use <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable</a></code>. By using <code>importFrom</code>, the name <code>'datatable'</code> is imported and we cannot use it for something else. The criterion should be:</p>
 <ul><li>If we use a lot of functions from a package, import the whole package with <code>@import</code>.</li>
