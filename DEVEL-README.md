@@ -39,19 +39,20 @@ RELEASE Process:
 
 TODO: See useful release steps here: https://github.com/tidyverse/ggplot2/issues/4965
 
-Update version number in Makefile and NEWS.md
+    Update version number in DESCRIPTION and NEWS.md
 
-git status # make sure you are up to date and clean
+    git status # make sure you are up to date and clean
 
-make check # passes
+    make check # passes
 
-make releasecheck 
+    make releasecheck 
 
-make releasebuild # Inspect the output for strange files!
+    make releasebuild # Inspect the output for strange files!
 
-make closeversion
+    # Update cran-comments.md
+    make closeversion
 
-make submit
+    make submit
 
 a IF the package requires further changes:
 

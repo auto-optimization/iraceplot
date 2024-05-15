@@ -1,4 +1,4 @@
-# iraceplot (development version)
+# iraceplot 1.3
 
  * Fix negative RPD values (Fixed by @j-mezger).
 
