@@ -1,3 +1,10 @@
+# iraceplot 2.0
+
+ * Fix tables in the report not showing any value if there are NAs.
+ 
+ * Handle iteration 0 in `summarise_by_iteration()`.
+ 
+ 
 # iraceplot 1.3
 
  * Fix negative RPD values (Fixed by @j-mezger).

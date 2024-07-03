@@ -216,7 +216,11 @@ if (irace_results$scenario$testIterationElites && has_testing_data(irace_results
 
 ```{r table-train-elites,fig.align="center", echo=FALSE}
 best_results <- as_tibble(irace_results$experiments[, best_elites, drop=FALSE])
-best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>% group_by(ID) %>% summarise(n_instances = sum(!is.na(value)), mean = mean(value), sd = sd(value), median = median(value), min = min(value), max = max(value))
+best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>%
+  group_by(ID) %>%
+  summarise(n_instances = sum(!is.na(value)), mean = mean(value, na.rm=TRUE),
+    sd = sd(value, na.rm=TRUE), median = median(value, na.rm=TRUE),
+    min = min(value, na.rm=TRUE), max = max(value, na.rm=TRUE))
 best_results <- best_results[match(best_elites, best_results$ID), , drop=FALSE]
 show_table(best_results, lengthMenu = c(10, 20, 50, 100),
            colorbar = c("mean", "sd", "median", "min", "max"))
