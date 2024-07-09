@@ -69,7 +69,7 @@ For example, to display all elite configurations:
 
 ```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE, eval=FALSE}
 all_elite <- iraceResults$allConfigurations[unlist(iraceResults$allElites),]
-plot_configurations(all_elite, iraceResults$parameters)
+plot_configurations(all_elite, iraceResults$scenario$parameters)
 ```
 
 A similar display can be obtained using the `parallel_cat` function. For example to 
@@ -111,7 +111,7 @@ If you would like to visualize the distribution of a particular set of configura
 you can pass directly a set of configurations 
 and a parameters object in the irace format to the `sampling_frequency` function:
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE, eval=FALSE}
- sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, param_names = c("alpha"))
+ sampling_frequency(iraceResults$allConfigurations, iraceResults$scenario$parameters, param_names = c("alpha"))
 ```
 
 A detailed plot showing the sampling by iteration can be obtained with the
@@ -134,7 +134,7 @@ functions, the parameter sizes can be used to adjust the number of intervals to 
 displayed:
 
 ```{r fig.align="center", fig.width= 7, fig.height=6, eval=FALSE}
-sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+sampling_heatmap2(iraceResults$allConfigurations, iraceResults$scenario$parameters, 
                   param_names = c("localsearch","nnls"), sizes=c(0,5))
 ```
 

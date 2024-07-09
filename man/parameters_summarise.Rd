@@ -16,14 +16,14 @@ parameters_summarise(parameters)
 Summarise parameters space
 }
 \examples{
- ## Read the parameters directly from text
- parameters_tab <-
-'a "" i (2, 10)
- b "" c (yes, no) | a < 5
- c "" r (10, 50)  | a == 2 || b == "yes"
- '
- parameters <- irace::readParameters(text=parameters_tab)
- parameters_summarise(parameters)
+# Read the parameters directly from text.
+parameters_tab <- '
+a "" i (2, 10)
+b "" c (yes, no) | a < 5
+c "" o (low, medium, high) | (a == 2) | (b == "yes")
+d "" r (a, 50)'
+parameters <- irace::readParameters(text=parameters_tab)
+parameters_summarise(parameters)
 
 }
 \author{

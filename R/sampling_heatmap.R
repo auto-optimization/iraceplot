@@ -23,11 +23,12 @@
 #  - domain: starting points of the intervals
 get_domain <- function(param_name, parameters, size)
 {
+  # FIXME: log parameters do not work this way.
   is_real <- function(param_name, parameters) parameters$types[param_name] %in% c("r", "r,log")
   is_integer <- function(param_name, parameters) parameters$types[param_name] %in% c("i", "i,log")
   is_cat <- function(param_name, parameters) parameters$types[param_name] %in% c("c", "o")
     
-  old_domain <- parameters$domain[[param_name]]
+  old_domain <- parameters$domains[[param_name]]
 
   if (is_cat(param_name, parameters)) {
     size   <- length(old_domain)
@@ -41,16 +42,16 @@ get_domain <- function(param_name, parameters, size)
       if (size <= 0)
         size <- 10
     } else if (size <= 0) {
-      size <- old_domain[2] - old_domain[1] 
+      size <- old_domain[2L] - old_domain[1] 
       size <- min(10L, size)
-    } else if (size > (old_domain[2] - old_domain[1])) {
+    } else if (size > (old_domain[2L] - old_domain[1])) {
       cli_alert_info(paste0("{.strong Note}: step size for integer parameters should not exceed",
-                            " the size of their domain. Parameter {.field {param_name}} domain size: {old_domain[2] - old_domain[1]}, provided step size: {size}. Setting step size to: {min(old_domain[2] - old_domain[1], 10L)}\n"))
-      size <- min(old_domain[2] - old_domain[1], 10L)
+                            " the size of their domain. Parameter {.field {param_name}} domain size: {old_domain[2L] - old_domain[1]}, provided step size: {size}. Setting step size to: {min(old_domain[2L] - old_domain[1], 10L)}\n"))
+      size <- min(old_domain[2L] - old_domain[1], 10L)
     }
     type <- "n"
     param <- seq(1,size)
-    domain <- seq(old_domain[1], old_domain[2], length.out = size+1)
+    domain <- seq(old_domain[1], old_domain[2L], length.out = size+1)
     # Generate domain names
     names <- c()
     for (i in 1:(size-1))
@@ -140,35 +141,36 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
                              iterations = NULL, only_elite = TRUE, 
                              filename = NULL)
 {
+  parameters <- irace_results$scenario$parameters
   # Check parameter values
-  param_names <- check_unknown_param_names(param_names, irace_results$parameters$names)
+  param_names <- check_unknown_param_names(param_names, parameters$names)
   if (length(param_names) != 2L) stop("'param_names' must specify two parameters")
     
   # Check iterations
-  if (!is.null(iterations)) {
-    it <- 1:length(irace_results$allElites)
+  if (is.null(iterations)) {
+    iterations <- seq_along(irace_results$allElites)
+  } else {
+    it <- seq_along(irace_results$allElites)
     if (any(!(iterations %in% it))) {
       stop("The iterations entered are outside the possible range")
     }
-  } else {
-    iterations <- 1:length(irace_results$allElites)
   } 
   
+  iteration <- configuration <- NULL # Silence CRAN warnings
   # Check configurations
-  if (only_elite)
-    id_configuration <- unlist(unique(irace_results$allElites[iterations]))
-  else
-    id_configuration <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
-  
+  id_configuration <-   if (only_elite)
+                          unlist(irace_results$allElites[iterations]) else
+                                                                        irace_results$state$experiment_log[iteration %in% iterations, configuration]
+  id_configuration <- unique(id_configuration)
   # Select data 
-  config <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configuration, ,drop=FALSE]
+  config <- irace_results$allConfigurations[irace_results$allConfigurations[[".ID."]] %in% id_configuration, ,drop=FALSE]
   config <- config[, colnames(config) %in% param_names]
 
-  domain1 <- get_domain(param_names[1], irace_results$parameters, sizes[1])
-  domain2 <- get_domain(param_names[2], irace_results$parameters, sizes[2])
+  domain1 <- get_domain(param_names[1], parameters, sizes[1])
+  domain2 <- get_domain(param_names[2], parameters, sizes[2])
   
-  params <- data.frame(param1 = which_domain(config[, param_names[1]], domain1), 
-                       param2 = which_domain(config[, param_names[2]], domain2), 
+  params <- data.frame(param1 = which_domain(config[, param_names[1L]], domain1), 
+                       param2 = which_domain(config[, param_names[2L]], domain2), 
                        stringsAsFactors = FALSE)
   
   domain_names1 <- domain1$names
@@ -192,7 +194,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
        geom_tile(color = "white", lwd = 0.5, linetype = 1) +
-       labs(x = param_names[1], y = param_names[2]) +
+       labs(x = param_names[1L], y = param_names[2L]) +
        scale_x_discrete(labels=domain_names1) +
        scale_y_discrete(labels=domain_names2) +
        theme_bw() + 
@@ -237,7 +239,7 @@ sampling_heatmap <- function(irace_results, param_names, sizes = c(0,0),
 #' @examples
 #' iraceResults <- read_logfile(system.file(package="irace", "exdata",
 #'                                          "irace-acotsp.Rdata", mustWork = TRUE))
-#' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+#' sampling_heatmap2(iraceResults$allConfigurations, iraceResults$scenario$parameters, 
 #'                   param_names=c("beta", "alpha"))
 #' @export
 sampling_heatmap2 <- function(configurations, parameters, param_names, 
@@ -249,11 +251,11 @@ sampling_heatmap2 <- function(configurations, parameters, param_names,
   # Select data 
   config <- configurations[, colnames(configurations) %in% param_names]
   
-  domain1 <- get_domain(param_names[1], parameters, sizes[1])
-  domain2 <- get_domain(param_names[2], parameters, sizes[2])
+  domain1 <- get_domain(param_names[1L], parameters, sizes[1L])
+  domain2 <- get_domain(param_names[2L], parameters, sizes[2L])
   
-  params <- data.frame(param1 = which_domain(config[, param_names[1]], domain1), 
-                       param2 = which_domain(config[, param_names[2]], domain2), 
+  params <- data.frame(param1 = which_domain(config[, param_names[1L]], domain1), 
+                       param2 = which_domain(config[, param_names[2L]], domain2), 
                        stringsAsFactors = FALSE)
   
   domain_names1 <- domain1$names
@@ -276,7 +278,7 @@ sampling_heatmap2 <- function(configurations, parameters, param_names,
   
   p <- ggplot(df, aes(x = param1, y = param2, fill=n)) +
     geom_tile(color = "white", lwd = 0.5, linetype = 1) +
-    labs(x = param_names[1], y = param_names[2]) +
+    labs(x = param_names[1L], y = param_names[2L]) +
     scale_x_discrete(labels=domain_names1) +
     scale_y_discrete(labels=domain_names2) +
     theme_bw() + 

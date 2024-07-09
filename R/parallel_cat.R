@@ -50,8 +50,8 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
 
   # Variable assignment
   iteration <- configuration <- dim <- tickV <- vectorP <- x <- y <- id <- freq <- NULL
-  id_configurations <- unlist(id_configurations)
-  param_names <- subset_param_names(param_names, irace_results$parameters$names, irace_results$parameters$isFixed)
+  parameters <- irace_results$scenario$parameters
+  param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
   # Verify that param_names contains more than one parameter
   if (length(param_names) < 2) stop("Data must have at least two parameters")
 
@@ -73,9 +73,13 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   } else {
     iterations <- seq_along(irace_results$allElites)
   }
+  experiment_log <- irace_results$state$experiment_log
   
   # Check configurations
-  if (!is.null(id_configurations)) {
+  if (is.null(id_configurations)) {
+    id_configurations <- unique(experiment_log[["configuration"]][experiment_log[["iteration"]] %in% iterations])
+  } else {
+    id_configurations <- unlist(id_configurations)
     # Verify that the entered id are within the possible range
     if (any(id_configurations[id_configurations < 1]) || any(id_configurations[id_configurations > nrow(irace_results$allConfigurations)])) {
       stop("Error: IDs provided are outside the range of settings\n")
@@ -84,66 +88,62 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
     if (length(id_configurations) <= 1 || length(id_configurations) > nrow(irace_results$allConfigurations)) {
       stop("Error: You must provide more than one configuration id\n")
     }
-    iterations <- 1:length(irace_results$allElites)
-  } else {
-    id_configurations <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% iterations, "configuration"])
+    iterations <- seq_along(irace_results$allElites)
   }
 
-  if (!is.numeric(n_bins) || n_bins < 1) {
+  if (!is.numeric(n_bins) || n_bins < 1L)
     stop("Error: n_bins must be numeric > 0")
-  }
   
   # Select data 
-  tabla <- irace_results$allConfigurations[irace_results$allConfigurations[, ".ID."] %in% id_configurations, ]
-  filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
-  filtro <- filtro[filtro[, "configuration"] %in% id_configurations, ]
-  filtro <- filtro[filtro[, "iteration"] %in% iterations, ]
+  tabla <- irace_results$allConfigurations[irace_results$allConfigurations[[".ID."]] %in% id_configurations, ]
+  filtered <- unique(experiment_log[, c("iteration", "configuration")])
+  filtered <- filtered[(configuration %in% id_configurations) & (iteration %in% iterations),]
   
   # Merge iteration and configuration data
-  colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
-  tabla <- merge(filtro, tabla, by=".ID.")
+  colnames(filtered)[colnames(filtered) == "configuration"] <- ".ID."
+  tabla <- merge(filtered, tabla, by=".ID.")
   
   # adding discretization for numerical variables and replace NA values 
   # FIXME: Add proper ordering for each axis
   # FIXME: add number of bins as an argument (maybe a list?)
   # FIXME: This is surely wrong! It is not using param_names calculated above!
-  for (pname in irace_results$parameters$names) {
+  # FIXME: This is not handling isDependent parameters.
+  # FIXME: This is not handling logarithmic transform.
+  for (param in parameters$get()) {
+    pname <- param[["name"]]
     n_bins_param <- n_bins
-    if (irace_results$parameters$types[pname] %in% c("i", "r", "i,log", "r,log")) {
-      not.na <- !is.na(tabla[,pname])
-      u_data <- unique(tabla[not.na, pname])
+    if (param[["type"]] %in% c("i", "r")) {
+      not_na <- !is.na(tabla[[pname]])
+      u_data <- unique(tabla[[pname]][not_na])
       if (length(u_data) >= n_bins_param) {
-        snot.na <- sum(not.na) 
-        if(snot.na < nrow(tabla)) {
-          n_bins_param <- max(n_bins - 1, 1)
-          if (snot.na < nrow(tabla)/3)
-            n_bins_param <- 2
+        snot_na <- sum(not_na) 
+        if(snot_na < nrow(tabla)) {
+          n_bins_param <- max(n_bins - 1L, 1L)
+          if (snot_na < nrow(tabla)/3)
+            n_bins_param <- 2L
         }
-        val  <- tabla[not.na, pname]
-        bb <- seq(irace_results$parameters$domain[[pname]][1], 
-                  irace_results$parameters$domain[[pname]][2], 
-                  length.out=(n_bins_param+1))
-        if (irace_results$parameters$types[pname] %in% c("i", "i,log"))
+        val  <- tabla[[pname]][not_na]
+        bb <- seq(param[["domain"]][[1L]], param[["domain"]][[2L]],
+          length.out=(n_bins_param+1))
+        if (param[["type"]] == "i")
           bb <- round(bb)
         #quartile based ranges
-        #val  <- c(irace_results$parameters$domain[[pname]], tabla[not.na, pname])
+        #val  <- c(parameters$domain[[pname]], tabla[not_na, pname])
         #bb   <- unique(c(quantile(val, probs=seq(0,1, by=1/n_bins_param))))
         #bins <- as.character(bins[3:length(bins)],scientific = F)
         bins <- cut(val, breaks=bb, include.lowest = TRUE, ordered_result=TRUE)
         bins <- as.character(bins)
-        tabla[not.na, pname] <- bins
-      } 
+        set(tabla, i = which(not_na), j = pname, value = bins)
+      }
     }
 
     # replace NA values
-    rna <- is.na(tabla[,pname])
-    if (any(rna)) {
-      tabla[rna,pname] <- "NA"
-    }
-    tabla[, pname] <- factor(tabla[, pname])
+    set(tabla, i = which(is.na(tabla[[pname]])), j = pname, value = "NA")
+    set(tabla, j = pname, value = factor(tabla[[pname]]))
   }
 
   # Column .ID. and .PARENT. are removed
+  tabla <- as_tibble(tabla) # FIXME: use data.table
   tabla <- tabla[, !(startsWith(colnames(tabla), "."))]
   tabla$iteration <- factor(tabla$iteration, ordered=TRUE)
   
@@ -152,7 +152,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
   end_i <- by_n_param
   plot_list <- list()
   # Create plots
-  for (i in 1:n_parts) {
+  for (i in seq_len(n_parts)) {
     # stop if we reach the end
     if (end_i > length(param_names))
       break;
@@ -191,7 +191,6 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
     end_i   <- min(end_i + by_n_param, length(param_names))
   }
   
-
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
     if (length(plot_list) == 1) {
@@ -207,7 +206,7 @@ parallel_cat <- function(irace_results, id_configurations = NULL, param_names = 
     }
   } 
   
-  if (length(plot_list) == 1)
-    return(plot_list[[1]])
-  return(plot_list)
+  if (length(plot_list) == 1L)
+    return(plot_list[[1L]])
+  plot_list
 }

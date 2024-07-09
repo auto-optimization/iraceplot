@@ -1,12 +1,19 @@
 # iraceplot 2.0
 
+ * Requires R >= 4.0 and irace >= 4.0.
+ 
  * Fix tables in the report not showing any value if there are NAs.
  
  * Handle iteration 0 in `summarise_by_iteration()`.
- 
- 
+
+ * `summarise_by_configuration()` also prints mean rank.
+
+
 # iraceplot 1.3
 
+ * Requires [irace](https://mlopez-ibanez.github.io/irace/) version >= 4.0 and
+   it will not work with earlier versions.
+ 
  * Fix negative RPD values (Fixed by @j-mezger).
 
  * Renamed `parallel_coord2()` to `plot_configurations()`. Completely rewrite `parallel_coord()` and `plot_configurations()` to produce nicer tickmarks and fix many bugs.
@@ -29,7 +36,7 @@
  
 # iraceplot 1.0
 
- * Implement all plots that were available in the `irace` package and a few
+ * Implement all plots that were available in the [irace](https://mlopez-ibanez.github.io/irace/) package and a few
    more.
    
  * First version in CRAN.

@@ -43,14 +43,15 @@ sampling_distance <- function(irace_results, type = c("boxplot", "line", "both")
   niterations <- length(irace_results$allElites)
   
   all.distance <- matrix(0, ncol=nrow(allconf), nrow=nrow(allconf))
-  a <- 1:nrow(allconf)
+  a <- seq_nrow(allconf)
   for (confid in allconf$.ID.) {
     all.distance[confid,a[-confid]] <- distance_config(irace_results, id_configuration=confid, t=t)
   }
 
+  iteration <- configuration <- NULL # Silence CRAN warnings
   # The value of the distance between each configuration is created
-  for (i in 1:niterations) {
-    ids <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] %in% i, "configuration"])
+  for (i in seq_len(niterations)) {
+    ids <- unique(irace_results$state$experiment_log[ iteration %in% i, configuration])
     iterations <- c(iterations, i)
 
     dd <- all.distance[ids,ids]

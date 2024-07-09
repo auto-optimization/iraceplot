@@ -18,7 +18,7 @@ sampling_frequency(
 \item{parameters}{(\code{list()})\cr Parameters object in \code{irace} format. If this argument
 is missing, the first parameter is taken as the \code{iraceResults} data
 generated when loading the \code{.Rdata} file created by \code{irace} and
-\code{configurations=iraceResults$allConfigurations} and \code{parameters = iraceResults$parameters}.}
+\code{configurations=iraceResults$allConfigurations} and \code{parameters = iraceResults$scenario$parameters}.}
 
 \item{param_names}{(\code{character()}) Parameters to be included in the plot. Example:
 \code{c("algorithm","alpha","rho","q0","rasrank")}.}
@@ -57,12 +57,13 @@ sampling_frequency(iraceResults, param_names = c("alpha"))
 sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 }
 # Or explicitly specify the configurations and parameters.
-sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
+parameters <- iraceResults$scenario$parameters
+sampling_frequency(iraceResults$allConfigurations, parameters)
 \donttest{ 
-sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
-sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+sampling_frequency(iraceResults$allConfigurations, parameters, n = 2)
+sampling_frequency(iraceResults$allConfigurations, parameters, 
                     param_names = c("alpha"))
-sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+sampling_frequency(iraceResults$allConfigurations, parameters, 
                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 }
 }

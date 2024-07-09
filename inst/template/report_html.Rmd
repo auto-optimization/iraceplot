@@ -82,6 +82,7 @@ show_table <- function(x, row.names = FALSE, search = FALSE, lengthMenu = NULL,
 
 best_elites <- as.character(irace_results$allElites[[length(irace_results$allElites)]])
 irs <- irace_summarise(irace_results)
+parameters <- irace_results$scenario$parameters
 ```
 
 # Scenario
@@ -95,12 +96,12 @@ irs <- irace_summarise(irace_results)
 # Parameters
 
 ```{r parameters_summarise, echo=FALSE, results='asis'}
-knitr::kable(parameters_summarise(irace_results$parameters))
+knitr::kable(parameters_summarise(parameters))
 ```
 ## Parameters tree
 <pre>
 ```{r parameters_tree, echo=FALSE, results='asis'}
-parameters_tree(irace_results$parameters)
+parameters_tree(parameters)
 ```
 </pre>
 
@@ -109,7 +110,7 @@ parameters_tree(irace_results$parameters)
 <summary>Click to show</summary>
 <pre>
 ```{r printParameters, echo=FALSE, results='asis'}
-irace::printParameters(irace_results$parameters)
+irace::printParameters(parameters)
 ```
 </pre>
 </details> 
@@ -151,7 +152,7 @@ The final best configurations found by irace are:
 ```{r table-elite,fig.align="center", echo=FALSE}
 show_table(irace_results$allConfigurations[best_elites, , drop=FALSE],
            lengthMenu = c(10,20),
-           colorbar = names(which(irace_results$parameters$types %in% c("i", "r") & !irace_results$parameters$isFixed)))
+           colorbar = names(which(parameters$types %in% c("i", "r") & !parameters$isFixed)))
 ```
 
 ## Parallel coordinates visualization (only elites)
@@ -215,15 +216,9 @@ if (irace_results$scenario$testIterationElites && has_testing_data(irace_results
 ## Performance of the final elite configurations on the training instances
 
 ```{r table-train-elites,fig.align="center", echo=FALSE}
-best_results <- as_tibble(irace_results$experiments[, best_elites, drop=FALSE])
-best_results <- best_results %>% pivot_longer(all_of(best_elites), names_to="ID") %>%
-  group_by(ID) %>%
-  summarise(n_instances = sum(!is.na(value)), mean = mean(value, na.rm=TRUE),
-    sd = sd(value, na.rm=TRUE), median = median(value, na.rm=TRUE),
-    min = min(value, na.rm=TRUE), max = max(value, na.rm=TRUE))
-best_results <- best_results[match(best_elites, best_results$ID), , drop=FALSE]
+best_results <- summarise_by_configuration(irace_results, elites_only = TRUE, instances = "train")
 show_table(best_results, lengthMenu = c(10, 20, 50, 100),
-           colorbar = c("mean", "sd", "median", "min", "max"))
+           colorbar = c("mean", "sd", "median", "min", "max", "rank_mean", "rank_sd"))
 ```
 
 ## Final elite configurations on the training instances

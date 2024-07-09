@@ -5,14 +5,14 @@
 #' @return [tibble()]
 #' 
 #' @examples
-#'  ## Read the parameters directly from text
-#'  parameters_tab <-
-#' 'a "" i (2, 10)
-#'  b "" c (yes, no) | a < 5
-#'  c "" r (10, 50)  | a == 2 || b == "yes"
-#'  '
-#'  parameters <- irace::readParameters(text=parameters_tab)
-#'  parameters_summarise(parameters)
+#' # Read the parameters directly from text.
+#' parameters_tab <- '
+#' a "" i (2, 10)
+#' b "" c (yes, no) | a < 5
+#' c "" o (low, medium, high) | (a == 2) | (b == "yes")
+#' d "" r (a, 50)'
+#' parameters <- irace::readParameters(text=parameters_tab)
+#' parameters_summarise(parameters)
 #' 
 #' @author Manuel López-Ibáñez
 #' @export
@@ -24,5 +24,6 @@ parameters_summarise <- function(parameters)
          n_cat = sum(parameters$types == "c"),
          n_ord = sum(parameters$types == "o"),
          n_conditional = sum(!sapply(parameters$conditions, isTRUE)),
-         n_dependent = sum(parameters$isDependent))
+         n_dependent = sum(sapply(parameters$get(), getElement, name="is_dependent")),
+         max_level = max(parameters$hierarchy))
 

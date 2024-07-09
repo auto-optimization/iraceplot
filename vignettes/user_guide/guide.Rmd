@@ -141,7 +141,7 @@ As an example, this lines display all elite configurations:
 
 ```{r fig.align="center", fig.width= 7, message=FALSE, prompt=FALSE}
 all_elite <- iraceResults$allConfigurations[unlist(iraceResults$allElites),]
-parameters <- iraceResults$parameters
+parameters <- iraceResults$scenario$parameters
 plot_configurations(all_elite, parameters)
 ```
 
@@ -208,7 +208,7 @@ If you would like to visualize the distribution of a particular set of configura
 you can pass directly a set of configurations 
 and a parameters object in the irace format to the `sampling_frequency` function:
 ```{r fig.align="center", fig.width= 7, fig.height=7, message=FALSE, prompt=FALSE, eval=FALSE}
- sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
+ sampling_frequency(iraceResults$allConfigurations, iraceResults$scenario$parameters)
 ```
 
 The previous functions display the parameter frequency plots grouped by 9 plots, you can
@@ -254,7 +254,7 @@ this argument indicates that the default interval size should be used. In this c
 for categorical or ordered parameter types.
 
 ```{r fig.align="center", fig.width= 7, fig.height=6}
-sampling_heatmap2(iraceResults$allConfigurations, iraceResults$parameters, 
+sampling_heatmap2(iraceResults$allConfigurations, iraceResults$scenario$parameters, 
                   param_names = c("localsearch","nnls"), sizes=c(0,5))
 ```
 

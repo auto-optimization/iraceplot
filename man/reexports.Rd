@@ -4,6 +4,9 @@
 \name{reexports}
 \alias{reexports}
 \alias{read_logfile}
+\alias{has_testing_data}
+\alias{read_ablogfile}
+\alias{irace_summarise}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +14,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{irace}{\code{\link[irace]{read_logfile}}}
+  \item{irace}{\code{\link[irace]{has_testing_data}}, \code{\link[irace]{irace_summarise}}, \code{\link[irace]{read_ablogfile}}, \code{\link[irace]{read_logfile}}}
 }}
 

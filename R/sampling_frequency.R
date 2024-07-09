@@ -13,7 +13,7 @@
 #'   is missing, the first parameter is taken as the `iraceResults` data
 #'   generated when loading the `.Rdata` file created by `irace` and
 #'   `configurations=iraceResults$allConfigurations` and `parameters =
-#'   iraceResults$parameters`.
+#'   iraceResults$scenario$parameters`.
 #'
 #' @template arg_param_names
 #'
@@ -42,19 +42,20 @@
 #' sampling_frequency(iraceResults, param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' }
 #' # Or explicitly specify the configurations and parameters.
-#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters)
+#' parameters <- iraceResults$scenario$parameters
+#' sampling_frequency(iraceResults$allConfigurations, parameters)
 #' \donttest{ 
-#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, n = 2)
-#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+#' sampling_frequency(iraceResults$allConfigurations, parameters, n = 2)
+#' sampling_frequency(iraceResults$allConfigurations, parameters, 
 #'                     param_names = c("alpha"))
-#' sampling_frequency(iraceResults$allConfigurations, iraceResults$parameters, 
+#' sampling_frequency(iraceResults$allConfigurations, parameters, 
 #'                     param_names = c("algorithm", "alpha", "rho", "q0", "rasrank"))
 #' }
 #' @export
 sampling_frequency <- function(configurations, parameters, param_names = NULL, n = NULL, filename = NULL)
 {
   if (missing(parameters)) {
-    parameters <- configurations$parameters 
+    parameters <- configurations$scenario$parameters 
     configurations <- configurations$allConfigurations
   }
   param_names <- subset_param_names(param_names, parameters$names, parameters$isFixed)
@@ -90,19 +91,10 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
                    # of marrangeGrob. We should find another way.
       p <- ggplot(data = tabla, aes(x = Var1, y = Freq)) +
         geom_bar(stat = "identity", fill = "grey", color = "black") +
-        labs(x = "Values") +
-        ggtitle(pname) +
-        theme(
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 6),
-          plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
-          axis.ticks.x = element_blank()
-        ) +
         # FIXME: This doesn't wrap if there are no spaces: https://github.com/r-lib/scales/issues/353
         # TODO: Use paste0(strsplit(string.to.split, "(?<=[[:lower:]])(?=[[:upper:]])", perl = TRUE), collapse="\n") to split camel case and replace with spaces.
         # TODO: Replace "-" and "_" with spaces if needed.
         # scale_x_discrete(labels = scales::label_wrap(8)) +
-        scale_y_continuous(n.breaks = 3) +
         guides(x = guide_axis(angle = angle_x))
     } else if (ptype %in% c("i", "r", "i,log", "r,log")) {
       # histogram and density plot
@@ -116,25 +108,26 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
         geom_histogram(aes(y = after_stat(density)),
                        breaks = nbreaks,
                        color = "black", fill = "gray") +
-        geom_density(color = "blue", fill = "blue", alpha = 0.2) +
-        labs(x = "Values") +
-        ggtitle(pname) +
-        theme(
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 6),
-          plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
-          axis.ticks.x = element_blank()) +
-        scale_y_continuous(n.breaks = 3)
+        geom_density(color = "blue", fill = "blue", alpha = 0.2)
+
     } else {
       stop("Unknown parameter type (", ptype, ") of parameter '", pname, "'")
     }
+    p <- p + scale_y_continuous(n.breaks = 3) + ggtitle(pname) + labs(x = "Values") +
+      theme(
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(size = 6),
+        plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
+        axis.ticks.x = element_blank())
+
+
     # the plot is saved in a list
     plot.list <- c(plot.list, list(p))
   }
 
   npar <- length(plot.list)
   # Get appropriate number of columns
-  col <- row <- 3
+  col <- row <- 3L
   if (npar <= 3) {
     col <- npar 
     row <- 1L 
@@ -143,7 +136,7 @@ sampling_frequency <- function(configurations, parameters, param_names = NULL, n
     row <- 2L
   } 
   # Generate plots
-  if (npar > 9)
+  if (npar > 9L)
     wp <- marrangeGrob(grobs=plot.list, ncol = col, nrow = row)
   else if (length(plot.list) == 1L)
     wp <- plot.list[[1L]]

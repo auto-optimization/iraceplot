@@ -12,7 +12,7 @@
 summarise_by_iteration <- function(irace_results)
 {
   iteration <- configuration <- instance <- NULL # Silence CRAN warnings.
-  as_tibble(irace_results$experimentLog) %>%
+  as_tibble(irace_results$state$experiment_log) %>%
     # Replace iteration 0 (used for estimating computation time)
     mutate(iteration = replace(iteration, iteration == 0L, 1L)) %>%
     group_by(iteration) %>%

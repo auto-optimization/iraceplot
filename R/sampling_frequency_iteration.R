@@ -31,95 +31,77 @@ sampling_frequency_iteration <- function(irace_results, param_name, numerical_ty
                                          filename = NULL)
 {
   # Variable assignment
-  memo <- vectorPlot <- configuration <- x <- Freq <- iteration_f <- iteration <- density <- NULL
-  
   if (!(numerical_type %in% c("both", "density", "frequency"))){
     stop("Unknown numerical_type, values must be either both, density ot frequency.")
   }
 
+  parameters <- irace_results$scenario$parameters
   # verify that param_names is other than null
   if (!is.null(param_name)) {
-    param_name <- check_unknown_param_names(param_name, irace_results$parameters$names)
+    param_name <- check_unknown_param_names(param_name, parameters$names)
     if (length(param_name) != 1L) stop("You can only provide one parameter")
   }
 
   # table is created with all settings
   tabla <- irace_results$allConfigurations[,c(".ID.", param_name)]
-  filtro <- unique(irace_results$experimentLog[, c("iteration", "configuration")])
+  filtro <- unique(irace_results$state$experiment_log[, c("iteration", "configuration")])
 
   # merge iteration and configuration data
-  colnames(filtro)[colnames(filtro) == "configuration"] <- ".ID."
+  setnames(filtro, "configuration", ".ID.")
   tabla <- merge(filtro, tabla, by=".ID.")
-
-  # Column .ID. and .PARENT. are removed
-  tabla <- tabla[, !(colnames(tabla) %in% c(".ID.")), drop=FALSE]
+  set(tabla, j = ".ID.", value = NULL)
 
   # The first column is renamed
-  colnames(tabla)[colnames(tabla) %in% c(param_name)] <- "x"
-  niter <- n_distinct(tabla$iteration)
-  tabla$iteration <- factor(tabla$iteration)
+  configuration <- Freq <- iteration <- density <- NULL # Silence CRAN warnings
 
   # If the parameter is of type character a frequency graph is displayed
-  if (irace_results$parameters$types[param_name] %in% c("c", "o")) {
+  if (parameters$types[param_name] %in% c("c", "o")) {
     tabla <- as.data.frame(table(tabla))
-    tabla$iteration_f <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
+    tabla$iteration <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
 
-    p <- ggplot(tabla, aes(x = x, y = Freq, fill = x)) +
+    p <- ggplot(tabla, aes(x = {{param_name}}, y = Freq, fill = {{param_name}})) +
       geom_bar(stat = "identity") +
-      facet_grid(ggplot2::vars(iteration_f), scales = "free") +
       scale_fill_manual(
-        values = viridisLite::viridis(length(unique(tabla$x))),
-        guide = guide_legend(title = param_name)
-      ) +
-      labs(y = "Frequency", x = param_name) +
-      scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0),
-            legend.position = "none")
+        values = viridisLite::viridis(n_distinct(tabla[[param_name]])),
+        guide = guide_legend(title = param_name))
 
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
-  } else if (irace_results$parameters$types[param_name] %in% c("i", "r", "i,log", "r,log")) {
+  } else if (parameters$types[param_name] %in% c("i", "r")) {
     tabla <- na.omit(tabla)
-    tabla$iteration_f <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
-
-    nbreaks <- pretty(range(tabla$x),
-      n = nclass.Sturges(tabla$x),
-      min.n = 1
-    )
+    tabla$iteration <- factor(tabla$iteration, levels = rev(unique(tabla$iteration)))
+    nbreaks <- pretty(range(tabla[[param_name]]),
+      n = nclass.Sturges(tabla[[param_name]]),
+      min.n = 1)
     
     # density and histogram plot
-    p <- ggplot(as.data.frame(tabla), aes(x = x, fill = iteration)) 
+    # FIXME: x = {{param_name}} doesn't work, why?
+    p <- ggplot(tabla, aes(x = tabla[[param_name]]))
     if (numerical_type %in% c("both", "frequency"))
         p <- p + geom_histogram(aes(y = after_stat(density)),
                        breaks = nbreaks,
                        color = "black", fill = "gray"
-         ) 
+         )
     if (numerical_type %in% c("both", "density")) {
         # Note: We can use also density ridges for a different (nicer) looking density plot
         # ggplot(tabla, aes(x, y = iteration, height = stat(density))) +
         # ggridges::geom_density_ridges(aes(fill = iteration), na.rm = TRUE, stat = "density") +
-        p <- p + geom_density(alpha = 0.7) 
+        p <- p + geom_density()
     }
-    p <- p + scale_fill_manual(values = viridisLite::viridis(n_distinct(tabla$iteration))) +
-      facet_grid(ggplot2::vars(iteration_f), scales = "free") +
-      labs(x = param_name, y = "Frequency") +
-      theme(
+    p <- p + theme(
         axis.title.y = element_text(),
         axis.title.x = element_text(size = 10),
         plot.title = element_text(hjust = 0.5, size = rel(0.8), face = "bold"),
         axis.ticks.x = element_blank()
-      ) +
-      scale_y_continuous(n.breaks = 3) +
-      theme(strip.text.y = element_text(angle = 0),
-            legend.position = "none")
-
-    # The plot is saved in a list
-    vectorPlot[1] <- list(p)
+      )
   }
+  p <- p + facet_grid(ggplot2::vars(iteration), scales = "free") +
+    labs(x = param_name, y = "Frequency") +
+    scale_y_continuous(n.breaks = 3) +
+    theme(strip.text.y = element_text(angle = 0),
+      legend.position = "none")
 
   # If the value in filename is added the pdf file is created
   if (!is.null(filename)) {
-    ggsave(filename, plot = do.call("grid.arrange", c(vectorPlot, ncol = 1)))
+    ggsave(filename, plot = do.call("grid.arrange", c(list(p), ncol = 1L)))
     # If you do not add the value of filename, the plot is displayed
   } else {
     p

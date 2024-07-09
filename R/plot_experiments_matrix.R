@@ -37,9 +37,9 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
   metric <- match.arg(metric)
   experiments <- irace_results$experiments
   conf_ids <- colnames(experiments)
-  if (is.null(conf_ids)) conf_ids <- as.character(1:ncol(experiments))
+  if (is.null(conf_ids)) conf_ids <- as.character(seq_ncol(experiments))
   inst_ids <- rownames(experiments)
-  if (is.null(inst_ids)) inst_ids <- as.character(1:nrow(experiments))
+  if (is.null(inst_ids)) inst_ids <- as.character(seq_nrow(experiments))
 
   if (is.na(show_conf_ids))
     show_conf_ids <- length(conf_ids) <= 25

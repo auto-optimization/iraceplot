@@ -18,7 +18,7 @@
 #' NULL
 distance_config <- function(irace_results, id_configuration, t = 0.05) {
   
-  if (length(id_configuration) != 1) {
+  if (length(id_configuration) != 1L) {
     stop("Error: You must enter one configuration id\n")
   } else if (id_configuration %not_in% irace_results$allConfigurations[[".ID."]]) {
     stop(paste("Error: Configuration", id_configuration[1], "does not exist\n", sep = " "))
@@ -33,12 +33,13 @@ distance_config <- function(irace_results, id_configuration, t = 0.05) {
   #Get configurations
   config <- select(irace_results$allConfigurations[id_configuration, ], -.ID., -.PARENT.)
   others <- select(irace_results$allConfigurations[irace_results$allConfigurations$.ID. %not_in% id_configuration, ], -.ID., -.PARENT.)
-  tipos <- irace_results$parameters$types
+  parameters <- irace_results$scenario$parameters
+  types <- parameters$types
   
   distance <- rep(0, nrow(others))
   
   # Categorical parameters
-  cat_par <- names(tipos[tipos %in% c("c", "o")])
+  cat_par <- names(types[types %in% c("c", "o")])
   for (pname in cat_par) {
     if(is.na(config[,pname])) {
       distance <- distance + as.numeric(!is.na(others[,pname]))
@@ -50,9 +51,10 @@ distance_config <- function(irace_results, id_configuration, t = 0.05) {
   }
   
   # Numerical parameters
-  num_par <- names(tipos[tipos %in% c("i", "r", "i,log", "r,log")])
+  num_par <- names(types[types %in% c("i", "r")])
   # calculate distance
-  threshold <- lapply(irace_results$parameters$domain[num_par], function(d) return(abs((d[2]-d[1])*t)))
+  threshold <- t * abs(sapply(parameters$domains[num_par], function(d) d[2L]-d[1L]))
+
   for (pname in num_par) {
     if(is.na(config[,pname])) {
       distance <- distance + as.numeric(!is.na(others[,pname]))
@@ -62,6 +64,5 @@ distance_config <- function(irace_results, id_configuration, t = 0.05) {
       distance[!are_na] <- distance[!are_na] + as.numeric(abs(others[!are_na,pname] - config[,pname]) > threshold[[pname]])
     }
   }
-  
-  return(distance)
+  distance
 }

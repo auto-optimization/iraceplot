@@ -1,6 +1,8 @@
 #' The configurations by iteration and instance
 #'
-#' This is a simplified version of the visualization you can obtain with [`acviz`](https://github.com/souzamarcelo/acviz). This function is currently VERY SLOW.
+#' This is a simplified version of the visualization you can obtain with
+#' [`acviz`](https://github.com/souzamarcelo/acviz). This function is currently
+#' VERY SLOW.
 #'
 #' @template arg_irace_results
 #'
@@ -24,87 +26,87 @@ configurations_display <- function(irace_results, rpd = TRUE, filename = NULL, i
   # FIXME: This function takes a long time.
   # variable assignment
   time <- bound <- instance <- configuration <- iteration <- nconfig <- cont_exe <- NULL
-  nconfig <- 0
+  nconfig <- 0L
+  experiments <- irace_results$experiments
+  if (rpd) experiments <- calculate_rpd(experiments)
   experiments <- as.data.frame(irace_results$experiments)
 
-  if (rpd) experiments <- calculate_rpd(experiments)
-  
-  exp_log <- select(as.data.frame(irace_results$experimentLog), -time, -bound)
-  value <- sample(NA, size = nrow(exp_log), replace = TRUE)
-  execution <- sample(NA, size = nrow(exp_log), replace = TRUE)
-  tabla <- cbind(exp_log, value, execution)
+  exp_log <- irace_results$state$experiment_log
+  exp_log[, let(time=NULL,bound=NULL,value=as.numeric(NA),execution=as.numeric(NA))]
 
   # the values of each configuration are added to the table
-  cont_exe <- 0
+  cont_exe <- 0L
   # FIXME: This loop is too slow. What is it doing?
-  for (i in 1:nrow(exp_log)) {
-    for (j in 1:nrow(irace_results$experiments)) {
-      if (!is.na(experiments[[tabla$configuration[i]]][j])) {
-        cont_exe <- cont_exe + 1
-        if (is.na(tabla$value[i])) {
-          tabla$value[i] <- experiments[[tabla$configuration[i]]][j]
-          tabla$execution[i] <- cont_exe
+  # FIXME: Use data.table
+  for (i in seq_nrow(exp_log)) {
+    for (j in seq_nrow(irace_results$experiments)) {
+      if (!is.na(experiments[[exp_log$configuration[i]]][j])) {
+        cont_exe <- cont_exe + 1L
+        if (is.na(exp_log$value[i])) {
+          exp_log$value[i] <- experiments[[exp_log$configuration[i]]][j]
+          exp_log$execution[i] <- cont_exe
         } else {
-          add <- tabla[i, ]
-          add$value <- experiments[[tabla$configuration[i]]][j]
+          add <- exp_log[i, ]
+          add$value <- experiments[[exp_log$configuration[i]]][j]
           add$execution <- cont_exe
-          tabla <- rbind(tabla, add)
+          exp_log <- rbind(exp_log, add)
         }
       }
     }
   }
 
   # new columns are created and added to the table
-  tabla <- tabla[order(tabla$execution), ]
-  tabla <- cbind(tabla, type = NA, conf_it = NA, instance_it = NA, media_regular = NA, media_elite = NA,
+  exp_log <- exp_log[order(exp_log$execution), ]
+  exp_log <- cbind(exp_log, type = NA, conf_it = NA, instance_it = NA, media_regular = NA, media_elite = NA,
                  regular_color = "median iteration", elite_color = "median elites")
 
   # FIXME: This code needs to be revised.
   # the data is added to the conf_it, instance_it and type columns
-  for (j in 1:length(irace_results$allElites)) {
-    nconfig <- max(tabla$execution[tabla$iteration == j])
-    tabla$conf_it[tabla$iteration == j] <- nconfig
-    tabla$instance_it[tabla$iteration == j] <- max(unique(tabla$instance[tabla$iteration == j]))
-    is_elite <- tabla$configuration %in% irace_results$allElites[[j]]
-    tabla$type[tabla$iteration == j & !is_elite] <- "regular config."
+  for (j in seq_along(irace_results$allElites)) {
+    nconfig <- max(exp_log$execution[exp_log$iteration == j])
+    exp_log$conf_it[exp_log$iteration == j] <- nconfig
+    exp_log$instance_it[exp_log$iteration == j] <- max(unique(exp_log$instance[exp_log$iteration == j]))
+    is_elite <- exp_log$configuration %in% irace_results$allElites[[j]]
+    exp_log$type[exp_log$iteration == j & !is_elite] <- "regular config."
     if (j == length(irace_results$allElites)) {
-      tabla$type[tabla$iteration == j & is_elite] <- "final elite config."
-      tabla$type[tabla$iteration == j & (tabla$configuration %in% irace_results$allElites[[j]][1])] <- "best found config."
+      exp_log$type[exp_log$iteration == j & is_elite] <- "final elite config."
+      exp_log$type[exp_log$iteration == j & (exp_log$configuration %in% irace_results$allElites[[j]][1])] <- "best found config."
     } else {
-      tabla$type[tabla$iteration == j & is_elite] <- "elite config."
+      exp_log$type[exp_log$iteration == j & is_elite] <- "elite config."
     }
   }
 
   # The mean values are calculated in the configurations by iteration
-  for (k in 1:length(irace_results$allElites)) {
+  for (k in seq_along(irace_results$allElites)) {
     # FIXME: This is not the median but the mean???
-    tabla$media_regular[tabla$iteration == k] <- mean(tabla$value[tabla$iteration == k])
-    tabla$media_elite[tabla$iteration == k] <- mean(tabla$value[tabla$iteration == k & (tabla$type == "elite config." | tabla$type == "final elite config." | tabla$type == "best found config.")])
+    exp_log$media_regular[exp_log$iteration == k] <- mean(exp_log$value[exp_log$iteration == k])
+    exp_log$media_elite[exp_log$iteration == k] <- mean(exp_log$value[exp_log$iteration == k & (exp_log$type == "elite config." | exp_log$type == "final elite config." | exp_log$type == "best found config.")])
   }
 
   # Instance and configuration columns are converted to character
-  tabla$instance[1] <- as.character(tabla$instance[1])
-  tabla$configuration[1] <- as.character(tabla$configuration[1])
+  exp_log$instance[1] <- as.character(exp_log$instance[1])
+  exp_log$configuration[1] <- as.character(exp_log$configuration[1])
 
+  execution <- NULL # CRAN warning
   # the text column is generated
-  tabla <- tabla %>%
+  exp_log <- exp_log %>%
     mutate(text = paste0("execution: ", execution, "\n", "instance: ", instance, "\n", "configuration: ", configuration, "\n"))
 
   # the execution column is passed to factor and added to the table
-  exe_factor <- factor(tabla$execution)
-  levels(exe_factor) <- tabla$execution
-  tabla <- cbind(tabla, exe_factor)
-  text <- type <- media_elite <- elite_color <- media_regular <- regular_color <- NULL # Silence CRAN warning
+  exe_factor <- factor(exp_log$execution)
+  levels(exe_factor) <- exp_log$execution
+  exp_log <- cbind(exp_log, exe_factor)
+  value <- text <- type <- media_elite <- elite_color <- media_regular <- regular_color <- NULL # Silence CRAN warning
 
   # point plot creation
-  p <- ggplot(tabla, aes(x = exe_factor, y = value, color = instance, text = text)) +
+  p <- ggplot(exp_log, aes(x = exe_factor, y = value, color = instance, text = text)) +
     geom_point(aes(shape = type, size = type, alpha = type)) +
-    facet_grid(cols = ggplot2::vars(tabla$instance_it), scales = "free_x", space = "free_x") +
+    facet_grid(cols = ggplot2::vars(exp_log$instance_it), scales = "free_x", space = "free_x") +
     scale_shape_manual(values = c(22, 21, 24, 4)) +
-    scale_color_manual(values = c(rainbow(n_distinct(tabla$instance)), "red", "orange"), breaks = c("median elites", "median iteration")) +
+    scale_color_manual(values = c(rainbow(n_distinct(exp_log$instance)), "red", "orange"), breaks = c("median elites", "median iteration")) +
     scale_size_manual(values = c(2, 2, 2, 0.5)) +
     scale_alpha_manual(values = c(0.8, 0.6, 1, 0.2)) +
-    scale_x_discrete(breaks = c(1, unique(tabla$conf_it))) +
+    scale_x_discrete(breaks = c(1, unique(exp_log$conf_it))) +
     labs(
       x = "Candidate evaluations",
       y = "RPD",

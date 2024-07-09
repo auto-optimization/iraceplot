@@ -17,31 +17,33 @@
 # FIXME: Add examples
 getCategoricalModel <- function(irace_results, param_name) 
 {
-  if (!(irace_results$parameters$types[[param_name]] %in% c("c"))) {
+  parameters <- irace_results$scenario$parameters
+  if (parameters$types[[param_name]] != "c")
     stop("Error: Parameter is not categorical\n")
-  }
+
   iterations <- length(irace_results$allElites)
-  domain <- irace_results$parameters$domain[[param_name]] 
-  n_val <- length(irace_results$parameters$domain[[param_name]])
+  domain <- parameters$domains[[param_name]] 
+  n_val <- length(domain)
   prob <- rep((1 / n_val), n_val)
     
   # Get elite data by iteration
   all_elites <- list()
-  for (i in 1:iterations){
+  for (i in seq_len(iterations)){
     all_elites[[i]] <- irace_results$allConfigurations[irace_results$allElites[[i]], c(".ID.", ".PARENT.",param_name) ]
   }
   
-  total_iterations <- floor(2 + log2(irace_results$parameters$nbVariable))
+  total_iterations <- floor(2 + log2(parameters$nbVariable))
 
+  # FIXME: Build X as a list then convert to data.frame in one go.
   X <- NULL
   models <- list()
-  for (i in 1:(iterations-1)) {
+  for (i in seq_len(iterations-1L)) {
     models[[i]] <- list() 
-    total_iterations <- max(total_iterations, i+1)
-    for (elite in 1:length(irace_results$allElites[[i]])) {
-      cid <- all_elites[[i]][elite, ".ID."]
-      parent <- all_elites[[i]][elite, ".PARENT."]
-      if (i==1) {
+    total_iterations <- max(total_iterations, i+1L)
+    for (elite in seq_along(irace_results$allElites[[i]])) {
+      cid <- all_elites[[i]][[".ID."]][elite]
+      parent <- all_elites[[i]][[".PARENT."]][elite]
+      if (i==1L) {
         cprob <- prob 
       } else {
         if (as.character(cid) %in% names(models[[i-1]]))
@@ -55,20 +57,20 @@ getCategoricalModel <- function(irace_results, param_name)
       cprob[index] <- (cprob[index] + (i / total_iterations))
       if (irace_results$scenario$elitist) {
         cprob <- cprob / sum(cprob)
-        probmax <- 0.2^(1 / irace_results$parameters$nbVariable)
+        probmax <- 0.2^(1 / parameters$nbVariable)
         cprob <- pmin(cprob, probmax)
       }
       # Normalize probabilities.
       cprob <- cprob / sum(cprob)
       models[[i]][[as.character(cid)]] <- cprob
-      for (v in 1:length(domain)) 
+      for (v in seq_along(domain)) 
         X <- rbind(X, cbind(i, elite, param_name, domain[v], as.character(cprob[v])))
     }
   }
   X <- as.data.frame(X, stringsAsFactors=FALSE)
   colnames(X) <-c("iteration", "elite", "parameter", "value", "prob")
   X[, "prob"] <- as.numeric(X[, "prob"])
-  return(X)
+  X
 }
 
 # Numerical model generation
@@ -89,15 +91,14 @@ getCategoricalModel <- function(irace_results, param_name)
 # FIXME: Add examples.
 getNumericalModel <- function(irace_results, param_name) 
 {
-  if (irace_results$parameters$types[[param_name]] %not_in% c("i", "r", "i,log", "r,log")) {
+  parameters <- irace_results$scenario$parameters
+  if (parameters$types[[param_name]] %not_in% c("i", "r"))
     stop("Parameter is not numerical")
-  }
   
   iterations <- length(irace_results$allElites)
-  domain <- irace_results$parameters$domain
-  n_par <- irace_results$parameters$nbVariable
+  domain <- parameters$domains[[param_name]]
+  n_par <- parameters$nbVariable
   
-
   # Get elite data by iteration
   all_elites <- list()
   for (i in seq_len(iterations)){
@@ -105,12 +106,13 @@ getNumericalModel <- function(irace_results, param_name)
   }
   
   # Get initial model standard deviation 
-  s <- (domain[[param_name]][2] - domain[[param_name]][1])/2
-  
+  s <- (domain[[2L]] - domain[[1L]])/2
+
+  configuration <- iteration <- NULL # Silence CRAN warnings
   X <- NULL
-  for (i in 1:(iterations-1)) {
+  for (i in seq_len(iterations - 1L)) {
     # Get not elite configurations executed in an iteration
-    it_conf <- unique(irace_results$experimentLog[irace_results$experimentLog[,"iteration"] == (i+1), "configuration"])
+    it_conf <- unique(irace_results$state$experiment_log[iteration == (i+1), configuration])
     new_it_conf <- it_conf[!(it_conf %in% irace_results$allElites[[i]])]
     n_conf <- length(new_it_conf)
     
@@ -127,7 +129,7 @@ getNumericalModel <- function(irace_results, param_name)
   X[,"sd"] <- as.numeric(as.character(X[,"sd"]))
   X[,"mean"] <- as.numeric(as.character(X[,"mean"]))
   rownames(X) <- NULL
-  return(X)
+  X
 }
 
 # Plot a categorical model
@@ -233,8 +235,7 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
                    axis.ticks.y = element_blank()) 
     p <- p + labs(y = as.character(iteration+1))
   }
-  p <- p + ggplot2::xlim(domain[1], domain[2])
-  return(p)
+  p + ggplot2::xlim(domain[1], domain[2])
 }
 
 #' Plot the sampling models used by irace
@@ -272,17 +273,17 @@ plotNumericalModel <- function(iteration, model_data, domain, xlabel_iteration)
 #' @export
 plot_model <- function(irace_results, param_name, filename=NULL)
 {
-  check_unknown_param_names(param_name, irace_results$parameters$names)
+  parameters <- irace_results$scenario$parameters
+  check_unknown_param_names(param_name, parameters$names)
   iterations <- length(irace_results$allElites)
-  
-  if (irace_results$parameters$types[param_name] %in% c("c", "o")) {
+  domain <- parameters$domains[[param_name]]
+  if (parameters$types[param_name] %in% c("c", "o")) {
     X <- getCategoricalModel(irace_results, param_name)
-    q <- plotCategoricalModel(model_data=X, domain=irace_results$parameters$domain[[param_name]])
+    q <- plotCategoricalModel(model_data=X, domain=domain)
   } else {
     X <- getNumericalModel(irace_results, param_name)
     p <- lapply((iterations-1):1, plotNumericalModel, model_data=X, 
-                domain=irace_results$parameters$domain[[param_name]], 
-                xlabel_iteration=1)
+      domain=domain, xlabel_iteration=1)
     q <- do.call("grid.arrange", c(p, ncol = 1, left="Iterations"))
   }
   

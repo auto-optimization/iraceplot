@@ -12,14 +12,14 @@
 summarise_by_instance <- function(irace_results)
 {
   # FIXME: Handle non-atomic instances (just use instanceID)
-  instances <- get_instanceID_seed_pairs(irace_results, index = 1:nrow(irace_results$experiments), instances=TRUE)[, "instance"]
+  instances <- get_instanceID_seed_pairs(irace_results, index = seq_nrow(irace_results$experiments), instances=TRUE)[["instance"]]
 
   # FIXME: There must be a faster/easier way to do this.
   freq_count <- function(x) {
     x <- table(x)
     setNames(as.vector(x), names(x))
   }
-  exp_by_instance <- freq_count(instances[irace_results$experimentLog[,"instance"]])
+  exp_by_instance <- freq_count(instances[irace_results$state$experiment_log[["instance"]]])
   seeds_by_instance <- freq_count(instances)
 
   ID <- value <- instance <- NULL # Silence warnings

@@ -26,7 +26,9 @@ performance.}
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
-This is a simplified version of the visualization you can obtain with \href{https://github.com/souzamarcelo/acviz}{\code{acviz}}. This function is currently VERY SLOW.
+This is a simplified version of the visualization you can obtain with
+\href{https://github.com/souzamarcelo/acviz}{\code{acviz}}. This function is currently
+VERY SLOW.
 }
 \examples{
 \donttest{
