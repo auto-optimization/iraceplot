@@ -8,11 +8,7 @@
 #' argument and this argument can be also used to define the iteration of each
 #' elite configuration was evaluated.
 #'
-#' @param experiments 
-#' Experiment matrix obtained from irace training or testing data. Configurations 
-#' in columns and instances in rows. As in irace, column names (configurations ids) 
-#' should be characters.
-#' 
+#' @template arg_experiments
 #' @param allElites
 #' List or vector of configuration ids, (default NULL). These configurations
 #' should be included in the plot. If the argument is not provided all configurations
@@ -81,7 +77,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   if (is.null(allElites)) {
     cli_alert_info("Note: {.field allElites} not provided, assumming all configurations in experiments as elites.\n")
     allElites <- list()
-    allElites[[1]] <- get_ranked_ids(experiments)
+    allElites[[1L]] <- get_ranked_ids(experiments)
     if (type == "ibest") {
       cli_abort("The {.field type} argument provided ({type}) is not supported when no {.field allElites} value provided")
     }
@@ -110,15 +106,15 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   # FIXME: It doesn't make sense to rename experiments to data. Just use either
   # of the names.
-  data <- as.data.frame(experiments[,v_allElites, drop=FALSE])
-  names_col <- colnames(data)
+  experiments <- as.data.frame(experiments[,v_allElites, drop=FALSE])
+  names_col <- colnames(experiments)
   # If we only have one row, then don't try to plot boxplots.
-  plot_points <- (nrow(data) == 1)
+  plot_points <- (nrow(experiments) == 1L)
 
   # FIXME: This is too complicated and unclear.
   reshape_data <- function(x, elites) {
     out <- NULL
-    for (i in 1:length(elites)) {
+    for (i in seq_along(elites)) {
       d <- x[, as.character(elites[[i]]), drop=FALSE]
       d <- reshape(d,
                    varying = as.vector(colnames(d)),
@@ -135,50 +131,50 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
   }
   # Get the experiment data together with the iterations
   if (is.list(allElites)) {
-    data <- reshape_data(data, if (type == "all") allElites else iterationElites)
-    data$iteration_f <- factor(data$iteration, levels = unique(data$iteration))
+    experiments <- reshape_data(experiments, if (type == "all") allElites else iterationElites)
+    experiments$iteration_f <- factor(experiments$iteration, levels = unique(experiments$iteration))
   } else {
-    data <- reshape(data,
-                    varying = as.character(colnames(data)),
+    experiments <- reshape(experiments,
+                    varying = as.character(colnames(experiments)),
                     v.names = "performance",
                     timevar = "ids",
-                    times = as.character(colnames(data)),
-                    new.row.names = 1:(nrow(data) * ncol(data)),
+                    times = as.character(colnames(experiments)),
+                    new.row.names = 1:(nrow(experiments) * ncol(experiments)),
                     direction = "long")
-    data <- data[!is.na(data[,"performance"]),]
-    data$iteration <- 0
+    experiments <- experiments[!is.na(experiments[,"performance"]),]
+    experiments$iteration <- 0
   }
   
   # Mark best configurations
   if (type == "all") {
-    data$best_conf <- rep("none", nrow(data))
+    experiments$best_conf <- rep("none", nrow(experiments))
     if (first_is_best) {
       if (is.list(allElites)) {
         for (i in 1:length(allElites)) {
-          data$best_conf[data$iteration == i & data$ids == as.character(iterationElites[i])] <- "best" 
+          experiments$best_conf[experiments$iteration == i & experiments$ids == as.character(iterationElites[i])] <- "best" 
         }
       } else {
-        data$best_conf[data$ids == as.character(iterationElites[1])] <- "best" 
+        experiments$best_conf[experiments$ids == as.character(iterationElites[1])] <- "best" 
       }
     } 
   } 
-  data$ids_f <- factor(data$ids, levels = unique(data$ids))
+  experiments$ids_f <- factor(experiments$ids, levels = unique(experiments$ids))
   # FIXME: This should include the instance and seed.
-  # data$label <- paste0("Iteration: ", data$iteration_f, "\nValue: ", data$performance, "\n")
+  # experiments$label <- paste0("Iteration: ", experiments$iteration_f, "\nValue: ", experiments$performance, "\n")
   # FIXME: Simplify these conditions to avoid repetitions.
   if (type == "ibest") {
-    p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) +
+    p <- ggplot(experiments, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) +
       labs(subtitle = "Iterations") +
       theme(plot.subtitle = element_text(hjust = 0.5))
   } else {
     # type="all"
     if (first_is_best) {
-      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$best_conf)) +
+      p <- ggplot(experiments, aes(x = .data$ids_f, y = .data$performance, colour = .data$best_conf)) +
         scale_color_manual(values=c(best_color, "#999999"))
     } else if (is.list(allElites)){
-      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) 
+      p <- ggplot(experiments, aes(x = .data$ids_f, y = .data$performance, colour = .data$iteration_f)) 
     } else {
-      p <- ggplot(data, aes(x = .data$ids_f, y = .data$performance, colour = .data$ids_f)) 
+      p <- ggplot(experiments, aes(x = .data$ids_f, y = .data$performance, colour = .data$ids_f)) 
     }
     
     if (is.list(allElites)) {
@@ -206,7 +202,7 @@ boxplot_performance <- function(experiments, allElites= NULL, type = c("all", "i
       
   # each box plot is divided by iteration
   if (is.list(allElites)) {
-    p <- p + facet_grid(cols = ggplot2::vars(data$iteration_f), scales = "free")
+    p <- p + facet_grid(cols = ggplot2::vars(experiments$iteration_f), scales = "free")
   }
   
   # If the value in filename is added the pdf file is created
