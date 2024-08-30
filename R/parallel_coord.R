@@ -65,9 +65,6 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   # Check iterations
   if (is.null(iterations)) {
     iterations <- length(irace_results$allElites)
-    if (length(irace_results$allElites[[length(irace_results$allElites)]]) == 1L) {
-      cli_alert_info("Note: The final iteration only has one elite configuration\n")
-    }
   } else if (any(iterations %not_in% seq_along(irace_results$allElites))) {
     cli_abort("The iterations entered are outside the possible range")
   }
@@ -84,8 +81,9 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
   }
 
   id_configurations <- as.character(unique(unlist(id_configurations)))
-  if (length(id_configurations) <= 1L) {
-    stop("You must provide more than one configuration ID")
+  if (length(id_configurations) == 0L) {
+    cli_abort("Must provide at least one configuration")
+    return(NULL)
   }
   if (any(id_configurations %not_in% irace_results$allConfigurations[[".ID."]])) {
     stop("Unknown configuration IDs: ", paste0(setdiff(id_configurations, irace_results$allConfigurations[, ".ID."]), collapse=", "))
@@ -197,22 +195,27 @@ parallel_coord <- function(irace_results, id_configurations = NULL, param_names 
       param_names <- c()
     }
 
+    cdata <- data[,c(".ID.", params, ".FITNESS.", ".ITERATION."), drop=FALSE]
+    # plotly cannot plot a single configuration due to bug https://github.com/plotly/plotly.R/issues/2385 so duplicate it
+    if (nrow(cdata) == 1L)
+      cdata <- rbind(cdata, cdata)
     # FIXME: If we pass the data to the plot we do not need to pass it to the
     # dimensions. It is enough to pass the column name: https://plotly.com/r/parallel-coordinates-plot/
-    cdata <- data[,c(".ID.", params, ".FITNESS.", ".ITERATION."), drop=FALSE]
+    # We should fix the values directly in cdata, then build the list with values = str2lang(paste0("~I(", name, ")"))
     dimensions <- lapply(colnames(cdata), get_dimensions)
-    
+    cminmax <- if (color_by_instances) range(data[[".FITNESS."]]) else c(1L, length(irace_results$allElites))
+    if (cminmax[1L] >= cminmax[2L])
+      cminmax[2L] <- cminmax[2L] + 1
     # plot creation
-    p <- plotly::plot_ly(cdata) %>%
-      plotly::add_trace(type = "parcoords",
+    p <- plotly::plot_ly(cdata, type = "parcoords",
         line = list(
-          color = if (color_by_instances) ~.FITNESS. else ~.ITERATION.,
+          color = if (color_by_instances) ~I(.FITNESS.) else ~I(.ITERATION.),
           colorscale = "Viridis",
           colorbar = list(title = list(text= if (color_by_instances) "Instances" else "Iteration")),
           showscale = TRUE,
           reversescale = TRUE,
-          cmin = if (color_by_instances) min(data[,".FITNESS."]) else 1L,
-          cmax = if (color_by_instances) max(data[,".FITNESS."]) else length(irace_results$allElites)),
+          cmin = cminmax[1L],
+          cmax = cminmax[2L]),
         dimensions = dimensions,
         labelangle = -25)
     plot_list[[i]] <- p
