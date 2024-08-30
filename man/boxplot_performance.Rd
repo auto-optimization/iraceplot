@@ -19,9 +19,9 @@ boxplot_performance(
 )
 }
 \arguments{
-\item{experiments}{Experiment matrix obtained from irace training or testing data. Configurations
-in columns and instances in rows. As in irace, column names (configurations ids)
-should be characters.}
+\item{experiments}{\code{matrix()}\cr Experiment matrix obtained from irace
+training or testing data. Configurations in columns and instances in
+rows. As in irace, column names (configurations IDs) should be characters.}
 
 \item{allElites}{List or vector of configuration ids, (default NULL). These configurations
 should be included in the plot. If the argument is not provided all configurations

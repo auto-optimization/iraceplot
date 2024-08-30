@@ -8,9 +8,7 @@
 #' evaluations of each configuration show how long they survived in the
 #' iterated racing procedure.  Rejected configurations are shown with a red `X`.
 #'
-#' @template arg_irace_results
-#'
-#' @template arg_filename
+#' @inheritParams boxplot_performance 
 #'
 #' @param metric Cost metric shown in the plot: `"raw"` shows the raw
 #'   values, `"rpd"` shows relative percentage deviation per instance and
@@ -19,7 +17,11 @@
 #' @param show_conf_ids (`logical(1)`)\cr  If `TRUE`, it shows the configuration IDs in the x-axis. The default `NA`,
 #' only shows them if there are no more than 25.
 #'
-#' @template arg_interactive
+#' @note
+#'
+#' Alternatively, `experiments` could be the data generated when loading the
+#' `.Rdata` file created by `irace` (or the filename of that file), from which
+#' the experiments matrix will be loaded.
 #' 
 #' @return [ggplot2::ggplot()] object
 #'
@@ -31,11 +33,15 @@
 #' plot_experiments_matrix(read_logfile(system.file(package="iraceplot", "exdata",
 #'                                          "dummy-reject.Rdata", mustWork = TRUE)))
 #' @export
-plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("raw", "rpd", "rank"),
+plot_experiments_matrix <- function(experiments, filename = NULL, metric = c("raw", "rpd", "rank"),
                                     show_conf_ids = FALSE, interactive = base::interactive())
 {
   metric <- match.arg(metric)
-  experiments <- irace_results$experiments
+  if (is.character(experiments)) {
+    experiments <- read_logfile(experiments)$experiments
+  } else if (!is.matrix(experiments)) {
+    experiments <- experiments$experiments
+  }
   conf_ids <- colnames(experiments)
   if (is.null(conf_ids)) conf_ids <- as.character(seq_ncol(experiments))
   inst_ids <- rownames(experiments)
@@ -60,28 +66,27 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
     transform <- "identity"
   }
 
-  conf_id <- inst_id <- cost <- text <- rejected <- NULL
   # The table is created and organized for ease of use
   experiments <- tibble::as_tibble(experiments) %>%
     rownames_to_column("inst_id") %>%
     tidyr::pivot_longer(-c("inst_id"), names_to = "conf_id", values_to = "cost") %>%
     # We need to relevel so that they appear in the correct order
-    mutate(conf_id = forcats::fct_relevel(conf_id, conf_ids)) %>%
-    mutate(inst_id = forcats::fct_relevel(inst_id, inst_ids)) %>%
+    mutate(conf_id = forcats::fct_relevel(.data$conf_id, conf_ids)) %>%
+    mutate(inst_id = forcats::fct_relevel(.data$inst_id, inst_ids)) %>%
     # Replace negative infinity to help with plotting
-    mutate(rejected = is.infinite(cost))
+    mutate(rejected = is.infinite(.data$cost))
   
   # The text field is added to the table to show it in the interactive plot.
   if (interactive) {
     experiments <- experiments %>%
-      mutate(text = paste0("Configuration: ", conf_id, "\nInstance: ", inst_id, "\nValue: ", cost, "\n"))
+      mutate(text = paste0("Configuration: ", .data$conf_id, "\nInstance: ", .data$inst_id, "\nValue: ", .data$cost, "\n"))
   } else {
     experiments <- experiments %>% mutate(text = "")
   }
   # Remove Inf before plotting.
-  experiments <- experiments %>% mutate(cost = ifelse(is.infinite(cost), NA, cost))
+  experiments <- experiments %>% mutate(cost = ifelse(is.infinite(.data$cost), NA, .data$cost))
 
-  p <- ggplot(experiments, aes(x = conf_id, y = inst_id, fill = cost, text = text)) +
+  p <- ggplot(experiments, aes(x = .data$conf_id, y = .data$inst_id, fill = .data$cost, text = .data$text)) +
     geom_tile() + # Heatmap style
     scale_fill_viridis_c(na.value = "white", direction=-1L, trans = transform,
                          guide = guide_colourbar(barheight=grid::unit(0.8,"npc"))) +
@@ -95,8 +100,8 @@ plot_experiments_matrix <- function(irace_results, filename = NULL, metric = c("
 
   # Show an X for rejected configurations.
   if (has_inf) {
-    p <- p + geom_point(data = experiments %>% dplyr::filter(rejected), show.legend = FALSE,
-                        aes(x = conf_id, y = inst_id), size=2, shape=4, fill=NA, color="red") +
+    p <- p + geom_point(data = experiments %>% dplyr::filter(.data$rejected), show.legend = FALSE,
+                        aes(x = .data$conf_id, y = .data$inst_id), size=2, shape=4, fill=NA, color="red") +
       guides(size= "none") # This is needed because plotly ignores guide="none".
   }
       

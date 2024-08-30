@@ -5,7 +5,7 @@
 \title{Heat Map Plot}
 \usage{
 plot_experiments_matrix(
-  irace_results,
+  experiments,
   filename = NULL,
   metric = c("raw", "rpd", "rank"),
   show_conf_ids = FALSE,
@@ -13,7 +13,9 @@ plot_experiments_matrix(
 )
 }
 \arguments{
-\item{irace_results}{The data generated when loading the \code{.Rdata} file created by \code{irace} (or the filename of that file).}
+\item{experiments}{\code{matrix()}\cr Experiment matrix obtained from irace
+training or testing data. Configurations in columns and instances in
+rows. As in irace, column names (configurations IDs) should be characters.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 
@@ -37,6 +39,11 @@ the order in which they where seen during the configuration run. This plot
 gives a general idea of the configuration process progression, the number of
 evaluations of each configuration show how long they survived in the
 iterated racing procedure.  Rejected configurations are shown with a red \code{X}.
+}
+\note{
+Alternatively, \code{experiments} could be the data generated when loading the
+\code{.Rdata} file created by \code{irace} (or the filename of that file), from which
+the experiments matrix will be loaded.
 }
 \examples{
 iraceResults <- read_logfile(system.file(package="irace", "exdata",
