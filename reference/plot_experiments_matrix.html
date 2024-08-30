@@ -9,7 +9,7 @@ iterated racing procedure.  Rejected configurations are shown with a red X."><!-
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -43,26 +43,26 @@ iterated racing procedure.  Rejected configurations are shown with a red X."><!-
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://cloud.r-project.org/package=iraceplot" class="external-link">
     <span class="fab fa-r-project"></span>
-     
+
   </a>
 </li>
 <li>
   <a href="https://github.com/auto-optimization/iraceplot/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Heat Map Plot</h1>
-    <small class="dont-index">Source: <a href="https://github.com/auto-optimization/iraceplot/blob/HEAD/R/plot_experiments_matrix.R" class="external-link"><code>R/plot_experiments_matrix.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/auto-optimization/iraceplot/blob/master/R/plot_experiments_matrix.R" class="external-link"><code>R/plot_experiments_matrix.R</code></a></small>
     <div class="hidden name"><code>plot_experiments_matrix.Rd</code></div>
     </div>
 
@@ -78,7 +78,7 @@ iterated racing procedure.  Rejected configurations are shown with a red <code>X
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_experiments_matrix</span><span class="op">(</span></span>
-<span>  <span class="va">irace_results</span>,</span>
+<span>  <span class="va">experiments</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  metric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"raw"</span>, <span class="st">"rpd"</span>, <span class="st">"rank"</span><span class="op">)</span>,</span>
 <span>  show_conf_ids <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -88,34 +88,42 @@ iterated racing procedure.  Rejected configurations are shown with a red <code>X
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>irace_results</dt>
-<dd><p>The data generated when loading the <code>.Rdata</code> file created by <code>irace</code> (or the filename of that file).</p></dd>
 
 
-<dt>filename</dt>
+<dl><dt id="arg-experiments">experiments<a class="anchor" aria-label="anchor" href="#arg-experiments"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code><br> Experiment matrix obtained from irace
+training or testing data. Configurations in columns and instances in
+rows. As in irace, column names (configurations IDs) should be characters.</p></dd>
+
+
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
 <dd><p>(<code>character(1)</code>) File name to save the plot, for example <code>"~/path/example/filename.png"</code>.</p></dd>
 
 
-<dt>metric</dt>
+<dt id="arg-metric">metric<a class="anchor" aria-label="anchor" href="#arg-metric"></a></dt>
 <dd><p>Cost metric shown in the plot: <code>"raw"</code> shows the raw
 values, <code>"rpd"</code> shows relative percentage deviation per instance and
 <code>"rank"</code> shows rank per instance.</p></dd>
 
 
-<dt>show_conf_ids</dt>
+<dt id="arg-show-conf-ids">show_conf_ids<a class="anchor" aria-label="anchor" href="#arg-show-conf-ids"></a></dt>
 <dd><p>(<code>logical(1)</code>)<br>  If <code>TRUE</code>, it shows the configuration IDs in the x-axis. The default <code>NA</code>,
 only shows them if there are no more than 25.</p></dd>
 
 
-<dt>interactive</dt>
+<dt id="arg-interactive">interactive<a class="anchor" aria-label="anchor" href="#arg-interactive"></a></dt>
 <dd><p>(<code>logical(1)</code>) TRUE if the report may use interactive features (using <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code>, <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plotly::plot_ly()</a></code> and <code><a href="https://rdrr.io/pkg/DT/man/dataTableOutput.html" class="external-link">DT::renderDataTable()</a></code>) or FALSE if such features must be disabled. Defaults to the value returned by <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code>,</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object</p>
+    <p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object</p>
+    </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>Alternatively, <code>experiments</code> could be the data generated when loading the
+<code>.Rdata</code> file created by <code>irace</code> (or the filename of that file), from which
+the experiments matrix will be loaded.</p>
     </div>
 
     <div id="ref-examples">
@@ -142,15 +150,15 @@ only shows them if there are no more than 25.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

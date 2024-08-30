@@ -5,7 +5,7 @@ configurations and their performance. Example: https://auto-optimization.github.
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -39,26 +39,26 @@ configurations and their performance. Example: https://auto-optimization.github.
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://cloud.r-project.org/package=iraceplot" class="external-link">
     <span class="fab fa-r-project"></span>
-     
+
   </a>
 </li>
 <li>
   <a href="https://github.com/auto-optimization/iraceplot/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create HTML Report from irace data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/auto-optimization/iraceplot/blob/HEAD/R/report.R" class="external-link"><code>R/report.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/auto-optimization/iraceplot/blob/master/R/report.R" class="external-link"><code>R/report.R</code></a></small>
     <div class="hidden name"><code>report.Rd</code></div>
     </div>
 
@@ -79,28 +79,28 @@ configurations and their performance. Example: <a href="https://auto-optimizatio
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>irace_results</dt>
+
+
+<dl><dt id="arg-irace-results">irace_results<a class="anchor" aria-label="anchor" href="#arg-irace-results"></a></dt>
 <dd><p>The data generated when loading the <code>.Rdata</code> file created by <code>irace</code> (or the filename of that file).</p></dd>
 
 
-<dt>filename</dt>
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
 <dd><p>(<code>character(1)</code>)
 Filename indicating where to save the report (example: <code>"~/path-to/filename"</code>).</p></dd>
 
 
-<dt>sections</dt>
+<dt id="arg-sections">sections<a class="anchor" aria-label="anchor" href="#arg-sections"></a></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>) List of sections to enable/disable. This is useful for disabling sections that may cause problems, such as out-of-memory errors. <code>NA</code> means automatically enable/disable a section depending on the memory required.</p></dd>
 
 
-<dt>interactive</dt>
+<dt id="arg-interactive">interactive<a class="anchor" aria-label="anchor" href="#arg-interactive"></a></dt>
 <dd><p>(<code>logical(1)</code>) TRUE if the report may use interactive features (using <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code>, <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plotly::plot_ly()</a></code> and <code><a href="https://rdrr.io/pkg/DT/man/dataTableOutput.html" class="external-link">DT::renderDataTable()</a></code>) or FALSE if such features must be disabled. Defaults to the value returned by <code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code>,</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>filename where the report was created or it opens the report in the default browser (interactive).</p>
+    <p>filename where the report was created or it opens the report in the default browser (interactive).</p>
     </div>
 
     <div id="ref-examples">
@@ -111,7 +111,7 @@ Filename indicating where to save the report (example: <code>"~/path-to/filename
 <span class="r-in"><span>                                            <span class="st">"irace-acotsp.Rdata"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>   <span class="fu">report</span><span class="op">(</span><span class="va">iraceResults</span>, filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"report"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">}</span>, clean <span class="op">=</span> <span class="op">!</span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating file '<span style="color: #0000BB;">/tmp/Rtmpo16zYc/file27e72796a095/report.html</span>'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating file '<span style="color: #0000BB;">/tmp/Rtmp5UezB6/file277a28d68543/report.html</span>'.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> processing file: report_html.Rmd</span>
@@ -165,10 +165,10 @@ Filename indicating where to save the report (example: <code>"~/path-to/filename
 <span class="r-out co"><span class="r-pr">#&gt;</span> 48/49 [unnamed-chunk-7]                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 49/49                                     </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> output file: report_html.knit.md</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> /opt/hostedtoolcache/pandoc/3.1.11/x64/pandoc +RTS -K512m -RTS report_html.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmpo16zYc/file27e72796a095/report.html --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 3 --variable toc_float=1 --variable toc_selectors=h1,h2,h3 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --highlight-style pygments --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmpo16zYc/rmarkdown-str27e753e7363f.html </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /opt/hostedtoolcache/pandoc/3.1.11/x64/pandoc +RTS -K512m -RTS report_html.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmp5UezB6/file277a28d68543/report.html --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 3 --variable toc_float=1 --variable toc_selectors=h1,h2,h3 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --highlight-style pygments --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp5UezB6/rmarkdown-str277a33c778a8.html </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Output created: report.html</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpo16zYc/file27e72796a095/report.html"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp5UezB6/file277a28d68543/report.html"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -184,15 +184,15 @@ Filename indicating where to save the report (example: <code>"~/path-to/filename
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
