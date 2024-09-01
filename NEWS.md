@@ -8,7 +8,11 @@
 
  * `summarise_by_configuration()` also prints mean rank.
 
-
+ * `summarise_by_iteration()` tries harder to print unique minimal paths. It also handles non-character instances (like R objects).
+ 
+ * Fix `parallel_coord()` not producing a plot with a single configuration.
+ 
+ 
 # iraceplot 1.3
 
  * Requires [irace](https://mlopez-ibanez.github.io/irace/) version >= 4.0 and
