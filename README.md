@@ -5,6 +5,7 @@
 Status](https://www.r-pkg.org/badges/version-last-release/iraceplot)](https://cran.r-project.org/package=iraceplot)
 [![R-CMD-check](https://github.com/auto-optimization/iraceplot/workflows/R-CMD-check/badge.svg)](https://github.com/auto-optimization/iraceplot/actions)
 [![Codecov test coverage](https://codecov.io/gh/auto-optimization/iraceplot/branch/master/graph/badge.svg)](https://app.codecov.io/gh/auto-optimization/iraceplot?branch=master)
+[![r-universe version](https://auto-optimization.r-universe.dev/badges/iraceplot)](https://auto-optimization.r-universe.dev/iraceplot)
 <!-- badges: end -->
 
 **Maintainers:** Leslie Pérez Cáceres, [Manuel López-Ibáñez](https://lopez-ibanez.eu)
@@ -111,12 +112,16 @@ install.packages("iraceplot")
 ```
 
 Or you may wish to try the [development version from GitHub](https://github.com/auto-optimization/iraceplot) 
-``` r
-install.packages("devtools")
-devtools::install_github("auto-optimization/iraceplot")
-```
 
-The above commands will install many packages so they may take a while.
+GitHub (Development version)
+---------------------------
+
+If you wish to try the development version, you can install it by executing the
+following command within the R console:
+
+```r
+    install.packages('iraceplot', repos = c('https://auto-optimization.r-universe.dev', 'https://cloud.r-project.org'))
+```
 
 
 Basic Usage
