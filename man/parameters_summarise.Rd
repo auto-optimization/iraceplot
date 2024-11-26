@@ -10,7 +10,7 @@ parameters_summarise(parameters)
 \item{parameters}{(\code{list()}) Parameter space in irace format. See the function \code{\link[irace:readParameters]{irace::readParameters()}}.}
 }
 \value{
-\code{\link[=tibble]{tibble()}}
+\code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
 Summarise parameters space

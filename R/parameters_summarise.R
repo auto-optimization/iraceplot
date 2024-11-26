@@ -2,7 +2,7 @@
 #' 
 #' @template arg_parameters
 #'
-#' @return [tibble()]
+#' @return [tibble::tibble()]
 #' 
 #' @examples
 #' # Read the parameters directly from text.
