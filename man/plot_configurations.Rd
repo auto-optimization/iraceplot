@@ -38,9 +38,10 @@ selected data.
 }
 \details{
 To export the plot to a file, it is possible to do it so manually using the
-functionality provided by \code{plotly} (\url{https://plotly-r.com/exporting-static-images}). If a filename is provided,
-orca server will be used to export the plots and thus, it requires the library
-to be installed (\url{https://github.com/plotly/orca}).
+functionality provided by \code{plotly}
+(\url{https://plotly-r.com/exporting-static-images}). If a filename is provided,
+orca server will be used to export the plots and thus, it requires the
+library to be installed (\url{https://github.com/plotly/orca}).
 }
 \examples{
 iraceResults <- read_logfile(system.file(package="irace", "exdata",

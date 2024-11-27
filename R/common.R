@@ -15,22 +15,17 @@ orca_pdf <- function(filename, plot)
   withr::with_dir(directory, plotly::orca(plot, nameFile))
 }
 
-
-iraceplot_warn <- function(...)
-  cli_alert_warning(text = paste0("{.strong Warning:} ", ...))
-
-
 orca_save_plot <- function(plot_list, filename)
 {
   if (is.null(filename))
     return(invisible())
   
   directory <- paste0(dirname(filename), sep = "/")
-  if (length(plot_list) == 1) {
-    plotly::orca(plot_list[[1]], irace::path_rel2abs(filename))
+  if (length(plot_list) == 1L) {
+    plotly::orca(plot_list[[1L]], irace::path_rel2abs(filename))
   } else {
-    base_name <- strsplit(basename(filename),split = '[.]')[[1]][1]
-    ext <- strsplit(basename(filename),split = '[.]')[[1]][2]
+    base_name <- strsplit(basename(filename),split = '[.]')[[1L]][1L]
+    ext <- strsplit(basename(filename),split = '[.]')[[1L]][2L]
     for (i in seq_along(plot_list)) {
       part <- paste0("-", i)
       cfile <- irace::path_rel2abs(paste0(directory, "/", base_name, part,"." , ext))
@@ -38,6 +33,10 @@ orca_save_plot <- function(plot_list, filename)
     }
   }
 }
+
+iraceplot_warn <- function(...)
+  cli_alert_warning(text = paste0("{.strong Warning:} ", ...))
+
 
 maybe_add_file_extension <- function(filename, ext)
 {
