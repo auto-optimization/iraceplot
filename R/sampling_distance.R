@@ -53,9 +53,8 @@ sampling_distance <- function(irace_results, type = c("boxplot", "line", "both")
   for (i in seq_len(niterations)) {
     ids <- unique(irace_results$state$experiment_log[ iteration %in% i, configuration])
     iterations <- c(iterations, i)
-
     dd <- all.distance[ids,ids]
-    distance <- dd[upper.tri(dd)]
+    distance <- if (length(dd) == 1L) dd else dd[upper.tri(dd)]
     it <- i
     datos <- data.frame(it, distance)
     tabla_box <- rbind(tabla_box, datos)

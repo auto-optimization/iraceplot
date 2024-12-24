@@ -1,3 +1,7 @@
+# iraceplot (development version)
+
+ * Fix bug in `sampling_distance()` with a single configuration in one iteration.
+ 
 # iraceplot 2.0
 
  * Requires R >= 4.0 and irace >= 4.0.
