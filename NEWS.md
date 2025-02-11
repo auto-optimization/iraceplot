@@ -1,7 +1,11 @@
-# iraceplot (development version)
+# iraceplot 2.1
 
  * Fix bug in `sampling_distance()` with a single configuration in one iteration.
  
+ * Support irace >= 4.2.
+ 
+ * `ablation_plot()` gains option `rename_labs`.
+  
 # iraceplot 2.0
 
  * Requires R >= 4.0 and irace >= 4.0.

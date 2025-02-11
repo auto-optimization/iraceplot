@@ -11,21 +11,24 @@ ablation_plot(
   ylab = "Mean configuration cost",
   ylim = NULL,
   rotate_labs = TRUE,
+  rename_labs = NULL,
   filename = NULL
 )
 }
 \arguments{
-\item{ablog}{(\code{list()}|\code{character(1)}) Ablation log object returned by \code{\link[irace:ablation]{irace::ablation()}}. Alternatively, the path to an \code{.Rdata} file, e.g., \code{"log-ablation.Rdata"}, from which the object will be loaded.}
+\item{ablog}{\code{list()}|\code{character(1)}\cr Ablation log object returned by \code{\link[irace:ablation]{irace::ablation()}}. Alternatively, the path to an \code{.Rdata} file, e.g., \code{"log-ablation.Rdata"}, from which the object will be loaded.}
 
 \item{type}{Type of plot. Supported values are \code{"mean"} and \code{"boxplot"}. Adding \code{"rank"} will plot rank per instance instead of raw cost value.}
 
-\item{n}{(\code{integer(1)}) Number of steps included in the plot. By default all steps from source to target are included.}
+\item{n}{\code{integer(1)}\cr Number of steps included in the plot. By default all steps from source to target are included.}
 
 \item{ylab}{Label of y-axis.}
 
 \item{ylim}{Numeric vector of length 2 giving the y-axis range.}
 
-\item{rotate_labs}{(\code{logical(1)}) Whether to rotate labels in x-axis. They are rotated by default because they are typically large.}
+\item{rotate_labs}{\code{logical(1)}\cr Whether to rotate labels in x-axis. They are rotated by default because they are typically large.}
+
+\item{rename_labs}{\code{character()}\cr Renaming table for nicer labels. For example, \code{c("No value"="NA", "LongParameterName"="LPN")}.}
 
 \item{filename}{(\code{character(1)}) File name to save the plot, for example \code{"~/path/example/filename.png"}.}
 }
@@ -39,7 +42,8 @@ Create plot from an ablation log
 ablog <- read_ablogfile(system.file(package="irace", "exdata", "log-ablation.Rdata"))
 ablation_plot(ablog)
 ablation_plot(ablog, type="boxplot", rotate_labs = FALSE)
-ablation_plot(ablog, type="mean,boxplot", rotate_labs = FALSE)
+ablation_plot(ablog, type = "rank,boxplot", rename_labs =
+              c("localsearch"="ls", algorithm="algo", source="default"))
 ablation_plot(ablog, type="rank,mean,boxplot", n = 4, rotate_labs = FALSE)
 ablog <- system.file(package="iraceplot", "exdata", "log-ablation-autoMOPSODTLZ.Rdata")
 ablation_plot(ablog, type="rank,mean,boxplot")

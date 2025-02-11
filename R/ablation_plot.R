@@ -1,11 +1,12 @@
 #' Create plot from an ablation log
 #'
-#' @param ablog (`list()`|`character(1)`) Ablation log object returned by [irace::ablation()]. Alternatively, the path to an `.Rdata` file, e.g., `"log-ablation.Rdata"`, from which the object will be loaded.
+#' @param ablog `list()`|`character(1)`\cr Ablation log object returned by [irace::ablation()]. Alternatively, the path to an `.Rdata` file, e.g., `"log-ablation.Rdata"`, from which the object will be loaded.
 #' @param type Type of plot. Supported values are `"mean"` and `"boxplot"`. Adding `"rank"` will plot rank per instance instead of raw cost value.
-#' @param n (`integer(1)`) Number of steps included in the plot. By default all steps from source to target are included.
+#' @param n `integer(1)`\cr Number of steps included in the plot. By default all steps from source to target are included.
 #' @param ylab Label of y-axis.
 #' @param ylim Numeric vector of length 2 giving the y-axis range. 
-#' @param rotate_labs (`logical(1)`) Whether to rotate labels in x-axis. They are rotated by default because they are typically large.
+#' @param rotate_labs `logical(1)`\cr Whether to rotate labels in x-axis. They are rotated by default because they are typically large.
+#' @param rename_labs `character()`\cr Renaming table for nicer labels. For example, `c("No value"="NA", "LongParameterName"="LPN")`.
 #' @template arg_filename
 #' 
 #' @template ret_boxplot
@@ -15,7 +16,8 @@
 #' ablog <- read_ablogfile(system.file(package="irace", "exdata", "log-ablation.Rdata"))
 #' ablation_plot(ablog)
 #' ablation_plot(ablog, type="boxplot", rotate_labs = FALSE)
-#' ablation_plot(ablog, type="mean,boxplot", rotate_labs = FALSE)
+#' ablation_plot(ablog, type = "rank,boxplot", rename_labs =
+#'               c("localsearch"="ls", algorithm="algo", source="default"))
 #' ablation_plot(ablog, type="rank,mean,boxplot", n = 4, rotate_labs = FALSE)
 #' ablog <- system.file(package="iraceplot", "exdata", "log-ablation-autoMOPSODTLZ.Rdata")
 #' ablation_plot(ablog, type="rank,mean,boxplot")
@@ -23,7 +25,8 @@
 ablation_plot <- function(ablog,
                           type = c("mean", "boxplot", "rank"), n = 0L,
                           ylab = "Mean configuration cost", ylim = NULL,
-                          rotate_labs = TRUE, filename = NULL)
+                          rotate_labs = TRUE, rename_labs = NULL,
+                          filename = NULL)
 {
   type <- trimws(unlist(strsplit(type, ",", fixed=TRUE)))
   type <- match.arg(type, several.ok = TRUE)
@@ -36,15 +39,27 @@ ablation_plot <- function(ablog,
   if (!ablog$complete)
     cli_abort("The ablog shows that the ablation procedure did not complete cleanly and only contains partial information.")
 
+  configurations <- ablog$allConfigurations
+  # Support irace < 4.2
+  if (is.null(configurations))
+    configurations <- ablog$configurations
+    
   trajectory <- ablog$trajectory
-  if (n > 0) trajectory <- trajectory[1:(n+1)]
-  configurations <- ablog$configurations
+  if (n > 0L)
+    trajectory <- trajectory[seq_len(n+1L)]
+  # Generate labels.
   labels <- ablation_labels(trajectory, configurations)
+  if (!is.null(rename_labs))
+    # stringr::str_replace_all() would be better.
+    for (i in seq_along(rename_labs))
+      labels <- gsub(names(rename_labs)[i], rename_labs[i], labels)
+  
   experiments <- ablog$experiments
   ylim <- NULL
   if ("rank" %in% type) {
     experiments <- matrixStats::rowRanks(experiments, ties.method = "average")
-    if (is.null(ylim)) ylim <- c(1L, ncol(experiments))
+    if (is.null(ylim))
+      ylim <- c(1L, ncol(experiments))
   }
   experiments <- experiments[,trajectory]
   colnames(experiments) <- trajectory
@@ -79,9 +94,9 @@ ablation_labels <- function(trajectory, configurations)
 {
   configurations <- irace::removeConfigurationsMetaData(configurations[trajectory, , drop = FALSE])
   labels <- names(trajectory)
-  last <- configurations[1, , drop = FALSE]
+  last <- configurations[1L, , drop = FALSE]
   param.names <- colnames(last)
-  for (i in 2:length(trajectory)) {
+  for (i in 2L:length(trajectory)) {
     current <- configurations[i, , drop = FALSE]
     # Select everything that is NOT NA now and was different or NA before.
     select <- !is.na(current) & (is.na(last) | (current != last))
