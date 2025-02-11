@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">iraceplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.0.0.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.1.0</span>
       </span>
     </div>
 
@@ -87,8 +87,6 @@
 
     
     
-<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
-<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <div class="section level3">
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h3>
@@ -137,19 +135,19 @@ as previously shown.</p>
 information about configurations. For visualizing individual
 configurations the <code>parallel_coord</code> shows each configuration
 as a line.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/parallel_coord.html">parallel_coord</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/plot_configurations.html">plot_configurations()</a></code> function generates a similar
 parallel coordinates plot when provided with an arbitrary set of
 configurations without the irace execution context. For example, to
 display all elite configurations:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_elite</span> <span class="op">&lt;-</span> <span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allElites</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/plot_configurations.html">plot_configurations</a></span><span class="op">(</span><span class="va">all_elite</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">scenario</span><span class="op">$</span><span class="va">parameters</span><span class="op">)</span></span></code></pre></div>
 <p>A similar display can be obtained using the <code>parallel_cat</code>
 function. For example to visualize the configurations of a selected set
 of parameters:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/parallel_cat.html">parallel_cat</a></span><span class="op">(</span>irace_results <span class="op">=</span> <span class="va">iraceResults</span>, </span>
 <span>             param_names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"algorithm"</span>, <span class="st">"localsearch"</span>, <span class="st">"dlb"</span>, <span class="st">"nnls"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>sampling_pie</code> function creates a plot that displays
@@ -157,7 +155,7 @@ the values of all configurations sampling during the configuration
 process. The size of each parameter value in the plot is dependent of
 the number of configurations having that value in the
 configurations.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sampling_pie.html">sampling_pie</a></span><span class="op">(</span>irace_results <span class="op">=</span> <span class="va">iraceResults</span>, param_names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"algorithm"</span>, <span class="st">"localsearch"</span>, <span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"rho"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Note that for some of the previous plots, numerical parameters
 domains are discretized to be showm in the plot. Check the documentation
@@ -174,29 +172,29 @@ detected a high performance.</p>
 <p>A general overview of the sampled parameters values can be obtained
 with the <code>sampling_frequency</code> function which generates
 frequency and density plots for the sampled values:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span> <span class="fu"><a href="../reference/sampling_frequency.html">sampling_frequency</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If you would like to visualize the distribution of a particular set
 of configurations, you can pass directly a set of configurations and a
 parameters object in the irace format to the
 <code>sampling_frequency</code> function:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span> <span class="fu"><a href="../reference/sampling_frequency.html">sampling_frequency</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">scenario</span><span class="op">$</span><span class="va">parameters</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alpha"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>A detailed plot showing the sampling by iteration can be obtained
 with the <code>sampling_frequency_iteration</code> function. This plot
 shows the convergence of the configuration process reflected in the
 sampled parameter values.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sampling_frequency_iteration.html">sampling_frequency_iteration</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_name <span class="op">=</span> <span class="st">"beta"</span><span class="op">)</span></span></code></pre></div>
 <p>To visualize the joint sampling frequency of two parameters you can
 use the <code>sampling_heatmap</code> function.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sampling_heatmap.html">sampling_heatmap</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span>,<span class="st">"alpha"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The configurations can be provided directly to the
 <code>sampling_heatmap2</code> function. In both functions, the
 parameter sizes can be used to adjust the number of intervals to be
 displayed:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sampling_heatmap2.html">sampling_heatmap2</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">allConfigurations</span>, <span class="va">iraceResults</span><span class="op">$</span><span class="va">scenario</span><span class="op">$</span><span class="va">parameters</span>, </span>
 <span>                  param_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"localsearch"</span>,<span class="st">"nnls"</span><span class="op">)</span>, sizes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>For more details of these functions, check the documentation of the
@@ -212,7 +210,7 @@ you to assess the convergence of the configuration process. Use the
 <code>sampling_distance</code> function to display the mean distance of
 the configurations across the iterations of the configuration
 process:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sampling_distance.html">sampling_distance</a></span><span class="op">(</span><span class="va">iraceResults</span>, t<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
 <p>Numerical parameter distance can be adjusted with a treshold
 (<code>t=0.05</code>), check the documentation of the function and the
@@ -224,7 +222,7 @@ for details.</p>
 </h3>
 <p>The test performance of the best final configurations can be
 visualized using the <code>boxplot_test</code> function.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/boxplot_test.html">boxplot_test</a></span><span class="op">(</span><span class="va">iraceResults</span>, type<span class="op">=</span><span class="st">"best"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the irace execution log includes test data (test is not
 enabled by default), check the irace package <a href="https://CRAN.R-project.org/package=irace/vignettes/irace-package.pdf" class="external-link">user
@@ -233,7 +231,7 @@ guide</a> for details on how to use the test feature in irace.</p>
 configurations the <code>scatter_test</code> function displays the
 performance of both configurations paired by instance (each point
 represents an instance):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scatter_performance.html">scatter_test</a></span><span class="op">(</span><span class="va">iraceResults</span>, x_id <span class="op">=</span> <span class="fl">808</span>, y_id <span class="op">=</span> <span class="fl">809</span>, interactive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -249,12 +247,12 @@ performed on these configurations. Note that this data corresponds to
 the performance generated during the configuration process thus, the
 number of instances on which the configurations were evaluated might
 vary between elite configurations.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/boxplot_training.html">boxplot_training</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></span></code></pre></div>
 <p>To observe the difference in the performance of two configurations
 you can also generate a scatter plot using the
 <code>scatter_training</code> function:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scatter_performance.html">scatter_training</a></span><span class="op">(</span><span class="va">iraceResults</span>, x_id <span class="op">=</span> <span class="fl">808</span>, y_id <span class="op">=</span> <span class="fl">809</span>, interactive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -264,11 +262,11 @@ you can also generate a scatter plot using the
 experiment matrix, you can use the <code>boxplot_performance</code>
 function. The configurations can be selected in a vector or a list
 (allElites):</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/boxplot_performance.html">boxplot_performance</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">experiments</span>, allElites<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">803</span>,<span class="fl">808</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">809</span>,<span class="fl">800</span><span class="op">)</span><span class="op">)</span>, first_is_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>In the same way, you can use the <code>scatter_perfomance</code>
 function to plot the difference between configurations:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/scatter_performance.html">scatter_performance</a></span><span class="op">(</span><span class="va">iraceResults</span><span class="op">$</span><span class="va">experiments</span>, x_id <span class="op">=</span> <span class="fl">83</span>, y_id <span class="op">=</span> <span class="fl">809</span>, interactive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Note that there these functions can be adjusted to display
 differently the configurations (i.e. include or not instancs). Check the
@@ -281,20 +279,20 @@ guide</a> and the documentation of each function for details.</p>
 <p>In some cases, it might be interesting have a general visualization
 for the configuration process. This can be obtained with the
 <code>plot_experiments_matrix</code> function:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_experiments_matrix.html">plot_experiments_matrix</a></span><span class="op">(</span><span class="va">iraceResults</span>, interactive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The sampling distributions used by irace during the configuration
 process can be displayed using the <code>plot_model</code> function. For
 categorical parameters, this function displays the sampling
 probabilities associated to each parameter value by iteration (x axis
 top) in each elite configuration model (bars):</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_model.html">plot_model</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_name<span class="op">=</span><span class="st">"algorithm"</span><span class="op">)</span></span></code></pre></div>
 <p>For numerical parameters, this function shows the sampling
 distributions associated to each parameter. These plots display the the
 density function of the truncated normal distribution associated to the
 models of each elite configuration in each instance:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_model.html">plot_model</a></span><span class="op">(</span><span class="va">iraceResults</span>, param_name<span class="op">=</span><span class="st">"alpha"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -306,7 +304,7 @@ summary of the configuration process executed by irace. The function
 will create an HTML file in the path provided in the
 <code>filename</code> argument and appending the <code>".html"</code>
 extension to it.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/report.html">report</a></span><span class="op">(</span><span class="va">iraceResults</span>, filename<span class="op">=</span><span class="st">"report"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">iraceplot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.0.0.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.1.0</span>
       </span>
     </div>
 
@@ -72,6 +72,7 @@
 <span>  ylab <span class="op">=</span> <span class="st">"Mean configuration cost"</span>,</span>
 <span>  ylim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rotate_labs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rename_labs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -81,7 +82,7 @@
 
 
 <dl><dt id="arg-ablog">ablog<a class="anchor" aria-label="anchor" href="#arg-ablog"></a></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>|<code>character(1)</code>) Ablation log object returned by <code><a href="https://mlopez-ibanez.github.io/irace/reference/ablation.html" class="external-link">irace::ablation()</a></code>. Alternatively, the path to an <code>.Rdata</code> file, e.g., <code>"log-ablation.Rdata"</code>, from which the object will be loaded.</p></dd>
+<dd><p><code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>|<code>character(1)</code><br> Ablation log object returned by <code><a href="https://mlopez-ibanez.github.io/irace/reference/ablation.html" class="external-link">irace::ablation()</a></code>. Alternatively, the path to an <code>.Rdata</code> file, e.g., <code>"log-ablation.Rdata"</code>, from which the object will be loaded.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -89,7 +90,7 @@
 
 
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>(<code>integer(1)</code>) Number of steps included in the plot. By default all steps from source to target are included.</p></dd>
+<dd><p><code>integer(1)</code><br> Number of steps included in the plot. By default all steps from source to target are included.</p></dd>
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
@@ -101,7 +102,11 @@
 
 
 <dt id="arg-rotate-labs">rotate_labs<a class="anchor" aria-label="anchor" href="#arg-rotate-labs"></a></dt>
-<dd><p>(<code>logical(1)</code>) Whether to rotate labels in x-axis. They are rotated by default because they are typically large.</p></dd>
+<dd><p><code>logical(1)</code><br> Whether to rotate labels in x-axis. They are rotated by default because they are typically large.</p></dd>
+
+
+<dt id="arg-rename-labs">rename_labs<a class="anchor" aria-label="anchor" href="#arg-rename-labs"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code><br> Renaming table for nicer labels. For example, <code>c("No value"="NA", "LongParameterName"="LPN")</code>.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -128,7 +133,8 @@
 <span class="r-plt img"><img src="ablation_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">ablation_plot</span><span class="op">(</span><span class="va">ablog</span>, type<span class="op">=</span><span class="st">"boxplot"</span>, rotate_labs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ablation_plot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">ablation_plot</span><span class="op">(</span><span class="va">ablog</span>, type<span class="op">=</span><span class="st">"mean,boxplot"</span>, rotate_labs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ablation_plot</span><span class="op">(</span><span class="va">ablog</span>, type <span class="op">=</span> <span class="st">"rank,boxplot"</span>, rename_labs <span class="op">=</span></span></span>
+<span class="r-in"><span>              <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"localsearch"</span><span class="op">=</span><span class="st">"ls"</span>, algorithm<span class="op">=</span><span class="st">"algo"</span>, source<span class="op">=</span><span class="st">"default"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ablation_plot-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">ablation_plot</span><span class="op">(</span><span class="va">ablog</span>, type<span class="op">=</span><span class="st">"rank,mean,boxplot"</span>, n <span class="op">=</span> <span class="fl">4</span>, rotate_labs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ablation_plot-4.png" alt="" width="700" height="433"></span>
