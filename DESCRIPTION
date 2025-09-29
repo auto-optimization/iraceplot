@@ -1,6 +1,6 @@
 Package: iraceplot
 Title: Plots for Visualizing the Data Produced by the 'irace' Package
-Version: 2.1.0
+Version: 2.1.9000
 Authors@R: c(person("Manuel", "López-Ibáñez", role = c("aut", "cre"),
                     email = "manuel.lopez-ibanez@manchester.ac.uk",
                     comment = c(ORCID = "0000-0001-9974-1295")),
@@ -22,7 +22,7 @@ Imports:
     forcats,
     fs,
     ggforce,
-    ggplot2 (>= 3.3.6),
+    ggplot2 (>= 3.4.0),
     gridExtra,
     knitr,
     labeling,
