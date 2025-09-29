@@ -131,6 +131,11 @@ the experiments matrix will be loaded.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">iraceResults</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mlopez-ibanez.github.io/irace/reference/read_logfile.html" class="external-link">read_logfile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"irace"</span>, <span class="st">"exdata"</span>,</span></span>
 <span class="r-in"><span>                                         <span class="st">"irace-acotsp.Rdata"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">plot_experiments_matrix</span><span class="op">(</span><span class="va">iraceResults</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use the `linewidth` argument instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">iraceplot</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/auto-optimization/iraceplot/issues&gt;</span>.</span>
 <span class="r-plt img"><img src="plot_experiments_matrix-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_experiments_matrix</span><span class="op">(</span><span class="fu"><a href="https://mlopez-ibanez.github.io/irace/reference/read_logfile.html" class="external-link">read_logfile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"iraceplot"</span>, <span class="st">"exdata"</span>,</span></span>
@@ -150,7 +155,7 @@ the experiments matrix will be loaded.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
