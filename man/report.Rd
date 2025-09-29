@@ -5,7 +5,7 @@
 \title{Create HTML Report from irace data}
 \usage{
 report(
-  irace_results,
+  irace_results = "irace.Rdata",
   filename = "report",
   sections = list(experiments_matrix = NULL, convergence = FALSE),
   interactive = base::interactive()

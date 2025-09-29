@@ -27,11 +27,10 @@
 #'  }, clean = !base::interactive())
 #' }
 #' @export
-report <- function(irace_results, filename = "report",
+report <- function(irace_results = "irace.Rdata", filename = "report",
                    sections = list(experiments_matrix = NULL, convergence = FALSE),
                    interactive = base::interactive())
 {
-  if (missing(irace_results)) stop("irace_results is required")
   # render() already checks this but the error is not clear enough.
   if (! rmarkdown::pandoc_available("1.12.3", error = FALSE))
     stop("pandoc version 1.12.3 or higher is required and was not found. ",
