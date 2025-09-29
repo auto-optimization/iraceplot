@@ -94,7 +94,7 @@ plot_experiments_matrix <- function(experiments, filename = NULL, metric = c("ra
     labs(x = "Configuration IDs", y = "Instance IDs", fill = metric_lab) +
     # theme(legend.position = "top") + # This doesn't work because numbers often overlap
     theme(axis.ticks = element_blank(),
-          panel.border = element_rect(colour="gray80", fill = NA, size=0.75),
+          panel.border = element_rect(colour="gray80", fill = NA, linewidth=0.75),
           plot.background = element_blank(),
           panel.background = element_blank())
 
