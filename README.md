@@ -116,6 +116,9 @@ Or you may wish to try the [development version from GitHub](https://github.com/
 GitHub (Development version)
 ---------------------------
 
+> [!WARNING]
+> The development packages are built automatically. Please make sure that [the most recent successful build](https://auto-optimization.r-universe.dev/builds) is more recent than the last commit to the repository.
+
 If you wish to try the development version, you can install it by executing the
 following command within the R console:
 
