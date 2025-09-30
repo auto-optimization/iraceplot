@@ -37,7 +37,8 @@ summarise_by_instance <- function(irace_results)
     mutate(seeds = seeds_by_instance[as.character(instance)], .after="instance") %>%
     mutate(experiments = exp_by_instance[as.character(instance)], .after="instance")
 
-  if (is.character(byinstance$instance)) {
+  # Only try this if the instances are paths.
+  if (is.character(byinstance$instance) && isTRUE(nzchar(irace_results$scenario$trainInstancesDir))) {
     rel_inst <- as.character(path_rel(byinstance$instance, start = path_common(byinstance$instance)))
     # We want the instances to be unique still, otherwise don't touch them.
     if (length(unique(rel_inst)) == length(byinstance$instance)) {
